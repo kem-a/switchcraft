@@ -10,7 +10,7 @@ class ThemeMonitor:
         self.app = app
         self.settings = Gio.Settings.new("org.gnome.desktop.interface")
         self.settings.connect("changed::color-scheme", self.on_theme_changed)
-        self.on_theme_changed(self.settings, None)
+        # Don't execute commands on startup, only on theme changes
 
     def on_theme_changed(self, settings, _key):
         color_scheme = settings.get_string("color-scheme")

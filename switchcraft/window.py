@@ -24,6 +24,7 @@ class MainWindow(Adw.ApplicationWindow):
         self._listboxes: Dict[str, Gtk.ListBox] = {}
         self._content_stacks: Dict[str, Gtk.Stack] = {}
         self._shortcuts_window: Gtk.ShortcutsWindow | None = None
+        self._banner: Adw.Banner | None = None
 
         for theme in ("light", "dark"):
             self._commands.setdefault(theme, [])
@@ -50,6 +51,7 @@ class MainWindow(Adw.ApplicationWindow):
         self._add_button.set_action_name("win.add-command")
         header_bar.pack_start(self._add_button)
 
+        # Menu button should be last (rightmost)
         menu_button = Gtk.MenuButton()
         menu_button.set_icon_name("open-menu-symbolic")
         menu = Gio.Menu()
@@ -60,6 +62,22 @@ class MainWindow(Adw.ApplicationWindow):
         menu_button.set_menu_model(menu)
         header_bar.pack_end(menu_button)
 
+        # Monitoring toggle switch (before menu button)
+        application = self.get_application()
+        monitoring_switch = Gtk.Switch()
+        monitoring_switch.set_valign(Gtk.Align.CENTER)
+        monitoring_switch.set_tooltip_text("Enable background monitoring")
+        if application:
+            monitoring_switch.set_active(application.get_monitoring_enabled())
+        monitoring_switch.connect("state-set", self._on_monitoring_toggled)
+        
+        monitoring_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=6)
+        monitoring_box.set_valign(Gtk.Align.CENTER)
+        monitoring_label = Gtk.Label(label="Monitor")
+        monitoring_box.append(monitoring_label)
+        monitoring_box.append(monitoring_switch)
+        header_bar.pack_end(monitoring_box)
+
         self._view_stack = Adw.ViewStack()
         
         # Create view switcher for header (visible on wide windows)
@@ -68,7 +86,19 @@ class MainWindow(Adw.ApplicationWindow):
         view_switcher.set_policy(Adw.ViewSwitcherPolicy.WIDE)
         header_bar.set_title_widget(view_switcher)
         
-        toolbar_view.set_content(self._view_stack)
+        # Create banner for logout notification
+        self._banner = Adw.Banner()
+        self._banner.set_title("Log out and back in to start background monitoring")
+        self._banner.set_button_label("Log Out")
+        self._banner.connect("button-clicked", self._on_banner_logout_clicked)
+        self._banner.set_revealed(False)
+        
+        # Create content box with banner and view stack
+        content_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=0)
+        content_box.append(self._banner)
+        content_box.append(self._view_stack)
+        
+        toolbar_view.set_content(content_box)
 
         supports_icon = hasattr(self._view_stack, "add_titled_with_icon")
 
@@ -350,6 +380,45 @@ class MainWindow(Adw.ApplicationWindow):
 
         constants_window = ConstantsWindow(application, self)
         constants_window.present()
+
+    def _on_monitoring_toggled(self, switch: Gtk.Switch, state: bool) -> bool:
+        """Handle monitoring toggle state change."""
+        application = self.get_application()
+        if application is None:
+            return False
+
+        application.set_monitoring_enabled(state)
+        
+        # Show banner when enabling, hide when disabling
+        if self._banner:
+            if state:
+                self._banner.set_revealed(True)
+            else:
+                self._banner.set_revealed(False)
+        
+        return False  # Allow the switch to change state
+
+    def _on_banner_logout_clicked(self, _banner) -> None:
+        """Trigger GNOME logout when banner button is clicked."""
+        try:
+            # Use D-Bus to call GNOME Session Manager logout
+            # Mode 0 = no confirmation dialog
+            bus = Gio.bus_get_sync(Gio.BusType.SESSION, None)
+            bus.call_sync(
+                "org.gnome.SessionManager",
+                "/org/gnome/SessionManager",
+                "org.gnome.SessionManager",
+                "Logout",
+                GLib.Variant("(u)", (0,)),  # 0 = logout without prompt
+                None,
+                Gio.DBusCallFlags.NONE,
+                -1,
+                None
+            )
+        except Exception as e:
+            print(f"Failed to logout: {e}")
+            # Fall back to just hiding the banner
+            self._banner.set_revealed(False)
 
     def _build_shortcuts_window(self) -> Gtk.ShortcutsWindow:
         window = Gtk.ShortcutsWindow()

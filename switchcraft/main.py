@@ -12,7 +12,15 @@ from .monitor import ThemeMonitor
 def main(argv: list[str] | None = None) -> int:
     app = SwitchcraftApp()
     ThemeMonitor(app)
-    return app.run(argv or sys.argv)
+    
+    # Background mode: keep app alive without showing window
+    args = argv or sys.argv
+    if "--background" in args:
+        app.hold()  # Prevent app from exiting when no windows are open
+        # Remove --background from argv so GApplication doesn't complain
+        args = [arg for arg in args if arg != "--background"]
+    
+    return app.run(args)
 
 
 if __name__ == "__main__":

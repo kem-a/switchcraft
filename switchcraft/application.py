@@ -9,6 +9,8 @@ from .window import MainWindow
 
 CONFIG_PATH = os.path.expanduser("~/.config/switchcraft/commands.json")
 CONSTANTS_PATH = os.path.expanduser("~/.config/switchcraft/constants.json")
+SETTINGS_PATH = os.path.expanduser("~/.config/switchcraft/settings.json")
+AUTOSTART_PATH = os.path.expanduser("~/.config/autostart/switchcraft.desktop")
 
 
 class SwitchcraftApp(Adw.Application):
@@ -100,3 +102,64 @@ class SwitchcraftApp(Adw.Application):
         os.makedirs(os.path.dirname(CONSTANTS_PATH), exist_ok=True)
         with open(CONSTANTS_PATH, "w", encoding="utf-8") as handle:
             json.dump(constants, handle, indent=2, sort_keys=True)
+
+    def get_monitoring_enabled(self) -> bool:
+        """Get whether background monitoring is enabled."""
+        if not os.path.exists(SETTINGS_PATH):
+            return False
+
+        try:
+            with open(SETTINGS_PATH, "r", encoding="utf-8") as handle:
+                settings = json.load(handle)
+                return bool(settings.get("monitoring_enabled", False))
+        except (json.JSONDecodeError, OSError):
+            return False
+
+    def set_monitoring_enabled(self, enabled: bool) -> None:
+        """Set whether background monitoring is enabled and manage autostart."""
+        # Load existing settings
+        settings = {}
+        if os.path.exists(SETTINGS_PATH):
+            try:
+                with open(SETTINGS_PATH, "r", encoding="utf-8") as handle:
+                    settings = json.load(handle)
+            except (json.JSONDecodeError, OSError):
+                pass
+
+        # Update monitoring_enabled
+        settings["monitoring_enabled"] = enabled
+
+        # Save settings
+        os.makedirs(os.path.dirname(SETTINGS_PATH), exist_ok=True)
+        with open(SETTINGS_PATH, "w", encoding="utf-8") as handle:
+            json.dump(settings, handle, indent=2)
+
+        # Manage autostart desktop entry
+        if enabled:
+            self._create_autostart_entry()
+        else:
+            self._remove_autostart_entry()
+
+    def _create_autostart_entry(self) -> None:
+        """Create the autostart desktop entry."""
+        desktop_entry = """[Desktop Entry]
+Type=Application
+Name=Switchcraft
+Comment=Run commands when GNOME theme switches
+Exec=python3 -m switchcraft.main --background
+Icon=preferences-desktop-theme
+Terminal=false
+Categories=Utility;GNOME;GTK;
+StartupNotify=false
+X-GNOME-Autostart-enabled=true
+X-GNOME-Autostart-Delay=2
+"""
+        os.makedirs(os.path.dirname(AUTOSTART_PATH), exist_ok=True)
+        with open(AUTOSTART_PATH, "w", encoding="utf-8") as handle:
+            handle.write(desktop_entry)
+
+    def _remove_autostart_entry(self) -> None:
+        """Remove the autostart desktop entry."""
+        if os.path.exists(AUTOSTART_PATH):
+            os.remove(AUTOSTART_PATH)
+
