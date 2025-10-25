@@ -8,6 +8,7 @@ from gi.repository import Adw, Gio
 from .window import MainWindow
 
 CONFIG_PATH = os.path.expanduser("~/.config/switchcraft/commands.json")
+CONSTANTS_PATH = os.path.expanduser("~/.config/switchcraft/constants.json")
 
 
 class SwitchcraftApp(Adw.Application):
@@ -78,3 +79,24 @@ class SwitchcraftApp(Adw.Application):
             normalized[theme] = theme_commands
 
         return copy.deepcopy(normalized)
+
+    def get_constants(self) -> Dict[str, str]:
+        """Get user-defined constants for command substitution."""
+        if not os.path.exists(CONSTANTS_PATH):
+            return {}
+
+        try:
+            with open(CONSTANTS_PATH, "r", encoding="utf-8") as handle:
+                constants = json.load(handle)
+                if isinstance(constants, dict):
+                    return {k: str(v) for k, v in constants.items() if isinstance(k, str)}
+        except (json.JSONDecodeError, OSError):
+            pass
+
+        return {}
+
+    def save_constants(self, constants: Dict[str, str]) -> None:
+        """Save user-defined constants."""
+        os.makedirs(os.path.dirname(CONSTANTS_PATH), exist_ok=True)
+        with open(CONSTANTS_PATH, "w", encoding="utf-8") as handle:
+            json.dump(constants, handle, indent=2, sort_keys=True)

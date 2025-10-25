@@ -3,6 +3,8 @@ from typing import Any, Dict, List
 
 from gi.repository import Adw, Gio, GLib, GObject, Gtk
 
+from switchcraft.constants_window import ConstantsWindow
+
 
 THEME_ICONS = {
     "light": "weather-clear-symbolic",
@@ -38,6 +40,7 @@ class MainWindow(Adw.ApplicationWindow):
 
         self._add_action("add-command", self._on_add_command_action)
         self._add_action("show-about", self._on_show_about_action)
+        self._add_action("show-constants", self._on_show_constants_action)
         self._add_action("show-shortcuts", self._on_show_shortcuts_action)
 
         self._add_button = Gtk.Button()
@@ -50,6 +53,7 @@ class MainWindow(Adw.ApplicationWindow):
         menu_button = Gtk.MenuButton()
         menu_button.set_icon_name("open-menu-symbolic")
         menu = Gio.Menu()
+        menu.append("Constants", "win.show-constants")
         menu.append("Keyboard Shortcuts", "win.show-shortcuts")
         menu.append("About Switchcraft", "win.show-about")
         menu.append("Quit", "app.quit")
@@ -338,6 +342,14 @@ class MainWindow(Adw.ApplicationWindow):
             self._shortcuts_window = self._build_shortcuts_window()
 
         self._shortcuts_window.present()
+
+    def _on_show_constants_action(self, _action, _param) -> None:
+        application = self.get_application()
+        if application is None:
+            return
+
+        constants_window = ConstantsWindow(application, self)
+        constants_window.present()
 
     def _build_shortcuts_window(self) -> Gtk.ShortcutsWindow:
         window = Gtk.ShortcutsWindow()
