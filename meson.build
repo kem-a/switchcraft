@@ -1,0 +1,63 @@
+project('switchcraft', 'vala', 'c',
+  version: '1.0.0',
+  meson_version: '>= 0.59.0',
+  default_options: [
+    'warning_level=2',
+    'werror=false',
+  ]
+)
+
+gnome = import('gnome')
+
+# Application ID
+application_id = 'io.github.switchcraft.Switchcraft'
+
+# Dependencies
+gtk4_dep = dependency('gtk4', version: '>= 4.0.0')
+libadwaita_dep = dependency('libadwaita-1', version: '>= 1.0.0')
+gio_dep = dependency('gio-2.0', version: '>= 2.66')
+glib_dep = dependency('glib-2.0', version: '>= 2.66')
+json_glib_dep = dependency('json-glib-1.0')
+
+# Source files
+sources = files(
+  'src/main.vala',
+  'src/Application.vala',
+  'src/ThemeMonitor.vala',
+  'src/MainWindow.vala',
+  'src/ConstantsWindow.vala',
+)
+
+# Vala compiler arguments
+vala_args = [
+  '--target-glib=2.66',
+  '--enable-checking',
+]
+
+# Build executable
+executable(
+  'switchcraft',
+  sources,
+  dependencies: [
+    gtk4_dep,
+    libadwaita_dep,
+    gio_dep,
+    glib_dep,
+    json_glib_dep,
+  ],
+  vala_args: vala_args,
+  install: true,
+)
+
+# Install desktop file
+install_data(
+  'switchcraft.desktop',
+  install_dir: join_paths(get_option('datadir'), 'applications')
+)
+
+# Summary
+summary({
+  'prefix': get_option('prefix'),
+  'bindir': get_option('bindir'),
+  'datadir': get_option('datadir'),
+}, section: 'Directories')
