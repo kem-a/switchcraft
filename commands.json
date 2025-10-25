@@ -1,0 +1,14 @@
+{
+  "dark": [
+    {
+      "command": "notify-send 'Dark mode enabled'",
+      "enabled": true
+    }
+  ],
+  "light": [
+    {
+      "command": "notify-send 'Light mode enabled'",
+      "enabled": true
+    }
+  ]
+}
