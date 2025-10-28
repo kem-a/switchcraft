@@ -2,10 +2,8 @@
 Type=Application
 Name=Switchcraft
 Comment=Run commands when GNOME theme switches
-Exec=switchcraft --background
+Exec=switchcraft
 Icon=switchcraft
 Terminal=false
 Categories=Utility;GNOME;GTK;
 StartupNotify=false
-X-GNOME-Autostart-enabled=true
-X-GNOME-Autostart-Delay=2

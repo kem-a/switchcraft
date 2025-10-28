@@ -21,6 +21,8 @@ namespace Switchcraft {
         private string constants_path;
         private string settings_path;
         private string autostart_path;
+        private string monitor_script_path;
+        private string local_bin_path;
         
         public Application () {
             Object (
@@ -32,7 +34,9 @@ namespace Switchcraft {
             config_path = Path.build_filename (home, ".config", "switchcraft", "commands.json");
             constants_path = Path.build_filename (home, ".config", "switchcraft", "constants.json");
             settings_path = Path.build_filename (home, ".config", "switchcraft", "settings.json");
-            autostart_path = Path.build_filename (home, ".config", "autostart", "switchcraft.desktop");
+            autostart_path = Path.build_filename (home, ".config", "autostart", "switchcraft-monitor.desktop");
+            local_bin_path = Path.build_filename (home, ".local", "bin");
+            monitor_script_path = Path.build_filename (local_bin_path, "switchcraft-monitor.sh");
             
             set_resource_base_path ("/io/github/switchcraft/Switchcraft/");
             set_accels_for_action ("win.add-command", {"<Primary>N"});
@@ -294,27 +298,176 @@ namespace Switchcraft {
                 warning ("Failed to save settings: %s", e.message);
             }
             
-            // Manage autostart desktop entry
+            // Manage autostart desktop entry and monitor script
             if (enabled) {
-                create_autostart_entry ();
+                enable_monitoring ();
             } else {
-                remove_autostart_entry ();
+                disable_monitoring ();
+            }
+        }
+        
+        private void enable_monitoring () {
+            // Ensure ~/.local/bin exists and script is installed
+            install_monitor_script ();
+            
+            // Create autostart desktop entry
+            create_autostart_entry ();
+            
+            // Start monitor script immediately
+            try {
+                string[] argv = { monitor_script_path };
+                Process.spawn_async (
+                    null,  // working directory
+                    argv,
+                    null,  // env
+                    SpawnFlags.SEARCH_PATH | SpawnFlags.DO_NOT_REAP_CHILD,
+                    null,
+                    null
+                );
+            } catch (Error e) {
+                warning ("Failed to start monitor script: %s", e.message);
+            }
+        }
+        
+        private void install_monitor_script () {
+            // Ensure ~/.local/bin exists
+            try {
+                DirUtils.create_with_parents (local_bin_path, 0755);
+            } catch (Error e) {
+                warning ("Failed to create ~/.local/bin: %s", e.message);
+                return;
+            }
+            
+            // If script already exists and is executable, we're done
+            if (FileUtils.test (monitor_script_path, FileTest.IS_EXECUTABLE)) {
+                return;
+            }
+            
+            // Script content - embed directly in the application
+            string script_content = """#!/usr/bin/env bash
+# Switchcraft Theme Monitor
+# Watches GNOME color-scheme and runs user-defined commands from commands.json
+
+set -euo pipefail
+
+# Configuration paths
+CONFIG_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/switchcraft"
+COMMANDS_FILE="$CONFIG_DIR/commands.json"
+CONSTANTS_FILE="$CONFIG_DIR/constants.json"
+
+# Load constants from constants.json and export as environment variables
+load_constants() {
+  if [[ ! -f "$CONSTANTS_FILE" ]]; then
+    return
+  fi
+  
+  # Parse JSON and export each constant
+  while IFS='=' read -r key value; do
+    if [[ -n "$key" && -n "$value" ]]; then
+      export "$key=$value"
+    fi
+  done < <(jq -r 'to_entries | .[] | "\(.key)=\(.value)"' "$CONSTANTS_FILE" 2>/dev/null || true)
+}
+
+# Execute commands for a specific theme (light or dark)
+execute_commands() {
+  local theme=$1
+  
+  if [[ ! -f "$COMMANDS_FILE" ]]; then
+    return
+  fi
+  
+  # Load constants for substitution
+  load_constants
+  
+  # Parse commands.json and execute enabled commands for the theme
+  jq -r --arg theme "$theme" '
+    .[$theme] // [] | 
+    .[] | 
+    select(.enabled == true) | 
+    .command
+  ' "$COMMANDS_FILE" 2>/dev/null | while IFS= read -r command; do
+    if [[ -n "$command" ]]; then
+      # Execute command in a subshell with full shell support
+      eval "$command" &
+    fi
+  done
+}
+
+# Monitor theme changes
+monitor_theme() {
+  # Get initial theme and execute commands once
+  local current_scheme
+  current_scheme=$(gsettings get org.gnome.desktop.interface color-scheme)
+  
+  if [[ "$current_scheme" == "'prefer-dark'" ]]; then
+    execute_commands "dark"
+  else
+    execute_commands "light"
+  fi
+  
+  # Monitor for changes
+  gsettings monitor org.gnome.desktop.interface color-scheme | while IFS= read -r line; do
+    # Extract new scheme from "color-scheme: 'prefer-dark'" format
+    local new_scheme="${line#*: }"
+    
+    if [[ "$new_scheme" == "'prefer-dark'" ]]; then
+      execute_commands "dark"
+    else
+      execute_commands "light"
+    fi
+  done
+}
+
+# Main entry point
+main() {
+  # Ensure config directory exists
+  mkdir -p "$CONFIG_DIR"
+  
+  # Start monitoring
+  monitor_theme
+}
+
+main "$@"
+""";
+            
+            // Write script to ~/.local/bin
+            try {
+                FileUtils.set_contents (monitor_script_path, script_content);
+                
+                // Make executable
+                FileUtils.chmod (monitor_script_path, 0755);
+            } catch (Error e) {
+                warning ("Failed to install monitor script: %s", e.message);
+            }
+        }
+        
+        private void disable_monitoring () {
+            // Remove autostart entry
+            remove_autostart_entry ();
+            
+            // Kill any running monitor processes
+            try {
+                Process.spawn_command_line_sync ("pkill -f switchcraft-monitor.sh");
+            } catch (Error e) {
+                // Ignore errors if no process found
             }
         }
         
         private void create_autostart_entry () {
             string desktop_entry = """[Desktop Entry]
 Type=Application
-Name=Switchcraft
-Comment=Run commands when GNOME theme switches
-Exec=switchcraft --background
-Icon=preferences-desktop-theme
+Name=Switchcraft Monitor
+Comment=Monitor GNOME theme changes and run commands
+Exec=%s
+Icon=switchcraft
 Terminal=false
 Categories=Utility;GNOME;GTK;
 StartupNotify=false
 X-GNOME-Autostart-enabled=true
 X-GNOME-Autostart-Delay=2
-""";
+Hidden=false
+""".printf (monitor_script_path);
             
             try {
                 var dir = Path.get_dirname (autostart_path);

@@ -26,6 +26,7 @@ ENV/
 Thumbs.db
 
 # Build artifacts
+builddir/
 build/
 dist/
 *.egg-info/

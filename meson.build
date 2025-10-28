@@ -60,7 +60,8 @@ install_data(
 # This preserves the hicolor theme structure (e.g. scalable/apps/switchcraft.png)
 install_subdir(
   'icons',
-  install_dir: join_paths(get_option('datadir'), 'icons')
+  install_dir: join_paths(get_option('datadir'), 'icons'),
+  strip_directory: true
 )
 
 # Summary
@@ -69,3 +70,24 @@ summary({
   'bindir': get_option('bindir'),
   'datadir': get_option('datadir'),
 }, section: 'Directories')
+
+# Create uninstall target
+uninstall_script = '''
+prefix="@0@"
+bindir="@1@"
+datadir="@2@"
+
+echo "Uninstalling Switchcraft..."
+rm -f "$bindir/switchcraft"
+rm -f "$datadir/applications/switchcraft.desktop" 
+rm -f "$datadir/icons/hicolor/scalable/apps/switchcraft.png"
+echo "Uninstallation complete."
+'''
+
+run_target('remove',
+  command: ['sh', '-c', uninstall_script.format(
+    get_option('prefix'),
+    join_paths(get_option('prefix'), get_option('bindir')),
+    join_paths(get_option('prefix'), get_option('datadir'))
+  )]
+)
