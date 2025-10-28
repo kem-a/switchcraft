@@ -55,6 +55,14 @@ install_data(
   install_dir: join_paths(get_option('datadir'), 'applications')
 )
 
+# Install application icon
+# Install application icons from icons/ directory
+# This preserves the hicolor theme structure (e.g. scalable/apps/switchcraft.png)
+install_subdir(
+  'icons',
+  install_dir: join_paths(get_option('datadir'), 'icons')
+)
+
 # Summary
 summary({
   'prefix': get_option('prefix'),

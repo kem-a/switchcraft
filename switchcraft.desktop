@@ -2,8 +2,8 @@
 Type=Application
 Name=Switchcraft
 Comment=Run commands when GNOME theme switches
-Exec=python3 -m switchcraft.main --background
-Icon=preferences-desktop-theme
+Exec=switchcraft --background
+Icon=switchcraft
 Terminal=false
 Categories=Utility;GNOME;GTK;
 StartupNotify=false

@@ -435,8 +435,29 @@ namespace Switchcraft {
         private void on_show_about_action () {
             var dialog = new Adw.AboutDialog ();
             dialog.set_application_name ("Switchcraft");
-            dialog.set_developer_name ("Switchcraft Contributors");
-            dialog.set_version ("1.0");
+            dialog.set_developer_name ("Arnis Kemlers");
+            dialog.set_version ("1.0.0");
+            
+            // Add icon search paths for development
+            var icon_theme = Gtk.IconTheme.get_for_display (Gdk.Display.get_default ());
+            var current_dir = Environment.get_current_dir ();
+            var icon_dir = Path.build_filename (current_dir, "icons");
+            icon_theme.add_search_path (icon_dir);
+            dialog.set_application_icon ("switchcraft");
+            
+            dialog.set_comments ("Watches GNOME's light/dark preference and runs your shell commands when the theme changes");
+            
+            // GitHub and issue reporting links
+            dialog.set_website ("https://github.com/kem-a/switchcraft");
+            dialog.set_issue_url ("https://github.com/kem-a/switchcraft/issues");
+            
+            // Credits
+            dialog.add_credit_section ("Contributors", {"Switchcraft Contributors"});
+            
+            // Legal - License information
+            dialog.set_license_type (Gtk.License.GPL_3_0);
+            dialog.set_copyright ("© 2025 Arnis Kemlers");
+            
             dialog.present (this);
         }
         
