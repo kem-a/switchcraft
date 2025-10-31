@@ -24,7 +24,6 @@ namespace Switchcraft {
         private string autostart_path;
         private string monitor_script_path;
         private string local_bin_path;
-    private string? monitor_script_source_path;
         
         public Application () {
             Object (
@@ -39,7 +38,6 @@ namespace Switchcraft {
             autostart_path = Path.build_filename (home, ".config", "autostart", "switchcraft-monitor.desktop");
             local_bin_path = Path.build_filename (home, ".local", "bin");
             monitor_script_path = Path.build_filename (local_bin_path, "switchcraft-monitor.sh");
-            monitor_script_source_path = find_monitor_script_source ();
             
             set_resource_base_path ("/io/github/switchcraft/Switchcraft/");
             set_accels_for_action ("win.add-command", {"<Primary>N"});
@@ -333,7 +331,6 @@ namespace Switchcraft {
         }
         
         private void install_monitor_script () {
-            // Ensure ~/.local/bin exists
             try {
                 DirUtils.create_with_parents (local_bin_path, 0755);
             } catch (Error e) {
@@ -341,24 +338,10 @@ namespace Switchcraft {
                 return;
             }
 
-            var source_path = monitor_script_source_path;
-            if (source_path == null || !FileUtils.test (source_path, FileTest.IS_REGULAR)) {
-                source_path = find_monitor_script_source ();
-                monitor_script_source_path = source_path;
-            }
-
-            if (source_path == null) {
-                warning ("Monitor script source not found; cannot install monitor script.");
-                return;
-            }
-
-            var source_file = File.new_for_path (source_path);
-            var dest_file = File.new_for_path (monitor_script_path);
-
             try {
-                source_file.copy (dest_file, FileCopyFlags.OVERWRITE, null, null);
+                FileUtils.set_contents (monitor_script_path, get_monitor_script_contents ());
             } catch (Error e) {
-                warning ("Failed to install monitor script: %s", e.message);
+                warning ("Failed to write monitor script: %s", e.message);
                 return;
             }
 
@@ -369,67 +352,123 @@ namespace Switchcraft {
             }
         }
 
-        private string? find_monitor_script_source () {
-            string? candidate = null;
+        private string get_monitor_script_contents () {
+            return """#!/usr/bin/env bash
+# Switchcraft Theme Monitor
+# Watches GNOME color-scheme and runs user-defined commands from commands.json
 
-            var user_data_dir = Environment.get_user_data_dir ();
-            if (user_data_dir != null && user_data_dir.length > 0) {
-                candidate = Path.build_filename (user_data_dir, "switchcraft", "switchcraft-monitor.sh");
-                if (FileUtils.test (candidate, FileTest.IS_REGULAR)) {
-                    return candidate;
-                }
-            }
+set -euo pipefail
 
-            foreach (unowned string dir in Environment.get_system_data_dirs ()) {
-                candidate = Path.build_filename (dir, "switchcraft", "switchcraft-monitor.sh");
-                if (FileUtils.test (candidate, FileTest.IS_REGULAR)) {
-                    return candidate;
-                }
-            }
+# Configuration paths
+CONFIG_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/switchcraft"
+COMMANDS_FILE="$CONFIG_DIR/commands.json"
+CONSTANTS_FILE="$CONFIG_DIR/constants.json"
 
-            var env_source_root = Environment.get_variable ("MESON_SOURCE_ROOT");
-            if (env_source_root != null && env_source_root.length > 0) {
-                candidate = Path.build_filename (env_source_root, "switchcraft-monitor.sh");
-                if (FileUtils.test (candidate, FileTest.IS_REGULAR)) {
-                    return candidate;
-                }
-            }
+# Load constants from constants.json and export as environment variables
+strip_wrapper_quotes() {
+    local input="$1"
 
-            var current_dir = Environment.get_current_dir ();
-            candidate = Path.build_filename (current_dir, "switchcraft-monitor.sh");
-            if (FileUtils.test (candidate, FileTest.IS_REGULAR)) {
-                return candidate;
-            }
+    if [[ ${#input} -ge 2 ]]; then
+        local first_char="${input:0:1}"
+        local last_char="${input: -1}"
 
-            candidate = Path.build_filename (current_dir, "..", "switchcraft-monitor.sh");
-            if (FileUtils.test (candidate, FileTest.IS_REGULAR)) {
-                return candidate;
-            }
+        if [[ "$first_char" == "'" && "$last_char" == "'" ]]; then
+            input="${input:1:-1}"
+        elif [[ "$first_char" == '"' && "$last_char" == '"' ]]; then
+            input="${input:1:-1}"
+        fi
+    fi
 
-            var prgname = Environment.get_prgname ();
-            if (prgname != null && prgname.length > 0) {
-                var exec_path = Environment.find_program_in_path (prgname);
-                if (exec_path != null && exec_path.length > 0) {
-                    var exec_dir = Path.get_dirname (exec_path);
+    printf '%s\n' "$input"
+}
 
-                    candidate = Path.build_filename (exec_dir, "..", "share", "switchcraft", "switchcraft-monitor.sh");
-                    if (FileUtils.test (candidate, FileTest.IS_REGULAR)) {
-                        return candidate;
-                    }
+expand_shell_value() {
+    set +u
+    local input="$1"
+    local expanded
+                expanded=$(eval "printf '%s' \"$input\"" 2>/dev/null) || expanded="$input"
+    set -u
+    printf '%s\n' "$expanded"
+}
 
-                    candidate = Path.build_filename (exec_dir, "..", "share", "switchcraft-monitor.sh");
-                    if (FileUtils.test (candidate, FileTest.IS_REGULAR)) {
-                        return candidate;
-                    }
+load_constants() {
+  if [[ ! -f "$CONSTANTS_FILE" ]]; then
+    return
+  fi
+  
+  # Parse JSON and export each constant
+  while IFS='=' read -r key value; do
+    if [[ -n "$key" && -n "$value" ]]; then
+      local sanitized_value
+      sanitized_value=$(strip_wrapper_quotes "$value")
+      local expanded_value
+      expanded_value=$(expand_shell_value "$sanitized_value")
+      export "$key=$expanded_value"
+    fi
+  done < <(jq -r 'to_entries | .[] | "\(.key)=\(.value)"' "$CONSTANTS_FILE" 2>/dev/null || true)
+}
 
-                    candidate = Path.build_filename (exec_dir, "switchcraft-monitor.sh");
-                    if (FileUtils.test (candidate, FileTest.IS_REGULAR)) {
-                        return candidate;
-                    }
-                }
-            }
+# Execute commands for a specific theme (light or dark)
+execute_commands() {
+  local theme=$1
+  
+  if [[ ! -f "$COMMANDS_FILE" ]]; then
+    return
+  fi
+  
+  # Load constants for substitution
+  load_constants
+  
+  # Parse commands.json and execute enabled commands for the theme
+  jq -r --arg theme "$theme" '
+    .[$theme] // [] | 
+    .[] | 
+    select(.enabled == true) | 
+    .command
+  ' "$COMMANDS_FILE" 2>/dev/null | while IFS= read -r command; do
+    if [[ -n "$command" ]]; then
+      # Execute command in a subshell with full shell support
+      eval "$command" &
+    fi
+  done
+}
 
-            return null;
+# Monitor theme changes
+monitor_theme() {
+  # Get initial theme and execute commands once
+  local current_scheme
+  current_scheme=$(gsettings get org.gnome.desktop.interface color-scheme)
+  
+  if [[ "$current_scheme" == "'prefer-dark'" ]]; then
+    execute_commands "dark"
+  else
+    execute_commands "light"
+  fi
+  
+  # Monitor for changes
+  gsettings monitor org.gnome.desktop.interface color-scheme | while IFS= read -r line; do
+    # Extract new scheme from "color-scheme: 'prefer-dark'" format
+    local new_scheme="${line#*: }"
+    
+    if [[ "$new_scheme" == "'prefer-dark'" ]]; then
+      execute_commands "dark"
+    else
+      execute_commands "light"
+    fi
+  done
+}
+
+# Main entry point
+main() {
+  # Ensure config directory exists
+  mkdir -p "$CONFIG_DIR"
+  
+  # Start monitoring
+  monitor_theme
+}
+
+main "$@"
+""";
         }
         
         private void disable_monitoring () {
