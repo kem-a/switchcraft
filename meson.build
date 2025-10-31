@@ -55,6 +55,12 @@ install_data(
   install_dir: join_paths(get_option('datadir'), 'applications')
 )
 
+# Install monitor script for runtime copying
+install_data(
+  'switchcraft-monitor.sh',
+  install_dir: join_paths(get_option('datadir'), 'switchcraft')
+)
+
 # Install application icon
 # Install application icons from icons/ directory
 # This preserves the hicolor theme structure (e.g. scalable/apps/switchcraft.png)

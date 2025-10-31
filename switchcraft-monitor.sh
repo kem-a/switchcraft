@@ -10,6 +10,32 @@ COMMANDS_FILE="$CONFIG_DIR/commands.json"
 CONSTANTS_FILE="$CONFIG_DIR/constants.json"
 
 # Load constants from constants.json and export as environment variables
+strip_wrapper_quotes() {
+    local input="$1"
+
+    if [[ ${#input} -ge 2 ]]; then
+        local first_char="${input:0:1}"
+        local last_char="${input: -1}"
+
+        if [[ "$first_char" == "'" && "$last_char" == "'" ]]; then
+            input="${input:1:-1}"
+        elif [[ "$first_char" == '"' && "$last_char" == '"' ]]; then
+            input="${input:1:-1}"
+        fi
+    fi
+
+    printf '%s\n' "$input"
+}
+
+expand_shell_value() {
+    set +u
+    local input="$1"
+    local expanded
+    expanded=$(eval "printf '%s' \"$input\"" 2>/dev/null) || expanded="$input"
+    set -u
+    printf '%s\n' "$expanded"
+}
+
 load_constants() {
   if [[ ! -f "$CONSTANTS_FILE" ]]; then
     return
@@ -18,7 +44,11 @@ load_constants() {
   # Parse JSON and export each constant
   while IFS='=' read -r key value; do
     if [[ -n "$key" && -n "$value" ]]; then
-      export "$key=$value"
+      local sanitized_value
+      sanitized_value=$(strip_wrapper_quotes "$value")
+      local expanded_value
+      expanded_value=$(expand_shell_value "$sanitized_value")
+      export "$key=$expanded_value"
     fi
   done < <(jq -r 'to_entries | .[] | "\(.key)=\(.value)"' "$CONSTANTS_FILE" 2>/dev/null || true)
 }

@@ -98,7 +98,7 @@ When you **enable monitoring** in the GUI:
 When you **disable monitoring**:
 - Autostart entry removed
 - Running monitor processes killed
-- Script remains installed for quick re-enabling
+- Script removed from `~/.local/bin`
 
 ### Command Execution Flow
 
@@ -152,7 +152,7 @@ When monitoring is enabled:
 - `src/ThemeMonitor.vala` — ⚠️ **Legacy code** - no longer used (monitor script handles theme watching)
 - `src/MainWindow.vala` — main UI window implementation (libadwaita)
 - `src/ConstantsWindow.vala` — constants management UI
-- `switchcraft-monitor.sh` — independent bash monitor script (embedded in Application.vala)
+- `switchcraft-monitor.sh` — independent bash monitor script copied to `~/.local/bin` when monitoring is enabled
 - `meson.build` — build system configuration with ninja install/remove targets
 - `ARCHITECTURE.md` — detailed architecture documentation
 - `samples/` — example scripts for common theme-switching use cases

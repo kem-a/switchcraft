@@ -14,7 +14,7 @@ Key files
 - `src/ThemeMonitor.vala` — ⚠️ **LEGACY CODE** - no longer used. Monitor functionality moved to bash script.
 - `src/MainWindow.vala` — UI (libadwaita) implementation and wiring to `Application` for persistence.
 - `src/ConstantsWindow.vala` — constants management UI for user-defined variables.
-- `switchcraft-monitor.sh` — independent bash monitor script (embedded in Application.vala, installed to ~/.local/bin)
+- `switchcraft-monitor.sh` — independent bash monitor script packaged with the app and copied to ~/.local/bin when monitoring is enabled
 - `meson.build` — build system configuration with ninja install/remove targets.
 
 Development notes
@@ -26,7 +26,7 @@ Development notes
 
 Design and architecture constraints
 - **Two-component architecture**: GTK GUI (configuration) + bash monitor script (execution)
-- Monitor script is embedded in Application.vala and installed to ~/.local/bin when monitoring enabled
+- Monitor script is stored as a standalone file, installed with the app, copied to ~/.local/bin when monitoring is enabled, and removed again when disabled
 - Single-process GTK app for GUI; prefer GLib/Gio signals and the GTK main loop
 - Keep UI code in `MainWindow.vala` and `ConstantsWindow.vala`, app-level state/persistence in `Application.vala`
 - Commands are intentionally executed with full shell support to allow arbitrary shell syntax — do not change this without documenting the reason
