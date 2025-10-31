@@ -23,7 +23,6 @@ json_glib_dep = dependency('json-glib-1.0')
 sources = files(
   'src/main.vala',
   'src/Application.vala',
-  'src/ThemeMonitor.vala',
   'src/MainWindow.vala',
   'src/ConstantsWindow.vala',
 )

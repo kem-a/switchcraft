@@ -1,7 +1,8 @@
 /* ConstantsWindow.vala
- * 
  * Constants management window
- * Converted from Python to Vala - preserving all logic, layout, and GNOME HIG
+ *
+ * Copyright (c) 2021-2025 kem-a
+ * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
 namespace Switchcraft {
