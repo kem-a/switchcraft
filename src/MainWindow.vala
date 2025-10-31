@@ -387,13 +387,22 @@ namespace Switchcraft {
             if (theme_commands == null) {
                 var new_list = new List<CommandEntry> ();
                 commands.replace (theme, (owned) new_list);
-                theme_commands = commands.lookup (theme);
             }
             
+            // Re-fetch the list after any potential replacement
+            theme_commands = commands.lookup (theme);
+
             if (index < 0) {
                 // Adding new command
-                theme_commands.append (new CommandEntry (command_text, true));
-            } else if (index < theme_commands.length ()) {
+                var updated_list = new List<CommandEntry> ();
+                if (theme_commands != null) {
+                    foreach (var existing in theme_commands) {
+                        updated_list.append (existing);
+                    }
+                }
+                updated_list.append (new CommandEntry (command_text, true));
+                commands.replace (theme, (owned) updated_list);
+            } else if (theme_commands != null && index < theme_commands.length ()) {
                 // Editing existing command
                 var cmd_entry = theme_commands.nth_data (index);
                 if (cmd_entry != null) {
