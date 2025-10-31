@@ -82,10 +82,21 @@ namespace Switchcraft {
         }
         
         private void load_constants () {
+            constants = new HashTable<string, string> (str_hash, str_equal);
+            bool needs_save = false;
             var app_constants = app.get_constants ();
             app_constants.foreach ((key, value) => {
-                constants.insert (key, value);
+                var normalized = normalize_constant_value (value);
+                constants.insert (key, normalized);
+                if (normalized != value) {
+                    needs_save = true;
+                }
             });
+
+            if (needs_save) {
+                save_constants ();
+            }
+
             refresh_list ();
         }
         
@@ -214,9 +225,9 @@ namespace Switchcraft {
             }
             
             var name = name_entry.get_text ().strip ();
-            var value = value_entry.get_text ().strip ();
+            var normalized_value = normalize_constant_value (value_entry.get_text ());
             
-            if (name.length == 0 || value.length == 0) {
+            if (name.length == 0 || normalized_value.length == 0) {
                 dialog.destroy ();
                 return;
             }
@@ -239,10 +250,22 @@ namespace Switchcraft {
                 constants.remove (old_name);
             }
             
-            constants.insert (name, value);
+            constants.insert (name, normalized_value);
             save_constants ();
             refresh_list ();
             dialog.destroy ();
+        }
+
+        private string normalize_constant_value (string value) {
+            var trimmed = value.strip ();
+            if (trimmed.length >= 2) {
+                char first = trimmed[0];
+                char last = trimmed[trimmed.length - 1];
+                if ((first == '\'' && last == '\'') || (first == '"' && last == '"')) {
+                    return trimmed.substring (1, trimmed.length - 2);
+                }
+            }
+            return trimmed;
         }
         
         private bool is_valid_variable_name (string name) {

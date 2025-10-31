@@ -338,11 +338,6 @@ namespace Switchcraft {
                 return;
             }
             
-            // If script already exists and is executable, we're done
-            if (FileUtils.test (monitor_script_path, FileTest.IS_EXECUTABLE)) {
-                return;
-            }
-            
             // Script content - embed directly in the application
             string script_content = """#!/usr/bin/env bash
 # Switchcraft Theme Monitor
@@ -356,17 +351,47 @@ COMMANDS_FILE="$CONFIG_DIR/commands.json"
 CONSTANTS_FILE="$CONFIG_DIR/constants.json"
 
 # Load constants from constants.json and export as environment variables
-load_constants() {
-  if [[ ! -f "$CONSTANTS_FILE" ]]; then
-    return
-  fi
-  
-  # Parse JSON and export each constant
-  while IFS='=' read -r key value; do
-    if [[ -n "$key" && -n "$value" ]]; then
-      export "$key=$value"
+strip_wrapper_quotes() {
+    local input="$1"
+
+    if [[ ${#input} -ge 2 ]]; then
+        local first_char="${input:0:1}"
+        local last_char="${input: -1}"
+
+        if [[ "$first_char" == "'" && "$last_char" == "'" ]]; then
+            input="${input:1:-1}"
+        elif [[ "$first_char" == '"' && "$last_char" == '"' ]]; then
+            input="${input:1:-1}"
+        fi
     fi
-  done < <(jq -r 'to_entries | .[] | "\(.key)=\(.value)"' "$CONSTANTS_FILE" 2>/dev/null || true)
+
+    printf '%s\n' "$input"
+}
+
+expand_shell_value() {
+    set +u
+    local input="$1"
+    local expanded
+    expanded=$(eval "printf '%s' \"$input\"" 2>/dev/null) || expanded="$input"
+    set -u
+    printf '%s\n' "$expanded"
+}
+
+load_constants() {
+    if [[ ! -f "$CONSTANTS_FILE" ]]; then
+        return
+    fi
+
+    # Parse JSON and export each constant
+    while IFS='=' read -r key value; do
+        if [[ -n "$key" && -n "$value" ]]; then
+            local sanitized_value
+            sanitized_value=$(strip_wrapper_quotes "$value")
+                local expanded_value
+                expanded_value=$(expand_shell_value "$sanitized_value")
+                export "$key=$expanded_value"
+        fi
+    done < <(jq -r 'to_entries | .[] | "\(.key)=\(.value)"' "$CONSTANTS_FILE" 2>/dev/null || true)
 }
 
 # Execute commands for a specific theme (light or dark)
@@ -431,14 +456,33 @@ main() {
 main "$@"
 """;
             
-            // Write script to ~/.local/bin
-            try {
-                FileUtils.set_contents (monitor_script_path, script_content);
-                
-                // Make executable
-                FileUtils.chmod (monitor_script_path, 0755);
-            } catch (Error e) {
-                warning ("Failed to install monitor script: %s", e.message);
+            bool needs_install = true;
+            if (FileUtils.test (monitor_script_path, FileTest.EXISTS)) {
+                try {
+                    string existing_content;
+                    FileUtils.get_contents (monitor_script_path, out existing_content);
+                    if (existing_content == script_content) {
+                        needs_install = false;
+                    }
+                } catch (Error e) {
+                    warning ("Failed to read existing monitor script: %s", e.message);
+                }
+            }
+
+            if (needs_install) {
+                try {
+                    FileUtils.set_contents (monitor_script_path, script_content);
+                } catch (Error e) {
+                    warning ("Failed to install monitor script: %s", e.message);
+                }
+            }
+
+            if (FileUtils.test (monitor_script_path, FileTest.EXISTS)) {
+                try {
+                    FileUtils.chmod (monitor_script_path, 0755);
+                } catch (Error e) {
+                    warning ("Failed to set monitor script executable: %s", e.message);
+                }
             }
         }
         
