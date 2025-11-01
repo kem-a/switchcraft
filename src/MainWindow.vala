@@ -8,6 +8,35 @@
 namespace Switchcraft {
 
     public class MainWindow : Adw.ApplicationWindow {
+        private class CommandRowContext : Object {
+            public string theme;
+            public CommandEntry entry;
+            public Adw.EntryRow row;
+            public Gtk.Widget drag_handle;
+            public Gtk.Widget toggle;
+            public Gtk.Widget remove_button;
+            public Gtk.Widget edit_button;
+            public Gtk.Widget save_button;
+            public Gtk.Editable? editable;
+            public string original_text = "";
+            public bool editing = false;
+            public bool commit_in_progress = false;
+
+            public CommandRowContext (string theme, CommandEntry entry, Adw.EntryRow row,
+                                      Gtk.Widget drag_handle, Gtk.Widget toggle, Gtk.Widget remove_button,
+                                      Gtk.Widget edit_button, Gtk.Widget save_button, Gtk.Editable? editable) {
+                this.theme = theme;
+                this.entry = entry;
+                this.row = row;
+                this.drag_handle = drag_handle;
+                this.toggle = toggle;
+                this.remove_button = remove_button;
+                this.edit_button = edit_button;
+                this.save_button = save_button;
+                this.editable = editable;
+            }
+        }
+
         private HashTable<string, List<CommandEntry>> commands;
         private HashTable<string, Gtk.ListBox> listboxes;
         private HashTable<string, Gtk.Stack> content_stacks;
@@ -19,6 +48,8 @@ namespace Switchcraft {
         private Adw.ViewStack view_stack;
         private string? drag_theme = null;
         private int drag_source_index = -1;
+        private HashTable<Adw.EntryRow, CommandRowContext> row_contexts;
+        private Adw.EntryRow? active_edit_row = null;
         
         private const string LIGHT_ICON = "weather-clear-symbolic";
         private const string DARK_ICON = "weather-clear-night-symbolic";
@@ -31,6 +62,7 @@ namespace Switchcraft {
             
             listboxes = new HashTable<string, Gtk.ListBox> (str_hash, str_equal);
             content_stacks = new HashTable<string, Gtk.Stack> (str_hash, str_equal);
+            row_contexts = new HashTable<Adw.EntryRow, CommandRowContext> (GLib.direct_hash, GLib.direct_equal);
             
             load_commands_from_application ();
             
@@ -132,6 +164,12 @@ namespace Switchcraft {
             var listbox = new Gtk.ListBox ();
             listbox.set_selection_mode (Gtk.SelectionMode.SINGLE);
             listbox.add_css_class ("boxed-list");
+            listbox.row_selected.connect ((selected_row) => {
+                var editing_row = active_edit_row;
+                if (editing_row != null && selected_row != editing_row) {
+                    cancel_row_edit_for_row (editing_row, true);
+                }
+            });
             configure_listbox_for_reordering (theme, listbox);
             
             var scrolled = new Gtk.ScrolledWindow ();
@@ -174,15 +212,25 @@ namespace Switchcraft {
             // Clear existing rows
             Gtk.ListBoxRow? row = listbox.get_row_at_index (0);
             while (row != null) {
+                var entry_row = row as Adw.EntryRow;
+                if (entry_row != null) {
+                    var ctx = row_contexts.lookup (entry_row);
+                    if (ctx != null && ctx.editing) {
+                        cancel_row_edit (ctx, true);
+                    }
+                    row_contexts.remove (entry_row);
+                }
+
                 listbox.remove (row);
                 row = listbox.get_row_at_index (0);
             }
-            
+
             // Add rows for commands
             unowned List<CommandEntry>? theme_commands = commands.lookup (theme);
             if (theme_commands != null) {
                 foreach (var entry in theme_commands) {
-                    listbox.append (create_command_row (theme, entry));
+                    var entry_row = create_command_row (theme, entry);
+                    listbox.append (entry_row);
                 }
             }
             
@@ -329,10 +377,19 @@ namespace Switchcraft {
             drag_source_index = -1;
         }
 
-        private Adw.ActionRow create_command_row (string theme, CommandEntry entry) {
-            var row = new Adw.ActionRow ();
-            row.set_title (entry.command);
+        private Adw.EntryRow create_command_row (string theme, CommandEntry entry) {
+            var row = new Adw.EntryRow ();
+            row.set_title ("");
             row.set_activatable (false);
+
+            var editable = row as Gtk.Editable;
+            if (editable != null) {
+                editable.text = entry.command;
+                editable.set_editable (false);
+                editable.set_enable_undo (false);
+                editable.set_can_focus (false);
+                editable.set_position (-1);
+            }
 
             var drag_handle = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 0);
             drag_handle.set_valign (Gtk.Align.CENTER);
@@ -373,8 +430,7 @@ namespace Switchcraft {
                 return false;
             });
             drag_handle.add_controller (drag_source);
-            
-            // Enable/disable toggle
+
             var toggle = new Gtk.Switch ();
             toggle.set_valign (Gtk.Align.CENTER);
             toggle.set_active (entry.enabled);
@@ -383,40 +439,236 @@ namespace Switchcraft {
                 return on_toggle_command_state (toggle, state, theme, row);
             });
             row.add_suffix (toggle);
-            
-            // Controls box with edit and remove buttons
-            var controls_box = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 6);
-            controls_box.set_valign (Gtk.Align.CENTER);
 
             var edit_button = new Gtk.Button.from_icon_name ("document-edit-symbolic");
             edit_button.add_css_class ("flat");
+            edit_button.set_margin_start (6);
             edit_button.set_tooltip_text ("Edit command");
-            edit_button.clicked.connect (() => {
-                on_edit_command_clicked (theme, row);
-            });
-            controls_box.append (edit_button);
-            
+            row.add_suffix (edit_button);
+
             var remove_button = new Gtk.Button.from_icon_name ("user-trash-symbolic");
             remove_button.add_css_class ("flat");
             remove_button.set_tooltip_text ("Remove command");
+            remove_button.set_margin_start (6);
             remove_button.clicked.connect (() => {
                 on_remove_command_clicked (theme, row);
             });
-            controls_box.append (remove_button);
-            
-            row.add_suffix (controls_box);
-            
+            row.add_suffix (remove_button);
+
+            var save_button = new Gtk.Button.from_icon_name ("object-select-symbolic");
+            save_button.add_css_class ("flat");
+            save_button.add_css_class ("suggested-action");
+            save_button.set_tooltip_text ("Save command");
+            save_button.set_margin_start (6);
+            save_button.set_visible (false);
+            save_button.clicked.connect (() => {
+                commit_row_edit (row);
+            });
+            row.add_suffix (save_button);
+
+            var context = new CommandRowContext (theme, entry, row, drag_handle, toggle, remove_button, edit_button, save_button, editable);
+            row_contexts.insert (row, context);
+
+            edit_button.clicked.connect (() => {
+                begin_row_edit (row);
+            });
+
+            row.entry_activated.connect (() => {
+                commit_row_edit (row);
+            });
+
+            var key_controller = new Gtk.EventControllerKey ();
+            key_controller.key_pressed.connect ((keyval, keycode, state) => {
+                return handle_row_key_pressed (row, keyval, keycode, state);
+            });
+            row.add_controller (key_controller);
+
+            var focus_controller = new Gtk.EventControllerFocus ();
+            focus_controller.leave.connect (() => {
+                on_row_focus_leave (row);
+            });
+            row.add_controller (focus_controller);
+
+            row.destroy.connect (() => {
+                var ctx = row_contexts.lookup (row);
+                if (ctx != null && ctx.editing) {
+                    cancel_row_edit (ctx, true);
+                }
+                row_contexts.remove (row);
+                if (active_edit_row == row) {
+                    active_edit_row = null;
+                }
+            });
+
             update_row_state (row, entry);
 
             return row;
         }
+
+        private CommandRowContext? get_row_context (Adw.EntryRow row) {
+            return row_contexts.lookup (row);
+        }
+
+        private void begin_row_edit (Adw.EntryRow row) {
+            var ctx = get_row_context (row);
+            if (ctx == null) {
+                return;
+            }
+
+            if (ctx.editing) {
+                return;
+            }
+
+            if (active_edit_row != null && active_edit_row != row) {
+                var active_ctx = get_row_context (active_edit_row);
+                if (active_ctx != null) {
+                    cancel_row_edit (active_ctx, true);
+                }
+            }
+
+            ctx.original_text = ctx.entry.command;
+            ctx.editing = true;
+            active_edit_row = row;
+
+            if (ctx.editable != null) {
+                ctx.editable.set_editable (true);
+                ctx.editable.set_enable_undo (true);
+                ctx.editable.set_can_focus (true);
+            }
+
+            ctx.row.add_css_class ("editing");
+            ctx.drag_handle.set_sensitive (false);
+            ctx.toggle.set_visible (false);
+            ctx.remove_button.set_visible (false);
+            ctx.edit_button.set_visible (false);
+            ctx.save_button.set_visible (true);
+
+            GLib.Idle.add (() => {
+                ctx.row.grab_focus_without_selecting ();
+                if (ctx.editable != null) {
+                    ctx.editable.grab_focus ();
+                    ctx.editable.select_region (0, -1);
+                }
+                return false;
+            });
+        }
+
+        private void cancel_row_edit (CommandRowContext ctx, bool revert_to_original) {
+            if (!ctx.editing) {
+                return;
+            }
+
+            ctx.editing = false;
+            ctx.commit_in_progress = false;
+
+            if (ctx.editable != null) {
+                if (revert_to_original) {
+                    ctx.editable.text = ctx.original_text;
+                }
+                ctx.editable.set_editable (false);
+                ctx.editable.set_enable_undo (false);
+                ctx.editable.set_can_focus (false);
+                ctx.editable.set_position (-1);
+                ctx.editable.select_region (0, 0);
+            }
+
+            ctx.row.remove_css_class ("editing");
+            ctx.drag_handle.set_sensitive (true);
+            ctx.toggle.set_visible (true);
+            ctx.remove_button.set_visible (true);
+            ctx.edit_button.set_visible (true);
+            ctx.save_button.set_visible (false);
+
+            if (active_edit_row == ctx.row) {
+                active_edit_row = null;
+            }
+
+            update_row_state (ctx.row, ctx.entry);
+        }
+
+        private void cancel_row_edit_for_row (Adw.EntryRow row, bool revert_to_original) {
+            var ctx = get_row_context (row);
+            if (ctx != null) {
+                cancel_row_edit (ctx, revert_to_original);
+            }
+        }
+
+        private void commit_row_edit (Adw.EntryRow row) {
+            var ctx = get_row_context (row);
+            if (ctx == null || !ctx.editing) {
+                return;
+            }
+
+            ctx.commit_in_progress = true;
+
+            if (ctx.editable == null) {
+                ctx.commit_in_progress = false;
+                cancel_row_edit (ctx, false);
+                return;
+            }
+
+            string new_text = ctx.editable.text.strip ();
+            if (new_text.length == 0) {
+                show_toast ("Command cannot be empty");
+                ctx.editable.text = ctx.original_text;
+                ctx.editable.select_region (0, -1);
+                ctx.commit_in_progress = false;
+                return;
+            }
+
+            if (ctx.entry.command != new_text) {
+                ctx.entry.command = new_text;
+                save_commands ();
+            }
+
+            ctx.original_text = new_text;
+            ctx.editable.text = new_text;
+
+            cancel_row_edit (ctx, false);
+        }
+
+        private bool handle_row_key_pressed (Adw.EntryRow row, uint keyval, uint keycode, Gdk.ModifierType state) {
+            var ctx = get_row_context (row);
+            if (ctx == null || !ctx.editing) {
+                return false;
+            }
+
+            if (keyval == Gdk.Key.Escape) {
+                cancel_row_edit (ctx, true);
+                return true;
+            }
+
+            if (keyval == Gdk.Key.Return || keyval == Gdk.Key.KP_Enter || keyval == Gdk.Key.ISO_Enter) {
+                commit_row_edit (row);
+                return true;
+            }
+
+            return false;
+        }
+
+        private void on_row_focus_leave (Adw.EntryRow row) {
+            var ctx = get_row_context (row);
+            if (ctx == null || !ctx.editing) {
+                return;
+            }
+
+            CommandRowContext context_ref = ctx;
+            GLib.Idle.add (() => {
+                var lookup = row_contexts.lookup (context_ref.row);
+                if (lookup != null && lookup.editing && !lookup.commit_in_progress) {
+                    cancel_row_edit (lookup, true);
+                }
+                return false;
+            });
+        }
         
-        private void update_row_state (Adw.ActionRow row, CommandEntry entry) {
-            row.set_subtitle (entry.enabled ? "" : "Disabled");
+        private void update_row_state (Adw.EntryRow row, CommandEntry entry) {
             if (entry.enabled) {
                 row.remove_css_class ("dim-label");
+                row.set_tooltip_text (null);
             } else {
                 row.add_css_class ("dim-label");
+                row.set_tooltip_text ("Disabled");
             }
         }
         
@@ -434,7 +686,10 @@ namespace Switchcraft {
             var entry = theme_commands.nth_data (index);
             if (entry != null) {
                 entry.enabled = state;
-                update_row_state (row as Adw.ActionRow, entry);
+                var entry_row = row as Adw.EntryRow;
+                if (entry_row != null) {
+                    update_row_state (entry_row, entry);
+                }
                 save_commands ();
             }
             
@@ -443,15 +698,19 @@ namespace Switchcraft {
         
         private void on_add_command_action () {
             var theme = current_theme ();
-            show_command_dialog (theme, -1);
-        }
-        
-        private void on_edit_command_clicked (string theme, Gtk.ListBoxRow row) {
-            var index = row.get_index ();
-            if (index < 0) {
-                return;
+            unowned List<CommandEntry>? theme_commands = commands.lookup (theme);
+
+            var updated_list = new List<CommandEntry> ();
+            if (theme_commands != null) {
+                foreach (var existing in theme_commands) {
+                    updated_list.append (existing);
+                }
             }
-            show_command_dialog (theme, index);
+
+            updated_list.append (new CommandEntry ("", true));
+            commands.replace (theme, (owned) updated_list);
+
+            refresh_theme_list (theme);
         }
         
         private void on_remove_command_clicked (string theme, Gtk.ListBoxRow row) {
@@ -478,92 +737,6 @@ namespace Switchcraft {
             }
         }
 
-        private void show_command_dialog (string theme, int index) {
-            bool editing = index >= 0;
-            string title = editing ? "Edit Command" : "Add Command";
-            string message = editing ?
-                "Update the shell command executed for the %s theme.".printf (theme) :
-                "Enter the shell command to run when the %s theme activates.".printf (theme);
-            
-            var dialog = new Adw.MessageDialog (this, title, message);
-            dialog.add_response ("cancel", "Cancel");
-            dialog.add_response ("save", editing ? "Save" : "Add");
-            dialog.set_default_response ("save");
-            dialog.set_response_appearance ("save", Adw.ResponseAppearance.SUGGESTED);
-            
-            var entry = new Gtk.Entry ();
-            entry.set_placeholder_text ("e.g. notify-send 'Switched to %s theme'".printf (theme.up (1).substring (0, 1) + theme.substring (1)));
-            
-            if (editing) {
-                unowned List<CommandEntry>? theme_commands = commands.lookup (theme);
-                if (theme_commands != null && index < theme_commands.length ()) {
-                    var cmd_entry = theme_commands.nth_data (index);
-                    if (cmd_entry != null) {
-                        entry.set_text (cmd_entry.command);
-                    }
-                }
-            }
-            
-            dialog.set_extra_child (entry);
-            
-            dialog.response.connect ((response_id) => {
-                on_command_dialog_response (dialog, response_id, theme, index, entry);
-            });
-            
-            dialog.present ();
-            
-            // Focus entry after dialog is shown
-            GLib.Idle.add (() => {
-                entry.grab_focus ();
-                return false;
-            });
-        }
-        
-        private void on_command_dialog_response (Adw.MessageDialog dialog, string response_id,
-                                                  string theme, int index, Gtk.Entry entry) {
-            if (response_id != "save") {
-                dialog.destroy ();
-                return;
-            }
-            
-            var command_text = entry.get_text ().strip ();
-            if (command_text.length == 0) {
-                dialog.destroy ();
-                return;
-            }
-            
-            unowned List<CommandEntry>? theme_commands = commands.lookup (theme);
-            if (theme_commands == null) {
-                var new_list = new List<CommandEntry> ();
-                commands.replace (theme, (owned) new_list);
-            }
-            
-            // Re-fetch the list after any potential replacement
-            theme_commands = commands.lookup (theme);
-
-            if (index < 0) {
-                // Adding new command
-                var updated_list = new List<CommandEntry> ();
-                if (theme_commands != null) {
-                    foreach (var existing in theme_commands) {
-                        updated_list.append (existing);
-                    }
-                }
-                updated_list.append (new CommandEntry (command_text, true));
-                commands.replace (theme, (owned) updated_list);
-            } else if (theme_commands != null && index < theme_commands.length ()) {
-                // Editing existing command
-                var cmd_entry = theme_commands.nth_data (index);
-                if (cmd_entry != null) {
-                    cmd_entry.command = command_text;
-                }
-            }
-            
-            save_commands ();
-            refresh_theme_list (theme);
-            dialog.destroy ();
-        }
-        
         private void add_action_handler (string name, SimpleActionActivateCallback callback) {
             var action = new SimpleAction (name, null);
             action.activate.connect ((a, v) => {
