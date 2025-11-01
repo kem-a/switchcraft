@@ -437,10 +437,15 @@ namespace Switchcraft {
         }
 
         private void on_show_about_action () {
+            var app = get_application () as Application;
             var dialog = new Adw.AboutDialog ();
             dialog.set_application_name ("Switchcraft");
             dialog.set_developer_name ("Arnis Kemlers");
-            dialog.set_version ("1.0.0");
+            var about_version = "1.0.0";
+            if (app != null) {
+                about_version = app.get_about_version ();
+            }
+            dialog.set_version (about_version);
             
             // Add icon search paths for development
             var icon_theme = Gtk.IconTheme.get_for_display (Gdk.Display.get_default ());
