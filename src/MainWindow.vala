@@ -14,9 +14,11 @@ namespace Switchcraft {
         private Gtk.ShortcutsWindow? shortcuts_window = null;
         private Adw.Banner? banner = null;
         private PreferencesWindow? preferences_window = null;
-    private Adw.ToastOverlay? toast_overlay = null;
+        private Adw.ToastOverlay? toast_overlay = null;
         private Gtk.Button add_button;
         private Adw.ViewStack view_stack;
+        private string? drag_theme = null;
+        private int drag_source_index = -1;
         
         private const string LIGHT_ICON = "weather-clear-symbolic";
         private const string DARK_ICON = "weather-clear-night-symbolic";
@@ -130,6 +132,7 @@ namespace Switchcraft {
             var listbox = new Gtk.ListBox ();
             listbox.set_selection_mode (Gtk.SelectionMode.SINGLE);
             listbox.add_css_class ("boxed-list");
+            configure_listbox_for_reordering (theme, listbox);
             
             var scrolled = new Gtk.ScrolledWindow ();
             scrolled.set_policy (Gtk.PolicyType.NEVER, Gtk.PolicyType.AUTOMATIC);
@@ -159,7 +162,7 @@ namespace Switchcraft {
             
             return page_box;
         }
-        
+
         private void refresh_theme_list (string theme) {
             var listbox = listboxes.lookup (theme);
             var stack = content_stacks.lookup (theme);
@@ -186,11 +189,190 @@ namespace Switchcraft {
             bool has_commands = theme_commands != null && theme_commands.length () > 0;
             stack.set_visible_child_name (has_commands ? "list" : "placeholder");
         }
-        
+
+        private void configure_listbox_for_reordering (string theme, Gtk.ListBox listbox) {
+            var drop_target = new Gtk.DropTarget (typeof (string), Gdk.DragAction.MOVE);
+
+            drop_target.accept.connect ((drop) => {
+                return drag_active_for_theme (theme);
+            });
+
+            drop_target.enter.connect ((x, y) => {
+                if (!drag_active_for_theme (theme)) {
+                    listbox.drag_unhighlight_row ();
+                    return (Gdk.DragAction) 0;
+                }
+
+                highlight_drop_position (listbox, y);
+                return Gdk.DragAction.MOVE;
+            });
+
+            drop_target.motion.connect ((x, y) => {
+                if (!drag_active_for_theme (theme)) {
+                    listbox.drag_unhighlight_row ();
+                    return (Gdk.DragAction) 0;
+                }
+
+                highlight_drop_position (listbox, y);
+                return Gdk.DragAction.MOVE;
+            });
+
+            drop_target.leave.connect (() => {
+                listbox.drag_unhighlight_row ();
+            });
+
+            drop_target.drop.connect ((value, x, y) => {
+                listbox.drag_unhighlight_row ();
+
+                if (!drag_active_for_theme (theme)) {
+                    reset_drag_state ();
+                    return false;
+                }
+
+                int source_index = drag_source_index;
+                int target_index = determine_drop_index (theme, listbox, y);
+
+                reset_drag_state ();
+
+                if (source_index < 0 || target_index < 0) {
+                    return false;
+                }
+
+                reorder_command (theme, source_index, target_index);
+                return true;
+            });
+
+            listbox.add_controller (drop_target);
+        }
+
+        private bool drag_active_for_theme (string theme) {
+            return drag_theme != null && drag_theme == theme && drag_source_index >= 0;
+        }
+
+        private void highlight_drop_position (Gtk.ListBox listbox, double y) {
+            var row = listbox.get_row_at_y ((int) y);
+            if (row != null) {
+                listbox.drag_highlight_row (row);
+            } else {
+                listbox.drag_unhighlight_row ();
+            }
+        }
+
+        private int determine_drop_index (string theme, Gtk.ListBox listbox, double y) {
+            unowned List<CommandEntry>? theme_commands = commands.lookup (theme);
+            int command_count = theme_commands != null ? (int) theme_commands.length () : 0;
+
+            var row = listbox.get_row_at_y ((int) y);
+            if (row == null) {
+                return command_count;
+            }
+            
+            return row.get_index ();
+        }
+
+        private void reorder_command (string theme, int source_index, int target_index) {
+            unowned List<CommandEntry>? theme_commands = commands.lookup (theme);
+            if (theme_commands == null) {
+                return;
+            }
+
+            int length = (int) theme_commands.length ();
+            if (length == 0 || source_index < 0 || source_index >= length) {
+                return;
+            }
+
+            if (target_index < 0) {
+                target_index = 0;
+            }
+            if (target_index > length) {
+                target_index = length;
+            }
+
+            if (target_index == source_index || target_index == source_index + 1) {
+                return;
+            }
+
+            CommandEntry[] ordered = new CommandEntry[length];
+            int idx = 0;
+            for (unowned List<CommandEntry>? link = theme_commands; link != null; link = link.next) {
+                ordered[idx++] = link.data;
+            }
+
+            var moved = ordered[source_index];
+
+            if (target_index > source_index) {
+                for (int i = source_index; i < target_index - 1; i++) {
+                    ordered[i] = ordered[i + 1];
+                }
+                ordered[target_index - 1] = moved;
+            } else if (target_index < source_index) {
+                for (int i = source_index; i > target_index; i--) {
+                    ordered[i] = ordered[i - 1];
+                }
+                ordered[target_index] = moved;
+            } else {
+                return;
+            }
+
+            var new_list = new List<CommandEntry> ();
+            foreach (var entry in ordered) {
+                new_list.append (entry);
+            }
+
+            commands.replace (theme, (owned) new_list);
+            save_commands ();
+            refresh_theme_list (theme);
+        }
+
+        private void reset_drag_state () {
+            drag_theme = null;
+            drag_source_index = -1;
+        }
+
         private Adw.ActionRow create_command_row (string theme, CommandEntry entry) {
             var row = new Adw.ActionRow ();
             row.set_title (entry.command);
             row.set_activatable (false);
+
+            var drag_handle = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 0);
+            drag_handle.set_valign (Gtk.Align.CENTER);
+            drag_handle.set_margin_end (6);
+            drag_handle.set_tooltip_text ("Drag to reorder");
+
+            var drag_icon = new Gtk.Image.from_icon_name ("drag-handle-symbolic");
+            drag_icon.add_css_class ("dim-label");
+            drag_handle.append (drag_icon);
+            row.add_prefix (drag_handle);
+
+            var drag_source = new Gtk.DragSource ();
+            drag_source.set_actions (Gdk.DragAction.MOVE);
+            drag_source.prepare.connect ((x, y) => {
+                var listbox = listboxes.lookup (theme);
+                if (listbox == null) {
+                    return (Gdk.ContentProvider?) null;
+                }
+
+                int index = row.get_index ();
+                if (index < 0) {
+                    reset_drag_state ();
+                    return (Gdk.ContentProvider?) null;
+                }
+
+                drag_theme = theme;
+                drag_source_index = index;
+
+                GLib.Value value = GLib.Value (typeof (string));
+                value.set_string (theme);
+                return new Gdk.ContentProvider.for_value (value);
+            });
+            drag_source.drag_end.connect ((drag, delete_data) => {
+                reset_drag_state ();
+            });
+            drag_source.drag_cancel.connect ((reason, delete_data) => {
+                reset_drag_state ();
+                return false;
+            });
+            drag_handle.add_controller (drag_source);
             
             // Enable/disable toggle
             var toggle = new Gtk.Switch ();
@@ -205,7 +387,7 @@ namespace Switchcraft {
             // Controls box with edit and remove buttons
             var controls_box = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 6);
             controls_box.set_valign (Gtk.Align.CENTER);
-            
+
             var edit_button = new Gtk.Button.from_icon_name ("document-edit-symbolic");
             edit_button.add_css_class ("flat");
             edit_button.set_tooltip_text ("Edit command");
@@ -225,6 +407,7 @@ namespace Switchcraft {
             row.add_suffix (controls_box);
             
             update_row_state (row, entry);
+
             return row;
         }
         
@@ -294,7 +477,7 @@ namespace Switchcraft {
                 refresh_theme_list (theme);
             }
         }
-        
+
         private void show_command_dialog (string theme, int index) {
             bool editing = index >= 0;
             string title = editing ? "Edit Command" : "Add Command";
