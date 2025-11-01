@@ -25,7 +25,7 @@ namespace Switchcraft {
             Object (application: app);
             
             set_title ("Switchcraft");
-            set_default_size (800, 480);
+            set_default_size (850, 620);
             
             listboxes = new HashTable<string, Gtk.ListBox> (str_hash, str_equal);
             content_stacks = new HashTable<string, Gtk.Stack> (str_hash, str_equal);
@@ -36,11 +36,6 @@ namespace Switchcraft {
         }
         
         private void build_ui () {
-            // Create breakpoint for narrow windows
-            var breakpoint = new Adw.Breakpoint (
-                Adw.BreakpointCondition.parse ("max-width: 550sp")
-            );
-            
             var toolbar_view = new Adw.ToolbarView ();
             var header_bar = new Adw.HeaderBar ();
             toolbar_view.add_top_bar (header_bar);
@@ -75,21 +70,17 @@ namespace Switchcraft {
             // View stack for light/dark pages
             view_stack = new Adw.ViewStack ();
             
-            // Create view switcher for header (visible on wide windows)
-            var view_switcher = new Adw.ViewSwitcher ();
-            view_switcher.set_stack (view_stack);
-            view_switcher.set_policy (Adw.ViewSwitcherPolicy.WIDE);
-            header_bar.set_title_widget (view_switcher);
+            // Create view switcher for header (adapts automatically)
+            var view_switcher_title = new Adw.ViewSwitcherTitle ();
+            view_switcher_title.set_stack (view_stack);
+            view_switcher_title.set_title (get_title ());
+            header_bar.set_title_widget (view_switcher_title);
             
             // Create banner for logout notification
             banner = new Adw.Banner ("Log out and back in to start background monitoring");
             banner.set_button_label ("Log Out");
             banner.button_clicked.connect (on_banner_logout_clicked);
             banner.set_revealed (false);
-            var app = get_application () as Application;
-            if (app != null) {
-                banner.set_revealed (app.get_monitoring_enabled ());
-            }
             
             // Create content box with banner and view stack
             var content_box = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
@@ -118,11 +109,8 @@ namespace Switchcraft {
             var switcher_bar = new Adw.ViewSwitcherBar ();
             switcher_bar.set_stack (view_stack);
             toolbar_view.add_bottom_bar (switcher_bar);
-            
-            // Configure breakpoint: on narrow windows, show bottom bar and remove header switcher
-            breakpoint.add_setter (switcher_bar, "reveal", true);
-            breakpoint.add_setter (header_bar, "title-widget", null);
-            add_breakpoint (breakpoint);
+            view_switcher_title.bind_property ("title-visible", switcher_bar, "reveal",
+                GLib.BindingFlags.SYNC_CREATE);
             
         }
         
@@ -575,6 +563,11 @@ namespace Switchcraft {
         public void apply_monitoring_state (bool enabled) {
             var app = get_application () as Application;
             if (app == null) {
+                return;
+            }
+
+            var previously_enabled = app.get_monitoring_enabled ();
+            if (previously_enabled == enabled) {
                 return;
             }
 
