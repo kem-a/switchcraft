@@ -2,8 +2,21 @@
 set -euo pipefail
 
 APP_NAME="switchcraft"
-VERSION="${VERSION:-1.0.0}"
 BUILD_ROOT="$(pwd)"
+DESKTOP_FILE="$BUILD_ROOT/switchcraft.desktop"
+
+if [[ -z "${VERSION:-}" ]]; then
+    if [[ -f "$DESKTOP_FILE" ]]; then
+        VERSION="$(sed -n 's/^X-AppImage-Version=//p' "$DESKTOP_FILE" | head -n1 | tr -d '[:space:]')"
+    else
+        VERSION=""
+    fi
+fi
+
+if [[ -z "${VERSION:-}" ]]; then
+    echo "Unable to determine app version (set VERSION env or ensure X-AppImage-Version is present in $DESKTOP_FILE)" >&2
+    exit 1
+fi
 BUILD_DIR="$BUILD_ROOT/builddir"
 STAGING_ROOT="$BUILD_ROOT/staging"
 DESTDIR="$STAGING_ROOT/$APP_NAME-$VERSION"
