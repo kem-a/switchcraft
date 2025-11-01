@@ -11,7 +11,7 @@ namespace Switchcraft {
         private HashTable<string, List<CommandEntry>> commands;
         private HashTable<string, Gtk.ListBox> listboxes;
         private HashTable<string, Gtk.Stack> content_stacks;
-        private Gtk.ShortcutsWindow? shortcuts_window = null;
+        private weak Gtk.ShortcutsWindow? shortcuts_window = null;
         private Adw.Banner? banner = null;
         private PreferencesWindow? preferences_window = null;
         private Adw.ToastOverlay? toast_overlay = null;
@@ -642,10 +642,27 @@ namespace Switchcraft {
         }
         
         private void on_show_shortcuts_action () {
-            if (shortcuts_window == null) {
-                shortcuts_window = build_shortcuts_window ();
+            Gtk.ShortcutsWindow? maybe_window = shortcuts_window;
+
+            if (maybe_window == null) {
+                maybe_window = build_shortcuts_window ();
+                if (maybe_window == null) {
+                    return;
+                }
+
+                Gtk.ShortcutsWindow actual_window = (!) maybe_window;
+                actual_window.set_transient_for (this);
+                actual_window.close_request.connect (() => {
+                    shortcuts_window = null;
+                    actual_window.destroy ();
+                    return true;
+                });
+
+                shortcuts_window = actual_window;
             }
-            shortcuts_window.present ();
+
+            Gtk.ShortcutsWindow present_window = (!) maybe_window;
+            present_window.present ();
         }
         
         private void on_show_constants_action () {
@@ -683,7 +700,7 @@ namespace Switchcraft {
             }
         }
         
-        private Gtk.ShortcutsWindow build_shortcuts_window () {
+        private Gtk.ShortcutsWindow? build_shortcuts_window () {
             var builder = new Gtk.Builder ();
             try {
                 builder.add_from_string ("""
@@ -705,6 +722,18 @@ namespace Switchcraft {
                                   </object>
                                 </child>
                                 <child>
+                                    <object class="GtkShortcutsShortcut">
+                                        <property name="title" translatable="yes">Open preferences</property>
+                                        <property name="accelerator">&lt;Primary&gt;comma</property>
+                                    </object>
+                                </child>
+                                <child>
+                                    <object class="GtkShortcutsShortcut">
+                                        <property name="title" translatable="yes">Show keyboard shortcuts</property>
+                                        <property name="accelerator">&lt;Primary&gt;question</property>
+                                    </object>
+                                </child>
+                                <child>
                                   <object class="GtkShortcutsShortcut">
                                     <property name="title" translatable="yes">Quit</property>
                                     <property name="accelerator">&lt;Primary&gt;Q</property>
@@ -718,14 +747,10 @@ namespace Switchcraft {
                     </interface>
                 """, -1);
                 
-                var window = builder.get_object ("shortcuts") as Gtk.ShortcutsWindow;
-                window.set_transient_for (this);
-                return window;
+                return builder.get_object ("shortcuts") as Gtk.ShortcutsWindow;
             } catch (Error e) {
                 warning ("Failed to create shortcuts window: %s", e.message);
-                // Return a simple window as fallback
-                var window = new Gtk.Window ();
-                return window as Gtk.ShortcutsWindow;
+                return null;
             }
         }
         
