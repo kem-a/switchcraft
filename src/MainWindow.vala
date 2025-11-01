@@ -13,6 +13,8 @@ namespace Switchcraft {
         private HashTable<string, Gtk.Stack> content_stacks;
         private Gtk.ShortcutsWindow? shortcuts_window = null;
         private Adw.Banner? banner = null;
+        private PreferencesWindow? preferences_window = null;
+    private Adw.ToastOverlay? toast_overlay = null;
         private Gtk.Button add_button;
         private Adw.ViewStack view_stack;
         
@@ -23,29 +25,12 @@ namespace Switchcraft {
             Object (application: app);
             
             set_title ("Switchcraft");
-            set_default_size (640, 480);
+            set_default_size (800, 480);
             
-            commands = new HashTable<string, List<CommandEntry>> (str_hash, str_equal);
             listboxes = new HashTable<string, Gtk.ListBox> (str_hash, str_equal);
             content_stacks = new HashTable<string, Gtk.Stack> (str_hash, str_equal);
             
-            // Load commands from application
-            var app_commands = app.get_commands ();
-            app_commands.foreach ((theme, cmd_list) => {
-                var new_list = new List<CommandEntry> ();
-                foreach (var entry in cmd_list) {
-                    new_list.append (new CommandEntry (entry.command, entry.enabled));
-                }
-                commands.replace (theme, (owned) new_list);
-            });
-            
-            // Ensure both themes exist
-            if (commands.lookup ("light") == null) {
-                commands.insert ("light", new List<CommandEntry> ());
-            }
-            if (commands.lookup ("dark") == null) {
-                commands.insert ("dark", new List<CommandEntry> ());
-            }
+            load_commands_from_application ();
             
             build_ui ();
         }
@@ -53,7 +38,7 @@ namespace Switchcraft {
         private void build_ui () {
             // Create breakpoint for narrow windows
             var breakpoint = new Adw.Breakpoint (
-                Adw.breakpoint_condition_parse ("max-width: 550sp")
+                Adw.BreakpointCondition.parse ("max-width: 550sp")
             );
             
             var toolbar_view = new Adw.ToolbarView ();
@@ -62,6 +47,7 @@ namespace Switchcraft {
             
             // Add actions
             add_action_handler ("add-command", on_add_command_action);
+            add_action_handler ("show-preferences", on_show_preferences_action);
             add_action_handler ("show-about", on_show_about_action);
             add_action_handler ("show-constants", on_show_constants_action);
             add_action_handler ("show-shortcuts", on_show_shortcuts_action);
@@ -78,29 +64,13 @@ namespace Switchcraft {
             var menu_button = new Gtk.MenuButton ();
             menu_button.set_icon_name ("open-menu-symbolic");
             var menu = new Menu ();
+            menu.append ("Preferences", "win.show-preferences");
             menu.append ("Constants", "win.show-constants");
             menu.append ("Keyboard Shortcuts", "win.show-shortcuts");
             menu.append ("About Switchcraft", "win.show-about");
             menu.append ("Quit", "app.quit");
             menu_button.set_menu_model (menu);
             header_bar.pack_end (menu_button);
-            
-            // Monitoring toggle switch (before menu button)
-            var monitoring_switch = new Gtk.Switch ();
-            monitoring_switch.set_valign (Gtk.Align.CENTER);
-            monitoring_switch.set_tooltip_text ("Enable background monitoring");
-            var app = get_application () as Application;
-            if (app != null) {
-                monitoring_switch.set_active (app.get_monitoring_enabled ());
-            }
-            monitoring_switch.state_set.connect (on_monitoring_toggled);
-            
-            var monitoring_box = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 6);
-            monitoring_box.set_valign (Gtk.Align.CENTER);
-            var monitoring_label = new Gtk.Label ("Monitor");
-            monitoring_box.append (monitoring_label);
-            monitoring_box.append (monitoring_switch);
-            header_bar.pack_end (monitoring_box);
             
             // View stack for light/dark pages
             view_stack = new Adw.ViewStack ();
@@ -116,6 +86,10 @@ namespace Switchcraft {
             banner.set_button_label ("Log Out");
             banner.button_clicked.connect (on_banner_logout_clicked);
             banner.set_revealed (false);
+            var app = get_application () as Application;
+            if (app != null) {
+                banner.set_revealed (app.get_monitoring_enabled ());
+            }
             
             // Create content box with banner and view stack
             var content_box = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
@@ -123,7 +97,11 @@ namespace Switchcraft {
             content_box.append (view_stack);
             
             toolbar_view.set_content (content_box);
-            
+
+            toast_overlay = new Adw.ToastOverlay ();
+            toast_overlay.set_child (toolbar_view);
+            set_content (toast_overlay);
+
             // Build theme pages
             foreach (var theme in new string[] {"light", "dark"}) {
                 var page = build_theme_page (theme);
@@ -146,7 +124,6 @@ namespace Switchcraft {
             breakpoint.add_setter (header_bar, "title-widget", null);
             add_breakpoint (breakpoint);
             
-            set_content (toolbar_view);
         }
         
         private Gtk.Widget build_theme_page (string theme) {
@@ -442,6 +419,23 @@ namespace Switchcraft {
             return "light";
         }
         
+        private void on_show_preferences_action () {
+            var app = get_application () as Application;
+            if (app == null) {
+                return;
+            }
+
+            if (preferences_window == null) {
+                preferences_window = new PreferencesWindow (app, this);
+                preferences_window.close_request.connect (() => {
+                    preferences_window = null;
+                    return false;
+                });
+            }
+
+            preferences_window.present ();
+        }
+
         private void on_show_about_action () {
             var dialog = new Adw.AboutDialog ();
             dialog.set_application_name ("Switchcraft");
@@ -486,22 +480,6 @@ namespace Switchcraft {
             
             var constants_window = new ConstantsWindow (app, this);
             constants_window.present ();
-        }
-        
-        private bool on_monitoring_toggled (Gtk.Switch sw, bool state) {
-            var app = get_application () as Application;
-            if (app == null) {
-                return false;
-            }
-            
-            app.set_monitoring_enabled (state);
-            
-            // Show banner when enabling, hide when disabling
-            if (banner != null) {
-                banner.set_revealed (state);
-            }
-            
-            return false;
         }
         
         private void on_banner_logout_clicked () {
@@ -581,6 +559,59 @@ namespace Switchcraft {
                 return;
             }
             app.save_commands (commands);
+        }
+
+        public void reload_commands_from_storage () {
+            load_commands_from_application ();
+            refresh_theme_list ("light");
+            refresh_theme_list ("dark");
+        }
+
+        public void apply_monitoring_state (bool enabled) {
+            var app = get_application () as Application;
+            if (app == null) {
+                return;
+            }
+
+            app.set_monitoring_enabled (enabled);
+            if (banner != null) {
+                banner.set_revealed (enabled);
+            }
+        }
+
+        public void show_toast (string message, bool is_error = false) {
+            if (toast_overlay == null) {
+                return;
+            }
+
+            var toast = new Adw.Toast (message);
+            if (is_error) {
+                toast.set_priority (Adw.ToastPriority.HIGH);
+            }
+            toast_overlay.add_toast (toast);
+        }
+
+        private void load_commands_from_application () {
+            var app = get_application () as Application;
+            commands = new HashTable<string, List<CommandEntry>> (str_hash, str_equal);
+
+            if (app != null) {
+                var app_commands = app.get_commands ();
+                app_commands.foreach ((theme, cmd_list) => {
+                    var new_list = new List<CommandEntry> ();
+                    foreach (var entry in cmd_list) {
+                        new_list.append (new CommandEntry (entry.command, entry.enabled));
+                    }
+                    commands.insert (theme, (owned) new_list);
+                });
+            }
+
+            if (commands.lookup ("light") == null) {
+                commands.insert ("light", new List<CommandEntry> ());
+            }
+            if (commands.lookup ("dark") == null) {
+                commands.insert ("dark", new List<CommandEntry> ());
+            }
         }
     }
 }

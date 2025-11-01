@@ -42,6 +42,8 @@ namespace Switchcraft {
             set_resource_base_path ("/io/github/switchcraft/Switchcraft/");
             set_accels_for_action ("win.add-command", {"<Primary>N"});
             set_accels_for_action ("app.quit", {"<Primary>Q"});
+            set_accels_for_action ("win.show-preferences", {"<Primary>comma"});
+            set_accels_for_action ("win.show-shortcuts", {"<Primary>question"});
             
             // Add quit action
             var quit_action = new SimpleAction ("quit", null);
@@ -93,7 +95,7 @@ namespace Switchcraft {
                 warning ("Failed to save commands: %s", e.message);
             }
         }
-        
+
         private HashTable<string, List<CommandEntry>> default_commands () {
             var commands = new HashTable<string, List<CommandEntry>> (str_hash, str_equal);
             commands.insert ("dark", new List<CommandEntry> ());
@@ -228,6 +230,246 @@ namespace Switchcraft {
                 FileUtils.set_contents (constants_path, generator.to_data (null));
             } catch (Error e) {
                 warning ("Failed to save constants: %s", e.message);
+            }
+        }
+
+        public bool export_configuration_bundle (GLib.File file, out string error_message) {
+            error_message = "";
+            var zip_tool = Environment.find_program_in_path ("zip");
+            if (zip_tool == null) {
+                error_message = "The 'zip' command is required to export.";
+                return false;
+            }
+
+            var target_path = file.get_path ();
+            if (target_path == null) {
+                error_message = "Destination must be a local file.";
+                return false;
+            }
+
+            try {
+                var parent = Path.get_dirname (target_path);
+                if (parent != null && parent.length > 0 && parent != ".") {
+                    DirUtils.create_with_parents (parent, 0755);
+                }
+            } catch (Error e) {
+                error_message = "Failed to prepare destination: %s".printf (e.message);
+                return false;
+            }
+
+            string temp_dir;
+            try {
+                var template = Path.build_filename (Environment.get_tmp_dir (), "switchcraft-export-XXXXXX");
+                temp_dir = DirUtils.mkdtemp (template);
+            } catch (Error e) {
+                error_message = "Failed to create temporary directory: %s".printf (e.message);
+                return false;
+            }
+
+            try {
+                var commands_node = normalize_commands_to_json (get_commands ());
+                var commands_generator = new Json.Generator ();
+                commands_generator.set_root (commands_node);
+                commands_generator.pretty = true;
+                commands_generator.indent = 2;
+                var commands_data = commands_generator.to_data (null);
+                var commands_path = Path.build_filename (temp_dir, "commands.json");
+                FileUtils.set_contents (commands_path, commands_data);
+
+                var constants = get_constants ();
+                var constants_root = new Json.Node (Json.NodeType.OBJECT);
+                var constants_obj = new Json.Object ();
+                constants.foreach ((key, value) => {
+                    constants_obj.set_string_member (key, value);
+                });
+                constants_root.set_object (constants_obj);
+                var constants_generator = new Json.Generator ();
+                constants_generator.set_root (constants_root);
+                constants_generator.pretty = true;
+                constants_generator.indent = 2;
+                var constants_data = constants_generator.to_data (null);
+                var constants_path = Path.build_filename (temp_dir, "constants.json");
+                FileUtils.set_contents (constants_path, constants_data);
+
+                if (FileUtils.test (target_path, FileTest.EXISTS)) {
+                    try {
+                        FileUtils.remove (target_path);
+                    } catch (Error e) {
+                        error_message = "Unable to overwrite existing archive: %s".printf (e.message);
+                        return false;
+                    }
+                }
+
+                try {
+                    var launcher = new SubprocessLauncher (SubprocessFlags.STDOUT_SILENCE | SubprocessFlags.STDERR_SILENCE);
+                    launcher.set_cwd (temp_dir);
+                    string[] argv = { zip_tool, "-q", target_path, "commands.json", "constants.json" };
+                    var process = launcher.spawnv (argv);
+                    process.wait_check (null);
+                } catch (Error e) {
+                    error_message = "Failed to write archive: %s".printf (e.message);
+                    return false;
+                }
+
+                return true;
+            } catch (Error e) {
+                error_message = e.message;
+                return false;
+            } finally {
+                cleanup_temp_dir (temp_dir);
+            }
+        }
+
+        public bool import_configuration_bundle (GLib.File file, out string error_message) {
+            error_message = "";
+            var unzip_tool = Environment.find_program_in_path ("unzip");
+            if (unzip_tool == null) {
+                error_message = "The 'unzip' command is required to import.";
+                return false;
+            }
+
+            var source_path = file.get_path ();
+            if (source_path == null) {
+                error_message = "Archive must be a local file.";
+                return false;
+            }
+
+            string temp_dir;
+            try {
+                var template = Path.build_filename (Environment.get_tmp_dir (), "switchcraft-import-XXXXXX");
+                temp_dir = DirUtils.mkdtemp (template);
+            } catch (Error e) {
+                error_message = "Failed to create temporary directory: %s".printf (e.message);
+                return false;
+            }
+
+            try {
+                try {
+                    var launcher = new SubprocessLauncher (SubprocessFlags.STDOUT_SILENCE | SubprocessFlags.STDERR_PIPE);
+                    string[] argv = { unzip_tool, "-qq", "-o", source_path, "-d", temp_dir };
+                    var process = launcher.spawnv (argv);
+                    process.wait_check (null);
+                } catch (Error e) {
+                    error_message = "Failed to unpack archive: %s".printf (e.message);
+                    return false;
+                }
+
+                var commands_path = Path.build_filename (temp_dir, "commands.json");
+                var constants_path = Path.build_filename (temp_dir, "constants.json");
+
+                if (!FileUtils.test (commands_path, FileTest.EXISTS) || !FileUtils.test (constants_path, FileTest.EXISTS)) {
+                    error_message = "Archive must contain commands.json and constants.json at the top level.";
+                    return false;
+                }
+
+                string commands_data;
+                FileUtils.get_contents (commands_path, out commands_data);
+                var commands_parser = new Json.Parser ();
+                commands_parser.load_from_data (commands_data);
+                var commands_root = commands_parser.get_root ();
+                if (commands_root.get_node_type () != Json.NodeType.OBJECT) {
+                    error_message = "commands.json is not a JSON object.";
+                    return false;
+                }
+                var imported_commands = normalize_commands (commands_root);
+                save_commands (imported_commands);
+
+                string constants_data;
+                FileUtils.get_contents (constants_path, out constants_data);
+                var constants_parser = new Json.Parser ();
+                constants_parser.load_from_data (constants_data);
+                var constants_root = constants_parser.get_root ();
+                if (constants_root.get_node_type () != Json.NodeType.OBJECT) {
+                    error_message = "constants.json is not a JSON object.";
+                    return false;
+                }
+
+                var constants_obj = constants_root.get_object ();
+                var constants_table = new HashTable<string, string> (str_hash, str_equal);
+                bool invalid_value = false;
+                constants_obj.foreach_member ((obj, name, node) => {
+                    if (node.get_node_type () == Json.NodeType.VALUE && node.get_value_type () == GLib.Type.STRING) {
+                        constants_table.insert (name, node.get_string ());
+                    } else {
+                        invalid_value = true;
+                    }
+                });
+
+                if (invalid_value) {
+                    error_message = "constants.json must only contain string values.";
+                    return false;
+                }
+
+                save_constants (constants_table);
+                return true;
+            } catch (Error e) {
+                error_message = e.message;
+                return false;
+            } finally {
+                cleanup_temp_dir (temp_dir);
+            }
+        }
+
+        public bool delete_configuration_files (out string error_message) {
+            error_message = "";
+
+            try {
+                if (FileUtils.test (config_path, FileTest.EXISTS)) {
+                    FileUtils.remove (config_path);
+                }
+            } catch (Error e) {
+                error_message = "Failed to remove commands.json: %s".printf (e.message);
+                return false;
+            }
+
+            try {
+                if (FileUtils.test (constants_path, FileTest.EXISTS)) {
+                    FileUtils.remove (constants_path);
+                }
+            } catch (Error e) {
+                error_message = "Failed to remove constants.json: %s".printf (e.message);
+                return false;
+            }
+
+            return true;
+        }
+
+        private void cleanup_temp_dir (string dir) {
+            try {
+                var root = File.new_for_path (dir);
+                delete_file_recursive (root);
+            } catch (Error e) {
+                warning ("Failed to clean temporary directory %s: %s", dir, e.message);
+            }
+        }
+
+        private void delete_file_recursive (GLib.File file) throws Error {
+            GLib.FileInfo info;
+            try {
+                info = file.query_info (FileAttribute.STANDARD_TYPE, FileQueryInfoFlags.NOFOLLOW_SYMLINKS, null);
+            } catch (Error e) {
+                // If the file vanished, nothing to do
+                if (e.code == IOError.NOT_FOUND) {
+                    return;
+                }
+                throw e;
+            }
+
+            if (info.get_file_type () == FileType.DIRECTORY) {
+                var enumerator = file.enumerate_children (FileAttribute.STANDARD_NAME, FileQueryInfoFlags.NOFOLLOW_SYMLINKS, null);
+                GLib.FileInfo? child_info;
+                while ((child_info = enumerator.next_file (null)) != null) {
+                    var child = file.get_child (child_info.get_name ());
+                    delete_file_recursive (child);
+                }
+            }
+
+            try {
+                file.delete (null);
+            } catch (Error e) {
+                if (e.code != IOError.NOT_FOUND) {
+                    throw e;
+                }
             }
         }
         

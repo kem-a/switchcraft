@@ -25,6 +25,7 @@ sources = files(
   'src/Application.vala',
   'src/MainWindow.vala',
   'src/ConstantsWindow.vala',
+  'src/PreferencesWindow.vala',
 )
 
 # Vala compiler arguments
