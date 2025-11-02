@@ -1,4 +1,4 @@
-# Switchcraft
+# <img width="96" height="96" alt="switchcraft" src="https://github.com/user-attachments/assets/410929d4-a94f-49f7-af37-b0f090270f79" /> Switchcraft
 
 Switchcraft watches GNOME's light/dark preference and runs your shell commands when the theme changes.
 
