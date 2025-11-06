@@ -129,8 +129,8 @@ Example:
 ### Monitor Files
 
 When monitoring is enabled:
-- `~/.local/bin/switchcraft-monitor.sh` — The monitoring script (installed automatically)
-- `~/.config/autostart/switchcraft-monitor.desktop` — Autostart entry for login persistence
+- `~/.local/bin/switchcraft-monitor.sh` - The monitoring script (installed automatically)
+- `~/.config/autostart/switchcraft-monitor.desktop` - Autostart entry for login persistence
 
 ## License
 
