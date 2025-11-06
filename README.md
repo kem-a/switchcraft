@@ -50,8 +50,8 @@ Dark theme:
 - Meson build system
 - jq (for JSON parsing in monitor script)
 
-### Install dependencies (examples)
-
+<details> <summary> Install dependencies <b>(click to open)</b> </summary>
+  
 **Debian/Ubuntu:**
 ```bash
 sudo apt install meson valac libgtk-4-dev libadwaita-1-dev libjson-glib-dev jq
@@ -66,6 +66,7 @@ sudo dnf install meson vala gtk4-devel libadwaita-devel json-glib-devel jq
 ```bash
 sudo pacman -S meson vala gtk4 libadwaita json-glib jq
 ```
+</details>
 
 ## Building and Installing
 
