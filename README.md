@@ -21,10 +21,8 @@ Switchcraft watches GNOME's light/dark preference and runs your shell commands w
 - **Independent background monitoring** - separate bash script runs even when GUI is closed.
 - Keyboard shortcuts (<kbd>Ctrl</kbd>+<kbd>N</kbd> to add, <kbd>Ctrl</kbd>+<kbd>Q</kbd> to quit) plus About and Shortcuts dialogs from the menu.
 
-## Command Examples
+<details> <summary> Command Examples <b>(click to open)</b> </summary>
 
-<details> <summary> Details <b>(click to open)</b> </summary>
-  
 - Change legacy theme to dark:
   
 `gsettings set org.gnome.desktop.interface gtk-theme 'adw-gtk3-dark'`
@@ -79,7 +77,7 @@ sudo pacman -S meson vala gtk4 libadwaita json-glib jq
 
 ## Installing
 
-Download latest release packages, rpm, deb or AppImage.
+[Download latest](https://github.com/kem-a/switchcraft/releases) release rpm, deb or AppImage.
 For seemless AppImage installation [Gear lever](https://github.com/mijorus/gearlever) app is recommended.
 
 ## Building
