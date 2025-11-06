@@ -7,7 +7,7 @@
 ![Vala](https://img.shields.io/badge/Vala-compiler-blue?logo=vala)
 [![Stars](https://img.shields.io/github/stars/kem-a/switchcraft?style=social)](https://github.com/kem-a/switchcraft/stargazers)
 
-# <img width="96" height="96" alt="switchcraft" src="https://github.com/user-attachments/assets/410929d4-a94f-49f7-af37-b0f090270f79" /> Switchcraft
+# <img width="48" height="48" alt="switchcraft" src="https://github.com/user-attachments/assets/410929d4-a94f-49f7-af37-b0f090270f79" /> Switchcraft
 
 Switchcraft watches GNOME's light/dark preference and runs your shell commands when the theme changes.
 
