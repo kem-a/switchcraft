@@ -1,3 +1,12 @@
+<!-- Core project info -->
+[![Download](https://img.shields.io/badge/Download-latest-blue)](https://github.com/OWNER/REPO/releases/latest)
+[![Release](https://img.shields.io/github/v/release/kem-a/switchcraft?sort=semver)](https://github.com/kem-a/switchcraft/releases/latest)
+[![License](https://img.shields.io/github/license/kem-a/switchcraft)](https://github.com/kem-a/switchcraft/blob/main/LICENSE)
+![GNOME 40+](https://img.shields.io/badge/GNOME-40%2B-blue?logo=gnome)
+![GTK 4](https://img.shields.io/badge/GTK-4-blue?logo=gtk)
+![Vala](https://img.shields.io/badge/Vala-compiler-blue?logo=vala)
+[![Stars](https://img.shields.io/github/stars/kem-a/switchcraft?style=social)](https://github.com/kem-a/switchcraft/stargazers)
+
 # <img width="96" height="96" alt="switchcraft" src="https://github.com/user-attachments/assets/410929d4-a94f-49f7-af37-b0f090270f79" /> Switchcraft
 
 Switchcraft watches GNOME's light/dark preference and runs your shell commands when the theme changes.
@@ -68,9 +77,16 @@ sudo pacman -S meson vala gtk4 libadwaita json-glib jq
 ```
 </details>
 
-## Building and Installing
+## Installing
 
-### User-Level Installation (Recommended)
+Download latest release packages, rpm, deb or AppImage.
+For seemless AppImage installation [Gear lever](https://github.com/mijorus/gearlever) app is recommended.
+
+## Building
+
+<details> <summary> Details <b>(click to open)</b> </summary>
+  
+#### User-Level building and installation (Recommended)
 
 ```bash
 # Configure for user installation
@@ -86,7 +102,7 @@ ninja -C builddir install
 ninja -C builddir remove
 ```
 
-### System-Wide Installation
+#### System-Wide Installation
 
 ```bash
 # Configure for system installation
@@ -101,8 +117,11 @@ sudo ninja -C builddir install
 # Uninstall
 sudo ninja -C builddir remove
 ```
-
+</details>
+  
 ## Configuration
+
+<details> <summary> Details <b>(click to open)</b> </summary>
 
 All runtime configuration lives under `~/.config/switchcraft/`.
 
@@ -133,6 +152,8 @@ When monitoring is enabled:
 - `~/.local/bin/switchcraft-monitor.sh` - The monitoring script (installed automatically)
 - `~/.config/autostart/switchcraft-monitor.desktop` - Autostart entry for login persistence
 
+</details>
+  
 ## License
 
 This project is provided under the terms in `LICENSE`.
