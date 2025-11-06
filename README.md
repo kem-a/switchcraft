@@ -12,6 +12,37 @@ Switchcraft watches GNOME's light/dark preference and runs your shell commands w
 - **Independent background monitoring** - separate bash script runs even when GUI is closed.
 - Keyboard shortcuts (<kbd>Ctrl</kbd>+<kbd>N</kbd> to add, <kbd>Ctrl</kbd>+<kbd>Q</kbd> to quit) plus About and Shortcuts dialogs from the menu.
 
+## Command Examples
+
+<details> <summary> Details <b>(click to open)</b> </summary>
+  
+- Change legacy theme to dark:
+  
+`gsettings set org.gnome.desktop.interface gtk-theme 'adw-gtk3-dark'`
+
+- Change icon theme to light:
+
+`gsettings set org.gnome.desktop.interface icon-theme 'MacTahoe-light'`
+
+- Set constants:
+
+```
+D2DL_SCHEMADIR="$HOME/.local/share/gnome-shell/extensions/dash2dock-lite@icedman.github.com/schemas"
+D2DL_SCHEMA="org.gnome.shell.extensions.dash2dock-lite"
+```
+
+- Change Dash 2 Dock Lite background based on theme and using constants
+
+Light theme:
+
+`gsettings --schemadir $D2DL_SCHEMADIR set $D2DL_SCHEMA background-color '(0.063, 0.1216, 0.1882, 1.0)'`
+
+Dark theme:
+
+`gsettings --schemadir $D2DL_SCHEMADIR set $D2DL_SCHEMA background-color '(0.3373, 0.4392, 0.5294, 1.0)'`
+
+</details>
+
 ## Requirements
 - GNOME 40+ (GTK 4 and libadwaita)
 - GLib 2.66+
