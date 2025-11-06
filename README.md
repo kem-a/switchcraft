@@ -1,5 +1,5 @@
 <!-- Core project info -->
-[![Download](https://img.shields.io/badge/Download-latest-blue)](https://github.com/OWNER/REPO/releases/latest)
+[![Download](https://img.shields.io/badge/Download-latest-blue)](https://github.com/kem-a/switchcraft/releases)
 [![Release](https://img.shields.io/github/v/release/kem-a/switchcraft?sort=semver)](https://github.com/kem-a/switchcraft/releases/latest)
 [![License](https://img.shields.io/github/license/kem-a/switchcraft)](https://github.com/kem-a/switchcraft/blob/main/LICENSE)
 ![GNOME 40+](https://img.shields.io/badge/GNOME-40%2B-blue?logo=gnome)
