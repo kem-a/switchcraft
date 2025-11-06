@@ -105,7 +105,7 @@ sudo ninja -C builddir remove
 
 All runtime configuration lives under `~/.config/switchcraft/`.
 
-- **`commands.json`** — per-theme command lists. Example:
+- **`commands.json`** - per-theme command lists. Example:
 
 ```json
 {
@@ -114,7 +114,7 @@ All runtime configuration lives under `~/.config/switchcraft/`.
 }
 ```
 
-- **`constants.json`** — reusable variables referenced inside commands using `$NAME` or `${NAME}`.
+- **`constants.json`** - reusable variables referenced inside commands using `$NAME` or `${NAME}`.
 
 Example:
 ```json
@@ -124,7 +124,7 @@ Example:
 }
 ```
 
-- **`settings.json`** — app settings (e.g., `monitoring_enabled`). The UI saves changes automatically.
+- **`settings.json`** - app settings (e.g., `monitoring_enabled`). The UI saves changes automatically.
 
 ### Monitor Files
 
