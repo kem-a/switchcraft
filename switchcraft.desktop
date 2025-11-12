@@ -8,4 +8,4 @@ Terminal=false
 Categories=Utility;GNOME;GTK;
 StartupNotify=false
 StartupWMClass=io.github.switchcraft.Switchcraft
-X-AppImage-Version=1.1.0
+X-AppImage-Version=1.2.0
