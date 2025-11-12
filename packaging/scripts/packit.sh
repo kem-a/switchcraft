@@ -2,8 +2,9 @@
 set -euo pipefail
 
 APP_NAME="switchcraft"
-BUILD_ROOT="$(pwd)"
-DESKTOP_FILE="$BUILD_ROOT/switchcraft.desktop"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
+DESKTOP_FILE="$REPO_ROOT/switchcraft.desktop"
 
 if [[ -z "${VERSION:-}" ]]; then
     if [[ -f "$DESKTOP_FILE" ]]; then
@@ -17,14 +18,24 @@ if [[ -z "${VERSION:-}" ]]; then
     echo "Unable to determine app version (set VERSION env or ensure X-AppImage-Version is present in $DESKTOP_FILE)" >&2
     exit 1
 fi
-BUILD_DIR="$BUILD_ROOT/builddir"
-STAGING_ROOT="$BUILD_ROOT/staging"
+BUILD_DIR="$REPO_ROOT/builddir"
+STAGING_ROOT="$REPO_ROOT/staging"
 DESTDIR="$STAGING_ROOT/$APP_NAME-$VERSION"
-DIST_DIR="$BUILD_ROOT/dist"
+DIST_DIR="$REPO_ROOT/dist"
 APPDIR="$STAGING_ROOT/AppDir"
+POST_REMOVE_SCRIPT="$SCRIPT_DIR/after-remove.sh"
 
 rm -rf "$DESTDIR" "$APPDIR" "$DIST_DIR"
 mkdir -p "$DESTDIR" "$APPDIR" "$DIST_DIR"
+
+if [[ ! -f "$POST_REMOVE_SCRIPT" ]]; then
+    echo "Missing post-remove script at $POST_REMOVE_SCRIPT" >&2
+    exit 1
+fi
+
+chmod +x "$POST_REMOVE_SCRIPT"
+
+cd "$REPO_ROOT"
 
 meson setup "$BUILD_DIR" --prefix /usr --buildtype release --wipe
 meson compile -C "$BUILD_DIR"
@@ -33,10 +44,12 @@ meson install -C "$BUILD_DIR" --destdir "$DESTDIR"
 fpm -s dir -t rpm  -n "$APP_NAME" -v "$VERSION" --license GPL-3.0-or-later \
     --description "GNOME theme switch command runner" \
     --url "https://github.com/kem-a/switchcraft" \
+    --after-remove "$POST_REMOVE_SCRIPT" \
     --chdir "$DESTDIR" --prefix / -p "$DIST_DIR"
 fpm -s dir -t deb  -n "$APP_NAME" -v "$VERSION" --license GPL-3.0-or-later \
     --description "GNOME theme switch command runner" \
     --url "https://github.com/kem-a/switchcraft" \
+    --after-remove "$POST_REMOVE_SCRIPT" \
     --chdir "$DESTDIR" --prefix / -p "$DIST_DIR"
 
 cp -a "$DESTDIR/usr" "$APPDIR/"

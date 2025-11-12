@@ -76,6 +76,9 @@ uninstall_script = '''
 prefix="@0@"
 bindir="@1@"
 datadir="@2@"
+config_home="${XDG_CONFIG_HOME:-$HOME/.config}"
+autostart_entry="$config_home/autostart/switchcraft-monitor.desktop"
+monitor_script="$HOME/.local/bin/switchcraft-monitor.sh"
 
 echo "Uninstalling Switchcraft..."
 rm -f "$bindir/switchcraft"
@@ -87,6 +90,9 @@ rm -f "$datadir/icons/hicolor/256x256/apps/switchcraft.png"
 rm -f "$datadir/icons/hicolor/512x512/apps/switchcraft.png"
 rm -f "$datadir/icons/hicolor/scalable/apps/switchcraft.svg"
 rm -f "$datadir/icons/hicolor/scalable/apps/switchcraft_ios.svg"
+rm -f "$autostart_entry"
+rm -f "$monitor_script"
+command -v pkill >/dev/null 2>&1 && pkill -f switchcraft-monitor.sh >/dev/null 2>&1 || true
 echo "Uninstallation complete."
 '''
 

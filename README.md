@@ -56,23 +56,32 @@ Dark theme:
 - Vala compiler (for building)
 - Meson build system
 - jq (for JSON parsing in monitor script)
+- ruby, rubygems, rpmbuild, appimagetool and chrpath (for packaging only)
 
 <details> <summary> Install dependencies <b>(click to open)</b> </summary>
   
 **Debian/Ubuntu:**
 ```bash
-sudo apt install meson valac libgtk-4-dev libadwaita-1-dev libjson-glib-dev jq
+sudo apt install meson valac libgtk-4-dev libadwaita-1-dev libjson-glib-dev jq ruby ruby-dev rubygems build-essential
+gem install --user-install fpm
 ```
 
 **Fedora:**
 ```bash
-sudo dnf install meson vala gtk4-devel libadwaita-devel json-glib-devel jq
+sudo dnf install meson vala gtk4-devel libadwaita-devel json-glib-devel jq ruby rubygems rpmbuild chrpath
+gem install --user-install fpm
 ```
 
 **Arch:**
 ```bash
-sudo pacman -S meson vala gtk4 libadwaita json-glib jq
+sudo pacman -S meson vala gtk4 libadwaita json-glib jq ruby
+gem install --user-install fpm
 ```
+
+**AppImageTool**
+
+Download from [here](https://github.com/AppImage/appimagetool/releases/download/continuous/appimagetool-x86_64.AppImage) and copy to `$PATH`
+
 </details>
 
 ## Installing
@@ -154,7 +163,7 @@ When monitoring is enabled:
 
 ## Known issues
 
-- AppImages are standalone applications and does it have install/uninstall function. Because of this if you not disable monitoring before removing AppImage background script will continue running. You can temove it manually from `~/.config/autoruns` and `~/.local/bin`.
+- AppImages are standalone applications and does it have install/uninstall function. Because of this if you not disable monitoring before removing AppImage background script will continue running. You can temove it manually from `~/.config/autostart` and `~/.local/bin`.
 ## License
 
 This project is provided under the terms in `LICENSE`.
