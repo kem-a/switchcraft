@@ -151,7 +151,10 @@ When monitoring is enabled:
 - `~/.config/autostart/switchcraft-monitor.desktop` - Autostart entry for login persistence
 
 </details>
-  
+
+## Known issues
+
+- AppImages are standalone applications and does it have install/uninstall function. Because of this if you not disable monitoring before removing AppImage background script will continue running. You can temove it manually from `~/.config/autoruns` and `~/.local/bin`.
 ## License
 
 This project is provided under the terms in `LICENSE`.
