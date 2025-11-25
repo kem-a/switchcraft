@@ -18,7 +18,7 @@ if [[ -z "${VERSION:-}" ]]; then
     echo "Unable to determine app version (set VERSION env or ensure X-AppImage-Version is present in $DESKTOP_FILE)" >&2
     exit 1
 fi
-BUILD_DIR="$REPO_ROOT/builddir"
+BUILD_DIR="$REPO_ROOT/build"
 STAGING_ROOT="$REPO_ROOT/staging"
 DESTDIR="$STAGING_ROOT/$APP_NAME-$VERSION"
 DIST_DIR="$REPO_ROOT/dist"
