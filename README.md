@@ -11,7 +11,9 @@
 
 Switchcraft watches GNOME's light/dark preference and runs your shell commands when the theme changes.
 
-<img width="520" height="400" alt="Screenshot From 2025-11-01 00-27-06" src="https://github.com/user-attachments/assets/b2d67af8-840a-41a1-8f56-387b0d1a0ae0" />
+
+<img width="607" height="400" alt="Screenshot From 2025-11-25 13-38-16" src="https://github.com/user-attachments/assets/c4e4f154-45b5-4084-bac2-c02be4b58361" />
+
 
 ## Features
 - Watches `org.gnome.desktop.interface color-scheme` and executes commands instantly.
