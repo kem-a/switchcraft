@@ -97,32 +97,32 @@ For seemless AppImage installation [Gear lever](https://github.com/mijorus/gearl
 
 ```bash
 # Configure for user installation
-meson setup builddir --prefix="$HOME/.local"
+meson setup build --prefix="$HOME/.local"
 
 # Compile
-meson compile -C builddir
+meson compile -C build
 
 # Install to ~/.local
-ninja -C builddir install
+ninja -C build install
 
 # Uninstall
-ninja -C builddir remove
+ninja -C build remove
 ```
 
 #### System-Wide Installation
 
 ```bash
 # Configure for system installation
-meson setup builddir --prefix=/usr/local
+meson setup build --prefix=/usr/local
 
 # Compile
-meson compile -C builddir
+meson compile -C build
 
 # Install system-wide
-sudo ninja -C builddir install
+sudo ninja -C build install
 
 # Uninstall
-sudo ninja -C builddir remove
+sudo ninja -C build remove
 ```
 </details>
   

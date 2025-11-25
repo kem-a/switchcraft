@@ -339,7 +339,7 @@ namespace Switchcraft {
             drag_handle.set_margin_end (6);
             drag_handle.set_tooltip_text ("Drag to reorder");
 
-            var drag_icon = new Gtk.Image.from_icon_name ("drag-handle-symbolic");
+            var drag_icon = new Gtk.Image.from_icon_name ("list-drag-handle-symbolic");
             drag_icon.add_css_class ("dim-label");
             drag_handle.append (drag_icon);
             row.add_prefix (drag_handle);
