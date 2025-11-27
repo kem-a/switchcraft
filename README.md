@@ -89,7 +89,7 @@ Download from [here](https://github.com/AppImage/appimagetool/releases/download/
 ## Installing
 
 [Download latest](https://github.com/kem-a/switchcraft/releases) release rpm, deb or AppImage.
-For seemless AppImage installation [Gear lever](https://github.com/mijorus/gearlever) app is recommended.
+For seemless AppImage installation use [AppManager](https://github.com/kem-a/AppManager).
 
 ## Building
 
