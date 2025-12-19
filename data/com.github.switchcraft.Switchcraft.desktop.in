@@ -2,11 +2,12 @@
 Type=Application
 Name=Switchcraft
 Comment=Run commands when GNOME theme switches
-Exec=switchcraft
+Exec=@BINDIR@/switchcraft
 Icon=com.github.switchcraft.Switchcraft
 Terminal=false
 Categories=Utility;GNOME;GTK;
 OnlyShowIn=GNOME;
+Keywords=theme;switch;gtk;gnome;
 StartupNotify=false
 StartupWMClass=com.github.switchcraft.Switchcraft
 X-AppImage-Version=@VERSION@

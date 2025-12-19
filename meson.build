@@ -23,6 +23,7 @@ json_glib_dep = dependency('json-glib-1.0')
 # Configuration
 conf = configuration_data()
 conf.set('VERSION', meson.project_version())
+conf.set('BINDIR', join_paths(get_option('prefix'), get_option('bindir')))
 
 config_vala = configure_file(
   input: 'src/Config.vala.in',
@@ -114,7 +115,6 @@ bindir="@1@"
 datadir="@2@"
 config_home="${XDG_CONFIG_HOME:-$HOME/.config}"
 autostart_entry="$config_home/autostart/switchcraft-monitor.desktop"
-monitor_script="$HOME/.local/bin/switchcraft-monitor.sh"
 
 echo "Uninstalling Switchcraft..."
 rm -f "$bindir/switchcraft"
@@ -122,8 +122,7 @@ rm -f "$datadir/applications/com.github.switchcraft.Switchcraft.desktop"
 rm -f "$datadir/icons/hicolor/512x512/apps/com.github.switchcraft.Switchcraft.png"
 rm -f "$datadir/icons/hicolor/scalable/apps/com.github.switchcraft.Switchcraft.svg"
 rm -f "$autostart_entry"
-rm -f "$monitor_script"
-command -v pkill >/dev/null 2>&1 && pkill -f switchcraft-monitor.sh >/dev/null 2>&1 || true
+command -v pkill >/dev/null 2>&1 && pkill -f "switchcraft --background" >/dev/null 2>&1 || true
 echo "Uninstallation complete."
 '''
 

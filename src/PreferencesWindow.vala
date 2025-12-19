@@ -37,7 +37,7 @@ namespace Switchcraft {
             
             monitoring_row = new Adw.SwitchRow ();
             monitoring_row.set_title ("Enable Monitor");
-            monitoring_row.set_subtitle ("Run the background script that reacts to GNOME theme changes.");
+            monitoring_row.set_subtitle ("Run the background process that reacts to GNOME theme changes.");
             monitoring_group.add (monitoring_row);
             monitoring_row.notify["active"].connect (() => {
                 if (loading_state) {

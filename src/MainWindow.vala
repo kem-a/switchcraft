@@ -78,10 +78,10 @@ namespace Switchcraft {
             view_switcher_title.set_title (get_title ());
             header_bar.set_title_widget (view_switcher_title);
             
-            // Create banner for logout notification
-            banner = new Adw.Banner ("Log out and back in to start background monitoring");
-            banner.set_button_label ("Log Out");
-            banner.button_clicked.connect (on_banner_logout_clicked);
+            // Create banner for monitoring status
+            banner = new Adw.Banner ("Background monitoring is now active");
+            banner.set_button_label ("Dismiss");
+            banner.button_clicked.connect (() => { banner.set_revealed (false); });
             banner.set_revealed (false);
             
             // Create content box with banner and view stack
@@ -652,31 +652,6 @@ namespace Switchcraft {
             
             var constants_window = new ConstantsWindow (app, this);
             constants_window.present ();
-        }
-        
-        private void on_banner_logout_clicked () {
-            try {
-                // Use D-Bus to call GNOME Session Manager logout
-                // Mode 0 = no confirmation dialog
-                var conn = Bus.get_sync (BusType.SESSION);
-                conn.call_sync (
-                    "org.gnome.SessionManager",
-                    "/org/gnome/SessionManager",
-                    "org.gnome.SessionManager",
-                    "Logout",
-                    new Variant ("(u)", 0),
-                    null,
-                    DBusCallFlags.NONE,
-                    -1,
-                    null
-                );
-            } catch (Error e) {
-                warning ("Failed to logout: %s", e.message);
-                // Fall back to just hiding the banner
-                if (banner != null) {
-                    banner.set_revealed (false);
-                }
-            }
         }
         
         private Gtk.ShortcutsWindow? build_shortcuts_window () {
