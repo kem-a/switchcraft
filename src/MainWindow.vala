@@ -412,7 +412,6 @@ namespace Switchcraft {
         }
         
         private void update_row_state (Adw.ActionRow row, CommandEntry entry) {
-            row.set_subtitle (entry.enabled ? "" : "Disabled");
             if (entry.enabled) {
                 row.remove_css_class ("dim-label");
             } else {
