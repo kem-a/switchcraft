@@ -24,7 +24,7 @@ namespace Switchcraft {
         private string autostart_path;
         private string monitor_script_path;
         private string local_bin_path;
-    private const string DEFAULT_VERSION = "1.0.0";
+    private const string DEFAULT_VERSION = Switchcraft.VERSION;
     private string? cached_about_version = null;
     private string? cached_desktop_path = null;
         

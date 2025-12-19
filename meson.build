@@ -1,5 +1,9 @@
+# Get version from metainfo
+v_cmd = run_command('grep', '-oP', '(?<=<release version=")[^"]+', 'io.github.switchcraft.Switchcraft.metainfo.xml', check: true)
+project_version = v_cmd.stdout().strip().split('\n')[0]
+
 project('switchcraft', 'vala', 'c',
-  version: '1.0.0',
+  version: project_version,
   meson_version: '>= 0.59.0',
   default_options: [
     'warning_level=2',
@@ -7,6 +11,7 @@ project('switchcraft', 'vala', 'c',
   ]
 )
 
+i18n = import('i18n')
 gnome = import('gnome')
 
 # Application ID
@@ -19,6 +24,16 @@ gio_dep = dependency('gio-2.0', version: '>= 2.66')
 glib_dep = dependency('glib-2.0', version: '>= 2.66')
 json_glib_dep = dependency('json-glib-1.0')
 
+# Configuration
+conf = configuration_data()
+conf.set('VERSION', meson.project_version())
+
+config_vala = configure_file(
+  input: 'src/Config.vala.in',
+  output: 'Config.vala',
+  configuration: conf
+)
+
 # Source files
 sources = files(
   'src/main.vala',
@@ -27,6 +42,7 @@ sources = files(
   'src/ConstantsWindow.vala',
   'src/PreferencesWindow.vala',
 )
+sources += config_vala
 
 # Vala compiler arguments
 vala_args = [
@@ -49,10 +65,19 @@ executable(
   install: true,
 )
 
-# Install desktop file
-install_data(
-  'io.github.switchcraft.Switchcraft.desktop',
+# Desktop file
+configure_file(
+  input: 'io.github.switchcraft.Switchcraft.desktop.in',
+  output: 'io.github.switchcraft.Switchcraft.desktop',
+  configuration: conf,
+  install: true,
   install_dir: join_paths(get_option('datadir'), 'applications')
+)
+
+# Metainfo file
+install_data(
+  'io.github.switchcraft.Switchcraft.metainfo.xml',
+  install_dir: join_paths(get_option('datadir'), 'metainfo')
 )
 
 # Install application icons
