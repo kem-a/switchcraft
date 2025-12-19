@@ -153,19 +153,8 @@ Example:
 }
 ```
 
-- **`settings.json`** - app settings (e.g., `monitoring_enabled`). The UI saves changes automatically.
-
-### Monitor Files
-
-When monitoring is enabled:
-- `~/.local/bin/switchcraft-monitor.sh` - The monitoring script (installed automatically)
-- `~/.config/autostart/switchcraft-monitor.desktop` - Autostart entry for login persistence
-
 </details>
 
-## Known issues
-
-- AppImages are standalone applications and does it have install/uninstall function. Because of this if you not disable monitoring before removing AppImage background script will continue running. You can temove it manually from `~/.config/autostart` and `~/.local/bin`.
 ## License
 
 This project is provided under the terms in `LICENSE`.

@@ -34,7 +34,7 @@ Design constraints & behavior
 Data layout and formats
 - `~/.config/switchcraft/commands.json` — per-theme arrays supporting string or `{ "command", "enabled" }` objects; `Application.normalize_commands()` accepts both.
 - `~/.config/switchcraft/constants.json` — flat key/value map; monitor exports as environment variables, so watch quoting.
-- `~/.config/switchcraft/settings.json` — e.g. `{ "monitoring_enabled": true }`.
+- **GSettings** — app settings (e.g., `monitoring-enabled`) are stored in dconf under `com.github.switchcraft.Switchcraft`.
 
 Code patterns & expectations
 - Vala style: PascalCase classes, snake_case methods/variables (follow `Application.vala`).

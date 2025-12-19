@@ -20,8 +20,8 @@ namespace Switchcraft {
     public class Application : Adw.Application {
         private string config_path;
         private string constants_path;
-        private string settings_path;
         private string autostart_path;
+        private Settings settings;
         private const string DEFAULT_VERSION = Switchcraft.VERSION;
         
         public Application () {
@@ -33,9 +33,10 @@ namespace Switchcraft {
             var home = Environment.get_home_dir ();
             config_path = Path.build_filename (home, ".config", "switchcraft", "commands.json");
             constants_path = Path.build_filename (home, ".config", "switchcraft", "constants.json");
-            settings_path = Path.build_filename (home, ".config", "switchcraft", "settings.json");
             autostart_path = Path.build_filename (home, ".config", "autostart", "switchcraft-monitor.desktop");
             
+            settings = new Settings ("com.github.switchcraft.Switchcraft");
+
             add_main_option ("version", 'v', OptionFlags.NONE, OptionArg.NONE, "Show version information", null);
             add_main_option ("background", 'b', OptionFlags.NONE, OptionArg.NONE, "Run in background for theme monitoring", null);
 
@@ -506,6 +507,8 @@ namespace Switchcraft {
                 return false;
             }
 
+            settings.reset ("monitoring-enabled");
+
             return true;
         }
 
@@ -549,74 +552,13 @@ namespace Switchcraft {
         }
         
         public bool get_monitoring_enabled () {
-            if (!FileUtils.test (settings_path, FileTest.EXISTS)) {
-                return false;
-            }
-            
-            try {
-                string contents;
-                FileUtils.get_contents (settings_path, out contents);
-                
-                var parser = new Json.Parser ();
-                parser.load_from_data (contents);
-                var root = parser.get_root ();
-                
-                if (root.get_node_type () == Json.NodeType.OBJECT) {
-                    var obj = root.get_object ();
-                    if (obj.has_member ("monitoring_enabled")) {
-                        return obj.get_boolean_member ("monitoring_enabled");
-                    }
-                }
-            } catch (Error e) {
-                warning ("Failed to load settings: %s", e.message);
-            }
-            
-            return false;
+            return settings.get_boolean ("monitoring-enabled");
         }
         
         public void set_monitoring_enabled (bool enabled) {
-            var settings = new Json.Object ();
+            settings.set_boolean ("monitoring-enabled", enabled);
             
-            // Load existing settings
-            if (FileUtils.test (settings_path, FileTest.EXISTS)) {
-                try {
-                    string contents;
-                    FileUtils.get_contents (settings_path, out contents);
-                    
-                    var parser = new Json.Parser ();
-                    parser.load_from_data (contents);
-                    var root = parser.get_root ();
-                    
-                    if (root.get_node_type () == Json.NodeType.OBJECT) {
-                        settings = root.get_object ();
-                    }
-                } catch (Error e) {
-                    // Ignore errors, use empty settings
-                }
-            }
-            
-            // Update monitoring_enabled
-            settings.set_boolean_member ("monitoring_enabled", enabled);
-            
-            // Save settings
-            try {
-                var dir = Path.get_dirname (settings_path);
-                DirUtils.create_with_parents (dir, 0755);
-                
-                var root = new Json.Node (Json.NodeType.OBJECT);
-                root.set_object (settings);
-                
-                var generator = new Json.Generator ();
-                generator.set_root (root);
-                generator.pretty = true;
-                generator.indent = 2;
-                
-                FileUtils.set_contents (settings_path, generator.to_data (null));
-            } catch (Error e) {
-                warning ("Failed to save settings: %s", e.message);
-            }
-            
-            // Manage autostart desktop entry and monitor script
+            // Manage autostart desktop entry
             if (enabled) {
                 enable_monitoring ();
             } else {

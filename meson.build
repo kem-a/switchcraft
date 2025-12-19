@@ -101,6 +101,14 @@ install_data(
   install_dir: join_paths(get_option('datadir'), 'icons', 'hicolor', 'scalable', 'apps')
 )
 
+# GSettings schema
+install_data(
+  'data/com.github.switchcraft.Switchcraft.gschema.xml',
+  install_dir: join_paths(get_option('datadir'), 'glib-2.0', 'schemas')
+)
+gnome.compile_schemas(build_by_default: true)
+gnome.post_install(glib_compile_schemas: true)
+
 # Summary
 summary({
   'prefix': get_option('prefix'),

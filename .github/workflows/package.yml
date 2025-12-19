@@ -80,7 +80,6 @@ jobs:
             --description "GNOME theme switch command runner" \
             --license GPL-3.0-or-later \
             --url "https://github.com/kem-a/switchcraft" \
-            --after-remove packaging/scripts/after-remove.sh \
             -p "$PACKAGE_DIR/switchcraft_${VERSION}_amd64.deb" \
             -C "$DESTDIR" usr
           fpm -s dir -t rpm -n switchcraft \
@@ -89,7 +88,6 @@ jobs:
             --description "GNOME theme switch command runner" \
             --license GPL-3.0-or-later \
             --url "https://github.com/kem-a/switchcraft" \
-            --after-remove packaging/scripts/after-remove.sh \
             -p "$PACKAGE_DIR/switchcraft-${VERSION}-1.x86_64.rpm" \
             -C "$DESTDIR" usr
 
