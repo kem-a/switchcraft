@@ -1,9 +1,5 @@
-# Get version from metainfo
-v_cmd = run_command('grep', '-oP', '(?<=<release version=")[^"]+', 'io.github.switchcraft.Switchcraft.metainfo.xml', check: true)
-project_version = v_cmd.stdout().strip().split('\n')[0]
-
 project('switchcraft', 'vala', 'c',
-  version: project_version,
+  version: '1.3.0',
   meson_version: '>= 0.59.0',
   default_options: [
     'warning_level=2',
@@ -75,8 +71,11 @@ configure_file(
 )
 
 # Metainfo file
-install_data(
-  'io.github.switchcraft.Switchcraft.metainfo.xml',
+configure_file(
+  input: 'io.github.switchcraft.Switchcraft.metainfo.xml.in',
+  output: 'io.github.switchcraft.Switchcraft.metainfo.xml',
+  configuration: conf,
+  install: true,
   install_dir: join_paths(get_option('datadir'), 'metainfo')
 )
 
