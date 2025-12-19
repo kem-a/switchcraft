@@ -485,7 +485,7 @@ namespace Switchcraft {
                 "Update the shell command executed for the %s theme.".printf (theme) :
                 "Enter the shell command to run when the %s theme activates.".printf (theme);
             
-            var dialog = new Adw.MessageDialog (this, title, message);
+            var dialog = new Adw.AlertDialog (title, message);
             dialog.add_response ("cancel", "Cancel");
             dialog.add_response ("save", editing ? "Save" : "Add");
             dialog.set_default_response ("save");
@@ -506,11 +506,10 @@ namespace Switchcraft {
             
             dialog.set_extra_child (entry);
             
-            dialog.response.connect ((response_id) => {
-                on_command_dialog_response (dialog, response_id, theme, index, entry);
+            dialog.choose.begin (this, null, (obj, res) => {
+                var response_id = dialog.choose.end (res);
+                on_command_dialog_response (response_id, theme, index, entry);
             });
-            
-            dialog.present ();
             
             // Focus entry after dialog is shown
             GLib.Idle.add (() => {
@@ -519,16 +518,14 @@ namespace Switchcraft {
             });
         }
         
-        private void on_command_dialog_response (Adw.MessageDialog dialog, string response_id,
+        private void on_command_dialog_response (string response_id,
                                                   string theme, int index, Gtk.Entry entry) {
             if (response_id != "save") {
-                dialog.destroy ();
                 return;
             }
             
             var command_text = entry.get_text ().strip ();
             if (command_text.length == 0) {
-                dialog.destroy ();
                 return;
             }
             
@@ -561,7 +558,6 @@ namespace Switchcraft {
             
             save_commands ();
             refresh_theme_list (theme);
-            dialog.destroy ();
         }
         
         private void add_action_handler (string name, SimpleActionActivateCallback callback) {
@@ -598,13 +594,9 @@ namespace Switchcraft {
 
             if (preferences_window == null) {
                 preferences_window = new PreferencesWindow (app, this);
-                preferences_window.close_request.connect (() => {
-                    preferences_window = null;
-                    return false;
-                });
             }
 
-            preferences_window.present ();
+            preferences_window.present (this);
         }
 
         private void on_show_about_action () {

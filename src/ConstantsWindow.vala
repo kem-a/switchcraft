@@ -20,7 +20,7 @@ namespace Switchcraft {
             constants = new HashTable<string, string> (str_hash, str_equal);
             
             set_title ("Constants");
-            set_default_size (600, 400);
+            set_default_size (600, 450);
             set_transient_for (parent);
             set_modal (true);
             
@@ -179,7 +179,7 @@ namespace Switchcraft {
             bool editing = existing_name.length > 0;
             string title = editing ? "Edit Constant" : "Add Constant";
             
-            var dialog = new Adw.MessageDialog (this, title, "Define a constant name and value.");
+            var dialog = new Adw.AlertDialog (title, "Define a constant name and value.");
             dialog.add_response ("cancel", "Cancel");
             dialog.add_response ("save", editing ? "Save" : "Add");
             dialog.set_default_response ("save");
@@ -212,16 +212,15 @@ namespace Switchcraft {
             form_box.append (hint_label);
             
             dialog.set_extra_child (form_box);
-            dialog.response.connect ((response_id) => {
-                on_constant_dialog_response (dialog, response_id, existing_name, name_entry, value_entry);
+            dialog.choose.begin (this, null, (obj, res) => {
+                var response_id = dialog.choose.end (res);
+                on_constant_dialog_response (response_id, existing_name, name_entry, value_entry);
             });
-            dialog.present ();
         }
         
-        private void on_constant_dialog_response (Adw.MessageDialog dialog, string response_id,
+        private void on_constant_dialog_response (string response_id,
                                                    string old_name, Gtk.Entry name_entry, Gtk.Entry value_entry) {
             if (response_id != "save") {
-                dialog.destroy ();
                 return;
             }
             
@@ -229,20 +228,17 @@ namespace Switchcraft {
             var normalized_value = normalize_constant_value (value_entry.get_text ());
             
             if (name.length == 0 || normalized_value.length == 0) {
-                dialog.destroy ();
                 return;
             }
             
             // Validate name (should be valid shell variable name)
             if (!is_valid_variable_name (name)) {
-                var error_dialog = new Adw.MessageDialog (
-                    this,
+                var error_dialog = new Adw.AlertDialog (
                     "Invalid Name",
                     "Constant name must be a valid shell variable name (letters, numbers, underscores)."
                 );
                 error_dialog.add_response ("ok", "OK");
-                error_dialog.present ();
-                dialog.destroy ();
+                error_dialog.choose.begin (this, null, null);
                 return;
             }
             
@@ -254,7 +250,6 @@ namespace Switchcraft {
             constants.insert (name, normalized_value);
             save_constants ();
             refresh_list ();
-            dialog.destroy ();
         }
 
         private string normalize_constant_value (string value) {

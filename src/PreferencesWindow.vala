@@ -7,7 +7,7 @@
 
 namespace Switchcraft {
 
-    public class PreferencesWindow : Adw.PreferencesWindow {
+    public class PreferencesWindow : Adw.PreferencesDialog {
         private Application app;
         private MainWindow main_window;
         private Adw.SwitchRow monitoring_row;
@@ -15,8 +15,6 @@ namespace Switchcraft {
         
         public PreferencesWindow (Application application, MainWindow parent) {
             Object (
-                transient_for: parent,
-                modal: true,
                 title: "Preferences"
             );
             
@@ -104,7 +102,7 @@ namespace Switchcraft {
             var dialog = new Gtk.FileDialog ();
             dialog.set_title ("Import Configuration");
             try {
-                var file = yield dialog.open (this, null);
+                var file = yield dialog.open (main_window, null);
                 if (file == null) {
                     return;
                 }
@@ -129,7 +127,7 @@ namespace Switchcraft {
             dialog.set_title ("Export Configuration");
             dialog.set_initial_name ("switchcraft-config.zip");
             try {
-                var file = yield dialog.save (this, null);
+                var file = yield dialog.save (main_window, null);
                 if (file == null) {
                     return;
                 }
@@ -148,8 +146,7 @@ namespace Switchcraft {
         }
 
         private void show_delete_confirmation () {
-            var dialog = new Adw.MessageDialog (
-                this,
+            var dialog = new Adw.AlertDialog (
                 "Delete all configuration?",
                 "This will remove every custom command and constant. This action cannot be undone."
             );
@@ -158,14 +155,12 @@ namespace Switchcraft {
             dialog.set_default_response ("cancel");
             dialog.set_response_appearance ("delete", Adw.ResponseAppearance.DESTRUCTIVE);
 
-            dialog.response.connect ((response_id) => {
+            dialog.choose.begin (main_window, null, (obj, res) => {
+                var response_id = dialog.choose.end (res);
                 if (response_id == "delete") {
                     delete_configuration_files ();
                 }
-                dialog.destroy ();
             });
-
-            dialog.present ();
         }
 
         private void delete_configuration_files () {

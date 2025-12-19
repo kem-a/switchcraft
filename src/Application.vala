@@ -11,8 +11,8 @@ namespace Switchcraft {
         public string command { get; set; }
         public bool enabled { get; set; default = true; }
         
-        public CommandEntry (string cmd, bool en = true) {
-            command = cmd;
+        public CommandEntry (owned string cmd, bool en = true) {
+            command = (owned) cmd;
             enabled = en;
         }
     }
@@ -45,10 +45,10 @@ namespace Switchcraft {
             add_main_option ("background", 'b', OptionFlags.NONE, OptionArg.NONE, "Run in background for theme monitoring", null);
 
             set_resource_base_path ("/com/github/switchcraft/Switchcraft/");
-            set_accels_for_action ("win.add-command", {"<Primary>N"});
-            set_accels_for_action ("app.quit", {"<Primary>Q"});
-            set_accels_for_action ("win.show-preferences", {"<Primary>comma"});
-            set_accels_for_action ("win.show-shortcuts", {"<Primary>question"});
+            set_accels_for_action ("win.add-command", new string[] {"<Primary>N"});
+            set_accels_for_action ("app.quit", new string[] {"<Primary>Q"});
+            set_accels_for_action ("win.show-preferences", new string[] {"<Primary>comma"});
+            set_accels_for_action ("win.show-shortcuts", new string[] {"<Primary>question"});
             
             // Add quit action
             var quit_action = new SimpleAction ("quit", null);
@@ -260,7 +260,9 @@ namespace Switchcraft {
             var root = new Json.Node (Json.NodeType.OBJECT);
             var obj = new Json.Object ();
             
-            commands.foreach ((theme, cmd_list) => {
+            commands.foreach ((k, v) => {
+                unowned string theme = (string) k;
+                unowned List<CommandEntry> cmd_list = (List<CommandEntry>) v;
                 var array = new Json.Array ();
                 
                 foreach (var entry in cmd_list) {
@@ -351,22 +353,18 @@ namespace Switchcraft {
                 return false;
             }
 
-            try {
-                var parent = Path.get_dirname (target_path);
-                if (parent != null && parent.length > 0 && parent != ".") {
-                    DirUtils.create_with_parents (parent, 0755);
+            var parent = Path.get_dirname (target_path);
+            if (parent != null && parent.length > 0 && parent != ".") {
+                if (DirUtils.create_with_parents (parent, 0755) != 0) {
+                    error_message = "Failed to prepare destination directory.";
+                    return false;
                 }
-            } catch (Error e) {
-                error_message = "Failed to prepare destination: %s".printf (e.message);
-                return false;
             }
 
-            string temp_dir;
-            try {
-                var template = Path.build_filename (Environment.get_tmp_dir (), "switchcraft-export-XXXXXX");
-                temp_dir = DirUtils.mkdtemp (template);
-            } catch (Error e) {
-                error_message = "Failed to create temporary directory: %s".printf (e.message);
+            var template = Path.build_filename (Environment.get_tmp_dir (), "switchcraft-export-XXXXXX");
+            string? temp_dir = DirUtils.mkdtemp (template);
+            if (temp_dir == null) {
+                error_message = "Failed to create temporary directory.";
                 return false;
             }
 
@@ -396,10 +394,8 @@ namespace Switchcraft {
                 FileUtils.set_contents (constants_path, constants_data);
 
                 if (FileUtils.test (target_path, FileTest.EXISTS)) {
-                    try {
-                        FileUtils.remove (target_path);
-                    } catch (Error e) {
-                        error_message = "Unable to overwrite existing archive: %s".printf (e.message);
+                    if (FileUtils.remove (target_path) != 0) {
+                        error_message = "Unable to overwrite existing archive.";
                         return false;
                     }
                 }
@@ -438,12 +434,10 @@ namespace Switchcraft {
                 return false;
             }
 
-            string temp_dir;
-            try {
-                var template = Path.build_filename (Environment.get_tmp_dir (), "switchcraft-import-XXXXXX");
-                temp_dir = DirUtils.mkdtemp (template);
-            } catch (Error e) {
-                error_message = "Failed to create temporary directory: %s".printf (e.message);
+            var template = Path.build_filename (Environment.get_tmp_dir (), "switchcraft-import-XXXXXX");
+            string? temp_dir = DirUtils.mkdtemp (template);
+            if (temp_dir == null) {
+                error_message = "Failed to create temporary directory.";
                 return false;
             }
 
@@ -517,22 +511,18 @@ namespace Switchcraft {
         public bool delete_configuration_files (out string error_message) {
             error_message = "";
 
-            try {
-                if (FileUtils.test (config_path, FileTest.EXISTS)) {
-                    FileUtils.remove (config_path);
+            if (FileUtils.test (config_path, FileTest.EXISTS)) {
+                if (FileUtils.remove (config_path) != 0) {
+                    error_message = "Failed to remove commands.json.";
+                    return false;
                 }
-            } catch (Error e) {
-                error_message = "Failed to remove commands.json: %s".printf (e.message);
-                return false;
             }
 
-            try {
-                if (FileUtils.test (constants_path, FileTest.EXISTS)) {
-                    FileUtils.remove (constants_path);
+            if (FileUtils.test (constants_path, FileTest.EXISTS)) {
+                if (FileUtils.remove (constants_path) != 0) {
+                    error_message = "Failed to remove constants.json.";
+                    return false;
                 }
-            } catch (Error e) {
-                error_message = "Failed to remove constants.json: %s".printf (e.message);
-                return false;
             }
 
             settings.reset ("monitoring-enabled");
