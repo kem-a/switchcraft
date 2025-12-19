@@ -24,9 +24,7 @@ namespace Switchcraft {
         private string autostart_path;
         private string monitor_script_path;
         private string local_bin_path;
-    private const string DEFAULT_VERSION = Switchcraft.VERSION;
-    private string? cached_about_version = null;
-    private string? cached_desktop_path = null;
+        private const string DEFAULT_VERSION = Switchcraft.VERSION;
         
         public Application () {
             Object (
@@ -61,33 +59,6 @@ namespace Switchcraft {
             win.present ();
         }
 
-        public string get_about_version () {
-            if (cached_about_version != null && cached_about_version.length > 0) {
-                return cached_about_version;
-            }
-
-            var desktop_path = locate_desktop_file ();
-            if (desktop_path != null) {
-                try {
-                    var keyfile = new KeyFile ();
-                    keyfile.load_from_file (desktop_path, KeyFileFlags.NONE);
-                    var version = keyfile.get_string ("Desktop Entry", "X-AppImage-Version");
-                    if (version != null) {
-                        version = version.strip ();
-                        if (version.length > 0) {
-                            cached_about_version = version;
-                            return cached_about_version;
-                        }
-                    }
-                } catch (Error e) {
-                    debug ("Failed to read version from %s: %s", desktop_path, e.message);
-                }
-            }
-
-            cached_about_version = DEFAULT_VERSION;
-            return cached_about_version;
-        }
-        
         public HashTable<string, List<CommandEntry>> get_commands () {
             if (!FileUtils.test (config_path, FileTest.EXISTS)) {
                 return default_commands ();
@@ -462,34 +433,6 @@ namespace Switchcraft {
             }
 
             return true;
-        }
-
-        private string? locate_desktop_file () {
-            if (cached_desktop_path != null && FileUtils.test (cached_desktop_path, FileTest.EXISTS)) {
-                return cached_desktop_path;
-            }
-
-            string? xdg_data_home = Environment.get_variable ("XDG_DATA_HOME");
-            string[] candidate_paths = {
-                Path.build_filename (Environment.get_current_dir (), "switchcraft.desktop"),
-                Path.build_filename (Environment.get_current_dir (), "..", "switchcraft.desktop"),
-                Path.build_filename (Environment.get_home_dir (), ".local", "share", "applications", "switchcraft.desktop"),
-                xdg_data_home != null ? Path.build_filename (xdg_data_home, "applications", "switchcraft.desktop") : "",
-                "/usr/local/share/applications/switchcraft.desktop",
-                "/usr/share/applications/switchcraft.desktop"
-            };
-
-            foreach (var path in candidate_paths) {
-                if (path.length == 0) {
-                    continue;
-                }
-                if (FileUtils.test (path, FileTest.EXISTS)) {
-                    cached_desktop_path = path;
-                    return cached_desktop_path;
-                }
-            }
-
-            return null;
         }
 
         private void cleanup_temp_dir (string dir) {

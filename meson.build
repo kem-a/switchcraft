@@ -30,6 +30,25 @@ config_vala = configure_file(
   configuration: conf
 )
 
+# Metainfo file
+metainfo = configure_file(
+  input: 'io.github.switchcraft.Switchcraft.metainfo.xml.in',
+  output: 'io.github.switchcraft.Switchcraft.metainfo.xml',
+  configuration: conf,
+  install: true,
+  install_dir: join_paths(get_option('datadir'), 'metainfo')
+)
+
+# Resources
+resources = gnome.compile_resources('switchcraft-resources',
+  'src/switchcraft.gresource.xml',
+  dependencies: metainfo,
+  source_dir: [
+    meson.current_build_dir(),
+    meson.current_source_dir(),
+  ]
+)
+
 # Source files
 sources = files(
   'src/main.vala',
@@ -39,6 +58,7 @@ sources = files(
   'src/PreferencesWindow.vala',
 )
 sources += config_vala
+sources += resources
 
 # Vala compiler arguments
 vala_args = [
@@ -68,15 +88,6 @@ configure_file(
   configuration: conf,
   install: true,
   install_dir: join_paths(get_option('datadir'), 'applications')
-)
-
-# Metainfo file
-configure_file(
-  input: 'io.github.switchcraft.Switchcraft.metainfo.xml.in',
-  output: 'io.github.switchcraft.Switchcraft.metainfo.xml',
-  configuration: conf,
-  install: true,
-  install_dir: join_paths(get_option('datadir'), 'metainfo')
 )
 
 # Install application icons
