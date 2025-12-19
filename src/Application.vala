@@ -30,12 +30,16 @@ namespace Switchcraft {
                 flags: ApplicationFlags.HANDLES_COMMAND_LINE
             );
             
-            var home = Environment.get_home_dir ();
-            config_path = Path.build_filename (home, ".config", "switchcraft", "commands.json");
-            constants_path = Path.build_filename (home, ".config", "switchcraft", "constants.json");
-            autostart_path = Path.build_filename (home, ".config", "autostart", "switchcraft-monitor.desktop");
+            var data_dir = Environment.get_user_data_dir ();
+            var config_home = Environment.get_user_config_dir ();
+            
+            config_path = Path.build_filename (data_dir, "switchcraft", "commands.json");
+            constants_path = Path.build_filename (data_dir, "switchcraft", "constants.json");
+            autostart_path = Path.build_filename (config_home, "autostart", "switchcraft-monitor.desktop");
             
             settings = new Settings ("com.github.switchcraft.Switchcraft");
+
+            migrate_config_files ();
 
             add_main_option ("version", 'v', OptionFlags.NONE, OptionArg.NONE, "Show version information", null);
             add_main_option ("background", 'b', OptionFlags.NONE, OptionArg.NONE, "Run in background for theme monitoring", null);
@@ -52,6 +56,30 @@ namespace Switchcraft {
                 quit ();
             });
             add_action (quit_action);
+        }
+
+        private void migrate_config_files () {
+            var config_home = Environment.get_user_config_dir ();
+            var old_dir = Path.build_filename (config_home, "switchcraft");
+            var new_dir = Path.get_dirname (config_path);
+
+            if (FileUtils.test (old_dir, FileTest.IS_DIR) && !FileUtils.test (new_dir, FileTest.EXISTS)) {
+                try {
+                    DirUtils.create_with_parents (Path.get_dirname (new_dir), 0755);
+                    
+                    // Use 'mv' via spawn to handle directory move across filesystems if necessary, 
+                    // or just rename if on same filesystem. GLib.File.move is better.
+                    var old_file = File.new_for_path (old_dir);
+                    var new_file = File.new_for_path (new_dir);
+                    
+                    if (old_file.query_exists ()) {
+                        old_file.move (new_file, FileCopyFlags.NONE, null, null);
+                        message ("Migrated configuration from %s to %s", old_dir, new_dir);
+                    }
+                } catch (Error e) {
+                    warning ("Failed to migrate configuration: %s", e.message);
+                }
+            }
         }
         
         protected override void activate () {

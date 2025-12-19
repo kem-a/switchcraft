@@ -32,8 +32,8 @@ Design constraints & behavior
 - Autostart: `Application.create_autostart_entry()` writes `~/.config/autostart/switchcraft-monitor.desktop` with the installed script and delay.
 
 Data layout and formats
-- `~/.config/switchcraft/commands.json` — per-theme arrays supporting string or `{ "command", "enabled" }` objects; `Application.normalize_commands()` accepts both.
-- `~/.config/switchcraft/constants.json` — flat key/value map; monitor exports as environment variables, so watch quoting.
+- `~/.local/share/switchcraft/commands.json` — per-theme arrays supporting string or `{ "command", "enabled" }` objects; `Application.normalize_commands()` accepts both.
+- `~/.local/share/switchcraft/constants.json` — flat key/value map; monitor exports as environment variables, so watch quoting.
 - **GSettings** — app settings (e.g., `monitoring-enabled`) are stored in dconf under `com.github.switchcraft.Switchcraft`.
 
 Code patterns & expectations

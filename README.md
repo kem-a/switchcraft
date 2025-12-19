@@ -132,7 +132,7 @@ sudo ninja -C build remove
 
 <details> <summary> Details <b>(click to open)</b> </summary>
 
-All runtime configuration lives under `~/.config/switchcraft/`.
+All runtime configuration lives under `~/.local/share/switchcraft/`.
 
 - **`commands.json`** - per-theme command lists. Example:
 
