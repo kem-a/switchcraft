@@ -490,8 +490,12 @@ namespace Switchcraft {
             dialog.set_default_response ("save");
             dialog.set_response_appearance ("save", Adw.ResponseAppearance.SUGGESTED);
             
+            var content_box = new Gtk.Box (Gtk.Orientation.VERTICAL, 12);
+            content_box.set_size_request (450, -1);
+            
             var entry = new Gtk.Entry ();
             entry.set_placeholder_text ("e.g. notify-send 'Switched to %s theme'".printf (theme.up (1).substring (0, 1) + theme.substring (1)));
+            content_box.append (entry);
             
             if (editing) {
                 unowned List<CommandEntry>? theme_commands = commands.lookup (theme);
@@ -503,7 +507,7 @@ namespace Switchcraft {
                 }
             }
             
-            dialog.set_extra_child (entry);
+            dialog.set_extra_child (content_box);
             
             dialog.choose.begin (this, null, (obj, res) => {
                 var response_id = dialog.choose.end (res);

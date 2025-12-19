@@ -189,6 +189,7 @@ namespace Switchcraft {
             var form_box = new Gtk.Box (Gtk.Orientation.VERTICAL, 12);
             form_box.set_margin_top (12);
             form_box.set_margin_bottom (12);
+            form_box.set_size_request (450, -1);
             
             var name_entry = new Gtk.Entry ();
             name_entry.set_placeholder_text ("Constant name (e.g., D2DL_SCHEMA)");
@@ -207,6 +208,9 @@ namespace Switchcraft {
             
             var hint_label = new Gtk.Label ("Use in commands as $NAME or ${NAME}");
             hint_label.set_xalign (0);
+            hint_label.set_wrap (true);
+            hint_label.set_wrap_mode (Pango.WrapMode.WORD_CHAR);
+            hint_label.set_max_width_chars (50);
             hint_label.add_css_class ("dim-label");
             hint_label.add_css_class ("caption");
             form_box.append (hint_label);
