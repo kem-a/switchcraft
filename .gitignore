@@ -1,4 +1,5 @@
 # Sample/reference code directory
+.github/copilot-instructions.md
 samples
 *.log
 

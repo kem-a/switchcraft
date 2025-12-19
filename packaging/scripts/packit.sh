@@ -4,7 +4,7 @@ set -euo pipefail
 APP_NAME="switchcraft"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
-DESKTOP_FILE="$REPO_ROOT/switchcraft.desktop"
+DESKTOP_FILE="$REPO_ROOT/io.github.switchcraft.Switchcraft.desktop"
 
 if [[ -z "${VERSION:-}" ]]; then
     if [[ -f "$DESKTOP_FILE" ]]; then
@@ -55,9 +55,9 @@ fpm -s dir -t deb  -n "$APP_NAME" -v "$VERSION" --license GPL-3.0-or-later \
 cp -a "$DESTDIR/usr" "$APPDIR/"
 install -Dm755 "$BUILD_DIR/switchcraft" "$APPDIR/usr/bin/$APP_NAME"
 install -Dm755 "$BUILD_DIR/switchcraft" "$APPDIR/AppRun"
-install -Dm644 "$DESTDIR/usr/share/applications/switchcraft.desktop" "$APPDIR/switchcraft.desktop"
-install -Dm644 "$DESTDIR/usr/share/icons/hicolor/256x256/apps/switchcraft.png" "$APPDIR/switchcraft.png"
+install -Dm644 "$DESTDIR/usr/share/applications/io.github.switchcraft.Switchcraft.desktop" "$APPDIR/io.github.switchcraft.Switchcraft.desktop"
+install -Dm644 "$DESTDIR/usr/share/icons/hicolor/512x512/apps/io.github.switchcraft.Switchcraft.png" "$APPDIR/io.github.switchcraft.Switchcraft.png"
 
-desktop-file-validate "$APPDIR/switchcraft.desktop"
+desktop-file-validate "$APPDIR/io.github.switchcraft.Switchcraft.desktop"
 chrpath -d "$APPDIR/usr/bin/$APP_NAME" || true
 appimagetool "$APPDIR" "$DIST_DIR/${APP_NAME}-${VERSION}.AppImage"

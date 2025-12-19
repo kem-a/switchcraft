@@ -51,17 +51,18 @@ executable(
 
 # Install desktop file
 install_data(
-  'switchcraft.desktop',
+  'io.github.switchcraft.Switchcraft.desktop',
   install_dir: join_paths(get_option('datadir'), 'applications')
 )
 
-# Install application icon
-# Install application icons from icons/ directory
-# This preserves the hicolor theme structure (e.g. scalable/apps/switchcraft.png)
-install_subdir(
-  'icons',
-  install_dir: join_paths(get_option('datadir'), 'icons'),
-  strip_directory: true
+# Install application icons
+install_data(
+  'icons/io.github.switchcraft.Switchcraft.png',
+  install_dir: join_paths(get_option('datadir'), 'icons', 'hicolor', '512x512', 'apps')
+)
+install_data(
+  'icons/io.github.switchcraft.Switchcraft.svg',
+  install_dir: join_paths(get_option('datadir'), 'icons', 'hicolor', 'scalable', 'apps')
 )
 
 # Summary
@@ -82,14 +83,9 @@ monitor_script="$HOME/.local/bin/switchcraft-monitor.sh"
 
 echo "Uninstalling Switchcraft..."
 rm -f "$bindir/switchcraft"
-rm -f "$datadir/applications/switchcraft.desktop" 
-rm -f "$datadir/icons/hicolor/48x48/apps/switchcraft.png"
-rm -f "$datadir/icons/hicolor/96x96/apps/switchcraft.png"
-rm -f "$datadir/icons/hicolor/128x128/apps/switchcraft.png"
-rm -f "$datadir/icons/hicolor/256x256/apps/switchcraft.png"
-rm -f "$datadir/icons/hicolor/512x512/apps/switchcraft.png"
-rm -f "$datadir/icons/hicolor/scalable/apps/switchcraft.svg"
-rm -f "$datadir/icons/hicolor/scalable/apps/switchcraft_ios.svg"
+rm -f "$datadir/applications/io.github.switchcraft.Switchcraft.desktop" 
+rm -f "$datadir/icons/hicolor/512x512/apps/io.github.switchcraft.Switchcraft.png"
+rm -f "$datadir/icons/hicolor/scalable/apps/io.github.switchcraft.Switchcraft.svg"
 rm -f "$autostart_entry"
 rm -f "$monitor_script"
 command -v pkill >/dev/null 2>&1 && pkill -f switchcraft-monitor.sh >/dev/null 2>&1 || true
