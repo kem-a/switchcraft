@@ -32,7 +32,7 @@ config_vala = configure_file(
 
 # Metainfo file
 metainfo = configure_file(
-  input: 'com.github.switchcraft.Switchcraft.metainfo.xml.in',
+  input: 'data/com.github.switchcraft.Switchcraft.metainfo.xml.in',
   output: 'com.github.switchcraft.Switchcraft.metainfo.xml',
   configuration: conf,
   install: true,
@@ -41,7 +41,7 @@ metainfo = configure_file(
 
 # Resources
 resources = gnome.compile_resources('switchcraft-resources',
-  'src/switchcraft.gresource.xml',
+  'data/resources/switchcraft.gresource.xml',
   dependencies: metainfo,
   source_dir: [
     meson.current_build_dir(),
@@ -83,7 +83,7 @@ executable(
 
 # Desktop file
 configure_file(
-  input: 'com.github.switchcraft.Switchcraft.desktop.in',
+  input: 'data/com.github.switchcraft.Switchcraft.desktop.in',
   output: 'com.github.switchcraft.Switchcraft.desktop',
   configuration: conf,
   install: true,
@@ -92,11 +92,11 @@ configure_file(
 
 # Install application icons
 install_data(
-  'icons/com.github.switchcraft.Switchcraft.png',
+  'data/icons/com.github.switchcraft.Switchcraft.png',
   install_dir: join_paths(get_option('datadir'), 'icons', 'hicolor', '512x512', 'apps')
 )
 install_data(
-  'icons/com.github.switchcraft.Switchcraft.svg',
+  'data/icons/com.github.switchcraft.Switchcraft.svg',
   install_dir: join_paths(get_option('datadir'), 'icons', 'hicolor', 'scalable', 'apps')
 )
 
