@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <gresources>
-  <gresource prefix="/io/github/switchcraft/Switchcraft">
-    <file preprocess="xml-stripblanks">io.github.switchcraft.Switchcraft.metainfo.xml</file>
+  <gresource prefix="/com/github/switchcraft/Switchcraft">
+    <file preprocess="xml-stripblanks">com.github.switchcraft.Switchcraft.metainfo.xml</file>
   </gresource>
 </gresources>

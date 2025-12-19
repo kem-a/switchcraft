@@ -11,7 +11,7 @@ i18n = import('i18n')
 gnome = import('gnome')
 
 # Application ID
-application_id = 'io.github.switchcraft.Switchcraft'
+application_id = 'com.github.switchcraft.Switchcraft'
 
 # Dependencies
 gtk4_dep = dependency('gtk4', version: '>= 4.0.0')
@@ -32,8 +32,8 @@ config_vala = configure_file(
 
 # Metainfo file
 metainfo = configure_file(
-  input: 'io.github.switchcraft.Switchcraft.metainfo.xml.in',
-  output: 'io.github.switchcraft.Switchcraft.metainfo.xml',
+  input: 'com.github.switchcraft.Switchcraft.metainfo.xml.in',
+  output: 'com.github.switchcraft.Switchcraft.metainfo.xml',
   configuration: conf,
   install: true,
   install_dir: join_paths(get_option('datadir'), 'metainfo')
@@ -83,8 +83,8 @@ executable(
 
 # Desktop file
 configure_file(
-  input: 'io.github.switchcraft.Switchcraft.desktop.in',
-  output: 'io.github.switchcraft.Switchcraft.desktop',
+  input: 'com.github.switchcraft.Switchcraft.desktop.in',
+  output: 'com.github.switchcraft.Switchcraft.desktop',
   configuration: conf,
   install: true,
   install_dir: join_paths(get_option('datadir'), 'applications')
@@ -92,11 +92,11 @@ configure_file(
 
 # Install application icons
 install_data(
-  'icons/io.github.switchcraft.Switchcraft.png',
+  'icons/com.github.switchcraft.Switchcraft.png',
   install_dir: join_paths(get_option('datadir'), 'icons', 'hicolor', '512x512', 'apps')
 )
 install_data(
-  'icons/io.github.switchcraft.Switchcraft.svg',
+  'icons/com.github.switchcraft.Switchcraft.svg',
   install_dir: join_paths(get_option('datadir'), 'icons', 'hicolor', 'scalable', 'apps')
 )
 
@@ -118,9 +118,9 @@ monitor_script="$HOME/.local/bin/switchcraft-monitor.sh"
 
 echo "Uninstalling Switchcraft..."
 rm -f "$bindir/switchcraft"
-rm -f "$datadir/applications/io.github.switchcraft.Switchcraft.desktop" 
-rm -f "$datadir/icons/hicolor/512x512/apps/io.github.switchcraft.Switchcraft.png"
-rm -f "$datadir/icons/hicolor/scalable/apps/io.github.switchcraft.Switchcraft.svg"
+rm -f "$datadir/applications/com.github.switchcraft.Switchcraft.desktop" 
+rm -f "$datadir/icons/hicolor/512x512/apps/com.github.switchcraft.Switchcraft.png"
+rm -f "$datadir/icons/hicolor/scalable/apps/com.github.switchcraft.Switchcraft.svg"
 rm -f "$autostart_entry"
 rm -f "$monitor_script"
 command -v pkill >/dev/null 2>&1 && pkill -f switchcraft-monitor.sh >/dev/null 2>&1 || true

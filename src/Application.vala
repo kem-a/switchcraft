@@ -28,7 +28,7 @@ namespace Switchcraft {
         
         public Application () {
             Object (
-                application_id: "io.github.switchcraft.Switchcraft",
+                application_id: "com.github.switchcraft.Switchcraft",
                 flags: ApplicationFlags.FLAGS_NONE
             );
             
@@ -40,7 +40,7 @@ namespace Switchcraft {
             local_bin_path = Path.build_filename (home, ".local", "bin");
             monitor_script_path = Path.build_filename (local_bin_path, "switchcraft-monitor.sh");
             
-            set_resource_base_path ("/io/github/switchcraft/Switchcraft/");
+            set_resource_base_path ("/com/github/switchcraft/Switchcraft/");
             set_accels_for_action ("win.add-command", {"<Primary>N"});
             set_accels_for_action ("app.quit", {"<Primary>Q"});
             set_accels_for_action ("win.show-preferences", {"<Primary>comma"});
@@ -741,7 +741,7 @@ Type=Application
 Name=Switchcraft Monitor
 Comment=Monitor GNOME theme changes and run commands
 Exec=%s
-Icon=io.github.switchcraft.Switchcraft
+Icon=com.github.switchcraft.Switchcraft
 Terminal=false
 Categories=Utility;GNOME;GTK;
 StartupNotify=false

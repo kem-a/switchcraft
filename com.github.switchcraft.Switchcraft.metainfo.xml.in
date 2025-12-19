@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component type="desktop-application">
-  <id>io.github.switchcraft.Switchcraft</id>
+  <id>com.github.switchcraft.Switchcraft</id>
   <name>Switchcraft</name>
-  <developer id="io.github.switchcraft">
+  <developer id="com.github.switchcraft">
     <name>Arnis Kemlers</name>
   </developer>
   <developer_name>Arnis Kemlers</developer_name>
@@ -12,7 +12,7 @@
   <description>
     <p>Switchcraft watches GNOME's color-scheme preference and runs user-defined shell commands when the theme switches between light and dark. It allows you to automate theme-dependent adjustments for applications that don't follow system settings automatically.</p>
   </description>
-  <launchable type="desktop-id">io.github.switchcraft.Switchcraft.desktop</launchable>
+  <launchable type="desktop-id">com.github.switchcraft.Switchcraft.desktop</launchable>
   <url type="homepage">https://github.com/kem-a/switchcraft</url>
   <url type="bugtracker">https://github.com/kem-a/switchcraft/issues</url>
   <provides>
