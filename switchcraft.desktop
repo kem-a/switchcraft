@@ -6,6 +6,7 @@ Exec=switchcraft
 Icon=switchcraft
 Terminal=false
 Categories=Utility;GNOME;GTK;
+OnlyShowIn=GNOME;
 StartupNotify=false
 StartupWMClass=io.github.switchcraft.Switchcraft
 X-AppImage-Version=1.2.1
