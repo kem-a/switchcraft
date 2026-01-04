@@ -1,6 +1,7 @@
 # Sample/reference code directory
 samples
 *.log
+*ns.md
 
 # IDEs and editors
 .vscode/
