@@ -11,11 +11,10 @@
 
 Switchcraft watches GNOME's light/dark preference and runs your shell commands when the theme changes.
 
-
 <img width="607" height="400" alt="Screenshot From 2025-11-25 13-38-16" src="https://github.com/user-attachments/assets/c4e4f154-45b5-4084-bac2-c02be4b58361" />
 
-
 ## Features
+
 - Watches `org.gnome.desktop.interface color-scheme` and executes commands instantly.
 - Polished libadwaita interface with light/dark pages, icons, and header-bar actions.
 - Add, edit, enable/disable, or remove commands per theme.
@@ -35,7 +34,7 @@ Switchcraft watches GNOME's light/dark preference and runs your shell commands w
 
 - Set constants:
 
-```
+```bash
 D2DL_SCHEMADIR="$HOME/.local/share/gnome-shell/extensions/dash2dock-lite@icedman.github.com/schemas"
 D2DL_SCHEMA="org.gnome.shell.extensions.dash2dock-lite"
 ```
@@ -53,6 +52,7 @@ Dark theme:
 </details>
 
 ## Requirements
+
 - GNOME 40+ (GTK 4 and libadwaita)
 - GLib 2.66+
 - Vala compiler (for building)
@@ -63,18 +63,21 @@ Dark theme:
 <details> <summary> Install dependencies <b>(click to open)</b> </summary>
   
 **Debian/Ubuntu:**
+
 ```bash
 sudo apt install meson valac libgtk-4-dev libadwaita-1-dev libjson-glib-dev jq ruby ruby-dev rubygems build-essential
 gem install --user-install fpm
 ```
 
 **Fedora:**
+
 ```bash
 sudo dnf install meson vala gtk4-devel libadwaita-devel json-glib-devel jq ruby rubygems rpmbuild chrpath
 gem install --user-install fpm
 ```
 
 **Arch:**
+
 ```bash
 sudo pacman -S meson vala gtk4 libadwaita json-glib jq ruby
 gem install --user-install fpm
@@ -126,6 +129,7 @@ sudo ninja -C build install
 # Uninstall
 sudo ninja -C build remove
 ```
+
 </details>
   
 ## Configuration
@@ -146,6 +150,7 @@ All runtime configuration lives under `~/.local/share/switchcraft/`.
 - **`constants.json`** - reusable variables referenced inside commands using `$NAME` or `${NAME}`.
 
 Example:
+
 ```json
 {
   "D2DL_SCHEMADIR": "$HOME/.local/share/gnome-shell/extensions/dash2dock-lite@icedman.github.com/schemas",
