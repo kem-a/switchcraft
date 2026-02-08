@@ -105,8 +105,8 @@ jobs:
           cp -r "$GITHUB_WORKSPACE/dist-root/usr" "$APPDIR/"
 
           # AppImage requirements
-          cp "$APPDIR/usr/share/applications/com.github.switchcraft.Switchcraft.desktop" "$APPDIR/com.github.switchcraft.Switchcraft.desktop"
-          cp "$APPDIR/usr/share/icons/hicolor/512x512/apps/com.github.switchcraft.Switchcraft.png" "$APPDIR/com.github.switchcraft.Switchcraft.png"
+          cp "$APPDIR/usr/share/applications/com.github.Switchcraft.desktop" "$APPDIR/com.github.Switchcraft.desktop"
+          cp "$APPDIR/usr/share/icons/hicolor/512x512/apps/com.github.Switchcraft.png" "$APPDIR/com.github.Switchcraft.png"
           ln -s usr/bin/switchcraft "$APPDIR/AppRun"
 
           mkdir -p packages

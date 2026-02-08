@@ -11,7 +11,7 @@ i18n = import('i18n')
 gnome = import('gnome')
 
 # Application ID
-application_id = 'com.github.switchcraft.Switchcraft'
+application_id = 'com.github.Switchcraft'
 
 # Dependencies
 gtk4_dep = dependency('gtk4', version: '>= 4.0.0')
@@ -33,8 +33,8 @@ config_vala = configure_file(
 
 # Metainfo file
 metainfo = configure_file(
-  input: 'data/com.github.switchcraft.Switchcraft.metainfo.xml.in',
-  output: 'com.github.switchcraft.Switchcraft.metainfo.xml',
+  input: 'data/com.github.Switchcraft.metainfo.xml.in',
+  output: 'com.github.Switchcraft.metainfo.xml',
   configuration: conf,
   install: true,
   install_dir: join_paths(get_option('datadir'), 'metainfo')
@@ -84,8 +84,8 @@ executable(
 
 # Desktop file
 configure_file(
-  input: 'data/com.github.switchcraft.Switchcraft.desktop.in',
-  output: 'com.github.switchcraft.Switchcraft.desktop',
+  input: 'data/com.github.Switchcraft.desktop.in',
+  output: 'com.github.Switchcraft.desktop',
   configuration: conf,
   install: true,
   install_dir: join_paths(get_option('datadir'), 'applications')
@@ -93,17 +93,17 @@ configure_file(
 
 # Install application icons
 install_data(
-  'data/icons/com.github.switchcraft.Switchcraft.png',
+  'data/icons/com.github.Switchcraft.png',
   install_dir: join_paths(get_option('datadir'), 'icons', 'hicolor', '512x512', 'apps')
 )
 install_data(
-  'data/icons/com.github.switchcraft.Switchcraft.svg',
+  'data/icons/com.github.Switchcraft.svg',
   install_dir: join_paths(get_option('datadir'), 'icons', 'hicolor', 'scalable', 'apps')
 )
 
 # GSettings schema
 install_data(
-  'data/com.github.switchcraft.Switchcraft.gschema.xml',
+  'data/com.github.Switchcraft.gschema.xml',
   install_dir: join_paths(get_option('datadir'), 'glib-2.0', 'schemas')
 )
 gnome.compile_schemas(build_by_default: true)
@@ -126,9 +126,9 @@ autostart_entry="$config_home/autostart/switchcraft-monitor.desktop"
 
 echo "Uninstalling Switchcraft..."
 rm -f "$bindir/switchcraft"
-rm -f "$datadir/applications/com.github.switchcraft.Switchcraft.desktop" 
-rm -f "$datadir/icons/hicolor/512x512/apps/com.github.switchcraft.Switchcraft.png"
-rm -f "$datadir/icons/hicolor/scalable/apps/com.github.switchcraft.Switchcraft.svg"
+rm -f "$datadir/applications/com.github.Switchcraft.desktop" 
+rm -f "$datadir/icons/hicolor/512x512/apps/com.github.Switchcraft.png"
+rm -f "$datadir/icons/hicolor/scalable/apps/com.github.Switchcraft.svg"
 rm -f "$autostart_entry"
 command -v pkill >/dev/null 2>&1 && pkill -f "switchcraft --background" >/dev/null 2>&1 || true
 echo "Uninstallation complete."

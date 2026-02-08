@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schemalist gettext-domain="switchcraft">
-  <schema id="com.github.switchcraft.Switchcraft" path="/com/github/switchcraft/Switchcraft/">
+  <schema id="com.github.Switchcraft" path="/com/github/Switchcraft/">
     <key name="monitoring-enabled" type="b">
       <default>false</default>
       <summary>Enable background monitoring</summary>

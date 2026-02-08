@@ -603,14 +603,14 @@ namespace Switchcraft {
         }
 
         private void on_show_about_action () {
-            var dialog = new Adw.AboutDialog.from_appdata ("/com/github/switchcraft/Switchcraft/com.github.switchcraft.Switchcraft.metainfo.xml", "com.github.switchcraft");
+            var dialog = new Adw.AboutDialog.from_appdata ("/com/github/Switchcraft/com.github.Switchcraft.metainfo.xml", "com.github");
             
             // Add icon search paths for development
             var icon_theme = Gtk.IconTheme.get_for_display (Gdk.Display.get_default ());
             var current_dir = Environment.get_current_dir ();
             var icon_dir = Path.build_filename (current_dir, "data", "icons");
             icon_theme.add_search_path (icon_dir);
-            dialog.set_application_icon ("com.github.switchcraft.Switchcraft");
+            dialog.set_application_icon ("com.github.Switchcraft");
             
             dialog.present (this);
         }

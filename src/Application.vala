@@ -26,7 +26,7 @@ namespace Switchcraft {
         
         public Application () {
             Object (
-                application_id: "com.github.switchcraft.Switchcraft",
+                application_id: "com.github.Switchcraft",
                 flags: ApplicationFlags.HANDLES_COMMAND_LINE
             );
             
@@ -37,14 +37,14 @@ namespace Switchcraft {
             constants_path = Path.build_filename (data_dir, "switchcraft", "constants.json");
             autostart_path = Path.build_filename (config_home, "autostart", "switchcraft-monitor.desktop");
             
-            settings = new Settings ("com.github.switchcraft.Switchcraft");
+            settings = new Settings ("com.github.Switchcraft");
 
             migrate_config_files ();
 
             add_main_option ("version", 'v', OptionFlags.NONE, OptionArg.NONE, "Show version information", null);
             add_main_option ("background", 'b', OptionFlags.NONE, OptionArg.NONE, "Run in background for theme monitoring", null);
 
-            set_resource_base_path ("/com/github/switchcraft/Switchcraft/");
+            set_resource_base_path ("/com/github/Switchcraft/");
             set_accels_for_action ("win.add-command", new string[] {"<Primary>N"});
             set_accels_for_action ("app.quit", new string[] {"<Primary>Q"});
             set_accels_for_action ("win.show-preferences", new string[] {"<Primary>comma"});
@@ -636,7 +636,7 @@ Type=Application
 Name=Switchcraft Monitor
 Comment=Monitor GNOME theme changes and run commands
 Exec=%s --background
-Icon=com.github.switchcraft.Switchcraft
+Icon=com.github.Switchcraft
 Terminal=false
 Categories=Utility;GNOME;GTK;
 StartupNotify=false
