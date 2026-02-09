@@ -433,6 +433,28 @@ namespace Switchcraft {
             apply_gsetting (ts, "gtk-theme", theme, "org.gnome.desktop.interface", "gtk-theme");
             apply_gsetting (ts, "cursor-theme", theme, "org.gnome.desktop.interface", "cursor-theme");
             apply_gsetting (ts, "shell-theme", theme, "org.gnome.shell.extensions.user-theme", "name");
+            apply_wallpaper (ts, theme);
+        }
+
+        private void apply_wallpaper (HashTable<string, ThemeSettingValue> ts, string theme) {
+            var val = ts.lookup ("wallpaper");
+            if (val == null) return;
+
+            var path = val.get_for_theme (theme);
+            if (path.length == 0) return;
+
+            string uri = path;
+            if (!path.has_prefix ("file://")) {
+                uri = "file://" + path;
+            }
+
+            string key = theme == "dark" ? "picture-uri-dark" : "picture-uri";
+            try {
+                string[] argv = { "gsettings", "set", "org.gnome.desktop.background", key, uri };
+                Process.spawn_async (null, argv, null, SpawnFlags.SEARCH_PATH, null, null);
+            } catch (Error e) {
+                warning ("Failed to set wallpaper: %s", e.message);
+            }
         }
 
         private void apply_gsetting (HashTable<string, ThemeSettingValue> ts,

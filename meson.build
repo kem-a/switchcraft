@@ -47,6 +47,7 @@ resources = gnome.compile_resources('switchcraft-resources',
   source_dir: [
     meson.current_build_dir(),
     meson.current_source_dir(),
+    join_paths(meson.current_source_dir(), 'data', 'resources'),
   ]
 )
 
