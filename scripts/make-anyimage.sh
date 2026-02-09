@@ -55,7 +55,7 @@ if ! _inside_arch; then
             -w /src \
             --name "$CONTAINER_NAME" \
             "$CONTAINER_IMAGE" \
-            sh packaging/scripts/make-anyimage.sh
+            sh scripts/make-anyimage.sh
     fi
 fi
 

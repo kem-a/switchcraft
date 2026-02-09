@@ -17,9 +17,32 @@ namespace Switchcraft {
         }
     }
 
+    public class ThemeSettingValue : Object {
+        public string light { get; set; default = ""; }
+        public string dark { get; set; default = ""; }
+
+        public ThemeSettingValue (string light_val = "", string dark_val = "") {
+            this.light = light_val;
+            this.dark = dark_val;
+        }
+
+        public string get_for_theme (string theme) {
+            return theme == "dark" ? dark : light;
+        }
+
+        public void set_for_theme (string theme, string val) {
+            if (theme == "dark") {
+                dark = val;
+            } else {
+                light = val;
+            }
+        }
+    }
+
     public class Application : Adw.Application {
         private string config_path;
         private string constants_path;
+        private string theme_settings_path;
         private string autostart_path;
         private Settings settings;
         private const string DEFAULT_VERSION = Switchcraft.VERSION;
@@ -35,6 +58,7 @@ namespace Switchcraft {
             
             config_path = Path.build_filename (data_dir, "switchcraft", "commands.json");
             constants_path = Path.build_filename (data_dir, "switchcraft", "constants.json");
+            theme_settings_path = Path.build_filename (data_dir, "switchcraft", "theme_settings.json");
             autostart_path = Path.build_filename (config_home, "autostart", "switchcraft-monitor.desktop");
             
             settings = new Settings ("com.github.Switchcraft");
@@ -132,6 +156,8 @@ namespace Switchcraft {
         }
 
         public void execute_commands (string theme) {
+            apply_theme_settings (theme);
+
             var commands = get_commands ();
             if (!commands.contains (theme)) return;
             
@@ -339,6 +365,196 @@ namespace Switchcraft {
             }
         }
 
+        // --- Theme settings persistence ---
+
+        public HashTable<string, ThemeSettingValue> get_theme_settings () {
+            var result = new HashTable<string, ThemeSettingValue> (str_hash, str_equal);
+
+            if (!FileUtils.test (theme_settings_path, FileTest.EXISTS)) {
+                return result;
+            }
+
+            try {
+                string contents;
+                FileUtils.get_contents (theme_settings_path, out contents);
+                var parser = new Json.Parser ();
+                parser.load_from_data (contents);
+                var root = parser.get_root ();
+
+                if (root.get_node_type () == Json.NodeType.OBJECT) {
+                    var obj = root.get_object ();
+                    obj.foreach_member ((o, id, node) => {
+                        if (node.get_node_type () == Json.NodeType.OBJECT) {
+                            var setting = node.get_object ();
+                            var light_val = setting.has_member ("light") ? setting.get_string_member ("light") : "";
+                            var dark_val = setting.has_member ("dark") ? setting.get_string_member ("dark") : "";
+                            result.insert (id, new ThemeSettingValue (light_val, dark_val));
+                        }
+                    });
+                }
+            } catch (Error e) {
+                warning ("Failed to load theme settings: %s", e.message);
+            }
+
+            return result;
+        }
+
+        public void save_theme_settings (HashTable<string, ThemeSettingValue> settings_data) {
+            try {
+                var dir = Path.get_dirname (theme_settings_path);
+                DirUtils.create_with_parents (dir, 0755);
+
+                var root = new Json.Node (Json.NodeType.OBJECT);
+                var obj = new Json.Object ();
+
+                settings_data.foreach ((id, val) => {
+                    var setting_obj = new Json.Object ();
+                    setting_obj.set_string_member ("light", val.light);
+                    setting_obj.set_string_member ("dark", val.dark);
+                    var setting_node = new Json.Node (Json.NodeType.OBJECT);
+                    setting_node.set_object (setting_obj);
+                    obj.set_member (id, setting_node);
+                });
+
+                root.set_object (obj);
+                var generator = new Json.Generator ();
+                generator.set_root (root);
+                generator.pretty = true;
+                generator.indent = 2;
+                FileUtils.set_contents (theme_settings_path, generator.to_data (null));
+            } catch (Error e) {
+                warning ("Failed to save theme settings: %s", e.message);
+            }
+        }
+
+        private void apply_theme_settings (string theme) {
+            var ts = get_theme_settings ();
+            apply_gsetting (ts, "icon-theme", theme, "org.gnome.desktop.interface", "icon-theme");
+            apply_gsetting (ts, "gtk-theme", theme, "org.gnome.desktop.interface", "gtk-theme");
+            apply_gsetting (ts, "cursor-theme", theme, "org.gnome.desktop.interface", "cursor-theme");
+            apply_gsetting (ts, "shell-theme", theme, "org.gnome.shell.extensions.user-theme", "name");
+        }
+
+        private void apply_gsetting (HashTable<string, ThemeSettingValue> ts,
+                                      string setting_id, string theme,
+                                      string schema_id, string key) {
+            var val = ts.lookup (setting_id);
+            if (val == null) return;
+
+            var value = val.get_for_theme (theme);
+            if (value.length == 0) return;
+
+            try {
+                string[] argv = { "gsettings", "set", schema_id, key, value };
+                Process.spawn_async (null, argv, null, SpawnFlags.SEARCH_PATH, null, null);
+            } catch (Error e) {
+                warning ("Failed to apply %s: %s", setting_id, e.message);
+            }
+        }
+
+        // --- Theme discovery ---
+
+        public GenericArray<string> scan_icon_themes () {
+            var themes = new GenericArray<string> ();
+            foreach (var dir_path in get_icon_search_dirs ()) {
+                try {
+                    var dir = Dir.open (dir_path, 0);
+                    string? name;
+                    while ((name = dir.read_name ()) != null) {
+                        if (name.has_prefix (".")) continue;
+                        var index_path = Path.build_filename (dir_path, name, "index.theme");
+                        if (FileUtils.test (index_path, FileTest.EXISTS) && !array_has_string (themes, name)) {
+                            themes.add (name);
+                        }
+                    }
+                } catch (FileError e) {}
+            }
+            themes.sort (strcmp);
+            return themes;
+        }
+
+        public GenericArray<string> scan_gtk_themes () {
+            var themes = new GenericArray<string> ();
+            foreach (var dir_path in get_theme_search_dirs ()) {
+                try {
+                    var dir = Dir.open (dir_path, 0);
+                    string? name;
+                    while ((name = dir.read_name ()) != null) {
+                        if (name.has_prefix (".")) continue;
+                        var gtk4 = Path.build_filename (dir_path, name, "gtk-4.0");
+                        var gtk3 = Path.build_filename (dir_path, name, "gtk-3.0");
+                        if ((FileUtils.test (gtk4, FileTest.IS_DIR) || FileUtils.test (gtk3, FileTest.IS_DIR))
+                            && !array_has_string (themes, name)) {
+                            themes.add (name);
+                        }
+                    }
+                } catch (FileError e) {}
+            }
+            themes.sort (strcmp);
+            return themes;
+        }
+
+        public GenericArray<string> scan_cursor_themes () {
+            var themes = new GenericArray<string> ();
+            foreach (var dir_path in get_icon_search_dirs ()) {
+                try {
+                    var dir = Dir.open (dir_path, 0);
+                    string? name;
+                    while ((name = dir.read_name ()) != null) {
+                        if (name.has_prefix (".")) continue;
+                        var cursors_path = Path.build_filename (dir_path, name, "cursors");
+                        if (FileUtils.test (cursors_path, FileTest.IS_DIR) && !array_has_string (themes, name)) {
+                            themes.add (name);
+                        }
+                    }
+                } catch (FileError e) {}
+            }
+            themes.sort (strcmp);
+            return themes;
+        }
+
+        public GenericArray<string> scan_shell_themes () {
+            var themes = new GenericArray<string> ();
+            foreach (var dir_path in get_theme_search_dirs ()) {
+                try {
+                    var dir = Dir.open (dir_path, 0);
+                    string? name;
+                    while ((name = dir.read_name ()) != null) {
+                        if (name.has_prefix (".")) continue;
+                        var shell_css = Path.build_filename (dir_path, name, "gnome-shell", "gnome-shell.css");
+                        if (FileUtils.test (shell_css, FileTest.EXISTS) && !array_has_string (themes, name)) {
+                            themes.add (name);
+                        }
+                    }
+                } catch (FileError e) {}
+            }
+            themes.sort (strcmp);
+            return themes;
+        }
+
+        private bool array_has_string (GenericArray<string> arr, string s) {
+            for (uint i = 0; i < arr.length; i++) {
+                if (arr[i] == s) return true;
+            }
+            return false;
+        }
+
+        private string[] get_icon_search_dirs () {
+            return {
+                "/usr/share/icons",
+                Path.build_filename (Environment.get_home_dir (), ".local", "share", "icons"),
+                Path.build_filename (Environment.get_home_dir (), ".icons")
+            };
+        }
+
+        private string[] get_theme_search_dirs () {
+            return {
+                "/usr/share/themes",
+                Path.build_filename (Environment.get_home_dir (), ".local", "share", "themes"),
+                Path.build_filename (Environment.get_home_dir (), ".themes")
+            };
+        }
+
         public bool export_configuration_bundle (GLib.File file, out string error_message) {
             error_message = "";
             var zip_tool = Environment.find_program_in_path ("zip");
@@ -393,6 +609,25 @@ namespace Switchcraft {
                 var constants_path = Path.build_filename (temp_dir, "constants.json");
                 FileUtils.set_contents (constants_path, constants_data);
 
+                var ts = get_theme_settings ();
+                var ts_root = new Json.Node (Json.NodeType.OBJECT);
+                var ts_obj = new Json.Object ();
+                ts.foreach ((id, val) => {
+                    var so = new Json.Object ();
+                    so.set_string_member ("light", val.light);
+                    so.set_string_member ("dark", val.dark);
+                    var sn = new Json.Node (Json.NodeType.OBJECT);
+                    sn.set_object (so);
+                    ts_obj.set_member (id, sn);
+                });
+                ts_root.set_object (ts_obj);
+                var ts_gen = new Json.Generator ();
+                ts_gen.set_root (ts_root);
+                ts_gen.pretty = true;
+                ts_gen.indent = 2;
+                var ts_export_path = Path.build_filename (temp_dir, "theme_settings.json");
+                FileUtils.set_contents (ts_export_path, ts_gen.to_data (null));
+
                 if (FileUtils.test (target_path, FileTest.EXISTS)) {
                     if (FileUtils.remove (target_path) != 0) {
                         error_message = "Unable to overwrite existing archive.";
@@ -403,7 +638,7 @@ namespace Switchcraft {
                 try {
                     var launcher = new SubprocessLauncher (SubprocessFlags.STDOUT_SILENCE | SubprocessFlags.STDERR_SILENCE);
                     launcher.set_cwd (temp_dir);
-                    string[] argv = { zip_tool, "-q", target_path, "commands.json", "constants.json" };
+                    string[] argv = { zip_tool, "-q", target_path, "commands.json", "constants.json", "theme_settings.json" };
                     var process = launcher.spawnv (argv);
                     process.wait_check (null);
                 } catch (Error e) {
@@ -499,6 +734,34 @@ namespace Switchcraft {
                 }
 
                 save_constants (constants_table);
+
+                // Import theme settings (optional for backward compatibility)
+                var ts_import_path = Path.build_filename (temp_dir, "theme_settings.json");
+                if (FileUtils.test (ts_import_path, FileTest.EXISTS)) {
+                    try {
+                        string ts_data;
+                        FileUtils.get_contents (ts_import_path, out ts_data);
+                        var ts_parser = new Json.Parser ();
+                        ts_parser.load_from_data (ts_data);
+                        var ts_root = ts_parser.get_root ();
+                        if (ts_root.get_node_type () == Json.NodeType.OBJECT) {
+                            var ts_parsed = ts_root.get_object ();
+                            var ts_table = new HashTable<string, ThemeSettingValue> (str_hash, str_equal);
+                            ts_parsed.foreach_member ((o, id, node) => {
+                                if (node.get_node_type () == Json.NodeType.OBJECT) {
+                                    var s = node.get_object ();
+                                    var lv = s.has_member ("light") ? s.get_string_member ("light") : "";
+                                    var dv = s.has_member ("dark") ? s.get_string_member ("dark") : "";
+                                    ts_table.insert (id, new ThemeSettingValue (lv, dv));
+                                }
+                            });
+                            save_theme_settings (ts_table);
+                        }
+                    } catch (Error e) {
+                        warning ("Failed to import theme settings: %s", e.message);
+                    }
+                }
+
                 return true;
             } catch (Error e) {
                 error_message = e.message;
@@ -521,6 +784,13 @@ namespace Switchcraft {
             if (FileUtils.test (constants_path, FileTest.EXISTS)) {
                 if (FileUtils.remove (constants_path) != 0) {
                     error_message = "Failed to remove constants.json.";
+                    return false;
+                }
+            }
+
+            if (FileUtils.test (theme_settings_path, FileTest.EXISTS)) {
+                if (FileUtils.remove (theme_settings_path) != 0) {
+                    error_message = "Failed to remove theme_settings.json.";
                     return false;
                 }
             }
