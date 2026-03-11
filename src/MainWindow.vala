@@ -155,14 +155,25 @@ namespace Switchcraft {
         }
 
         private Gtk.Widget build_theme_column (string theme, Application? app) {
+            var column = new Gtk.Box (Gtk.Orientation.VERTICAL, 12);
             var group = new Adw.PreferencesGroup ();
             var label = theme == "light" ? "Light" : "Dark";
-            group.set_title (label);
-            group.set_description ("Applied when %s mode activates.".printf (theme));
-
-            // Header suffix icon
             var icon = new Gtk.Image.from_icon_name (theme == "light" ? LIGHT_ICON : DARK_ICON);
-            group.set_header_suffix (icon);
+            var header = new Gtk.Box (Gtk.Orientation.VERTICAL, 4);
+            var title_row = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 8);
+            var title = new Gtk.Label (label);
+            var description = new Gtk.Label ("Applied when %s mode activates.".printf (theme));
+
+            title.set_xalign (0.0f);
+            title.add_css_class ("title-4");
+            description.set_xalign (0.0f);
+            description.add_css_class ("dim-label");
+
+            title_row.append (icon);
+            title_row.append (title);
+            header.append (title_row);
+            header.append (description);
+            column.append (header);
 
             // Theme combo rows
             string[] setting_ids = { "icon-theme", "gtk-theme", "cursor-theme", "shell-theme" };
@@ -182,7 +193,8 @@ namespace Switchcraft {
             group.add (wallpaper_row);
             wallpaper_rows.insert (theme, wallpaper_row);
 
-            return group;
+            column.append (group);
+            return column;
         }
 
         private Adw.ComboRow create_theme_combo_row (string theme, string setting_id,

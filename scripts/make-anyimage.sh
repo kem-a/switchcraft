@@ -8,7 +8,7 @@
 # The script auto-detects whether it's running inside Arch Linux.
 # If not, it will use podman to run itself inside a container.
 #
-# Usage:  ./packaging/scripts/make-anyimage.sh
+# Usage:  ./scripts/make-anyimage.sh
 # Output: ./build-anyimage/dist/Switchcraft-<version>-anylinux-<arch>.AppImage
 #
 
@@ -77,10 +77,11 @@ pacman -Syu --noconfirm \
     libadwaita \
     json-glib \
     jq \
-    zsync \
     desktop-file-utils \
+    squashfs-tools \
     wget \
-    xorg-server-xvfb
+    xorg-server-xvfb \
+    zsync
 
 # ── Install debloated packages ──────────────────────────────────────
 echo "Installing debloated packages..."
@@ -114,6 +115,7 @@ export OUTNAME="Switchcraft-${VERSION}-anylinux-${ARCH}.AppImage"
 export UPINFO="gh-releases-zsync|kem-a|switchcraft|latest|*anylinux*${ARCH}.AppImage.zsync"
 export ICON=/usr/share/icons/hicolor/scalable/apps/com.github.Switchcraft.svg
 export DESKTOP=/usr/share/applications/com.github.Switchcraft.desktop
+export ANYLINUX_LIB=1
 
 # ── Download quick-sharun if not already available ───────────────────
 if command -v quick-sharun >/dev/null 2>&1; then
@@ -129,17 +131,39 @@ echo "Bundling AppImage..."
 echo "---------------------------------------------------------------"
 
 # Bundle main binary + helper tools invoked as subprocesses.
-# quick-sharun will auto-detect GTK4, libadwaita, and all their deps.
-# jq is needed for the monitor script
-# /usr/share/vala is needed for Vala runtime data
-# GIO modules for TLS and proxy are needed since the app uses gio
+# quick-sharun will auto-detect GTK4, libadwaita, and their runtime deps.
+# Switchcraft shells out to gsettings when applying theme changes, so
+# include it explicitly alongside the main executable.
 "$QS" \
     /usr/bin/switchcraft \
-    /usr/bin/jq \
-    /usr/share/vala \
-    /usr/lib/gio/modules/libgiognomeproxy.so \
-    /usr/lib/gio/modules/libgiognutls.so \
-    /usr/lib/gio/modules/libgiolibproxy.so
+    /usr/bin/gsettings
+
+# ── Restore toolkit locale files removed by quick-sharun debloating ──
+# quick-sharun's locale debloating can strip GTK/libadwaita catalogs,
+# which removes translated toolkit strings from menus and dialogs.
+# If the project declares shipped locales, restore those toolkit domains.
+if [ -f po/LINGUAS ]; then
+    echo "Restoring toolkit locale files..."
+
+    restore_locale_domain() {
+        domain=$1
+        while IFS= read -r lang; do
+            case "$lang" in \#*|"") continue ;; esac
+            src="/usr/share/locale/$lang/LC_MESSAGES/$domain.mo"
+            dst="$APPDIR/share/locale/$lang/LC_MESSAGES"
+            if [ -f "$src" ]; then
+                mkdir -p "$dst"
+                cp "$src" "$dst/"
+            fi
+        done < po/LINGUAS
+    }
+
+    for domain in gtk40 glib20 libadwaita; do
+        restore_locale_domain "$domain"
+    done
+else
+    echo "Skipping toolkit locale restore: po/LINGUAS not found."
+fi
 
 # ── Create AppImage ─────────────────────────────────────────────────
 "$QS" --make-appimage
