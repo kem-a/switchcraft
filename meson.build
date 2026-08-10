@@ -92,7 +92,11 @@ rm -f "$datadir/icons/hicolor/scalable/apps/switchcraft.svg"
 rm -f "$datadir/icons/hicolor/scalable/apps/switchcraft_ios.svg"
 rm -f "$autostart_entry"
 rm -f "$monitor_script"
-command -v pkill >/dev/null 2>&1 && pkill -f switchcraft-monitor.sh >/dev/null 2>&1 || true
+if command -v pgrep >/dev/null 2>&1; then
+  for pid in $(pgrep -f switchcraft-monitor); do
+    [ "$pid" = "$$" ] || kill "$pid" 2>/dev/null || true
+  done
+fi
 echo "Uninstallation complete."
 '''
 
