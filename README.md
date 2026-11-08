@@ -2,7 +2,7 @@
 [![Download](https://img.shields.io/badge/Download-latest-blue)](https://github.com/kem-a/switchcraft/releases/latest)
 [![Release](https://img.shields.io/github/v/release/kem-a/switchcraft?semver)](https://github.com/kem-a/switchcraft/releases/latest)
 [![License](https://img.shields.io/github/license/kem-a/switchcraft)](https://github.com/kem-a/switchcraft/blob/main/LICENSE)
-![GNOME 40+](https://img.shields.io/badge/GNOME-40%2B-blue?logo=gnome)
+![GNOME 42+](https://img.shields.io/badge/GNOME-42%2B-blue?logo=gnome)
 ![GTK 4](https://img.shields.io/badge/GTK-4-blue?logo=gtk)
 ![Vala](https://img.shields.io/badge/Vala-compiler-blue?logo=vala)
 [![Stars](https://img.shields.io/github/stars/kem-a/switchcraft?style=social)](https://github.com/kem-a/switchcraft/stargazers)
@@ -53,85 +53,85 @@ Dark theme:
 
 ## Requirements
 
-- GNOME 40+ (GTK 4 and libadwaita)
-- GLib 2.66+
-- Vala compiler (for building)
-- Meson build system
-- jq (for JSON parsing in monitor script)
-- ruby, rubygems, rpmbuild, appimagetool and chrpath (for packaging only)
+- Desktop: GNOME 42+ (Switchcraft follows the `org.gnome.desktop.interface color-scheme` setting)
+- Build tools: a C compiler, `valac`, `meson` (>= 0.59), `ninja`, `pkg-config`, `gettext`, `glib-compile-resources`, `glib-compile-schemas`
+- Libraries (with development headers): `gtk4`, `libadwaita-1` (>= 1.5), `glib-2.0` (>= 2.66), `gio-2.0`, `json-glib-1.0`
+- Runtime tools: `gsettings`, `zip` and `unzip` (configuration export and import), `pkill` (stopping the background monitor)
+- AnyLinux AppImage packaging with `scripts/make-anyimage.sh`: `podman` (the build runs in an Arch Linux container)
+- Local AppImage packaging with `scripts/make-appimage.sh`: `bash`, `jq` and `appimagetool` (downloaded automatically if missing)
 
-<details> <summary> Install dependencies <b>(click to open)</b> </summary>
-  
-**Debian/Ubuntu:**
+## Install
 
-```bash
-sudo apt install meson valac libgtk-4-dev libadwaita-1-dev libjson-glib-dev jq ruby ruby-dev rubygems build-essential
-gem install --user-install fpm
-```
+Simply [download](https://github.com/kem-a/switchcraft/releases/latest) the latest AppImage, enable execute and run it.
+For seamless AppImage installation use [AppManager](https://github.com/kem-a/AppManager).
 
-**Fedora:**
+> The AnyLinux AppImage bundles GTK 4 and libadwaita, so it runs on any distro with a GNOME desktop.
 
-```bash
-sudo dnf install meson vala gtk4-devel libadwaita-devel json-glib-devel jq ruby rubygems rpmbuild chrpath
-gem install --user-install fpm
-```
+## Build
 
-**Arch:**
+<details> <summary> <H4>Install development dependencies</H4> <b>(click to open)</b> </summary>
+
+Your distribution must provide libadwaita >= 1.5. The lists include `zip`, `unzip` and `jq`.
+
+- **Debian / Ubuntu:**
 
 ```bash
-sudo pacman -S meson vala gtk4 libadwaita json-glib jq ruby
-gem install --user-install fpm
+sudo apt install build-essential valac meson ninja-build pkg-config gettext \
+  libglib2.0-dev libgtk-4-dev libadwaita-1-dev libjson-glib-dev zip unzip jq
 ```
 
-**AppImageTool**
+- **Fedora:**
 
-Download from [here](https://github.com/AppImage/appimagetool/releases/download/continuous/appimagetool-x86_64.AppImage) and copy to `$PATH`
+```bash
+sudo dnf install gcc vala meson ninja-build pkgconf-pkg-config gettext \
+  glib2-devel gtk4-devel libadwaita-devel json-glib-devel zip unzip jq
+```
+
+- **Arch Linux / Manjaro:**
+
+```bash
+sudo pacman -S --needed base-devel vala meson ninja gettext glib2 gtk4 libadwaita json-glib zip unzip jq
+```
+
+On Arch Linux / Manjaro, `base-devel` supplies the C compiler and `pkgconf`.
+
+`jq` is needed by `scripts/make-appimage.sh`, but not by the Meson build itself.
 
 </details>
 
-## Installing
-
-[Download latest](https://github.com/kem-a/switchcraft/releases) release rpm, deb or AppImage.
-For seemless AppImage installation use [AppManager](https://github.com/kem-a/AppManager).
-
-## Building
-
-<details> <summary> Details <b>(click to open)</b> </summary>
-  
-#### User-Level building and installation (Recommended)
+Default setup
 
 ```bash
-# Configure for user installation
-meson setup build --prefix="$HOME/.local"
+meson setup build --prefix=$HOME/.local
+```
 
-# Compile
+Build and install
+
+```bash
 meson compile -C build
+meson install -C build
+```
 
-# Install to ~/.local
-ninja -C build install
+Uninstall
 
-# Uninstall
+```bash
 ninja -C build remove
 ```
 
-#### System-Wide Installation
+For a system-wide install use `--prefix=/usr/local` and run the install and remove steps with `sudo`.
+
+Build the portable AnyLinux AppImage (output in `build-anyimage/dist/`)
 
 ```bash
-# Configure for system installation
-meson setup build --prefix=/usr/local
-
-# Compile
-meson compile -C build
-
-# Install system-wide
-sudo ninja -C build install
-
-# Uninstall
-sudo ninja -C build remove
+./scripts/make-anyimage.sh
 ```
 
-</details>
-  
+## Translations
+
+UI strings use gettext. See [po/README.md](po/README.md) for the workflow.
+`./scripts/translations.sh --pot-only` refreshes the template without touching
+existing `.po` files.
+
 ## Configuration
 
 <details> <summary> Details <b>(click to open)</b> </summary>

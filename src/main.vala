@@ -8,6 +8,8 @@
 namespace Switchcraft {
 
     public static int main (string[] args) {
+        init_i18n ();
+
         var app = new Application ();
         return app.run (args);
     }

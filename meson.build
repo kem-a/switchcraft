@@ -7,15 +7,17 @@ project('switchcraft', 'vala', 'c',
   ]
 )
 
-i18n = import('i18n')
 gnome = import('gnome')
+
+# Translation domain used by gettext in Vala and C
+add_project_arguments('-DGETTEXT_PACKAGE="switchcraft"', language: 'c')
 
 # Application ID
 application_id = 'com.github.Switchcraft'
 
 # Dependencies
 gtk4_dep = dependency('gtk4', version: '>= 4.0.0')
-libadwaita_dep = dependency('libadwaita-1', version: '>= 1.0.0')
+libadwaita_dep = dependency('libadwaita-1', version: '>= 1.5.0')
 gio_dep = dependency('gio-2.0', version: '>= 2.66')
 glib_dep = dependency('glib-2.0', version: '>= 2.66')
 json_glib_dep = dependency('json-glib-1.0')
@@ -116,6 +118,9 @@ summary({
   'bindir': get_option('bindir'),
   'datadir': get_option('datadir'),
 }, section: 'Directories')
+
+# Translations
+subdir('po')
 
 # Create uninstall target
 uninstall_script = '''

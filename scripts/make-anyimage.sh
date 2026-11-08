@@ -76,9 +76,10 @@ pacman -Syu --noconfirm \
     gtk4 \
     libadwaita \
     json-glib \
-    jq \
+    gettext \
     desktop-file-utils \
     squashfs-tools \
+    patchelf \
     wget \
     xorg-server-xvfb \
     zsync
@@ -92,6 +93,13 @@ else
     wget --retry-connrefused --tries=30 "$DEBLOATED_URL" -O /tmp/get-debloated-pkgs.sh
     chmod +x /tmp/get-debloated-pkgs.sh
     /tmp/get-debloated-pkgs.sh --add-common --prefer-nano
+fi
+
+# The debloated gtk4 can lag behind the repo libadwaita (aarch64 gtk4-mini
+# 4.22.5 vs libadwaita needing >= 4.23.1). Fall back to the repo gtk4 then.
+if ! pkg-config --exists libadwaita-1; then
+    echo "Debloated gtk4 too old for libadwaita, reinstalling repo gtk4..."
+    pacman -S --noconfirm gtk4
 fi
 
 # ── Build and install switchcraft ────────────────────────────────────
@@ -130,40 +138,33 @@ fi
 echo "Bundling AppImage..."
 echo "---------------------------------------------------------------"
 
-# Bundle main binary + helper tools invoked as subprocesses.
-# quick-sharun will auto-detect GTK4, libadwaita, and their runtime deps.
-# Switchcraft shells out to gsettings when applying theme changes, so
-# include it explicitly alongside the main executable.
+# quick-sharun auto-detects GTK4, libadwaita and their deps.
+# gsettings is passed explicitly: the app spawns it to apply theme settings.
 "$QS" \
     /usr/bin/switchcraft \
     /usr/bin/gsettings
 
-# ── Restore toolkit locale files removed by quick-sharun debloating ──
-# quick-sharun's locale debloating can strip GTK/libadwaita catalogs,
-# which removes translated toolkit strings from menus and dialogs.
-# If the project declares shipped locales, restore those toolkit domains.
-if [ -f po/LINGUAS ]; then
-    echo "Restoring toolkit locale files..."
+# ── Restore locale files removed by quick-sharun debloating ─────────
+# quick-sharun deletes .mo files that do not match a bundled binary name.
+# Restore the app domain and the toolkit domains for the shipped languages.
+echo "Restoring locale files..."
 
-    restore_locale_domain() {
-        domain=$1
-        while IFS= read -r lang; do
-            case "$lang" in \#*|"") continue ;; esac
-            src="/usr/share/locale/$lang/LC_MESSAGES/$domain.mo"
-            dst="$APPDIR/share/locale/$lang/LC_MESSAGES"
-            if [ -f "$src" ]; then
-                mkdir -p "$dst"
-                cp "$src" "$dst/"
-            fi
-        done < po/LINGUAS
-    }
+restore_locale_domain() {
+    domain=$1
+    while IFS= read -r lang; do
+        case "$lang" in \#*|"") continue ;; esac
+        src="/usr/share/locale/$lang/LC_MESSAGES/$domain.mo"
+        dst="$APPDIR/share/locale/$lang/LC_MESSAGES"
+        if [ -f "$src" ]; then
+            mkdir -p "$dst"
+            cp "$src" "$dst/"
+        fi
+    done < po/LINGUAS
+}
 
-    for domain in gtk40 glib20 libadwaita; do
-        restore_locale_domain "$domain"
-    done
-else
-    echo "Skipping toolkit locale restore: po/LINGUAS not found."
-fi
+for domain in switchcraft gtk40 glib20 libadwaita; do
+    restore_locale_domain "$domain"
+done
 
 # ── Create AppImage ─────────────────────────────────────────────────
 "$QS" --make-appimage

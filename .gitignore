@@ -1,20 +1,15 @@
-# Sample/reference code directory
-.github/copilot-instructions.md
-samples
-*.log
-
-# IDEs and editors
-.vscode/
-.idea/
-*.swp
-*.swo
-*~
-
-# Build artifacts
-builddir/
-build/
+AppDir/
+build*/
 dist/
-*.egg-info/
-staging/
+squashfs-root/
+squashfs-*.img
+*.[Aa]pp[Ii]mage
+*.[Aa]pp[Ii]mage.zsync
+appimagetool
 .vscode/
-build-anyimage/
+.directory
+.c[a-z]*/
+*.log
+samples/
+docs/
+tests/

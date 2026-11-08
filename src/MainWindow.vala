@@ -69,11 +69,11 @@ namespace Switchcraft {
             var menu_button = new Gtk.MenuButton ();
             menu_button.set_icon_name ("open-menu-symbolic");
             var menu = new Menu ();
-            menu.append ("Preferences", "win.show-preferences");
-            menu.append ("Constants", "win.show-constants");
-            menu.append ("Keyboard Shortcuts", "win.show-shortcuts");
-            menu.append ("About Switchcraft", "win.show-about");
-            menu.append ("Quit", "app.quit");
+            menu.append (_("Preferences"), "win.show-preferences");
+            menu.append (_("Constants"), "win.show-constants");
+            menu.append (_("Keyboard Shortcuts"), "win.show-shortcuts");
+            menu.append (_("About Switchcraft"), "win.show-about");
+            menu.append (_("Quit"), "app.quit");
             menu_button.set_menu_model (menu);
             header_bar.pack_end (menu_button);
 
@@ -86,8 +86,8 @@ namespace Switchcraft {
             header_bar.set_title_widget (view_switcher_title);
 
             // Banner for monitoring status
-            banner = new Adw.Banner ("Background monitoring is now active");
-            banner.set_button_label ("Dismiss");
+            banner = new Adw.Banner (_("Background monitoring is now active"));
+            banner.set_button_label (_("Dismiss"));
             banner.button_clicked.connect (() => { banner.set_revealed (false); });
             banner.set_revealed (false);
 
@@ -105,11 +105,11 @@ namespace Switchcraft {
             loading_theme_settings = true;
 
             var builtin_page = build_builtin_page ();
-            var builtin_stack_page = view_stack.add_titled (builtin_page, "builtin", "Built-in");
+            var builtin_stack_page = view_stack.add_titled (builtin_page, "builtin", _("Built-in"));
             builtin_stack_page.set_icon_name ("applications-system-symbolic");
 
             var custom_page = build_custom_page ();
-            var custom_stack_page = view_stack.add_titled (custom_page, "custom", "Custom");
+            var custom_stack_page = view_stack.add_titled (custom_page, "custom", _("Custom"));
             custom_stack_page.set_icon_name ("utilities-terminal-symbolic");
 
             loading_theme_settings = false;
@@ -155,12 +155,14 @@ namespace Switchcraft {
         private Gtk.Widget build_theme_column (string theme, Application? app) {
             var column = new Gtk.Box (Gtk.Orientation.VERTICAL, 12);
             var group = new Adw.PreferencesGroup ();
-            var label = theme == "light" ? "Light" : "Dark";
+            var label = theme == "light" ? _("Light") : _("Dark");
             var icon = new Gtk.Image.from_icon_name (theme == "light" ? LIGHT_ICON : DARK_ICON);
             var header = new Gtk.Box (Gtk.Orientation.VERTICAL, 4);
             var title_row = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 8);
             var title = new Gtk.Label (label);
-            var description = new Gtk.Label ("Applied when %s mode activates.".printf (theme));
+            var description = new Gtk.Label (
+                theme == "light" ? _("Applied when light mode activates.")
+                                 : _("Applied when dark mode activates."));
 
             title.set_xalign (0.0f);
             title.add_css_class ("title-4");
@@ -175,7 +177,7 @@ namespace Switchcraft {
 
             // Theme combo rows
             string[] setting_ids = { "icon-theme", "gtk-theme", "cursor-theme", "shell-theme" };
-            string[] setting_titles = { "Icon Theme", "GTK Theme", "Cursor Theme", "Shell Theme" };
+            string[] setting_titles = { _("Icon Theme"), _("GTK Theme"), _("Cursor Theme"), _("Shell Theme") };
             string[] setting_icons = { "view-grid-symbolic", "preferences-desktop-theme-symbolic", "input-mouse-symbolic", "user-desktop-symbolic" };
 
             for (int i = 0; i < setting_ids.length; i++) {
@@ -201,7 +203,7 @@ namespace Switchcraft {
             combo.set_title (title);
 
             var model = new Gtk.StringList (null);
-            model.append ("Don\u2019t change");
+            model.append (_("Don\u2019t change"));
 
             if (app != null) {
                 GenericArray<string>? available = null;
@@ -243,7 +245,7 @@ namespace Switchcraft {
 
         private Adw.ActionRow create_wallpaper_row (string theme) {
             var row = new Adw.ActionRow ();
-            row.set_title ("Wallpaper");
+            row.set_title (_("Wallpaper"));
             var wp_icon = new Gtk.Image.from_icon_name ("image-x-generic-symbolic");
             row.add_prefix (wp_icon);
 
@@ -253,19 +255,19 @@ namespace Switchcraft {
             if (current.length > 0) {
                 row.set_subtitle (Path.get_basename (current));
             } else {
-                row.set_subtitle ("None");
+                row.set_subtitle (_("None"));
             }
 
             var clear_btn = new Gtk.Button.from_icon_name ("edit-clear-symbolic");
             clear_btn.add_css_class ("flat");
             clear_btn.set_valign (Gtk.Align.CENTER);
-            clear_btn.set_tooltip_text ("Clear wallpaper");
+            clear_btn.set_tooltip_text (_("Clear wallpaper"));
             clear_btn.clicked.connect (() => {
                 on_clear_wallpaper (theme, row);
             });
             row.add_suffix (clear_btn);
 
-            var browse_btn = new Gtk.Button.with_label ("Browse\u2026");
+            var browse_btn = new Gtk.Button.with_label (_("Browse\u2026"));
             browse_btn.set_valign (Gtk.Align.CENTER);
             browse_btn.clicked.connect (() => {
                 on_browse_wallpaper (theme, row);
@@ -277,8 +279,8 @@ namespace Switchcraft {
 
         private void on_browse_wallpaper (string theme, Adw.ActionRow row) {
             var dialog = new Gtk.FileDialog ();
-            dialog.set_title ("Select Wallpaper for %s Theme".printf (
-                theme == "light" ? "Light" : "Dark"));
+            dialog.set_title (_("Select Wallpaper for %s Theme").printf (
+                theme == "light" ? _("Light") : _("Dark")));
 
             var filter = new Gtk.FileFilter ();
             filter.add_mime_type ("image/*");
@@ -315,7 +317,7 @@ namespace Switchcraft {
             }
 
             setting_val.set_for_theme (theme, path);
-            row.set_subtitle (path.length > 0 ? Path.get_basename (path) : "None");
+            row.set_subtitle (path.length > 0 ? Path.get_basename (path) : _("None"));
 
             save_theme_settings_from_ui ();
         }
@@ -330,14 +332,13 @@ namespace Switchcraft {
             page_box.set_margin_end (24);
 
             var header_box = new Gtk.Box (Gtk.Orientation.VERTICAL, 6);
-            var title_label = new Gtk.Label ("Custom Commands");
+            var title_label = new Gtk.Label (_("Custom Commands"));
             title_label.add_css_class ("heading");
             title_label.set_xalign (0);
             header_box.append (title_label);
 
             var desc_label = new Gtk.Label (
-                "Shell commands executed when the system switches themes. " +
-                "Use the toggle to assign each command to light or dark mode."
+                _("Shell commands executed when the system switches themes. Use the toggle to assign each command to light or dark mode.")
             );
             desc_label.add_css_class ("body");
             desc_label.add_css_class ("dim-label");
@@ -347,7 +348,7 @@ namespace Switchcraft {
 
             page_box.append (header_box);
 
-            var add_button = new Gtk.Button.with_label ("Add New Command");
+            var add_button = new Gtk.Button.with_label (_("Add New Command"));
             add_button.add_css_class ("suggested-action");
             add_button.set_halign (Gtk.Align.START);
             add_button.clicked.connect (() => {
@@ -356,14 +357,14 @@ namespace Switchcraft {
             page_box.append (add_button);
 
             page_box.append (create_command_section (
-                "Commands",
-                "Active commands that will run when their theme matches.",
+                _("Commands"),
+                _("Active commands that will run when their theme matches."),
                 out enabled_command_listbox
             ));
 
             page_box.append (create_command_section (
-                "Disabled",
-                "Saved commands that are currently turned off.",
+                _("Disabled"),
+                _("Saved commands that are currently turned off."),
                 out disabled_command_listbox
             ));
 
@@ -504,7 +505,7 @@ namespace Switchcraft {
             var drag_handle = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 0);
             drag_handle.set_valign (Gtk.Align.CENTER);
             drag_handle.set_margin_end (6);
-            drag_handle.set_tooltip_text ("Drag to reorder");
+            drag_handle.set_tooltip_text (_("Drag to reorder"));
 
             var drag_icon = new Gtk.Image.from_icon_name ("list-drag-handle-symbolic");
             drag_icon.add_css_class ("dim-label");
@@ -576,7 +577,7 @@ namespace Switchcraft {
             var toggle = new Gtk.Switch ();
             toggle.set_valign (Gtk.Align.CENTER);
             toggle.set_active (entry.enabled);
-            toggle.set_tooltip_text ("Enable or disable this command");
+            toggle.set_tooltip_text (_("Enable or disable this command"));
             toggle.state_set.connect ((state) => {
                 return on_toggle_command_state (toggle, state, row, entry);
             });
@@ -588,7 +589,7 @@ namespace Switchcraft {
 
             var edit_button = new Gtk.Button.from_icon_name ("document-edit-symbolic");
             edit_button.add_css_class ("flat");
-            edit_button.set_tooltip_text ("Edit command");
+            edit_button.set_tooltip_text (_("Edit command"));
             edit_button.clicked.connect (() => {
                 on_edit_command_clicked (entry);
             });
@@ -596,7 +597,7 @@ namespace Switchcraft {
 
             var remove_button = new Gtk.Button.from_icon_name ("user-trash-symbolic");
             remove_button.add_css_class ("flat");
-            remove_button.set_tooltip_text ("Remove command");
+            remove_button.set_tooltip_text (_("Remove command"));
             remove_button.clicked.connect (() => {
                 on_remove_command_clicked (entry);
             });
@@ -656,7 +657,7 @@ namespace Switchcraft {
 
             var entry = new Gtk.Entry ();
             entry.set_hexpand (true);
-            entry.set_placeholder_text ("e.g. notify-send 'Theme changed'");
+            entry.set_placeholder_text (_("e.g. notify-send 'Theme changed'"));
             if (inline_editor_entry != null) {
                 entry.set_text (inline_editor_entry.command);
             }
@@ -664,7 +665,7 @@ namespace Switchcraft {
 
             var save_button = new Gtk.Button.from_icon_name ("object-select-symbolic");
             save_button.add_css_class ("flat");
-            save_button.set_tooltip_text (inline_editor_is_new ? "Add command" : "Save command");
+            save_button.set_tooltip_text (inline_editor_is_new ? _("Add command") : _("Save command"));
             save_button.clicked.connect (() => {
                 save_inline_command_row (entry);
             });
@@ -672,7 +673,7 @@ namespace Switchcraft {
 
             var cancel_button = new Gtk.Button.from_icon_name ("window-close-symbolic");
             cancel_button.add_css_class ("flat");
-            cancel_button.set_tooltip_text ("Cancel");
+            cancel_button.set_tooltip_text (_("Cancel"));
             cancel_button.clicked.connect (() => {
                 cancel_inline_command_edit ();
             });
@@ -1037,7 +1038,7 @@ namespace Switchcraft {
                 if (wp_row != null) {
                     var wp_val = theme_settings.lookup ("wallpaper");
                     var path = wp_val != null ? wp_val.get_for_theme (t) : "";
-                    wp_row.set_subtitle (path.length > 0 ? Path.get_basename (path) : "None");
+                    wp_row.set_subtitle (path.length > 0 ? Path.get_basename (path) : _("None"));
                 }
             }
             loading_theme_settings = false;

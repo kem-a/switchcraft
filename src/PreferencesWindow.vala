@@ -15,7 +15,7 @@ namespace Switchcraft {
         
         public PreferencesWindow (Application application, MainWindow parent) {
             Object (
-                title: "Preferences"
+                title: _("Preferences")
             );
             
             app = application;
@@ -30,12 +30,12 @@ namespace Switchcraft {
             add (general_page);
             
             var monitoring_group = new Adw.PreferencesGroup ();
-            monitoring_group.set_title ("Monitoring");
+            monitoring_group.set_title (_("Monitoring"));
             general_page.add (monitoring_group);
             
             monitoring_row = new Adw.SwitchRow ();
-            monitoring_row.set_title ("Enable Monitor");
-            monitoring_row.set_subtitle ("Run the background process that reacts to GNOME theme changes.");
+            monitoring_row.set_title (_("Enable Monitor"));
+            monitoring_row.set_subtitle (_("Run the background process that reacts to GNOME theme changes."));
             monitoring_group.add (monitoring_row);
             monitoring_row.notify["active"].connect (() => {
                 if (loading_state) {
@@ -45,15 +45,15 @@ namespace Switchcraft {
             });
             
             var bundle_group = new Adw.PreferencesGroup ();
-            bundle_group.set_title ("Configuration");
-            bundle_group.set_description ("Import or export commands and constants together as a zip archive.");
+            bundle_group.set_title (_("Configuration"));
+            bundle_group.set_description (_("Import or export commands and constants together as a zip archive."));
             general_page.add (bundle_group);
             
             var import_row = new Adw.ActionRow ();
-            import_row.set_title ("Import Configuration");
-            import_row.set_subtitle ("Replace local commands and constants from a zip file.");
+            import_row.set_title (_("Import Configuration"));
+            import_row.set_subtitle (_("Replace local commands and constants from a zip file."));
             import_row.set_activatable (false);
-            var import_button = new Gtk.Button.with_label ("Import");
+            var import_button = new Gtk.Button.with_label (_("Import"));
             import_button.set_valign (Gtk.Align.CENTER);
             import_button.clicked.connect (() => {
                 import_configuration.begin ();
@@ -62,10 +62,10 @@ namespace Switchcraft {
             bundle_group.add (import_row);
             
             var export_row = new Adw.ActionRow ();
-            export_row.set_title ("Export Configuration");
-            export_row.set_subtitle ("Save commands and constants into a zip file.");
+            export_row.set_title (_("Export Configuration"));
+            export_row.set_subtitle (_("Save commands and constants into a zip file."));
             export_row.set_activatable (false);
-            var export_button = new Gtk.Button.with_label ("Export");
+            var export_button = new Gtk.Button.with_label (_("Export"));
             export_button.set_valign (Gtk.Align.CENTER);
             export_button.clicked.connect (() => {
                 export_configuration.begin ();
@@ -74,15 +74,15 @@ namespace Switchcraft {
             bundle_group.add (export_row);
 
             var danger_group = new Adw.PreferencesGroup ();
-            danger_group.set_title ("Danger Zone");
-            danger_group.set_description ("Remove all saved commands and constants from this device.");
+            danger_group.set_title (_("Danger Zone"));
+            danger_group.set_description (_("Remove all saved commands and constants from this device."));
             general_page.add (danger_group);
 
             var delete_row = new Adw.ActionRow ();
-            delete_row.set_title ("Delete All Configuration");
-            delete_row.set_subtitle ("Deletes commands.json and constants.json. This cannot be undone.");
+            delete_row.set_title (_("Delete All Configuration"));
+            delete_row.set_subtitle (_("Deletes commands.json and constants.json. This cannot be undone."));
             delete_row.set_activatable (false);
-            var delete_button = new Gtk.Button.with_label ("Delete");
+            var delete_button = new Gtk.Button.with_label (_("Delete"));
             delete_button.set_valign (Gtk.Align.CENTER);
             delete_button.add_css_class ("destructive-action");
             delete_button.clicked.connect (() => {
@@ -100,7 +100,7 @@ namespace Switchcraft {
         
         private async void import_configuration () {
             var dialog = new Gtk.FileDialog ();
-            dialog.set_title ("Import Configuration");
+            dialog.set_title (_("Import Configuration"));
             try {
                 var file = yield dialog.open (main_window, null);
                 if (file == null) {
@@ -110,21 +110,21 @@ namespace Switchcraft {
                 if (app.import_configuration_bundle (file, out error_message)) {
                     main_window.reload_commands_from_storage ();
                     load_state ();
-                    show_toast ("Configuration imported");
+                    show_toast (_("Configuration imported"));
                 } else {
-                    show_toast ("Import failed: %s".printf (error_message), true);
+                    show_toast (_("Import failed: %s").printf (error_message), true);
                 }
             } catch (Error e) {
                 if (e.domain == Gtk.DialogError.quark () && e.code == Gtk.DialogError.CANCELLED) {
                     return;
                 }
-                show_toast ("Import failed: %s".printf (e.message), true);
+                show_toast (_("Import failed: %s").printf (e.message), true);
             }
         }
         
         private async void export_configuration () {
             var dialog = new Gtk.FileDialog ();
-            dialog.set_title ("Export Configuration");
+            dialog.set_title (_("Export Configuration"));
             dialog.set_initial_name ("switchcraft-config.zip");
             try {
                 var file = yield dialog.save (main_window, null);
@@ -133,25 +133,25 @@ namespace Switchcraft {
                 }
                 string error_message;
                 if (app.export_configuration_bundle (file, out error_message)) {
-                    show_toast ("Configuration exported");
+                    show_toast (_("Configuration exported"));
                 } else {
-                    show_toast ("Export failed: %s".printf (error_message), true);
+                    show_toast (_("Export failed: %s").printf (error_message), true);
                 }
             } catch (Error e) {
                 if (e.domain == Gtk.DialogError.quark () && e.code == Gtk.DialogError.CANCELLED) {
                     return;
                 }
-                show_toast ("Export failed: %s".printf (e.message), true);
+                show_toast (_("Export failed: %s").printf (e.message), true);
             }
         }
 
         private void show_delete_confirmation () {
             var dialog = new Adw.AlertDialog (
-                "Delete all configuration?",
-                "This will remove every custom command and constant. This action cannot be undone."
+                _("Delete all configuration?"),
+                _("This will remove every custom command and constant. This action cannot be undone.")
             );
-            dialog.add_response ("cancel", "Cancel");
-            dialog.add_response ("delete", "Delete");
+            dialog.add_response ("cancel", _("Cancel"));
+            dialog.add_response ("delete", _("Delete"));
             dialog.set_default_response ("cancel");
             dialog.set_response_appearance ("delete", Adw.ResponseAppearance.DESTRUCTIVE);
 
@@ -167,9 +167,9 @@ namespace Switchcraft {
             string error_message;
             if (app.delete_configuration_files (out error_message)) {
                 main_window.reload_commands_from_storage ();
-                show_toast ("Commands and constants deleted");
+                show_toast (_("Commands and constants deleted"));
             } else {
-                show_toast ("Delete failed: %s".printf (error_message), true);
+                show_toast (_("Delete failed: %s").printf (error_message), true);
             }
         }
         

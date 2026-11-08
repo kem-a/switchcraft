@@ -1,0 +1,11 @@
+# List of source files containing translatable strings
+
+src/Application.vala
+src/ConstantsWindow.vala
+src/MainWindow.vala
+src/PreferencesWindow.vala
+
+data/resources/ui/shortcuts.ui
+data/com.github.Switchcraft.desktop.in
+data/com.github.Switchcraft.gschema.xml
+data/com.github.Switchcraft.metainfo.xml.in

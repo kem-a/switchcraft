@@ -7,6 +7,57 @@
 
 namespace Switchcraft {
 
+    public const string GETTEXT_PACKAGE = "switchcraft";
+
+    public void init_i18n () {
+        if (Intl.setlocale (LocaleCategory.ALL, "") == null) {
+            if (Intl.setlocale (LocaleCategory.ALL, "C.UTF-8") != null) {
+                Environment.set_variable ("LC_ALL", "C.UTF-8", true);
+                Environment.set_variable ("LANG", "C.UTF-8", true);
+            } else {
+                Intl.setlocale (LocaleCategory.ALL, "C");
+                Environment.set_variable ("LC_ALL", "C", true);
+                Environment.set_variable ("LANG", "C", true);
+            }
+        }
+
+        Intl.bindtextdomain (GETTEXT_PACKAGE, get_locale_dir ());
+        Intl.bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
+        Intl.textdomain (GETTEXT_PACKAGE);
+    }
+
+    private string get_locale_dir () {
+        // Check next to the running binary first. This covers local installs
+        // and both AppImage layouts without trusting an inherited APPDIR.
+        try {
+            var exe_path = FileUtils.read_link ("/proc/self/exe");
+            if (exe_path != null) {
+                var local_locale = Path.build_filename (
+                    Path.get_dirname (exe_path), "..", "share", "locale");
+                if (FileUtils.test (local_locale, FileTest.IS_DIR)) {
+                    return local_locale;
+                }
+            }
+        } catch (Error e) {
+            // Fall through to the bundle and system locale directories
+        }
+
+        var appdir = Environment.get_variable ("APPDIR");
+        if (appdir != null && appdir != "") {
+            var bundled = Path.build_filename (appdir, "share", "locale");
+            if (FileUtils.test (bundled, FileTest.IS_DIR)) {
+                return bundled;
+            }
+
+            var classic = Path.build_filename (appdir, "usr", "share", "locale");
+            if (FileUtils.test (classic, FileTest.IS_DIR)) {
+                return classic;
+            }
+        }
+
+        return "/usr/share/locale";
+    }
+
     public class CommandEntry : Object {
         public string command { get; set; }
         public bool enabled { get; set; default = true; }
@@ -45,8 +96,7 @@ namespace Switchcraft {
         private string theme_settings_path;
         private string autostart_path;
         private Settings settings;
-        private const string DEFAULT_VERSION = Switchcraft.VERSION;
-        
+
         public Application () {
             Object (
                 application_id: "com.github.Switchcraft",
@@ -65,8 +115,8 @@ namespace Switchcraft {
 
             migrate_config_files ();
 
-            add_main_option ("version", 'v', OptionFlags.NONE, OptionArg.NONE, "Show version information", null);
-            add_main_option ("background", 'b', OptionFlags.NONE, OptionArg.NONE, "Run in background for theme monitoring", null);
+            add_main_option ("version", 'v', OptionFlags.NONE, OptionArg.NONE, _("Show version information"), null);
+            add_main_option ("background", 'b', OptionFlags.NONE, OptionArg.NONE, _("Run in background for theme monitoring"), null);
 
             set_resource_base_path ("/com/github/Switchcraft/");
             set_accels_for_action ("win.add-command", new string[] {"<Primary>N"});
@@ -581,20 +631,20 @@ namespace Switchcraft {
             error_message = "";
             var zip_tool = Environment.find_program_in_path ("zip");
             if (zip_tool == null) {
-                error_message = "The 'zip' command is required to export.";
+                error_message = _("The 'zip' command is required to export.");
                 return false;
             }
 
             var target_path = file.get_path ();
             if (target_path == null) {
-                error_message = "Destination must be a local file.";
+                error_message = _("Destination must be a local file.");
                 return false;
             }
 
             var parent = Path.get_dirname (target_path);
             if (parent != null && parent.length > 0 && parent != ".") {
                 if (DirUtils.create_with_parents (parent, 0755) != 0) {
-                    error_message = "Failed to prepare destination directory.";
+                    error_message = _("Failed to prepare destination directory.");
                     return false;
                 }
             }
@@ -602,7 +652,7 @@ namespace Switchcraft {
             var template = Path.build_filename (Environment.get_tmp_dir (), "switchcraft-export-XXXXXX");
             string? temp_dir = DirUtils.mkdtemp (template);
             if (temp_dir == null) {
-                error_message = "Failed to create temporary directory.";
+                error_message = _("Failed to create temporary directory.");
                 return false;
             }
 
@@ -652,7 +702,7 @@ namespace Switchcraft {
 
                 if (FileUtils.test (target_path, FileTest.EXISTS)) {
                     if (FileUtils.remove (target_path) != 0) {
-                        error_message = "Unable to overwrite existing archive.";
+                        error_message = _("Unable to overwrite existing archive.");
                         return false;
                     }
                 }
@@ -664,7 +714,7 @@ namespace Switchcraft {
                     var process = launcher.spawnv (argv);
                     process.wait_check (null);
                 } catch (Error e) {
-                    error_message = "Failed to write archive: %s".printf (e.message);
+                    error_message = _("Failed to write archive: %s").printf (e.message);
                     return false;
                 }
 
@@ -681,20 +731,20 @@ namespace Switchcraft {
             error_message = "";
             var unzip_tool = Environment.find_program_in_path ("unzip");
             if (unzip_tool == null) {
-                error_message = "The 'unzip' command is required to import.";
+                error_message = _("The 'unzip' command is required to import.");
                 return false;
             }
 
             var source_path = file.get_path ();
             if (source_path == null) {
-                error_message = "Archive must be a local file.";
+                error_message = _("Archive must be a local file.");
                 return false;
             }
 
             var template = Path.build_filename (Environment.get_tmp_dir (), "switchcraft-import-XXXXXX");
             string? temp_dir = DirUtils.mkdtemp (template);
             if (temp_dir == null) {
-                error_message = "Failed to create temporary directory.";
+                error_message = _("Failed to create temporary directory.");
                 return false;
             }
 
@@ -705,7 +755,7 @@ namespace Switchcraft {
                     var process = launcher.spawnv (argv);
                     process.wait_check (null);
                 } catch (Error e) {
-                    error_message = "Failed to unpack archive: %s".printf (e.message);
+                    error_message = _("Failed to unpack archive: %s").printf (e.message);
                     return false;
                 }
 
@@ -713,7 +763,7 @@ namespace Switchcraft {
                 var constants_path = Path.build_filename (temp_dir, "constants.json");
 
                 if (!FileUtils.test (commands_path, FileTest.EXISTS) || !FileUtils.test (constants_path, FileTest.EXISTS)) {
-                    error_message = "Archive must contain commands.json and constants.json at the top level.";
+                    error_message = _("Archive must contain commands.json and constants.json at the top level.");
                     return false;
                 }
 
@@ -723,7 +773,7 @@ namespace Switchcraft {
                 commands_parser.load_from_data (commands_data);
                 var commands_root = commands_parser.get_root ();
                 if (commands_root.get_node_type () != Json.NodeType.OBJECT) {
-                    error_message = "commands.json is not a JSON object.";
+                    error_message = _("commands.json is not a JSON object.");
                     return false;
                 }
                 var imported_commands = normalize_commands (commands_root);
@@ -735,7 +785,7 @@ namespace Switchcraft {
                 constants_parser.load_from_data (constants_data);
                 var constants_root = constants_parser.get_root ();
                 if (constants_root.get_node_type () != Json.NodeType.OBJECT) {
-                    error_message = "constants.json is not a JSON object.";
+                    error_message = _("constants.json is not a JSON object.");
                     return false;
                 }
 
@@ -751,7 +801,7 @@ namespace Switchcraft {
                 });
 
                 if (invalid_value) {
-                    error_message = "constants.json must only contain string values.";
+                    error_message = _("constants.json must only contain string values.");
                     return false;
                 }
 
@@ -798,21 +848,21 @@ namespace Switchcraft {
 
             if (FileUtils.test (config_path, FileTest.EXISTS)) {
                 if (FileUtils.remove (config_path) != 0) {
-                    error_message = "Failed to remove commands.json.";
+                    error_message = _("Failed to remove commands.json.");
                     return false;
                 }
             }
 
             if (FileUtils.test (constants_path, FileTest.EXISTS)) {
                 if (FileUtils.remove (constants_path) != 0) {
-                    error_message = "Failed to remove constants.json.";
+                    error_message = _("Failed to remove constants.json.");
                     return false;
                 }
             }
 
             if (FileUtils.test (theme_settings_path, FileTest.EXISTS)) {
                 if (FileUtils.remove (theme_settings_path) != 0) {
-                    error_message = "Failed to remove theme_settings.json.";
+                    error_message = _("Failed to remove theme_settings.json.");
                     return false;
                 }
             }
@@ -923,19 +973,23 @@ namespace Switchcraft {
                 // Fallback to "switchcraft" if read_link fails
             }
 
-            string desktop_entry = """[Desktop Entry]
-Type=Application
-Name=Switchcraft Monitor
-Comment=Monitor GNOME theme changes and run commands
-Exec=%s --background
-Icon=com.github.Switchcraft
-Terminal=false
-Categories=Utility;GNOME;GTK;
-StartupNotify=false
-X-GNOME-Autostart-enabled=true
-X-GNOME-Autostart-Delay=2
-Hidden=false
-""".printf (exe_path);
+            string desktop_entry =
+                "[Desktop Entry]\n" +
+                "Type=Application\n" +
+                "Name=%s\n" +
+                "Comment=%s\n" +
+                "Exec=%s --background\n" +
+                "Icon=com.github.Switchcraft\n" +
+                "Terminal=false\n" +
+                "Categories=Utility;GNOME;GTK;\n" +
+                "StartupNotify=false\n" +
+                "X-GNOME-Autostart-enabled=true\n" +
+                "X-GNOME-Autostart-Delay=2\n" +
+                "Hidden=false\n";
+            desktop_entry = desktop_entry.printf (
+                _("Switchcraft Monitor"),
+                _("Monitor GNOME theme changes and run commands"),
+                exe_path);
             
             try {
                 var dir = Path.get_dirname (autostart_path);
