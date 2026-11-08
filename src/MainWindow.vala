@@ -16,15 +16,20 @@ namespace Switchcraft {
         private Adw.Banner? banner = null;
         private PreferencesWindow? preferences_window = null;
         private Adw.ToastOverlay? toast_overlay = null;
-        private Gtk.Button add_button;
         private Adw.ViewStack view_stack;
-        private Gtk.ListBox command_listbox;
-        private Gtk.Stack command_content_stack;
+        private Gtk.ListBox enabled_command_listbox;
+        private Gtk.ListBox disabled_command_listbox;
+        private HashTable<Gtk.ListBoxRow, CommandEntry> command_row_entries;
+        private CommandEntry? drag_source_entry = null;
         private string? drag_theme = null;
-        private int drag_source_index = -1;
+        private bool drag_source_enabled = false;
         private bool loading_theme_settings = false;
         private GenericArray<string> row_theme_map;
         private GenericArray<CommandEntry> row_entry_map;
+        private CommandEntry? inline_editor_entry = null;
+        private string inline_editor_theme = "light";
+        private bool inline_editor_is_new = false;
+        private bool should_focus_inline_editor = false;
 
         private const string LIGHT_ICON = "weather-clear-symbolic";
         private const string DARK_ICON = "weather-clear-night-symbolic";
@@ -38,6 +43,7 @@ namespace Switchcraft {
 
             theme_combo_rows = new HashTable<string, Adw.ComboRow> (str_hash, str_equal);
             wallpaper_rows = new HashTable<string, Adw.ActionRow> (str_hash, str_equal);
+            command_row_entries = new HashTable<Gtk.ListBoxRow, CommandEntry> (direct_hash, direct_equal);
             row_theme_map = new GenericArray<string> ();
             row_entry_map = new GenericArray<CommandEntry> ();
 
@@ -58,14 +64,6 @@ namespace Switchcraft {
             add_action_handler ("show-about", on_show_about_action);
             add_action_handler ("show-constants", on_show_constants_action);
             add_action_handler ("show-shortcuts", on_show_shortcuts_action);
-
-            // Add button
-            add_button = new Gtk.Button ();
-            add_button.set_icon_name ("list-add-symbolic");
-            add_button.set_tooltip_text ("Add Command");
-            add_button.add_css_class ("flat");
-            add_button.set_action_name ("win.add-command");
-            header_bar.pack_start (add_button);
 
             // Menu button
             var menu_button = new Gtk.MenuButton ();
@@ -349,37 +347,60 @@ namespace Switchcraft {
 
             page_box.append (header_box);
 
-            command_listbox = new Gtk.ListBox ();
-            command_listbox.set_selection_mode (Gtk.SelectionMode.SINGLE);
-            command_listbox.add_css_class ("boxed-list");
-            configure_listbox_for_reordering (command_listbox);
+            var add_button = new Gtk.Button.with_label ("Add New Command");
+            add_button.add_css_class ("suggested-action");
+            add_button.set_halign (Gtk.Align.START);
+            add_button.clicked.connect (() => {
+                on_add_command_action ();
+            });
+            page_box.append (add_button);
+
+            page_box.append (create_command_section (
+                "Commands",
+                "Active commands that will run when their theme matches.",
+                out enabled_command_listbox
+            ));
+
+            page_box.append (create_command_section (
+                "Disabled",
+                "Saved commands that are currently turned off.",
+                out disabled_command_listbox
+            ));
+
+            rebuild_display_order ();
+            refresh_command_list_ui ();
 
             var scrolled = new Gtk.ScrolledWindow ();
             scrolled.set_policy (Gtk.PolicyType.NEVER, Gtk.PolicyType.AUTOMATIC);
             scrolled.set_hexpand (true);
             scrolled.set_vexpand (true);
-            scrolled.set_child (command_listbox);
+            scrolled.set_child (page_box);
 
-            var placeholder = new Adw.StatusPage ();
-            placeholder.set_icon_name ("list-add-symbolic");
-            placeholder.set_title ("No custom commands");
-            placeholder.set_description (
-                "Click the + button or press Ctrl+N to add a shell command."
-            );
+            return scrolled;
+        }
 
-            command_content_stack = new Gtk.Stack ();
-            command_content_stack.set_transition_type (Gtk.StackTransitionType.CROSSFADE);
-            command_content_stack.set_hexpand (true);
-            command_content_stack.set_vexpand (true);
-            command_content_stack.add_named (scrolled, "list");
-            command_content_stack.add_named (placeholder, "placeholder");
+        private Gtk.Widget create_command_section (string title, string description,
+                                                   out Gtk.ListBox listbox) {
+            var section_box = new Gtk.Box (Gtk.Orientation.VERTICAL, 8);
 
-            page_box.append (command_content_stack);
+            var title_label = new Gtk.Label (title);
+            title_label.add_css_class ("title-4");
+            title_label.set_xalign (0);
+            section_box.append (title_label);
 
-            rebuild_display_order ();
-            refresh_command_list_ui ();
+            var description_label = new Gtk.Label (description);
+            description_label.add_css_class ("dim-label");
+            description_label.set_wrap (true);
+            description_label.set_xalign (0);
+            section_box.append (description_label);
 
-            return page_box;
+            listbox = new Gtk.ListBox ();
+            listbox.set_selection_mode (Gtk.SelectionMode.NONE);
+            listbox.add_css_class ("boxed-list");
+            configure_listbox_for_reordering (listbox);
+            section_box.append (listbox);
+
+            return section_box;
         }
 
         private void rebuild_display_order () {
@@ -398,19 +419,46 @@ namespace Switchcraft {
         }
 
         private void refresh_command_list_ui () {
-            Gtk.ListBoxRow? row = command_listbox.get_row_at_index (0);
-            while (row != null) {
-                command_listbox.remove (row);
-                row = command_listbox.get_row_at_index (0);
+            command_row_entries.remove_all ();
+            clear_command_listbox (enabled_command_listbox);
+            clear_command_listbox (disabled_command_listbox);
+
+            if (inline_editor_is_new || (inline_editor_entry != null && inline_editor_entry.enabled)) {
+                enabled_command_listbox.append (create_inline_command_row ());
+            }
+            for (int i = 0; i < (int) row_entry_map.length; i++) {
+                var entry = row_entry_map[i];
+                if (!entry.enabled) {
+                    continue;
+                }
+
+                if (!inline_editor_is_new && inline_editor_entry == entry) continue;
+
+                enabled_command_listbox.append (create_command_row (row_theme_map[i], entry));
+            }
+
+            if (!inline_editor_is_new && inline_editor_entry != null && !inline_editor_entry.enabled) {
+                disabled_command_listbox.append (create_inline_command_row ());
             }
 
             for (int i = 0; i < (int) row_entry_map.length; i++) {
-                command_listbox.append (create_command_row (row_theme_map[i], row_entry_map[i]));
-            }
+                var entry = row_entry_map[i];
+                if (entry.enabled) {
+                    continue;
+                }
 
-            command_content_stack.set_visible_child_name (
-                row_entry_map.length > 0 ? "list" : "placeholder"
-            );
+                if (!inline_editor_is_new && inline_editor_entry == entry) continue;
+
+                disabled_command_listbox.append (create_command_row (row_theme_map[i], entry));
+            }
+        }
+
+        private void clear_command_listbox (Gtk.ListBox listbox) {
+            Gtk.ListBoxRow? row = listbox.get_row_at_index (0);
+            while (row != null) {
+                listbox.remove (row);
+                row = listbox.get_row_at_index (0);
+            }
         }
 
         private void rebuild_commands_from_display_order () {
@@ -427,31 +475,30 @@ namespace Switchcraft {
             commands.replace ("dark", (owned) dark);
         }
 
-        private string get_row_theme (int listbox_index) {
-            if (listbox_index >= 0 && listbox_index < (int) row_theme_map.length) {
-                return row_theme_map[listbox_index];
+        private int get_entry_index (CommandEntry entry) {
+            for (int i = 0; i < (int) row_entry_map.length; i++) {
+                if (row_entry_map[i] == entry) {
+                    return i;
+                }
             }
-            return "light";
+
+            return -1;
         }
 
-        private int get_theme_relative_index (int listbox_index) {
-            if (listbox_index < 0 || listbox_index >= (int) row_entry_map.length) return -1;
-            var entry = row_entry_map[listbox_index];
-            var theme = row_theme_map[listbox_index];
-            unowned List<CommandEntry>? cmds = commands.lookup (theme);
-            if (cmds == null) return -1;
-            int idx = 0;
-            foreach (var e in cmds) {
-                if (e == entry) return idx;
-                idx++;
+        private string get_entry_theme (CommandEntry entry) {
+            int index = get_entry_index (entry);
+            if (index >= 0) {
+                return row_theme_map[index];
             }
-            return -1;
+
+            return "light";
         }
 
         private Adw.ActionRow create_command_row (string theme, CommandEntry entry) {
             var row = new Adw.ActionRow ();
             row.set_title (entry.command);
             row.set_activatable (false);
+            command_row_entries.insert (row, entry);
 
             // Drag handle
             var drag_handle = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 0);
@@ -467,14 +514,14 @@ namespace Switchcraft {
             var drag_source = new Gtk.DragSource ();
             drag_source.set_actions (Gdk.DragAction.MOVE);
             drag_source.prepare.connect ((x, y) => {
-                int index = row.get_index ();
-                if (index < 0) {
+                if (get_entry_index (entry) < 0) {
                     reset_drag_state ();
                     return (Gdk.ContentProvider?) null;
                 }
 
-                drag_theme = get_row_theme (index);
-                drag_source_index = index;
+                drag_source_entry = entry;
+                drag_theme = get_entry_theme (entry);
+                drag_source_enabled = entry.enabled;
 
                 GLib.Value value = GLib.Value (typeof (string));
                 value.set_string (drag_theme);
@@ -512,12 +559,12 @@ namespace Switchcraft {
             // Connect signals AFTER initial state to avoid spurious handlers
             light_toggle.toggled.connect (() => {
                 if (light_toggle.get_active ()) {
-                    on_theme_toggle_changed (row, "light");
+                    on_theme_toggle_changed (entry, "light");
                 }
             });
             dark_toggle.toggled.connect (() => {
                 if (dark_toggle.get_active ()) {
-                    on_theme_toggle_changed (row, "dark");
+                    on_theme_toggle_changed (entry, "dark");
                 }
             });
 
@@ -531,7 +578,7 @@ namespace Switchcraft {
             toggle.set_active (entry.enabled);
             toggle.set_tooltip_text ("Enable or disable this command");
             toggle.state_set.connect ((state) => {
-                return on_toggle_command_state (toggle, state, row);
+                return on_toggle_command_state (toggle, state, row, entry);
             });
             row.add_suffix (toggle);
 
@@ -543,7 +590,7 @@ namespace Switchcraft {
             edit_button.add_css_class ("flat");
             edit_button.set_tooltip_text ("Edit command");
             edit_button.clicked.connect (() => {
-                on_edit_command_clicked (row);
+                on_edit_command_clicked (entry);
             });
             controls_box.append (edit_button);
 
@@ -551,7 +598,7 @@ namespace Switchcraft {
             remove_button.add_css_class ("flat");
             remove_button.set_tooltip_text ("Remove command");
             remove_button.clicked.connect (() => {
-                on_remove_command_clicked (row);
+                on_remove_command_clicked (entry);
             });
             controls_box.append (remove_button);
 
@@ -562,14 +609,151 @@ namespace Switchcraft {
             return row;
         }
 
-        private void on_theme_toggle_changed (Gtk.ListBoxRow row, string new_theme) {
-            int listbox_index = row.get_index ();
-            if (listbox_index < 0 || listbox_index >= (int) row_entry_map.length) return;
+        private Gtk.ListBoxRow create_inline_command_row () {
+            var row = new Gtk.ListBoxRow ();
+            row.set_activatable (false);
+            row.set_selectable (false);
+
+            var content_box = new Gtk.Box (Gtk.Orientation.VERTICAL, 12);
+            content_box.set_margin_top (12);
+            content_box.set_margin_bottom (12);
+            content_box.set_margin_start (12);
+            content_box.set_margin_end (12);
+
+            var controls_row = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 12);
+
+            var theme_box = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 0);
+            theme_box.add_css_class ("linked");
+            theme_box.set_valign (Gtk.Align.CENTER);
+
+            var light_toggle = new Gtk.ToggleButton ();
+            light_toggle.set_icon_name (LIGHT_ICON);
+
+            var dark_toggle = new Gtk.ToggleButton ();
+            dark_toggle.set_icon_name (DARK_ICON);
+            dark_toggle.set_group (light_toggle);
+
+            if (inline_editor_theme == "dark") {
+                dark_toggle.set_active (true);
+            } else {
+                light_toggle.set_active (true);
+            }
+
+            light_toggle.toggled.connect (() => {
+                if (light_toggle.get_active ()) {
+                    inline_editor_theme = "light";
+                }
+            });
+            dark_toggle.toggled.connect (() => {
+                if (dark_toggle.get_active ()) {
+                    inline_editor_theme = "dark";
+                }
+            });
+
+            theme_box.append (light_toggle);
+            theme_box.append (dark_toggle);
+            controls_row.append (theme_box);
+
+            var entry = new Gtk.Entry ();
+            entry.set_hexpand (true);
+            entry.set_placeholder_text ("e.g. notify-send 'Theme changed'");
+            if (inline_editor_entry != null) {
+                entry.set_text (inline_editor_entry.command);
+            }
+            controls_row.append (entry);
+
+            var save_button = new Gtk.Button.from_icon_name ("object-select-symbolic");
+            save_button.add_css_class ("flat");
+            save_button.set_tooltip_text (inline_editor_is_new ? "Add command" : "Save command");
+            save_button.clicked.connect (() => {
+                save_inline_command_row (entry);
+            });
+            controls_row.append (save_button);
+
+            var cancel_button = new Gtk.Button.from_icon_name ("window-close-symbolic");
+            cancel_button.add_css_class ("flat");
+            cancel_button.set_tooltip_text ("Cancel");
+            cancel_button.clicked.connect (() => {
+                cancel_inline_command_edit ();
+            });
+            controls_row.append (cancel_button);
+
+            entry.activate.connect (() => {
+                save_inline_command_row (entry);
+            });
+
+            content_box.append (controls_row);
+            row.set_child (content_box);
+
+            if (should_focus_inline_editor) {
+                should_focus_inline_editor = false;
+                GLib.Idle.add (() => {
+                    entry.grab_focus ();
+                    entry.set_position (-1);
+                    return false;
+                });
+            }
+
+            return row;
+        }
+
+        private void begin_inline_command_edit (string theme, CommandEntry? entry = null) {
+            view_stack.set_visible_child_name ("custom");
+
+            inline_editor_theme = theme;
+            inline_editor_entry = entry;
+            inline_editor_is_new = entry == null;
+            should_focus_inline_editor = true;
+
+            refresh_command_list_ui ();
+        }
+
+        private void cancel_inline_command_edit () {
+            inline_editor_entry = null;
+            inline_editor_theme = "light";
+            inline_editor_is_new = false;
+            should_focus_inline_editor = false;
+            refresh_command_list_ui ();
+        }
+
+        private void save_inline_command_row (Gtk.Entry entry_widget) {
+            var command_text = entry_widget.get_text ().strip ();
+            if (command_text.length == 0) {
+                entry_widget.grab_focus ();
+                return;
+            }
+
+            if (inline_editor_is_new) {
+                var new_entry = new CommandEntry (command_text, true);
+                row_theme_map.add (inline_editor_theme);
+                row_entry_map.add (new_entry);
+            } else if (inline_editor_entry != null) {
+                inline_editor_entry.command = command_text;
+
+                for (int i = 0; i < (int) row_entry_map.length; i++) {
+                    if (row_entry_map[i] == inline_editor_entry) {
+                        row_theme_map[i] = inline_editor_theme;
+                        break;
+                    }
+                }
+            }
+
+            rebuild_commands_from_display_order ();
+            inline_editor_entry = null;
+            inline_editor_theme = "light";
+            inline_editor_is_new = false;
+            should_focus_inline_editor = false;
+
+            save_commands ();
+            refresh_command_list_ui ();
+        }
+
+        private void on_theme_toggle_changed (CommandEntry entry, string new_theme) {
+            int listbox_index = get_entry_index (entry);
+            if (listbox_index < 0) return;
 
             string old_theme = row_theme_map[listbox_index];
             if (old_theme == new_theme) return;
-
-            var entry = row_entry_map[listbox_index];
 
             // Remove from old theme list
             unowned List<CommandEntry>? old_list = commands.lookup (old_theme);
@@ -598,6 +782,7 @@ namespace Switchcraft {
             row_theme_map[listbox_index] = new_theme;
 
             save_commands ();
+            refresh_command_list_ui ();
         }
 
         private void update_row_state (Adw.ActionRow row, CommandEntry entry) {
@@ -608,22 +793,12 @@ namespace Switchcraft {
             }
         }
 
-        private bool on_toggle_command_state (Gtk.Switch sw, bool state, Gtk.ListBoxRow row) {
-            int listbox_index = row.get_index ();
-            if (listbox_index < 0) return false;
-
-            string theme = get_row_theme (listbox_index);
-            int theme_index = get_theme_relative_index (listbox_index);
-
-            unowned List<CommandEntry>? theme_commands = commands.lookup (theme);
-            if (theme_commands == null) return false;
-
-            var entry = theme_commands.nth_data (theme_index);
-            if (entry != null) {
-                entry.enabled = state;
-                update_row_state (row as Adw.ActionRow, entry);
-                save_commands ();
-            }
+        private bool on_toggle_command_state (Gtk.Switch sw, bool state,
+                                              Gtk.ListBoxRow row, CommandEntry entry) {
+            entry.enabled = state;
+            update_row_state (row as Adw.ActionRow, entry);
+            save_commands ();
+            refresh_command_list_ui ();
 
             return false;
         }
@@ -634,7 +809,7 @@ namespace Switchcraft {
             var drop_target = new Gtk.DropTarget (typeof (string), Gdk.DragAction.MOVE);
 
             drop_target.accept.connect ((drop) => {
-                return drag_theme != null && drag_source_index >= 0;
+                return drag_theme != null && drag_source_entry != null;
             });
 
             drop_target.enter.connect ((x, y) => {
@@ -662,24 +837,35 @@ namespace Switchcraft {
             drop_target.drop.connect ((value, x, y) => {
                 listbox.drag_unhighlight_row ();
 
-                if (drag_theme == null || drag_source_index < 0) {
+                if (drag_theme == null || drag_source_entry == null) {
                     reset_drag_state ();
                     return false;
                 }
 
                 string source_theme = drag_theme;
-                int source_display_idx = drag_source_index;
+                var source_entry = (!) drag_source_entry;
+                bool source_enabled = drag_source_enabled;
                 reset_drag_state ();
 
                 // Determine target
                 var target_row = listbox.get_row_at_y ((int) y);
                 if (target_row == null) return false;
 
-                int target_display_idx = target_row.get_index ();
-                string target_theme = get_row_theme (target_display_idx);
+                var target_entry = command_row_entries.lookup (target_row);
+                if (target_entry == null) {
+                    return false;
+                }
+
+                int source_display_idx = get_entry_index (source_entry);
+                int target_display_idx = get_entry_index (target_entry);
+                if (source_display_idx < 0 || target_display_idx < 0) {
+                    return false;
+                }
+
+                string target_theme = get_entry_theme (target_entry);
 
                 // Only allow reordering within the same theme
-                if (source_theme != target_theme) return false;
+                if (source_theme != target_theme || source_enabled != target_entry.enabled) return false;
 
                 reorder_display_command (source_display_idx, target_display_idx);
                 return true;
@@ -690,7 +876,7 @@ namespace Switchcraft {
 
         private void highlight_drop_position (Gtk.ListBox listbox, double y) {
             var row = listbox.get_row_at_y ((int) y);
-            if (row != null) {
+            if (row != null && command_row_entries.lookup (row) != null) {
                 listbox.drag_highlight_row (row);
             } else {
                 listbox.drag_unhighlight_row ();
@@ -725,151 +911,29 @@ namespace Switchcraft {
         }
 
         private void reset_drag_state () {
+            drag_source_entry = null;
             drag_theme = null;
-            drag_source_index = -1;
+            drag_source_enabled = false;
         }
 
         // ── Command actions ───────────────────────────────────────────────
 
         private void on_add_command_action () {
-            show_command_dialog ("light", -1);
+            begin_inline_command_edit ("light");
         }
 
-        private void on_edit_command_clicked (Gtk.ListBoxRow row) {
-            int listbox_index = row.get_index ();
+        private void on_edit_command_clicked (CommandEntry entry) {
+            begin_inline_command_edit (get_entry_theme (entry), entry);
+        }
+
+        private void on_remove_command_clicked (CommandEntry entry) {
+            int listbox_index = get_entry_index (entry);
             if (listbox_index < 0) return;
-
-            string theme = get_row_theme (listbox_index);
-            int theme_index = get_theme_relative_index (listbox_index);
-            show_command_dialog (theme, theme_index);
-        }
-
-        private void on_remove_command_clicked (Gtk.ListBoxRow row) {
-            int listbox_index = row.get_index ();
-            if (listbox_index < 0 || listbox_index >= (int) row_entry_map.length) return;
 
             row_theme_map.remove_index ((uint) listbox_index);
             row_entry_map.remove_index ((uint) listbox_index);
 
             rebuild_commands_from_display_order ();
-            save_commands ();
-            refresh_command_list_ui ();
-        }
-
-        private void show_command_dialog (string default_theme, int index) {
-            bool editing = index >= 0;
-            string title = editing ? "Edit Command" : "Add Command";
-            string message = editing ?
-                "Update the shell command." :
-                "Enter the shell command to execute on theme change.";
-
-            var dialog = new Adw.AlertDialog (title, message);
-            dialog.add_response ("cancel", "Cancel");
-            dialog.add_response ("save", editing ? "Save" : "Add");
-            dialog.set_default_response ("save");
-            dialog.set_response_appearance ("save", Adw.ResponseAppearance.SUGGESTED);
-
-            var content_box = new Gtk.Box (Gtk.Orientation.VERTICAL, 12);
-            content_box.set_size_request (450, -1);
-
-            // Theme selector (for add mode)
-            Gtk.ToggleButton? light_btn = null;
-
-            if (!editing) {
-                var theme_label = new Gtk.Label ("Applies to:");
-                theme_label.set_xalign (0);
-                content_box.append (theme_label);
-
-                var theme_box = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 0);
-                theme_box.add_css_class ("linked");
-                theme_box.set_halign (Gtk.Align.START);
-
-                light_btn = new Gtk.ToggleButton ();
-                light_btn.set_icon_name (LIGHT_ICON);
-                light_btn.set_label ("Light");
-
-                var dark_btn = new Gtk.ToggleButton ();
-                dark_btn.set_icon_name (DARK_ICON);
-                dark_btn.set_label ("Dark");
-                dark_btn.set_group (light_btn);
-
-                if (default_theme == "dark") {
-                    dark_btn.set_active (true);
-                } else {
-                    light_btn.set_active (true);
-                }
-
-                theme_box.append (light_btn);
-                theme_box.append (dark_btn);
-                content_box.append (theme_box);
-            }
-
-            var entry = new Gtk.Entry ();
-            entry.set_placeholder_text ("e.g. notify-send 'Theme changed'");
-            content_box.append (entry);
-
-            if (editing) {
-                unowned List<CommandEntry>? theme_commands = commands.lookup (default_theme);
-                if (theme_commands != null && index < (int) theme_commands.length ()) {
-                    var cmd_entry = theme_commands.nth_data (index);
-                    if (cmd_entry != null) {
-                        entry.set_text (cmd_entry.command);
-                    }
-                }
-            }
-
-            dialog.set_extra_child (content_box);
-
-            // Capture reference for closure
-            Gtk.ToggleButton? _light_btn = light_btn;
-
-            dialog.choose.begin (this, null, (obj, res) => {
-                var response_id = dialog.choose.end (res);
-
-                string theme = default_theme;
-                if (!editing && _light_btn != null) {
-                    theme = _light_btn.get_active () ? "light" : "dark";
-                }
-
-                on_command_dialog_response (response_id, theme, index, entry);
-            });
-
-            // Focus entry after dialog is shown
-            GLib.Idle.add (() => {
-                entry.grab_focus ();
-                return false;
-            });
-        }
-
-        private void on_command_dialog_response (string response_id,
-                                                  string theme, int index, Gtk.Entry entry) {
-            if (response_id != "save") return;
-
-            var command_text = entry.get_text ().strip ();
-            if (command_text.length == 0) return;
-
-            unowned List<CommandEntry>? theme_commands = commands.lookup (theme);
-            if (theme_commands == null) {
-                commands.replace (theme, new List<CommandEntry> ());
-            }
-
-            // Re-fetch the list after any potential replacement
-            theme_commands = commands.lookup (theme);
-
-            if (index < 0) {
-                // Adding new command
-                var new_entry = new CommandEntry (command_text, true);
-                row_theme_map.add (theme);
-                row_entry_map.add (new_entry);
-                rebuild_commands_from_display_order ();
-            } else if (theme_commands != null && index < (int) theme_commands.length ()) {
-                // Editing existing command
-                var cmd_entry = theme_commands.nth_data (index);
-                if (cmd_entry != null) {
-                    cmd_entry.command = command_text;
-                }
-            }
-
             save_commands ();
             refresh_command_list_ui ();
         }
