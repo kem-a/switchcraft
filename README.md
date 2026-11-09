@@ -17,10 +17,11 @@ Switchcraft watches GNOME's light/dark preference and runs your shell commands w
 
 - Watches `org.gnome.desktop.interface color-scheme` and executes commands instantly.
 - Polished libadwaita interface with light/dark pages, icons, and header-bar actions.
-- Pick icon, GTK, cursor and shell theme plus wallpaper for light and dark mode. Each starts with what GNOME uses now.
-- Add, edit, enable/disable, or remove commands per theme.
+- Add, edit, enable/disable, reorder or remove commands per theme.
+- Built-in commands for icon, GTK, cursor and shell theme or wallpaper: pick the setting and a value from a list instead of typing a command.
 - Define reusable constants for common variables in commands.
 - **Independent background monitoring** - a `switchcraft --background` process runs even when the GUI is closed.
+- Turn the background monitor on or off from the header bar.
 - Keyboard shortcuts (<kbd>Ctrl</kbd>+<kbd>N</kbd> to add, <kbd>Ctrl</kbd>+<kbd>Q</kbd> to quit) plus About and Shortcuts dialogs from the menu.
 
 <details> <summary> Command Examples <b>(click to open)</b> </summary>
@@ -159,13 +160,14 @@ Example:
 }
 ```
 
-- **`theme_settings.json`** - Built-in page values per theme. Example:
+Built-in commands are stored in `commands.json` as normal `gsettings` lines with two extra fields, so the dialog can reopen them:
 
 ```json
-{
-  "icon-theme": { "light": "Adwaita", "dark": "Papirus-Dark" }
-}
+{ "command": "gsettings set org.gnome.desktop.interface gtk-theme 'adw-gtk3-dark'",
+  "enabled": true, "builtin": "gtk-theme", "value": "adw-gtk3-dark" }
 ```
+
+A `theme_settings.json` from older versions is turned into built-in commands on start.
 
 </details>
 

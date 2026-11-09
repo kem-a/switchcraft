@@ -32,6 +32,17 @@ namespace Switchcraft {
             set_css_name ("toggle-group");
         }
 
+        // The light/dark toggle used by command rows and the command dialog
+        public static SlidingToggleGroup for_theme (string theme) {
+            var group = new Adw.ToggleGroup ();
+            group.add (new Adw.Toggle () { name = "light", icon_name = "weather-clear-symbolic", tooltip = _("Light") });
+            group.add (new Adw.Toggle () { name = "dark", icon_name = "weather-clear-night-symbolic", tooltip = _("Dark") });
+            group.set_active_name (theme);
+            var toggle = new SlidingToggleGroup (group);
+            toggle.set_valign (Gtk.Align.CENTER);
+            return toggle;
+        }
+
         public SlidingToggleGroup (Adw.ToggleGroup group) {
             this.group = group;
             add_css_class ("round");

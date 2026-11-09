@@ -61,8 +61,12 @@ namespace Switchcraft {
     public class CommandEntry : Object {
         public string command { get; set; }
         public bool enabled { get; set; default = true; }
-        // Index in the Custom page list, which mixes light and dark
+        // Index in the command list, which mixes light and dark
         public int position { get; set; default = -1; }
+        // Set for commands made from a built-in setting, so the dialog can
+        // show the setting and its value instead of the gsettings line
+        public string builtin { get; set; default = ""; }
+        public string value { get; set; default = ""; }
 
         public CommandEntry (owned string cmd, bool en = true) {
             command = (owned) cmd;
@@ -116,6 +120,7 @@ namespace Switchcraft {
             settings = new Settings ("com.github.Switchcraft");
 
             migrate_config_files ();
+            migrate_theme_settings ();
 
             add_main_option ("version", 'v', OptionFlags.NONE, OptionArg.NONE, _("Show version information"), null);
             add_main_option ("background", 'b', OptionFlags.NONE, OptionArg.NONE, _("Run in background for theme monitoring"), null);
@@ -241,8 +246,6 @@ namespace Switchcraft {
         }
 
         public void execute_commands (string theme) {
-            apply_theme_settings (theme);
-
             var commands = get_commands ();
             if (!commands.contains (theme)) return;
             
@@ -286,8 +289,16 @@ namespace Switchcraft {
         }
 
         public HashTable<string, List<CommandEntry>> get_commands () {
+            HashTable<string, List<CommandEntry>> commands;
+            load_commands (out commands);
+            return commands;
+        }
+
+        // Returns false if the file exists but cannot be read
+        private bool load_commands (out HashTable<string, List<CommandEntry>> commands) {
+            commands = default_commands ();
             if (!FileUtils.test (config_path, FileTest.EXISTS)) {
-                return default_commands ();
+                return true;
             }
             
             try {
@@ -296,12 +307,11 @@ namespace Switchcraft {
                 
                 var parser = new Json.Parser ();
                 parser.load_from_data (contents);
-                var root = parser.get_root ();
-                
-                return normalize_commands (root);
+                commands = normalize_commands (parser.get_root ());
+                return true;
             } catch (Error e) {
                 warning ("Failed to load commands: %s", e.message);
-                return default_commands ();
+                return false;
             }
         }
         
@@ -380,6 +390,8 @@ namespace Switchcraft {
                         var entry = new CommandEntry (cmd,
                             enabled_node == null || enabled_node.get_value_type () != typeof (bool)
                             || enabled_node.get_boolean ());
+                        entry.builtin = string_value (obj.get_member ("builtin")) ?? "";
+                        entry.value = string_value (obj.get_member ("value")) ?? "";
                         var position_node = obj.get_member ("position");
                         if (position_node != null && position_node.get_value_type () == typeof (int64)) {
                             entry.position = (int) position_node.get_int ();
@@ -411,6 +423,10 @@ namespace Switchcraft {
                     entry_obj.set_boolean_member ("enabled", entry.enabled);
                     if (entry.position >= 0) {
                         entry_obj.set_int_member ("position", entry.position);
+                    }
+                    if (entry.builtin.length > 0) {
+                        entry_obj.set_string_member ("builtin", entry.builtin);
+                        entry_obj.set_string_member ("value", entry.value);
                     }
                     
                     var entry_node = new Json.Node (Json.NodeType.OBJECT);
@@ -485,7 +501,7 @@ namespace Switchcraft {
 
         // --- Theme settings persistence ---
 
-        public HashTable<string, ThemeSettingValue> get_theme_settings () {
+        private HashTable<string, ThemeSettingValue> get_theme_settings () {
             var result = new HashTable<string, ThemeSettingValue> (str_hash, str_equal);
 
             if (!FileUtils.test (theme_settings_path, FileTest.EXISTS)) {
@@ -522,31 +538,42 @@ namespace Switchcraft {
             return result;
         }
 
-        public void save_theme_settings (HashTable<string, ThemeSettingValue> settings_data) {
-            try {
-                var dir = Path.get_dirname (theme_settings_path);
-                DirUtils.create_with_parents (dir, 0755);
+        // Versions with a Built-in page kept these settings in
+        // theme_settings.json. They are regular commands now.
+        private void migrate_theme_settings () {
+            if (!FileUtils.test (theme_settings_path, FileTest.EXISTS)) {
+                return;
+            }
 
-                var root = new Json.Node (Json.NodeType.OBJECT);
-                var obj = new Json.Object ();
+            HashTable<string, List<CommandEntry>> commands;
+            if (!load_commands (out commands)) {
+                // Saving now would replace a commands file we could not read
+                return;
+            }
+            add_theme_setting_commands (commands, get_theme_settings ());
+            save_commands (commands);
+            FileUtils.remove (theme_settings_path);
+            message ("Converted %s into commands", theme_settings_path);
+        }
 
-                settings_data.foreach ((id, val) => {
-                    var setting_obj = new Json.Object ();
-                    setting_obj.set_string_member ("light", val.light);
-                    setting_obj.set_string_member ("dark", val.dark);
-                    var setting_node = new Json.Node (Json.NodeType.OBJECT);
-                    setting_node.set_object (setting_obj);
-                    obj.set_member (id, setting_node);
-                });
-
-                root.set_object (obj);
-                var generator = new Json.Generator ();
-                generator.set_root (root);
-                generator.pretty = true;
-                generator.indent = 2;
-                FileUtils.set_contents (theme_settings_path, generator.to_data (null));
-            } catch (Error e) {
-                warning ("Failed to save theme settings: %s", e.message);
+        private void add_theme_setting_commands (HashTable<string, List<CommandEntry>> commands,
+                                                 HashTable<string, ThemeSettingValue> settings_data) {
+            foreach (var theme in new string[] { "light", "dark" }) {
+                var list = new List<CommandEntry> ();
+                foreach (var entry in commands.lookup (theme)) {
+                    list.append (entry);
+                }
+                foreach (var setting_id in THEME_SETTING_IDS) {
+                    var val = settings_data.lookup (setting_id);
+                    var value = val != null ? val.get_for_theme (theme) : "";
+                    if (value.length > 0) {
+                        list.append (new CommandEntry (build_builtin_command (setting_id, value), true) {
+                            builtin = setting_id,
+                            value = value
+                        });
+                    }
+                }
+                commands.replace (theme, (owned) list);
             }
         }
 
@@ -624,44 +651,42 @@ namespace Switchcraft {
             return value;
         }
 
-        private void apply_theme_settings (string theme) {
-            var ts = get_theme_settings ();
-            foreach (var setting_id in THEME_SETTING_IDS) {
-                var val = ts.lookup (setting_id);
-                var value = val != null ? val.get_for_theme (theme) : "";
-                if (value.length == 0) {
-                    continue;
-                }
+        // The gsettings line a built-in command runs. The wallpaper sets both
+        // keys, so it shows whichever style GNOME is in.
+        public string build_builtin_command (string setting_id, string value) {
+            string schema_id, key;
+            string? schema_dir;
+            get_setting_key (setting_id, "light", out schema_id, out key);
+            lookup_schema (schema_id, out schema_dir);
+            var gsettings = schema_dir != null
+                ? "gsettings --schemadir %s".printf (Shell.quote (schema_dir))
+                : "gsettings";
 
-                if (setting_id == "shell-theme" && value == SHELL_THEME_DEFAULT) {
-                    value = "";
-                } else if (setting_id == "wallpaper" && !value.contains ("://")) {
-                    // Escapes characters like # and % in the path
-                    value = File.new_for_path (value).get_uri ();
-                }
+            if (setting_id == "wallpaper") {
+                // Escapes characters like # and % in the path
+                var uri = Shell.quote (value.contains ("://") ? value : File.new_for_path (value).get_uri ());
+                return "%s set %s picture-uri %s && %s set %s picture-uri-dark %s".printf (
+                    gsettings, schema_id, uri, gsettings, schema_id, uri);
+            }
 
-                string schema_id, key;
-                string? schema_dir;
-                get_setting_key (setting_id, theme, out schema_id, out key);
-                if (lookup_schema (schema_id, out schema_dir) == null) {
-                    warning ("Cannot apply %s: schema %s is not installed", setting_id, schema_id);
-                    continue;
-                }
+            var name = setting_id == "shell-theme" && value == SHELL_THEME_DEFAULT ? "" : value;
+            return "%s set %s %s %s".printf (gsettings, schema_id, key, Shell.quote (name));
+        }
 
-                string[] argv = { "gsettings" };
-                if (schema_dir != null) {
-                    argv += "--schemadir";
-                    argv += schema_dir;
-                }
-                argv += "set";
-                argv += schema_id;
-                argv += key;
-                argv += value;
-                try {
-                    Process.spawn_async (null, argv, null, SpawnFlags.SEARCH_PATH, null, null);
-                } catch (Error e) {
-                    warning ("Failed to apply %s: %s", setting_id, e.message);
-                }
+        public GenericArray<string> scan_setting_values (string setting_id) {
+            switch (setting_id) {
+                case "icon-theme":
+                    return scan_icon_themes ();
+                case "gtk-theme":
+                    return scan_gtk_themes ();
+                case "cursor-theme":
+                    return scan_cursor_themes ();
+                case "shell-theme":
+                    var themes = scan_shell_themes ();
+                    themes.insert (0, SHELL_THEME_DEFAULT);
+                    return themes;
+                default:
+                    return new GenericArray<string> ();
             }
         }
 
@@ -822,25 +847,6 @@ namespace Switchcraft {
                 var constants_path = Path.build_filename (temp_dir, "constants.json");
                 FileUtils.set_contents (constants_path, constants_data);
 
-                var ts = get_theme_settings ();
-                var ts_root = new Json.Node (Json.NodeType.OBJECT);
-                var ts_obj = new Json.Object ();
-                ts.foreach ((id, val) => {
-                    var so = new Json.Object ();
-                    so.set_string_member ("light", val.light);
-                    so.set_string_member ("dark", val.dark);
-                    var sn = new Json.Node (Json.NodeType.OBJECT);
-                    sn.set_object (so);
-                    ts_obj.set_member (id, sn);
-                });
-                ts_root.set_object (ts_obj);
-                var ts_gen = new Json.Generator ();
-                ts_gen.set_root (ts_root);
-                ts_gen.pretty = true;
-                ts_gen.indent = 2;
-                var ts_export_path = Path.build_filename (temp_dir, "theme_settings.json");
-                FileUtils.set_contents (ts_export_path, ts_gen.to_data (null));
-
                 if (FileUtils.test (target_path, FileTest.EXISTS)) {
                     if (FileUtils.remove (target_path) != 0) {
                         error_message = _("Unable to overwrite existing archive.");
@@ -851,7 +857,7 @@ namespace Switchcraft {
                 try {
                     var launcher = new SubprocessLauncher (SubprocessFlags.STDOUT_SILENCE | SubprocessFlags.STDERR_SILENCE);
                     launcher.set_cwd (temp_dir);
-                    string[] argv = { zip_tool, "-q", target_path, "commands.json", "constants.json", "theme_settings.json" };
+                    string[] argv = { zip_tool, "-q", target_path, "commands.json", "constants.json" };
                     var process = launcher.spawnv (argv);
                     process.wait_check (null);
                 } catch (Error e) {
@@ -948,8 +954,7 @@ namespace Switchcraft {
                     return false;
                 }
 
-                // Theme settings are optional for backward compatibility
-                HashTable<string, ThemeSettingValue>? ts_table = null;
+                // Older exports have theme_settings.json. It becomes commands.
                 var ts_import_path = Path.build_filename (temp_dir, "theme_settings.json");
                 if (FileUtils.test (ts_import_path, FileTest.EXISTS)) {
                     string ts_data;
@@ -961,14 +966,11 @@ namespace Switchcraft {
                         error_message = _("theme_settings.json is not a JSON object.");
                         return false;
                     }
-                    ts_table = parse_theme_settings (ts_root.get_object ());
+                    add_theme_setting_commands (imported_commands, parse_theme_settings (ts_root.get_object ()));
                 }
 
                 save_commands (imported_commands);
                 save_constants (constants_table);
-                if (ts_table != null) {
-                    save_theme_settings (ts_table);
-                }
 
                 return true;
             } catch (Error e) {

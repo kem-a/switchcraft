@@ -60,6 +60,7 @@ sources = files(
   'src/MainWindow.vala',
   'src/AnimatedRows.vala',
   'src/SlidingToggleGroup.vala',
+  'src/CommandDialog.vala',
   'src/ConstantsWindow.vala',
   'src/PreferencesWindow.vala',
 )
