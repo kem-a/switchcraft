@@ -17,7 +17,7 @@ application_id = 'com.github.Switchcraft'
 
 # Dependencies
 gtk4_dep = dependency('gtk4', version: '>= 4.0.0')
-libadwaita_dep = dependency('libadwaita-1', version: '>= 1.5.0')
+libadwaita_dep = dependency('libadwaita-1', version: '>= 1.8.0')
 gio_dep = dependency('gio-2.0', version: '>= 2.66')
 glib_dep = dependency('glib-2.0', version: '>= 2.66')
 json_glib_dep = dependency('json-glib-1.0')
@@ -58,6 +58,7 @@ sources = files(
   'src/main.vala',
   'src/Application.vala',
   'src/MainWindow.vala',
+  'src/AnimatedRows.vala',
   'src/ConstantsWindow.vala',
   'src/PreferencesWindow.vala',
 )

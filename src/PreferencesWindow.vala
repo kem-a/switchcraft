@@ -164,6 +164,8 @@ namespace Switchcraft {
         }
 
         private void delete_configuration_files () {
+            // Stops the monitor and removes autostart before the flag is reset
+            monitoring_row.set_active (false);
             string error_message;
             if (app.delete_configuration_files (out error_message)) {
                 main_window.reload_commands_from_storage ();

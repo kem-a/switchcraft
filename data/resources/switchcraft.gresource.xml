@@ -2,6 +2,6 @@
 <gresources>
   <gresource prefix="/com/github/Switchcraft">
     <file preprocess="xml-stripblanks">com.github.Switchcraft.metainfo.xml</file>
-    <file>ui/shortcuts.ui</file>
+    <file preprocess="xml-stripblanks">shortcuts-dialog.ui</file>
   </gresource>
 </gresources>

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: switchcraft 2.0.0\n"
 "Report-Msgid-Bugs-To: https://github.com/kem-a/switchcraft/issues\n"
-"POT-Creation-Date: 2026-11-08 23:18+0200\n"
+"POT-Creation-Date: 2026-11-09 00:22+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,78 +25,78 @@ msgstr ""
 msgid "Run in background for theme monitoring"
 msgstr ""
 
-#: src/Application.vala:634
+#: src/Application.vala:641
 msgid "The 'zip' command is required to export."
 msgstr ""
 
-#: src/Application.vala:640
+#: src/Application.vala:647
 msgid "Destination must be a local file."
 msgstr ""
 
-#: src/Application.vala:647
+#: src/Application.vala:654
 msgid "Failed to prepare destination directory."
 msgstr ""
 
-#: src/Application.vala:655 src/Application.vala:747
+#: src/Application.vala:662 src/Application.vala:754
 msgid "Failed to create temporary directory."
 msgstr ""
 
-#: src/Application.vala:705
+#: src/Application.vala:712
 msgid "Unable to overwrite existing archive."
 msgstr ""
 
-#: src/Application.vala:717
+#: src/Application.vala:724
 #, c-format
 msgid "Failed to write archive: %s"
 msgstr ""
 
-#: src/Application.vala:734
+#: src/Application.vala:741
 msgid "The 'unzip' command is required to import."
 msgstr ""
 
-#: src/Application.vala:740
+#: src/Application.vala:747
 msgid "Archive must be a local file."
 msgstr ""
 
-#: src/Application.vala:758
+#: src/Application.vala:765
 #, c-format
 msgid "Failed to unpack archive: %s"
 msgstr ""
 
-#: src/Application.vala:766
+#: src/Application.vala:773
 msgid "Archive must contain commands.json and constants.json at the top level."
 msgstr ""
 
-#: src/Application.vala:776
+#: src/Application.vala:783
 msgid "commands.json is not a JSON object."
 msgstr ""
 
-#: src/Application.vala:788
+#: src/Application.vala:795
 msgid "constants.json is not a JSON object."
 msgstr ""
 
-#: src/Application.vala:804
+#: src/Application.vala:811
 msgid "constants.json must only contain string values."
 msgstr ""
 
-#: src/Application.vala:851
+#: src/Application.vala:858
 msgid "Failed to remove commands.json."
 msgstr ""
 
-#: src/Application.vala:858
+#: src/Application.vala:865
 msgid "Failed to remove constants.json."
 msgstr ""
 
-#: src/Application.vala:865
+#: src/Application.vala:872
 msgid "Failed to remove theme_settings.json."
 msgstr ""
 
-#: src/Application.vala:990
+#: src/Application.vala:1058
 #, c-format
 msgid "Switchcraft Monitor"
 msgstr ""
 
-#: src/Application.vala:991
+#: src/Application.vala:1059
 msgid "Monitor GNOME theme changes and run commands"
 msgstr ""
 
@@ -150,178 +150,170 @@ msgstr ""
 msgid "Add"
 msgstr ""
 
-#: src/ConstantsWindow.vala:195
+#: src/ConstantsWindow.vala:200
 msgid "Constant name (e.g., D2DL_SCHEMA)"
 msgstr ""
 
-#: src/ConstantsWindow.vala:203
+#: src/ConstantsWindow.vala:208
 msgid "Value (e.g., org.gnome.shell.extensions.dash2dock-lite)"
 msgstr ""
 
-#: src/ConstantsWindow.vala:209
+#: src/ConstantsWindow.vala:214
 msgid "Use in commands as $NAME or ${NAME}"
 msgstr ""
 
-#: src/ConstantsWindow.vala:241
+#: src/ConstantsWindow.vala:246
 msgid "Invalid Name"
 msgstr ""
 
-#: src/ConstantsWindow.vala:242
+#: src/ConstantsWindow.vala:247
 msgid ""
 "Constant name must be a valid shell variable name (letters, numbers, "
 "underscores)."
 msgstr ""
 
-#: src/ConstantsWindow.vala:244
+#: src/ConstantsWindow.vala:249
 msgid "OK"
 msgstr ""
 
-#: src/MainWindow.vala:72
+#: src/MainWindow.vala:74
 msgid "Preferences"
 msgstr ""
 
-#: src/MainWindow.vala:74
+#: src/MainWindow.vala:77
 msgid "Keyboard Shortcuts"
 msgstr ""
 
-#: src/MainWindow.vala:75
+#: src/MainWindow.vala:78
 msgid "About Switchcraft"
 msgstr ""
 
-#: src/MainWindow.vala:76
+#: src/MainWindow.vala:79
 msgid "Quit"
 msgstr ""
 
-#: src/MainWindow.vala:89
+#: src/MainWindow.vala:92
 msgid "Background monitoring is now active"
 msgstr ""
 
-#: src/MainWindow.vala:90
+#: src/MainWindow.vala:93
 msgid "Dismiss"
 msgstr ""
 
-#: src/MainWindow.vala:108
+#: src/MainWindow.vala:111
 msgid "Built-in"
 msgstr ""
 
-#: src/MainWindow.vala:112
+#: src/MainWindow.vala:115
 msgid "Custom"
 msgstr ""
 
-#: src/MainWindow.vala:158 src/MainWindow.vala:283
+#: src/MainWindow.vala:165 src/MainWindow.vala:290 src/MainWindow.vala:503
 #, c-format
 msgid "Light"
 msgstr ""
 
-#: src/MainWindow.vala:158 src/MainWindow.vala:283
+#: src/MainWindow.vala:165 src/MainWindow.vala:290 src/MainWindow.vala:504
 #, c-format
 msgid "Dark"
 msgstr ""
 
-#: src/MainWindow.vala:164
+#: src/MainWindow.vala:171
 msgid "Applied when light mode activates."
 msgstr ""
 
-#: src/MainWindow.vala:165
+#: src/MainWindow.vala:172
 msgid "Applied when dark mode activates."
 msgstr ""
 
-#: src/MainWindow.vala:180
+#: src/MainWindow.vala:187
 msgid "Icon Theme"
 msgstr ""
 
-#: src/MainWindow.vala:180
+#: src/MainWindow.vala:187
 msgid "GTK Theme"
 msgstr ""
 
-#: src/MainWindow.vala:180
+#: src/MainWindow.vala:187
 msgid "Cursor Theme"
 msgstr ""
 
-#: src/MainWindow.vala:180
+#: src/MainWindow.vala:187
 msgid "Shell Theme"
 msgstr ""
 
-#: src/MainWindow.vala:206
+#: src/MainWindow.vala:213
 msgid "Don’t change"
 msgstr ""
 
-#: src/MainWindow.vala:248
+#: src/MainWindow.vala:255
 msgid "Wallpaper"
 msgstr ""
 
-#: src/MainWindow.vala:258 src/MainWindow.vala:320 src/MainWindow.vala:1041
+#: src/MainWindow.vala:265 src/MainWindow.vala:327 src/MainWindow.vala:1015
 msgid "None"
 msgstr ""
 
-#: src/MainWindow.vala:264
+#: src/MainWindow.vala:271
 msgid "Clear wallpaper"
 msgstr ""
 
-#: src/MainWindow.vala:270
+#: src/MainWindow.vala:277
 msgid "Browse…"
 msgstr ""
 
-#: src/MainWindow.vala:282
+#: src/MainWindow.vala:289
 #, c-format
 msgid "Select Wallpaper for %s Theme"
 msgstr ""
 
-#: src/MainWindow.vala:335
+#: src/MainWindow.vala:342
 msgid "Custom Commands"
 msgstr ""
 
-#: src/MainWindow.vala:341
+#: src/MainWindow.vala:348
 msgid ""
 "Shell commands executed when the system switches themes. Use the toggle to "
 "assign each command to light or dark mode."
 msgstr ""
 
-#: src/MainWindow.vala:351
-msgid "Add New Command"
-msgstr ""
-
-#: src/MainWindow.vala:360
-msgid "Commands"
-msgstr ""
-
-#: src/MainWindow.vala:361
-msgid "Active commands that will run when their theme matches."
-msgstr ""
-
-#: src/MainWindow.vala:366
-msgid "Disabled"
-msgstr ""
-
-#: src/MainWindow.vala:367
-msgid "Saved commands that are currently turned off."
-msgstr ""
-
-#: src/MainWindow.vala:508
-msgid "Drag to reorder"
-msgstr ""
-
-#: src/MainWindow.vala:580
-msgid "Enable or disable this command"
-msgstr ""
-
-#: src/MainWindow.vala:592
-msgid "Edit command"
-msgstr ""
-
-#: src/MainWindow.vala:600
-msgid "Remove command"
-msgstr ""
-
-#: src/MainWindow.vala:660
-msgid "e.g. notify-send 'Theme changed'"
-msgstr ""
-
-#: src/MainWindow.vala:668
+#: src/MainWindow.vala:360 src/MainWindow.vala:361 src/MainWindow.vala:621
 msgid "Add command"
 msgstr ""
 
-#: src/MainWindow.vala:668
+#: src/MainWindow.vala:368
+msgid "Commands"
+msgstr ""
+
+#: src/MainWindow.vala:369
+msgid "Active commands that will run when their theme matches."
+msgstr ""
+
+#: src/MainWindow.vala:374
+msgid "Disabled"
+msgstr ""
+
+#: src/MainWindow.vala:375
+msgid "Saved commands that are currently turned off."
+msgstr ""
+
+#: src/MainWindow.vala:522
+msgid "Drag to reorder"
+msgstr ""
+
+#: src/MainWindow.vala:581
+msgid "Edit command"
+msgstr ""
+
+#: src/MainWindow.vala:589
+msgid "Remove command"
+msgstr ""
+
+#: src/MainWindow.vala:604
+msgid "Command"
+msgstr ""
+
+#: src/MainWindow.vala:621
 msgid "Save command"
 msgstr ""
 
@@ -417,29 +409,29 @@ msgid ""
 "undone."
 msgstr ""
 
-#: src/PreferencesWindow.vala:170
+#: src/PreferencesWindow.vala:172
 msgid "Commands and constants deleted"
 msgstr ""
 
-#: src/PreferencesWindow.vala:172
+#: src/PreferencesWindow.vala:174
 #, c-format
 msgid "Delete failed: %s"
 msgstr ""
 
-#: data/resources/ui/shortcuts.ui:8
+#: data/resources/shortcuts-dialog.ui:6
 msgid "General"
 msgstr ""
 
-#: data/resources/ui/shortcuts.ui:11
-msgid "Switchcraft"
-msgstr ""
-
-#: data/resources/ui/shortcuts.ui:20
+#: data/resources/shortcuts-dialog.ui:15
 msgid "Open preferences"
 msgstr ""
 
-#: data/resources/ui/shortcuts.ui:26
+#: data/resources/shortcuts-dialog.ui:21
 msgid "Show keyboard shortcuts"
+msgstr ""
+
+#: data/com.github.Switchcraft.desktop.in:3
+msgid "Switchcraft"
 msgstr ""
 
 #: data/com.github.Switchcraft.desktop.in:4

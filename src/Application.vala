@@ -122,8 +122,7 @@ namespace Switchcraft {
             set_accels_for_action ("win.add-command", new string[] {"<Primary>N"});
             set_accels_for_action ("app.quit", new string[] {"<Primary>Q"});
             set_accels_for_action ("win.show-preferences", new string[] {"<Primary>comma"});
-            set_accels_for_action ("win.show-shortcuts", new string[] {"<Primary>question"});
-            
+
             // Add quit action
             var quit_action = new SimpleAction ("quit", null);
             quit_action.activate.connect (() => {
@@ -157,6 +156,14 @@ namespace Switchcraft {
         }
         
         protected override void activate () {
+            migrate_legacy_monitor ();
+
+            // Repair the autostart path (e.g. a moved AppImage) and make sure
+            // the monitor runs when it is enabled
+            if (get_monitoring_enabled ()) {
+                enable_monitoring ();
+            }
+
             var win = new MainWindow (this);
             win.present ();
         }
@@ -926,51 +933,112 @@ namespace Switchcraft {
             }
         }
         
-        private void enable_monitoring () {
-            // Create autostart desktop entry
-            create_autostart_entry ();
-            
-            // Start app in background immediately
-            try {
-                string exe_path = "switchcraft";
-                try {
-                    exe_path = FileUtils.read_link ("/proc/self/exe");
-                } catch (Error e) {
-                    // Fallback to "switchcraft" if read_link fails
-                }
+        // Matches the monitor binary in native and AppImage installs, but not
+        // the AppImage runtime, the GUI or other apps' --background-* options
+        private const string MONITOR_PATTERN = "(^|/)switchcraft --background$";
+        private const string LEGACY_MONITOR_SCRIPT = "switchcraft-monitor.sh";
+        // Only the bash process running the script, not editors or shells
+        // that mention its path
+        private const string LEGACY_MONITOR_PATTERN = "(^|/)bash .*/switchcraft-monitor\\.sh$";
 
-                string[] argv = { exe_path, "--background" };
-                Process.spawn_async (
-                    null,
-                    argv,
-                    null,
-                    SpawnFlags.SEARCH_PATH | SpawnFlags.DO_NOT_REAP_CHILD,
-                    null,
-                    null
-                );
-            } catch (Error e) {
+        private void enable_monitoring () {
+            create_autostart_entry ();
+            start_monitor ();
+        }
+
+        private void disable_monitoring () {
+            remove_autostart_entry ();
+            // SIGTERM, so an AppImage runtime can unmount cleanly
+            run_process ({ "pkill", "-u", Environment.get_user_name (), "-f", MONITOR_PATTERN });
+        }
+
+        private void start_monitor () {
+            if (run_process ({ "pgrep", "-u", Environment.get_user_name (), "-f", MONITOR_PATTERN }) == 0) {
+                return;
+            }
+
+            try {
+                string[] argv = { get_exec_path (), "--background" };
+                Pid pid;
+                Process.spawn_async (null, argv, null,
+                    SpawnFlags.SEARCH_PATH | SpawnFlags.DO_NOT_REAP_CHILD, null, out pid);
+                // Reap it if it exits while the GUI is still open
+                ChildWatch.add (pid, (child_pid, status) => {
+                    Process.close_pid (child_pid);
+                });
+            } catch (SpawnError e) {
                 warning ("Failed to start background monitor: %s", e.message);
             }
         }
-        
-        private void disable_monitoring () {
-            // Remove autostart entry
-            remove_autostart_entry ();
-            
-            // Kill any running background processes
+
+        // Returns the exit status, or -1 if the process could not run
+        private int run_process (string[] argv) {
             try {
-                Process.spawn_command_line_sync ("pkill -f \"switchcraft --background\"");
-            } catch (Error e) {
-                // Ignore errors if no process found
+                int wait_status;
+                Process.spawn_sync (null, argv, null,
+                    SpawnFlags.SEARCH_PATH | SpawnFlags.STDOUT_TO_DEV_NULL | SpawnFlags.STDERR_TO_DEV_NULL,
+                    null, null, null, out wait_status);
+                return Process.if_exited (wait_status) ? Process.exit_status (wait_status) : -1;
+            } catch (SpawnError e) {
+                warning ("Failed to run %s: %s", argv[0], e.message);
+                return -1;
             }
         }
-        
-        private void create_autostart_entry () {
+
+        // Inside an AppImage /proc/self/exe points into a temporary mount
+        // that is gone once the app exits, so use $APPIMAGE there. It is only
+        // trusted when this binary runs from $APPDIR, because both variables
+        // leak into processes started from other AppImages (e.g. a terminal).
+        private string get_exec_path () {
             string exe_path = "switchcraft";
             try {
                 exe_path = FileUtils.read_link ("/proc/self/exe");
-            } catch (Error e) {
-                // Fallback to "switchcraft" if read_link fails
+            } catch (FileError e) {
+                warning ("Failed to resolve executable path: %s", e.message);
+            }
+
+            var appimage = Environment.get_variable ("APPIMAGE");
+            var appdir = Environment.get_variable ("APPDIR");
+            if (appimage != null && appimage != "" && appdir != null && appdir != ""
+                && exe_path.has_prefix (appdir + "/")) {
+                return appimage;
+            }
+            return exe_path;
+        }
+
+        // Versions before 2.0 ran ~/.local/bin/switchcraft-monitor.sh from
+        // the same autostart file. Stop it, delete it and keep the user's
+        // choice by switching the built-in monitor on.
+        private void migrate_legacy_monitor () {
+            var script = Path.build_filename (Environment.get_home_dir (), ".local", "bin", LEGACY_MONITOR_SCRIPT);
+            bool legacy_autostart = false;
+            if (FileUtils.test (autostart_path, FileTest.EXISTS)) {
+                try {
+                    string contents;
+                    FileUtils.get_contents (autostart_path, out contents);
+                    legacy_autostart = contents.contains (LEGACY_MONITOR_SCRIPT);
+                } catch (FileError e) {
+                    warning ("Failed to read autostart entry: %s", e.message);
+                }
+            }
+
+            if (!legacy_autostart && !FileUtils.test (script, FileTest.EXISTS)) {
+                return;
+            }
+
+            run_process ({ "pkill", "-u", Environment.get_user_name (), "-f", LEGACY_MONITOR_PATTERN });
+            FileUtils.remove (script);
+            // activate () then rewrites the autostart file for the new monitor
+            if (legacy_autostart) {
+                settings.set_boolean ("monitoring-enabled", true);
+            }
+            message ("Replaced legacy %s with the built-in monitor", LEGACY_MONITOR_SCRIPT);
+        }
+
+        private void create_autostart_entry () {
+            string exe_path = get_exec_path ();
+            if (exe_path.contains (" ") || exe_path.contains ("\t")) {
+                exe_path = "\"%s\"".printf (exe_path);
             }
 
             string desktop_entry =

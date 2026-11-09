@@ -19,7 +19,7 @@ Switchcraft watches GNOME's light/dark preference and runs your shell commands w
 - Polished libadwaita interface with light/dark pages, icons, and header-bar actions.
 - Add, edit, enable/disable, or remove commands per theme.
 - Define reusable constants for common variables in commands.
-- **Independent background monitoring** - separate bash script runs even when GUI is closed.
+- **Independent background monitoring** - a `switchcraft --background` process runs even when the GUI is closed.
 - Keyboard shortcuts (<kbd>Ctrl</kbd>+<kbd>N</kbd> to add, <kbd>Ctrl</kbd>+<kbd>Q</kbd> to quit) plus About and Shortcuts dialogs from the menu.
 
 <details> <summary> Command Examples <b>(click to open)</b> </summary>
@@ -55,8 +55,8 @@ Dark theme:
 
 - Desktop: GNOME 42+ (Switchcraft follows the `org.gnome.desktop.interface color-scheme` setting)
 - Build tools: a C compiler, `valac`, `meson` (>= 0.59), `ninja`, `pkg-config`, `gettext`, `glib-compile-resources`, `glib-compile-schemas`
-- Libraries (with development headers): `gtk4`, `libadwaita-1` (>= 1.5), `glib-2.0` (>= 2.66), `gio-2.0`, `json-glib-1.0`
-- Runtime tools: `gsettings`, `zip` and `unzip` (configuration export and import), `pkill` (stopping the background monitor)
+- Libraries (with development headers): `gtk4`, `libadwaita-1` (>= 1.8), `glib-2.0` (>= 2.66), `gio-2.0`, `json-glib-1.0`
+- Runtime tools: `gsettings`, `zip` and `unzip` (configuration export and import), `pgrep` and `pkill` (managing the background monitor)
 - AnyLinux AppImage packaging with `scripts/make-anyimage.sh`: `podman` (the build runs in an Arch Linux container)
 - Local AppImage packaging with `scripts/make-appimage.sh`: `bash`, `jq` and `appimagetool` (downloaded automatically if missing)
 
@@ -71,7 +71,7 @@ For seamless AppImage installation use [AppManager](https://github.com/kem-a/App
 
 <details> <summary> <H4>Install development dependencies</H4> <b>(click to open)</b> </summary>
 
-Your distribution must provide libadwaita >= 1.5. The lists include `zip`, `unzip` and `jq`.
+Your distribution must provide libadwaita >= 1.8. The lists include `zip`, `unzip` and `jq`.
 
 - **Debian / Ubuntu:**
 

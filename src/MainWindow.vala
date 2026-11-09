@@ -12,13 +12,15 @@ namespace Switchcraft {
         private HashTable<string, Adw.ComboRow> theme_combo_rows;
         private HashTable<string, ThemeSettingValue> theme_settings;
         private HashTable<string, Adw.ActionRow> wallpaper_rows;
-        private weak Gtk.ShortcutsWindow? shortcuts_window = null;
         private Adw.Banner? banner = null;
         private PreferencesWindow? preferences_window = null;
         private Adw.ToastOverlay? toast_overlay = null;
         private Adw.ViewStack view_stack;
         private Gtk.ListBox enabled_command_listbox;
         private Gtk.ListBox disabled_command_listbox;
+        private Adw.ButtonRow add_command_row;
+        private AnimatedRows animated_rows;
+        private Gtk.Box builtin_columns;
         private HashTable<Gtk.ListBoxRow, CommandEntry> command_row_entries;
         private CommandEntry? drag_source_entry = null;
         private string? drag_theme = null;
@@ -28,18 +30,19 @@ namespace Switchcraft {
         private GenericArray<CommandEntry> row_entry_map;
         private CommandEntry? inline_editor_entry = null;
         private string inline_editor_theme = "light";
+        private string inline_editor_text = "";
         private bool inline_editor_is_new = false;
         private bool should_focus_inline_editor = false;
 
         private const string LIGHT_ICON = "weather-clear-symbolic";
         private const string DARK_ICON = "weather-clear-night-symbolic";
-        private const string SHORTCUTS_RESOURCE = "/com/github/Switchcraft/ui/shortcuts.ui";
 
         public MainWindow (Application app) {
             Object (application: app);
 
             set_title ("Switchcraft");
             set_default_size (850, 620);
+            set_size_request (360, 294);
 
             theme_combo_rows = new HashTable<string, Adw.ComboRow> (str_hash, str_equal);
             wallpaper_rows = new HashTable<string, Adw.ActionRow> (str_hash, str_equal);
@@ -63,7 +66,6 @@ namespace Switchcraft {
             add_action_handler ("show-preferences", on_show_preferences_action);
             add_action_handler ("show-about", on_show_about_action);
             add_action_handler ("show-constants", on_show_constants_action);
-            add_action_handler ("show-shortcuts", on_show_shortcuts_action);
 
             // Menu button
             var menu_button = new Gtk.MenuButton ();
@@ -71,7 +73,8 @@ namespace Switchcraft {
             var menu = new Menu ();
             menu.append (_("Preferences"), "win.show-preferences");
             menu.append (_("Constants"), "win.show-constants");
-            menu.append (_("Keyboard Shortcuts"), "win.show-shortcuts");
+            // app.shortcuts comes from Adw.Application and shortcuts-dialog.ui
+            menu.append (_("Keyboard Shortcuts"), "app.shortcuts");
             menu.append (_("About Switchcraft"), "win.show-about");
             menu.append (_("Quit"), "app.quit");
             menu_button.set_menu_model (menu);
@@ -80,10 +83,10 @@ namespace Switchcraft {
             // View stack for Built-in / Custom pages
             view_stack = new Adw.ViewStack ();
 
-            var view_switcher_title = new Adw.ViewSwitcherTitle ();
-            view_switcher_title.set_stack (view_stack);
-            view_switcher_title.set_title (get_title ());
-            header_bar.set_title_widget (view_switcher_title);
+            var view_switcher = new Adw.ViewSwitcher ();
+            view_switcher.set_stack (view_stack);
+            view_switcher.set_policy (Adw.ViewSwitcherPolicy.WIDE);
+            header_bar.set_title_widget (view_switcher);
 
             // Banner for monitoring status
             banner = new Adw.Banner (_("Background monitoring is now active"));
@@ -118,8 +121,12 @@ namespace Switchcraft {
             var switcher_bar = new Adw.ViewSwitcherBar ();
             switcher_bar.set_stack (view_stack);
             toolbar_view.add_bottom_bar (switcher_bar);
-            view_switcher_title.bind_property ("title-visible", switcher_bar, "reveal",
-                GLib.BindingFlags.SYNC_CREATE);
+
+            var narrow = new Adw.Breakpoint (Adw.BreakpointCondition.parse ("max-width: 550sp"));
+            narrow.add_setter (switcher_bar, "reveal", true);
+            narrow.add_setter (header_bar, "title-widget", Value (typeof (Gtk.Widget)));
+            narrow.add_setter (builtin_columns, "orientation", Gtk.Orientation.VERTICAL);
+            add_breakpoint (narrow);
         }
 
         // ── Built-in page (two-column theme settings) ─────────────────────
@@ -136,18 +143,18 @@ namespace Switchcraft {
             page_box.set_margin_start (24);
             page_box.set_margin_end (24);
 
-            var columns = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 24);
-            columns.set_homogeneous (true);
-            columns.set_hexpand (true);
+            builtin_columns = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 24);
+            builtin_columns.set_homogeneous (true);
+            builtin_columns.set_hexpand (true);
 
             var app = get_application () as Application;
 
             foreach (var theme in new string[] { "light", "dark" }) {
                 var column = build_theme_column (theme, app);
-                columns.append (column);
+                builtin_columns.append (column);
             }
 
-            page_box.append (columns);
+            page_box.append (builtin_columns);
             scrolled.set_child (page_box);
             return scrolled;
         }
@@ -348,13 +355,14 @@ namespace Switchcraft {
 
             page_box.append (header_box);
 
-            var add_button = new Gtk.Button.with_label (_("Add New Command"));
-            add_button.add_css_class ("suggested-action");
-            add_button.set_halign (Gtk.Align.START);
-            add_button.clicked.connect (() => {
+            add_command_row = new Adw.ButtonRow ();
+            add_command_row.set_start_icon_name ("list-add-symbolic");
+            add_command_row.set_tooltip_text (_("Add command"));
+            add_command_row.update_property (Gtk.AccessibleProperty.LABEL, _("Add command"), -1);
+            add_command_row.set_data<void*> (AnimatedRows.ROW_KEY, (void*) add_command_row);
+            add_command_row.activated.connect (() => {
                 on_add_command_action ();
             });
-            page_box.append (add_button);
 
             page_box.append (create_command_section (
                 _("Commands"),
@@ -368,6 +376,9 @@ namespace Switchcraft {
                 out disabled_command_listbox
             ));
 
+            animated_rows = new AnimatedRows (page_box,
+                { enabled_command_listbox, disabled_command_listbox });
+
             rebuild_display_order ();
             refresh_command_list_ui ();
 
@@ -375,7 +386,7 @@ namespace Switchcraft {
             scrolled.set_policy (Gtk.PolicyType.NEVER, Gtk.PolicyType.AUTOMATIC);
             scrolled.set_hexpand (true);
             scrolled.set_vexpand (true);
-            scrolled.set_child (page_box);
+            scrolled.set_child (animated_rows);
 
             return scrolled;
         }
@@ -420,37 +431,28 @@ namespace Switchcraft {
         }
 
         private void refresh_command_list_ui () {
+            animated_rows.begin_reorder ();
             command_row_entries.remove_all ();
             clear_command_listbox (enabled_command_listbox);
             clear_command_listbox (disabled_command_listbox);
 
-            if (inline_editor_is_new || (inline_editor_entry != null && inline_editor_entry.enabled)) {
+            for (int i = 0; i < (int) row_entry_map.length; i++) {
+                var entry = row_entry_map[i];
+                var listbox = entry.enabled ? enabled_command_listbox : disabled_command_listbox;
+
+                // The editor takes the place of the row it edits
+                if (entry == inline_editor_entry) {
+                    listbox.append (create_inline_command_row ());
+                } else {
+                    listbox.append (create_command_row (row_theme_map[i], entry));
+                }
+            }
+
+            // A new command is edited where the "+" row normally sits
+            if (inline_editor_is_new) {
                 enabled_command_listbox.append (create_inline_command_row ());
-            }
-            for (int i = 0; i < (int) row_entry_map.length; i++) {
-                var entry = row_entry_map[i];
-                if (!entry.enabled) {
-                    continue;
-                }
-
-                if (!inline_editor_is_new && inline_editor_entry == entry) continue;
-
-                enabled_command_listbox.append (create_command_row (row_theme_map[i], entry));
-            }
-
-            if (!inline_editor_is_new && inline_editor_entry != null && !inline_editor_entry.enabled) {
-                disabled_command_listbox.append (create_inline_command_row ());
-            }
-
-            for (int i = 0; i < (int) row_entry_map.length; i++) {
-                var entry = row_entry_map[i];
-                if (entry.enabled) {
-                    continue;
-                }
-
-                if (!inline_editor_is_new && inline_editor_entry == entry) continue;
-
-                disabled_command_listbox.append (create_command_row (row_theme_map[i], entry));
+            } else {
+                enabled_command_listbox.append (add_command_row);
             }
         }
 
@@ -495,10 +497,22 @@ namespace Switchcraft {
             return "light";
         }
 
-        private Adw.ActionRow create_command_row (string theme, CommandEntry entry) {
-            var row = new Adw.ActionRow ();
+        private Adw.ToggleGroup create_theme_toggle (string theme) {
+            var group = new Adw.ToggleGroup ();
+            group.set_valign (Gtk.Align.CENTER);
+            group.add (new Adw.Toggle () { name = "light", icon_name = LIGHT_ICON, tooltip = _("Light") });
+            group.add (new Adw.Toggle () { name = "dark", icon_name = DARK_ICON, tooltip = _("Dark") });
+            group.set_active_name (theme);
+            return group;
+        }
+
+        private Adw.SwitchRow create_command_row (string theme, CommandEntry entry) {
+            var row = new Adw.SwitchRow ();
+            // Commands often contain & < > which are not valid markup
+            row.set_use_markup (false);
             row.set_title (entry.command);
-            row.set_activatable (false);
+            row.set_active (entry.enabled);
+            row.set_data<void*> (AnimatedRows.ROW_KEY, (void*) entry);
             command_row_entries.insert (row, entry);
 
             // Drag handle
@@ -514,7 +528,11 @@ namespace Switchcraft {
 
             var drag_source = new Gtk.DragSource ();
             drag_source.set_actions (Gdk.DragAction.MOVE);
+            double press_x = 0;
+            double press_y = 0;
             drag_source.prepare.connect ((x, y) => {
+                press_x = x;
+                press_y = y;
                 if (get_entry_index (entry) < 0) {
                     reset_drag_state ();
                     return (Gdk.ContentProvider?) null;
@@ -528,6 +546,9 @@ namespace Switchcraft {
                 value.set_string (drag_theme);
                 return new Gdk.ContentProvider.for_value (value);
             });
+            drag_source.drag_begin.connect ((drag) => {
+                set_drag_icon (drag, row, drag_handle, press_x, press_y);
+            });
             drag_source.drag_end.connect ((drag, delete_data) => {
                 reset_drag_state ();
             });
@@ -537,51 +558,19 @@ namespace Switchcraft {
             });
             drag_handle.add_controller (drag_source);
 
-            // Theme toggle group (light / dark)
-            var toggle_box = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 0);
-            toggle_box.add_css_class ("linked");
-            toggle_box.set_valign (Gtk.Align.CENTER);
-            toggle_box.set_margin_end (6);
-
-            var light_toggle = new Gtk.ToggleButton ();
-            light_toggle.set_icon_name (LIGHT_ICON);
-
-            var dark_toggle = new Gtk.ToggleButton ();
-            dark_toggle.set_icon_name (DARK_ICON);
-            dark_toggle.set_group (light_toggle);
-
-            // Set initial state BEFORE connecting signals
-            if (theme == "dark") {
-                dark_toggle.set_active (true);
-            } else {
-                light_toggle.set_active (true);
-            }
-
-            // Connect signals AFTER initial state to avoid spurious handlers
-            light_toggle.toggled.connect (() => {
-                if (light_toggle.get_active ()) {
-                    on_theme_toggle_changed (entry, "light");
-                }
+            // Theme toggle group (light / dark). Initial state is set before
+            // connecting to avoid a spurious change.
+            var theme_toggle = create_theme_toggle (theme);
+            theme_toggle.set_margin_end (6);
+            theme_toggle.notify["active-name"].connect (() => {
+                on_theme_toggle_changed (entry, theme_toggle.get_active_name ());
             });
-            dark_toggle.toggled.connect (() => {
-                if (dark_toggle.get_active ()) {
-                    on_theme_toggle_changed (entry, "dark");
-                }
-            });
-
-            toggle_box.append (light_toggle);
-            toggle_box.append (dark_toggle);
-            row.add_prefix (toggle_box);
+            row.add_prefix (theme_toggle);
 
             // Enable/disable switch
-            var toggle = new Gtk.Switch ();
-            toggle.set_valign (Gtk.Align.CENTER);
-            toggle.set_active (entry.enabled);
-            toggle.set_tooltip_text (_("Enable or disable this command"));
-            toggle.state_set.connect ((state) => {
-                return on_toggle_command_state (toggle, state, row, entry);
+            row.notify["active"].connect (() => {
+                on_toggle_command_state (row.get_active (), entry);
             });
-            row.add_suffix (toggle);
 
             // Controls box with edit and remove buttons
             var controls_box = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 6);
@@ -610,87 +599,49 @@ namespace Switchcraft {
             return row;
         }
 
-        private Gtk.ListBoxRow create_inline_command_row () {
-            var row = new Gtk.ListBoxRow ();
-            row.set_activatable (false);
-            row.set_selectable (false);
+        private Adw.EntryRow create_inline_command_row () {
+            var row = new Adw.EntryRow ();
+            row.set_title (_("Command"));
+            row.set_text (inline_editor_text);
 
-            var content_box = new Gtk.Box (Gtk.Orientation.VERTICAL, 12);
-            content_box.set_margin_top (12);
-            content_box.set_margin_bottom (12);
-            content_box.set_margin_start (12);
-            content_box.set_margin_end (12);
-
-            var controls_row = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 12);
-
-            var theme_box = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 0);
-            theme_box.add_css_class ("linked");
-            theme_box.set_valign (Gtk.Align.CENTER);
-
-            var light_toggle = new Gtk.ToggleButton ();
-            light_toggle.set_icon_name (LIGHT_ICON);
-
-            var dark_toggle = new Gtk.ToggleButton ();
-            dark_toggle.set_icon_name (DARK_ICON);
-            dark_toggle.set_group (light_toggle);
-
-            if (inline_editor_theme == "dark") {
-                dark_toggle.set_active (true);
-            } else {
-                light_toggle.set_active (true);
-            }
-
-            light_toggle.toggled.connect (() => {
-                if (light_toggle.get_active ()) {
-                    inline_editor_theme = "light";
-                }
+            var theme_toggle = create_theme_toggle (inline_editor_theme);
+            theme_toggle.notify["active-name"].connect (() => {
+                inline_editor_theme = theme_toggle.get_active_name ();
             });
-            dark_toggle.toggled.connect (() => {
-                if (dark_toggle.get_active ()) {
-                    inline_editor_theme = "dark";
-                }
+            row.add_prefix (theme_toggle);
+
+            // Keep the draft when the list is rebuilt while editing
+            row.changed.connect (() => {
+                inline_editor_text = row.get_text ();
             });
-
-            theme_box.append (light_toggle);
-            theme_box.append (dark_toggle);
-            controls_row.append (theme_box);
-
-            var entry = new Gtk.Entry ();
-            entry.set_hexpand (true);
-            entry.set_placeholder_text (_("e.g. notify-send 'Theme changed'"));
-            if (inline_editor_entry != null) {
-                entry.set_text (inline_editor_entry.command);
-            }
-            controls_row.append (entry);
 
             var save_button = new Gtk.Button.from_icon_name ("object-select-symbolic");
             save_button.add_css_class ("flat");
+            save_button.set_valign (Gtk.Align.CENTER);
             save_button.set_tooltip_text (inline_editor_is_new ? _("Add command") : _("Save command"));
             save_button.clicked.connect (() => {
-                save_inline_command_row (entry);
+                save_inline_command_row (row);
             });
-            controls_row.append (save_button);
+            row.add_suffix (save_button);
 
             var cancel_button = new Gtk.Button.from_icon_name ("window-close-symbolic");
             cancel_button.add_css_class ("flat");
+            cancel_button.set_valign (Gtk.Align.CENTER);
             cancel_button.set_tooltip_text (_("Cancel"));
             cancel_button.clicked.connect (() => {
                 cancel_inline_command_edit ();
             });
-            controls_row.append (cancel_button);
+            row.add_suffix (cancel_button);
 
-            entry.activate.connect (() => {
-                save_inline_command_row (entry);
+            row.entry_activated.connect (() => {
+                save_inline_command_row (row);
             });
-
-            content_box.append (controls_row);
-            row.set_child (content_box);
 
             if (should_focus_inline_editor) {
                 should_focus_inline_editor = false;
                 GLib.Idle.add (() => {
-                    entry.grab_focus ();
-                    entry.set_position (-1);
+                    row.grab_focus ();
+                    row.set_position (-1);
                     return false;
                 });
             }
@@ -703,6 +654,7 @@ namespace Switchcraft {
 
             inline_editor_theme = theme;
             inline_editor_entry = entry;
+            inline_editor_text = entry != null ? entry.command : "";
             inline_editor_is_new = entry == null;
             should_focus_inline_editor = true;
 
@@ -712,12 +664,13 @@ namespace Switchcraft {
         private void cancel_inline_command_edit () {
             inline_editor_entry = null;
             inline_editor_theme = "light";
+            inline_editor_text = "";
             inline_editor_is_new = false;
             should_focus_inline_editor = false;
             refresh_command_list_ui ();
         }
 
-        private void save_inline_command_row (Gtk.Entry entry_widget) {
+        private void save_inline_command_row (Adw.EntryRow entry_widget) {
             var command_text = entry_widget.get_text ().strip ();
             if (command_text.length == 0) {
                 entry_widget.grab_focus ();
@@ -742,6 +695,7 @@ namespace Switchcraft {
             rebuild_commands_from_display_order ();
             inline_editor_entry = null;
             inline_editor_theme = "light";
+            inline_editor_text = "";
             inline_editor_is_new = false;
             should_focus_inline_editor = false;
 
@@ -794,14 +748,34 @@ namespace Switchcraft {
             }
         }
 
-        private bool on_toggle_command_state (Gtk.Switch sw, bool state,
-                                              Gtk.ListBoxRow row, CommandEntry entry) {
+        private void on_toggle_command_state (bool state, CommandEntry entry) {
             entry.enabled = state;
-            update_row_state (row as Adw.ActionRow, entry);
             save_commands ();
+            // The row slides into the other section
             refresh_command_list_ui ();
+        }
 
-            return false;
+        private void set_drag_icon (Gdk.Drag drag, Adw.ActionRow row, Gtk.Widget handle,
+                                    double press_x, double press_y) {
+            // Show a copy of the row while dragging. A plain list is opaque,
+            // boxed-list cards are translucent in dark mode.
+            var copy = new Adw.ActionRow ();
+            copy.set_use_markup (false);
+            copy.set_title (row.get_title ());
+            copy.add_prefix (new Gtk.Image.from_icon_name ("list-drag-handle-symbolic"));
+
+            var list = new Gtk.ListBox ();
+            list.set_size_request (row.get_width (), row.get_height ());
+            list.append (copy);
+            list.drag_highlight_row (copy);
+
+            var icon = new Gtk.DragIcon.get_for_drag (drag);
+            icon.set_child (list);
+
+            // Keep the pointer where the drag started
+            Graphene.Point hotspot;
+            handle.compute_point (row, Graphene.Point () { x = (float) press_x, y = (float) press_y }, out hotspot);
+            drag.set_hotspot ((int) hotspot.x, (int) hotspot.y);
         }
 
         // ── Drag-and-drop reordering ──────────────────────────────────────
@@ -1076,39 +1050,6 @@ namespace Switchcraft {
             dialog.set_application_icon ("com.github.Switchcraft");
 
             dialog.present (this);
-        }
-
-        private void on_show_shortcuts_action () {
-            Gtk.ShortcutsWindow? maybe_window = shortcuts_window;
-
-            if (maybe_window == null) {
-                maybe_window = build_shortcuts_window ();
-                if (maybe_window == null) return;
-
-                Gtk.ShortcutsWindow actual_window = (!) maybe_window;
-                actual_window.set_transient_for (this);
-                actual_window.close_request.connect (() => {
-                    shortcuts_window = null;
-                    actual_window.destroy ();
-                    return true;
-                });
-
-                shortcuts_window = actual_window;
-            }
-
-            Gtk.ShortcutsWindow present_window = (!) maybe_window;
-            present_window.present ();
-        }
-
-        private Gtk.ShortcutsWindow? build_shortcuts_window () {
-            var builder = new Gtk.Builder ();
-            try {
-                builder.add_from_resource (SHORTCUTS_RESOURCE);
-                return builder.get_object ("shortcuts_window") as Gtk.ShortcutsWindow;
-            } catch (Error e) {
-                warning ("Failed to load shortcuts window: %s", e.message);
-                return null;
-            }
         }
 
         private void on_show_constants_action () {

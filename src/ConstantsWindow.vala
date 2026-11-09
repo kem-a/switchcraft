@@ -191,20 +191,25 @@ namespace Switchcraft {
             form_box.set_margin_bottom (12);
             form_box.set_size_request (450, -1);
             
-            var name_entry = new Gtk.Entry ();
-            name_entry.set_placeholder_text (_("Constant name (e.g., D2DL_SCHEMA)"));
+            var fields = new Gtk.ListBox ();
+            fields.set_selection_mode (Gtk.SelectionMode.NONE);
+            fields.add_css_class ("boxed-list");
+            form_box.append (fields);
+
+            var name_entry = new Adw.EntryRow ();
+            name_entry.set_title (_("Constant name (e.g., D2DL_SCHEMA)"));
             if (existing_name.length > 0) {
                 name_entry.set_text (existing_name);
                 name_entry.set_sensitive (false); // Don't allow renaming
             }
-            form_box.append (name_entry);
-            
-            var value_entry = new Gtk.Entry ();
-            value_entry.set_placeholder_text (_("Value (e.g., org.gnome.shell.extensions.dash2dock-lite)"));
+            fields.append (name_entry);
+
+            var value_entry = new Adw.EntryRow ();
+            value_entry.set_title (_("Value (e.g., org.gnome.shell.extensions.dash2dock-lite)"));
             if (existing_value.length > 0) {
                 value_entry.set_text (existing_value);
             }
-            form_box.append (value_entry);
+            fields.append (value_entry);
             
             var hint_label = new Gtk.Label (_("Use in commands as $NAME or ${NAME}"));
             hint_label.set_xalign (0);
@@ -223,7 +228,7 @@ namespace Switchcraft {
         }
         
         private void on_constant_dialog_response (string response_id,
-                                                   string old_name, Gtk.Entry name_entry, Gtk.Entry value_entry) {
+                                                   string old_name, Adw.EntryRow name_entry, Adw.EntryRow value_entry) {
             if (response_id != "save") {
                 return;
             }

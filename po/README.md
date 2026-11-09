@@ -52,9 +52,9 @@ Open the generated YAML file and fill in the `msgstr` fields:
 
 ```yaml
 entries:
-  - msgid: "Add New Command"
-    msgstr: "Pievienot jaunu komandu"
-    locations: "src/MainWindow.vala:350"
+  - msgid: "Add command"
+    msgstr: "Pievienot komandu"
+    locations: "src/MainWindow.vala:360"
 ```
 
 ### 5. Import translations
