@@ -61,7 +61,9 @@ namespace Switchcraft {
     public class CommandEntry : Object {
         public string command { get; set; }
         public bool enabled { get; set; default = true; }
-        
+        // Index in the Custom page list, which mixes light and dark
+        public int position { get; set; default = -1; }
+
         public CommandEntry (owned string cmd, bool en = true) {
             command = (owned) cmd;
             enabled = en;
@@ -152,9 +154,27 @@ namespace Switchcraft {
                 } catch (Error e) {
                     warning ("Failed to migrate configuration: %s", e.message);
                 }
+            } else if (FileUtils.test (old_dir, FileTest.IS_DIR)) {
+                // Both dirs exist: move only what the new dir lacks. Files
+                // present in both stay in the old dir untouched.
+                try {
+                    var dir = Dir.open (old_dir);
+                    string? name;
+                    while ((name = dir.read_name ()) != null) {
+                        var target = Path.build_filename (new_dir, name);
+                        if (!FileUtils.test (target, FileTest.EXISTS)) {
+                            File.new_for_path (Path.build_filename (old_dir, name))
+                                .move (File.new_for_path (target), FileCopyFlags.NONE, null, null);
+                        }
+                    }
+                } catch (Error e) {
+                    warning ("Failed to migrate configuration: %s", e.message);
+                }
+                // Only succeeds once the old dir is empty
+                DirUtils.remove (old_dir);
             }
         }
-        
+
         protected override void activate () {
             migrate_legacy_monitor ();
 
@@ -164,17 +184,25 @@ namespace Switchcraft {
                 enable_monitoring ();
             }
 
-            var win = new MainWindow (this);
+            // A second launch shows the open window instead of a new one
+            var win = get_active_window ();
+            if (win == null) {
+                win = new MainWindow (this);
+            }
             win.present ();
         }
 
-        protected override int command_line (ApplicationCommandLine command_line) {
-            var options = command_line.get_options_dict ();
-
+        // Runs in the calling process, so the output reaches its terminal
+        protected override int handle_local_options (VariantDict options) {
             if (options.contains ("version")) {
                 print ("Switchcraft %s\n", Switchcraft.VERSION);
                 return 0;
             }
+            return -1;
+        }
+
+        protected override int command_line (ApplicationCommandLine command_line) {
+            var options = command_line.get_options_dict ();
 
             if (options.contains ("background")) {
                 this.hold ();
@@ -222,14 +250,26 @@ namespace Switchcraft {
             var constants = get_constants ();
             
             string[] env = Environ.get ();
-            foreach (var key in constants.get_keys ()) {
+            // Constants arrive as plain variables. The prefix expands $VARS
+            // in their values, like the old bash monitor's eval did.
+            var prefix = new StringBuilder ();
+            var names = constants.get_keys ();
+            names.sort (strcmp);
+            foreach (var key in names) {
                 env = Environ.set_variable (env, key, constants.get (key));
+                if (Regex.match_simple ("^[A-Za-z_][A-Za-z0-9_]*$", key)) {
+                    prefix.append_printf (
+                        "__sc=$(eval \"printf '%%s' \\\"$%s\\\"\" 2>/dev/null) && %s=$__sc\n", key, key);
+                }
             }
-            
+            if (prefix.len > 0) {
+                prefix.append ("unset __sc\n");
+            }
+
             foreach (var entry in theme_commands) {
                 if (entry.enabled) {
                     try {
-                        string[] argv = { "/bin/sh", "-c", entry.command };
+                        string[] argv = { "/bin/sh", "-c", prefix.str + entry.command };
                         Process.spawn_async (
                             null,
                             argv,
@@ -290,10 +330,19 @@ namespace Switchcraft {
             return commands;
         }
         
-        private HashTable<string, List<CommandEntry>> normalize_commands (Json.Node root_node) {
+        // Hand-edited files may hold numbers, bools or null where strings
+        // are expected. get_string () on those returns null.
+        private static string? string_value (Json.Node? node) {
+            if (node == null || node.get_value_type () != typeof (string)) {
+                return null;
+            }
+            return node.get_string ();
+        }
+
+        private HashTable<string, List<CommandEntry>> normalize_commands (Json.Node? root_node) {
             var commands = default_commands ();
             
-            if (root_node.get_node_type () != Json.NodeType.OBJECT) {
+            if (root_node == null || root_node.get_node_type () != Json.NodeType.OBJECT) {
                 return commands;
             }
             
@@ -315,20 +364,28 @@ namespace Switchcraft {
                 array.foreach_element ((arr, idx, node) => {
                     if (node.get_node_type () == Json.NodeType.VALUE) {
                         // String format
-                        var cmd = node.get_string ();
-                        theme_commands.prepend (new CommandEntry (cmd, true));
+                        var cmd = string_value (node);
+                        if (cmd != null) {
+                            theme_commands.prepend (new CommandEntry (cmd, true));
+                        }
                     } else if (node.get_node_type () == Json.NodeType.OBJECT) {
                         // Object format with enabled flag
                         var obj = node.get_object ();
-                        if (!obj.has_member ("command")) {
+                        var cmd = string_value (obj.get_member ("command"));
+                        if (cmd == null) {
                             return;
                         }
                         
-                        var cmd = obj.get_string_member ("command");
-                        var enabled = obj.has_member ("enabled") ? 
-                            obj.get_boolean_member ("enabled") : true;
+                        var enabled_node = obj.get_member ("enabled");
+                        var entry = new CommandEntry (cmd,
+                            enabled_node == null || enabled_node.get_value_type () != typeof (bool)
+                            || enabled_node.get_boolean ());
+                        var position_node = obj.get_member ("position");
+                        if (position_node != null && position_node.get_value_type () == typeof (int64)) {
+                            entry.position = (int) position_node.get_int ();
+                        }
                         
-                        theme_commands.prepend (new CommandEntry (cmd, enabled));
+                        theme_commands.prepend (entry);
                     }
                 });
                 
@@ -352,6 +409,9 @@ namespace Switchcraft {
                     var entry_obj = new Json.Object ();
                     entry_obj.set_string_member ("command", entry.command);
                     entry_obj.set_boolean_member ("enabled", entry.enabled);
+                    if (entry.position >= 0) {
+                        entry_obj.set_int_member ("position", entry.position);
+                    }
                     
                     var entry_node = new Json.Node (Json.NodeType.OBJECT);
                     entry_node.set_object (entry_obj);
@@ -382,11 +442,12 @@ namespace Switchcraft {
                 parser.load_from_data (contents);
                 var root = parser.get_root ();
                 
-                if (root.get_node_type () == Json.NodeType.OBJECT) {
+                if (root != null && root.get_node_type () == Json.NodeType.OBJECT) {
                     var obj = root.get_object ();
                     obj.foreach_member ((obj, name, node) => {
-                        if (node.get_node_type () == Json.NodeType.VALUE) {
-                            constants.insert (name, node.get_string ());
+                        var value = string_value (node);
+                        if (value != null) {
+                            constants.insert (name, value);
                         }
                     });
                 }
@@ -438,21 +499,26 @@ namespace Switchcraft {
                 parser.load_from_data (contents);
                 var root = parser.get_root ();
 
-                if (root.get_node_type () == Json.NodeType.OBJECT) {
-                    var obj = root.get_object ();
-                    obj.foreach_member ((o, id, node) => {
-                        if (node.get_node_type () == Json.NodeType.OBJECT) {
-                            var setting = node.get_object ();
-                            var light_val = setting.has_member ("light") ? setting.get_string_member ("light") : "";
-                            var dark_val = setting.has_member ("dark") ? setting.get_string_member ("dark") : "";
-                            result.insert (id, new ThemeSettingValue (light_val, dark_val));
-                        }
-                    });
+                if (root != null && root.get_node_type () == Json.NodeType.OBJECT) {
+                    result = parse_theme_settings (root.get_object ());
                 }
             } catch (Error e) {
                 warning ("Failed to load theme settings: %s", e.message);
             }
 
+            return result;
+        }
+
+        private HashTable<string, ThemeSettingValue> parse_theme_settings (Json.Object obj) {
+            var result = new HashTable<string, ThemeSettingValue> (str_hash, str_equal);
+            obj.foreach_member ((o, id, node) => {
+                if (node.get_node_type () == Json.NodeType.OBJECT) {
+                    var setting = node.get_object ();
+                    var light_val = string_value (setting.get_member ("light")) ?? "";
+                    var dark_val = string_value (setting.get_member ("dark")) ?? "";
+                    result.insert (id, new ThemeSettingValue (light_val, dark_val));
+                }
+            });
             return result;
         }
 
@@ -484,50 +550,118 @@ namespace Switchcraft {
             }
         }
 
+        public const string[] THEME_SETTING_IDS = {
+            "icon-theme", "gtk-theme", "cursor-theme", "shell-theme", "wallpaper"
+        };
+        // Stored for the shell theme's empty name, since "" means "not set"
+        public const string SHELL_THEME_DEFAULT = "Default";
+        private const string USER_THEME_SCHEMA = "org.gnome.shell.extensions.user-theme";
+        private const string USER_THEME_EXTENSION = "user-theme@gnome-shell-extensions.gcampax.github.com";
+
+        private void get_setting_key (string setting_id, string theme, out string schema_id, out string key) {
+            schema_id = "org.gnome.desktop.interface";
+            key = setting_id;
+            if (setting_id == "shell-theme") {
+                schema_id = USER_THEME_SCHEMA;
+                key = "name";
+            } else if (setting_id == "wallpaper") {
+                schema_id = "org.gnome.desktop.background";
+                key = theme == "dark" ? "picture-uri-dark" : "picture-uri";
+            }
+        }
+
+        // Extensions from extensions.gnome.org keep their schema in their
+        // own folder, where the default schema source does not look
+        private SettingsSchema? lookup_schema (string schema_id, out string? schema_dir) {
+            schema_dir = null;
+            var source = SettingsSchemaSource.get_default ();
+            var schema = source != null ? source.lookup (schema_id, true) : null;
+            if (schema != null || schema_id != USER_THEME_SCHEMA) {
+                return schema;
+            }
+
+            foreach (var base_dir in new string[] { Environment.get_user_data_dir (), "/usr/share" }) {
+                var dir = Path.build_filename (base_dir, "gnome-shell", "extensions", USER_THEME_EXTENSION, "schemas");
+                if (!FileUtils.test (Path.build_filename (dir, "gschemas.compiled"), FileTest.EXISTS)) {
+                    continue;
+                }
+                try {
+                    var extension_source = new SettingsSchemaSource.from_directory (dir, source, false);
+                    schema = extension_source.lookup (schema_id, false);
+                    if (schema != null) {
+                        schema_dir = dir;
+                        return schema;
+                    }
+                } catch (Error e) {
+                    warning ("Failed to load schemas from %s: %s", dir, e.message);
+                }
+            }
+            return null;
+        }
+
+        public bool has_shell_theme_support () {
+            string? schema_dir;
+            return lookup_schema (USER_THEME_SCHEMA, out schema_dir) != null;
+        }
+
+        // What GNOME currently uses, shown for settings the user has not set
+        public string get_current_theme_value (string setting_id, string theme) {
+            string schema_id, key;
+            string? schema_dir;
+            get_setting_key (setting_id, theme, out schema_id, out key);
+            var schema = lookup_schema (schema_id, out schema_dir);
+            if (schema == null || !schema.has_key (key)) {
+                return "";
+            }
+
+            var value = new Settings.full (schema, null, null).get_string (key);
+            if (setting_id == "shell-theme" && value == "") {
+                return SHELL_THEME_DEFAULT;
+            }
+            if (setting_id == "wallpaper" && value != "") {
+                return File.new_for_uri (value).get_path () ?? value;
+            }
+            return value;
+        }
+
         private void apply_theme_settings (string theme) {
             var ts = get_theme_settings ();
-            apply_gsetting (ts, "icon-theme", theme, "org.gnome.desktop.interface", "icon-theme");
-            apply_gsetting (ts, "gtk-theme", theme, "org.gnome.desktop.interface", "gtk-theme");
-            apply_gsetting (ts, "cursor-theme", theme, "org.gnome.desktop.interface", "cursor-theme");
-            apply_gsetting (ts, "shell-theme", theme, "org.gnome.shell.extensions.user-theme", "name");
-            apply_wallpaper (ts, theme);
-        }
+            foreach (var setting_id in THEME_SETTING_IDS) {
+                var val = ts.lookup (setting_id);
+                var value = val != null ? val.get_for_theme (theme) : "";
+                if (value.length == 0) {
+                    continue;
+                }
 
-        private void apply_wallpaper (HashTable<string, ThemeSettingValue> ts, string theme) {
-            var val = ts.lookup ("wallpaper");
-            if (val == null) return;
+                if (setting_id == "shell-theme" && value == SHELL_THEME_DEFAULT) {
+                    value = "";
+                } else if (setting_id == "wallpaper" && !value.contains ("://")) {
+                    // Escapes characters like # and % in the path
+                    value = File.new_for_path (value).get_uri ();
+                }
 
-            var path = val.get_for_theme (theme);
-            if (path.length == 0) return;
+                string schema_id, key;
+                string? schema_dir;
+                get_setting_key (setting_id, theme, out schema_id, out key);
+                if (lookup_schema (schema_id, out schema_dir) == null) {
+                    warning ("Cannot apply %s: schema %s is not installed", setting_id, schema_id);
+                    continue;
+                }
 
-            string uri = path;
-            if (!path.has_prefix ("file://")) {
-                uri = "file://" + path;
-            }
-
-            string key = theme == "dark" ? "picture-uri-dark" : "picture-uri";
-            try {
-                string[] argv = { "gsettings", "set", "org.gnome.desktop.background", key, uri };
-                Process.spawn_async (null, argv, null, SpawnFlags.SEARCH_PATH, null, null);
-            } catch (Error e) {
-                warning ("Failed to set wallpaper: %s", e.message);
-            }
-        }
-
-        private void apply_gsetting (HashTable<string, ThemeSettingValue> ts,
-                                      string setting_id, string theme,
-                                      string schema_id, string key) {
-            var val = ts.lookup (setting_id);
-            if (val == null) return;
-
-            var value = val.get_for_theme (theme);
-            if (value.length == 0) return;
-
-            try {
-                string[] argv = { "gsettings", "set", schema_id, key, value };
-                Process.spawn_async (null, argv, null, SpawnFlags.SEARCH_PATH, null, null);
-            } catch (Error e) {
-                warning ("Failed to apply %s: %s", setting_id, e.message);
+                string[] argv = { "gsettings" };
+                if (schema_dir != null) {
+                    argv += "--schemadir";
+                    argv += schema_dir;
+                }
+                argv += "set";
+                argv += schema_id;
+                argv += key;
+                argv += value;
+                try {
+                    Process.spawn_async (null, argv, null, SpawnFlags.SEARCH_PATH, null, null);
+                } catch (Error e) {
+                    warning ("Failed to apply %s: %s", setting_id, e.message);
+                }
             }
         }
 
@@ -774,24 +908,25 @@ namespace Switchcraft {
                     return false;
                 }
 
+                // Parse and check every file before saving, so a bad archive
+                // changes nothing
                 string commands_data;
                 FileUtils.get_contents (commands_path, out commands_data);
                 var commands_parser = new Json.Parser ();
                 commands_parser.load_from_data (commands_data);
                 var commands_root = commands_parser.get_root ();
-                if (commands_root.get_node_type () != Json.NodeType.OBJECT) {
+                if (commands_root == null || commands_root.get_node_type () != Json.NodeType.OBJECT) {
                     error_message = _("commands.json is not a JSON object.");
                     return false;
                 }
                 var imported_commands = normalize_commands (commands_root);
-                save_commands (imported_commands);
 
                 string constants_data;
                 FileUtils.get_contents (constants_path, out constants_data);
                 var constants_parser = new Json.Parser ();
                 constants_parser.load_from_data (constants_data);
                 var constants_root = constants_parser.get_root ();
-                if (constants_root.get_node_type () != Json.NodeType.OBJECT) {
+                if (constants_root == null || constants_root.get_node_type () != Json.NodeType.OBJECT) {
                     error_message = _("constants.json is not a JSON object.");
                     return false;
                 }
@@ -800,8 +935,9 @@ namespace Switchcraft {
                 var constants_table = new HashTable<string, string> (str_hash, str_equal);
                 bool invalid_value = false;
                 constants_obj.foreach_member ((obj, name, node) => {
-                    if (node.get_node_type () == Json.NodeType.VALUE && node.get_value_type () == GLib.Type.STRING) {
-                        constants_table.insert (name, node.get_string ());
+                    var value = string_value (node);
+                    if (value != null) {
+                        constants_table.insert (name, value);
                     } else {
                         invalid_value = true;
                     }
@@ -812,33 +948,26 @@ namespace Switchcraft {
                     return false;
                 }
 
-                save_constants (constants_table);
-
-                // Import theme settings (optional for backward compatibility)
+                // Theme settings are optional for backward compatibility
+                HashTable<string, ThemeSettingValue>? ts_table = null;
                 var ts_import_path = Path.build_filename (temp_dir, "theme_settings.json");
                 if (FileUtils.test (ts_import_path, FileTest.EXISTS)) {
-                    try {
-                        string ts_data;
-                        FileUtils.get_contents (ts_import_path, out ts_data);
-                        var ts_parser = new Json.Parser ();
-                        ts_parser.load_from_data (ts_data);
-                        var ts_root = ts_parser.get_root ();
-                        if (ts_root.get_node_type () == Json.NodeType.OBJECT) {
-                            var ts_parsed = ts_root.get_object ();
-                            var ts_table = new HashTable<string, ThemeSettingValue> (str_hash, str_equal);
-                            ts_parsed.foreach_member ((o, id, node) => {
-                                if (node.get_node_type () == Json.NodeType.OBJECT) {
-                                    var s = node.get_object ();
-                                    var lv = s.has_member ("light") ? s.get_string_member ("light") : "";
-                                    var dv = s.has_member ("dark") ? s.get_string_member ("dark") : "";
-                                    ts_table.insert (id, new ThemeSettingValue (lv, dv));
-                                }
-                            });
-                            save_theme_settings (ts_table);
-                        }
-                    } catch (Error e) {
-                        warning ("Failed to import theme settings: %s", e.message);
+                    string ts_data;
+                    FileUtils.get_contents (ts_import_path, out ts_data);
+                    var ts_parser = new Json.Parser ();
+                    ts_parser.load_from_data (ts_data);
+                    var ts_root = ts_parser.get_root ();
+                    if (ts_root == null || ts_root.get_node_type () != Json.NodeType.OBJECT) {
+                        error_message = _("theme_settings.json is not a JSON object.");
+                        return false;
                     }
+                    ts_table = parse_theme_settings (ts_root.get_object ());
+                }
+
+                save_commands (imported_commands);
+                save_constants (constants_table);
+                if (ts_table != null) {
+                    save_theme_settings (ts_table);
                 }
 
                 return true;

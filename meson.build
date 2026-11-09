@@ -59,6 +59,7 @@ sources = files(
   'src/Application.vala',
   'src/MainWindow.vala',
   'src/AnimatedRows.vala',
+  'src/SlidingToggleGroup.vala',
   'src/ConstantsWindow.vala',
   'src/PreferencesWindow.vala',
 )
@@ -110,7 +111,7 @@ install_data(
   'data/com.github.Switchcraft.gschema.xml',
   install_dir: join_paths(get_option('datadir'), 'glib-2.0', 'schemas')
 )
-gnome.compile_schemas(build_by_default: true)
+subdir('data')
 gnome.post_install(glib_compile_schemas: true)
 
 # Summary
@@ -137,7 +138,7 @@ rm -f "$datadir/applications/com.github.Switchcraft.desktop"
 rm -f "$datadir/icons/hicolor/512x512/apps/com.github.Switchcraft.png"
 rm -f "$datadir/icons/hicolor/scalable/apps/com.github.Switchcraft.svg"
 rm -f "$autostart_entry"
-command -v pkill >/dev/null 2>&1 && pkill -f "switchcraft --background" >/dev/null 2>&1 || true
+command -v pkill >/dev/null 2>&1 && pkill -u "$(id -un)" -f '(^|/)switchcraft --background$' >/dev/null 2>&1 || true
 echo "Uninstallation complete."
 '''
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: switchcraft 2.0.0\n"
 "Report-Msgid-Bugs-To: https://github.com/kem-a/switchcraft/issues\n"
-"POT-Creation-Date: 2026-11-09 00:22+0200\n"
+"POT-Creation-Date: 2026-11-09 23:17+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,86 +17,90 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/Application.vala:118
+#: src/Application.vala:120
 msgid "Show version information"
 msgstr ""
 
-#: src/Application.vala:119
+#: src/Application.vala:121
 msgid "Run in background for theme monitoring"
 msgstr ""
 
-#: src/Application.vala:641
+#: src/Application.vala:775
 msgid "The 'zip' command is required to export."
 msgstr ""
 
-#: src/Application.vala:647
+#: src/Application.vala:781
 msgid "Destination must be a local file."
 msgstr ""
 
-#: src/Application.vala:654
+#: src/Application.vala:788
 msgid "Failed to prepare destination directory."
 msgstr ""
 
-#: src/Application.vala:662 src/Application.vala:754
+#: src/Application.vala:796 src/Application.vala:888
 msgid "Failed to create temporary directory."
 msgstr ""
 
-#: src/Application.vala:712
+#: src/Application.vala:846
 msgid "Unable to overwrite existing archive."
 msgstr ""
 
-#: src/Application.vala:724
+#: src/Application.vala:858
 #, c-format
 msgid "Failed to write archive: %s"
 msgstr ""
 
-#: src/Application.vala:741
+#: src/Application.vala:875
 msgid "The 'unzip' command is required to import."
 msgstr ""
 
-#: src/Application.vala:747
+#: src/Application.vala:881
 msgid "Archive must be a local file."
 msgstr ""
 
-#: src/Application.vala:765
+#: src/Application.vala:899
 #, c-format
 msgid "Failed to unpack archive: %s"
 msgstr ""
 
-#: src/Application.vala:773
+#: src/Application.vala:907
 msgid "Archive must contain commands.json and constants.json at the top level."
 msgstr ""
 
-#: src/Application.vala:783
+#: src/Application.vala:919
 msgid "commands.json is not a JSON object."
 msgstr ""
 
-#: src/Application.vala:795
+#: src/Application.vala:930
 msgid "constants.json is not a JSON object."
 msgstr ""
 
-#: src/Application.vala:811
+#: src/Application.vala:947
 msgid "constants.json must only contain string values."
 msgstr ""
 
-#: src/Application.vala:858
+#: src/Application.vala:961
+msgid "theme_settings.json is not a JSON object."
+msgstr ""
+
+#: src/Application.vala:987
 msgid "Failed to remove commands.json."
 msgstr ""
 
-#: src/Application.vala:865
+#: src/Application.vala:994
 msgid "Failed to remove constants.json."
 msgstr ""
 
-#: src/Application.vala:872
+#: src/Application.vala:1001
 msgid "Failed to remove theme_settings.json."
 msgstr ""
 
-#: src/Application.vala:1058
+#: src/Application.vala:1187
 #, c-format
 msgid "Switchcraft Monitor"
 msgstr ""
 
-#: src/Application.vala:1059
+#: src/Application.vala:1188
 msgid "Monitor GNOME theme changes and run commands"
 msgstr ""
 
@@ -104,7 +108,7 @@ msgstr ""
 msgid "Constants"
 msgstr ""
 
-#: src/ConstantsWindow.vala:39 src/ConstantsWindow.vala:180
+#: src/ConstantsWindow.vala:39 src/ConstantsWindow.vala:182
 msgid "Add Constant"
 msgstr ""
 
@@ -122,198 +126,186 @@ msgstr ""
 msgid "Click the + button to define a constant."
 msgstr ""
 
-#: src/ConstantsWindow.vala:143
+#: src/ConstantsWindow.vala:145
 msgid "Edit constant"
 msgstr ""
 
-#: src/ConstantsWindow.vala:151
+#: src/ConstantsWindow.vala:153
 msgid "Remove constant"
 msgstr ""
 
-#: src/ConstantsWindow.vala:180
+#: src/ConstantsWindow.vala:182
 msgid "Edit Constant"
 msgstr ""
 
-#: src/ConstantsWindow.vala:182
+#: src/ConstantsWindow.vala:184
 msgid "Define a constant name and value."
 msgstr ""
 
-#: src/ConstantsWindow.vala:183
+#: src/ConstantsWindow.vala:185
 msgid "Cancel"
 msgstr ""
 
-#: src/ConstantsWindow.vala:184
+#: src/ConstantsWindow.vala:186
 msgid "Save"
 msgstr ""
 
-#: src/ConstantsWindow.vala:184
+#: src/ConstantsWindow.vala:186
 msgid "Add"
 msgstr ""
 
-#: src/ConstantsWindow.vala:200
+#: src/ConstantsWindow.vala:202
 msgid "Constant name (e.g., D2DL_SCHEMA)"
 msgstr ""
 
-#: src/ConstantsWindow.vala:208
+#: src/ConstantsWindow.vala:210
 msgid "Value (e.g., org.gnome.shell.extensions.dash2dock-lite)"
 msgstr ""
 
-#: src/ConstantsWindow.vala:214
-msgid "Use in commands as $NAME or ${NAME}"
-msgstr ""
-
-#: src/ConstantsWindow.vala:246
-msgid "Invalid Name"
-msgstr ""
-
-#: src/ConstantsWindow.vala:247
+#: src/ConstantsWindow.vala:216
 msgid ""
-"Constant name must be a valid shell variable name (letters, numbers, "
-"underscores)."
+"Use in commands as $NAME or ${NAME}. Names use letters, numbers and "
+"underscores."
 msgstr ""
 
-#: src/ConstantsWindow.vala:249
-msgid "OK"
-msgstr ""
-
-#: src/MainWindow.vala:74
+#: src/MainWindow.vala:76
 msgid "Preferences"
 msgstr ""
 
-#: src/MainWindow.vala:77
+#: src/MainWindow.vala:79
 msgid "Keyboard Shortcuts"
 msgstr ""
 
-#: src/MainWindow.vala:78
+#: src/MainWindow.vala:80
 msgid "About Switchcraft"
 msgstr ""
 
-#: src/MainWindow.vala:79
+#: src/MainWindow.vala:81
 msgid "Quit"
 msgstr ""
 
-#: src/MainWindow.vala:92
+#: src/MainWindow.vala:94
 msgid "Background monitoring is now active"
 msgstr ""
 
-#: src/MainWindow.vala:93
+#: src/MainWindow.vala:95
 msgid "Dismiss"
 msgstr ""
 
-#: src/MainWindow.vala:111
+#: src/MainWindow.vala:113
 msgid "Built-in"
 msgstr ""
 
-#: src/MainWindow.vala:115
+#: src/MainWindow.vala:117
 msgid "Custom"
 msgstr ""
 
-#: src/MainWindow.vala:165 src/MainWindow.vala:290 src/MainWindow.vala:503
+#: src/MainWindow.vala:143
+msgid "Theme Settings"
+msgstr ""
+
+#: src/MainWindow.vala:144
+msgid ""
+"GNOME settings applied when the system switches themes. Until you pick a "
+"value, a row shows what GNOME uses now."
+msgstr ""
+
+#: src/MainWindow.vala:148
+msgid "Icon Theme"
+msgstr ""
+
+#: src/MainWindow.vala:148
+msgid "GTK Theme"
+msgstr ""
+
+#: src/MainWindow.vala:148
+msgid "Cursor Theme"
+msgstr ""
+
+#: src/MainWindow.vala:148
+msgid "Shell Theme"
+msgstr ""
+
+#: src/MainWindow.vala:148
+msgid "Wallpaper"
+msgstr ""
+
+#: src/MainWindow.vala:156
+msgid "Requires the User Themes GNOME Shell extension."
+msgstr ""
+
+#: src/MainWindow.vala:179 src/MainWindow.vala:225 src/MainWindow.vala:256
+#: src/MainWindow.vala:481
 #, c-format
 msgid "Light"
 msgstr ""
 
-#: src/MainWindow.vala:165 src/MainWindow.vala:290 src/MainWindow.vala:504
+#: src/MainWindow.vala:179 src/MainWindow.vala:225 src/MainWindow.vala:256
+#: src/MainWindow.vala:482
 #, c-format
 msgid "Dark"
 msgstr ""
 
-#: src/MainWindow.vala:171
-msgid "Applied when light mode activates."
-msgstr ""
-
-#: src/MainWindow.vala:172
-msgid "Applied when dark mode activates."
-msgstr ""
-
-#: src/MainWindow.vala:187
-msgid "Icon Theme"
-msgstr ""
-
-#: src/MainWindow.vala:187
-msgid "GTK Theme"
-msgstr ""
-
-#: src/MainWindow.vala:187
-msgid "Cursor Theme"
-msgstr ""
-
-#: src/MainWindow.vala:187
-msgid "Shell Theme"
-msgstr ""
-
-#: src/MainWindow.vala:213
-msgid "Don’t change"
-msgstr ""
-
-#: src/MainWindow.vala:255
-msgid "Wallpaper"
-msgstr ""
-
-#: src/MainWindow.vala:265 src/MainWindow.vala:327 src/MainWindow.vala:1015
-msgid "None"
-msgstr ""
-
-#: src/MainWindow.vala:271
-msgid "Clear wallpaper"
-msgstr ""
-
-#: src/MainWindow.vala:277
+#: src/MainWindow.vala:234
 msgid "Browse…"
 msgstr ""
 
-#: src/MainWindow.vala:289
+#: src/MainWindow.vala:249
+msgid "None"
+msgstr ""
+
+#: src/MainWindow.vala:255
 #, c-format
 msgid "Select Wallpaper for %s Theme"
 msgstr ""
 
-#: src/MainWindow.vala:342
+#: src/MainWindow.vala:292
 msgid "Custom Commands"
 msgstr ""
 
-#: src/MainWindow.vala:348
+#: src/MainWindow.vala:293
 msgid ""
 "Shell commands executed when the system switches themes. Use the toggle to "
 "assign each command to light or dark mode."
 msgstr ""
 
-#: src/MainWindow.vala:360 src/MainWindow.vala:361 src/MainWindow.vala:621
+#: src/MainWindow.vala:298 src/MainWindow.vala:299 src/MainWindow.vala:601
 msgid "Add command"
 msgstr ""
 
-#: src/MainWindow.vala:368
+#: src/MainWindow.vala:306
 msgid "Commands"
 msgstr ""
 
-#: src/MainWindow.vala:369
+#: src/MainWindow.vala:307
 msgid "Active commands that will run when their theme matches."
 msgstr ""
 
-#: src/MainWindow.vala:374
+#: src/MainWindow.vala:312
 msgid "Disabled"
 msgstr ""
 
-#: src/MainWindow.vala:375
+#: src/MainWindow.vala:313
 msgid "Saved commands that are currently turned off."
 msgstr ""
 
-#: src/MainWindow.vala:522
+#: src/MainWindow.vala:502
 msgid "Drag to reorder"
 msgstr ""
 
-#: src/MainWindow.vala:581
+#: src/MainWindow.vala:561
 msgid "Edit command"
 msgstr ""
 
-#: src/MainWindow.vala:589
+#: src/MainWindow.vala:569
 msgid "Remove command"
 msgstr ""
 
-#: src/MainWindow.vala:604
+#: src/MainWindow.vala:584
 msgid "Command"
 msgstr ""
 
-#: src/MainWindow.vala:621
+#: src/MainWindow.vala:601
 msgid "Save command"
 msgstr ""
 
@@ -334,7 +326,9 @@ msgid "Configuration"
 msgstr ""
 
 #: src/PreferencesWindow.vala:49
-msgid "Import or export commands and constants together as a zip archive."
+msgid ""
+"Import or export commands, constants and theme settings together as a zip "
+"archive."
 msgstr ""
 
 #: src/PreferencesWindow.vala:53 src/PreferencesWindow.vala:103
@@ -342,7 +336,7 @@ msgid "Import Configuration"
 msgstr ""
 
 #: src/PreferencesWindow.vala:54
-msgid "Replace local commands and constants from a zip file."
+msgid "Replace local commands, constants and theme settings from a zip file."
 msgstr ""
 
 #: src/PreferencesWindow.vala:56
@@ -354,7 +348,7 @@ msgid "Export Configuration"
 msgstr ""
 
 #: src/PreferencesWindow.vala:66
-msgid "Save commands and constants into a zip file."
+msgid "Save commands, constants and theme settings into a zip file."
 msgstr ""
 
 #: src/PreferencesWindow.vala:68
@@ -366,7 +360,8 @@ msgid "Danger Zone"
 msgstr ""
 
 #: src/PreferencesWindow.vala:78
-msgid "Remove all saved commands and constants from this device."
+msgid ""
+"Remove all saved commands, constants and theme settings from this device."
 msgstr ""
 
 #: src/PreferencesWindow.vala:82
@@ -374,7 +369,9 @@ msgid "Delete All Configuration"
 msgstr ""
 
 #: src/PreferencesWindow.vala:83
-msgid "Deletes commands.json and constants.json. This cannot be undone."
+msgid ""
+"Deletes commands.json, constants.json and theme_settings.json. This cannot "
+"be undone."
 msgstr ""
 
 #: src/PreferencesWindow.vala:85 src/PreferencesWindow.vala:154
@@ -405,12 +402,12 @@ msgstr ""
 
 #: src/PreferencesWindow.vala:151
 msgid ""
-"This will remove every custom command and constant. This action cannot be "
-"undone."
+"This will remove every custom command, constant and theme setting. This "
+"action cannot be undone."
 msgstr ""
 
 #: src/PreferencesWindow.vala:172
-msgid "Commands and constants deleted"
+msgid "Configuration deleted"
 msgstr ""
 
 #: src/PreferencesWindow.vala:174

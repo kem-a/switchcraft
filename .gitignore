@@ -12,4 +12,4 @@ appimagetool
 *.log
 samples/
 docs/
-tests/
+tests/data/gschemas.compiled

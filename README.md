@@ -17,6 +17,7 @@ Switchcraft watches GNOME's light/dark preference and runs your shell commands w
 
 - Watches `org.gnome.desktop.interface color-scheme` and executes commands instantly.
 - Polished libadwaita interface with light/dark pages, icons, and header-bar actions.
+- Pick icon, GTK, cursor and shell theme plus wallpaper for light and dark mode. Each starts with what GNOME uses now.
 - Add, edit, enable/disable, or remove commands per theme.
 - Define reusable constants for common variables in commands.
 - **Independent background monitoring** - a `switchcraft --background` process runs even when the GUI is closed.
@@ -147,7 +148,7 @@ All runtime configuration lives under `~/.local/share/switchcraft/`.
 }
 ```
 
-- **`constants.json`** - reusable variables referenced inside commands using `$NAME` or `${NAME}`.
+- **`constants.json`** - reusable variables referenced inside commands using `$NAME` or `${NAME}`. Values are expanded by the shell, so `$HOME` works inside them.
 
 Example:
 
@@ -155,6 +156,14 @@ Example:
 {
   "D2DL_SCHEMADIR": "$HOME/.local/share/gnome-shell/extensions/dash2dock-lite@icedman.github.com/schemas",
   "D2DL_SCHEMA": "org.gnome.shell.extensions.dash2dock-lite"
+}
+```
+
+- **`theme_settings.json`** - Built-in page values per theme. Example:
+
+```json
+{
+  "icon-theme": { "light": "Adwaita", "dark": "Papirus-Dark" }
 }
 ```
 

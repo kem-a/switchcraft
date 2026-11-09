@@ -1,0 +1,12 @@
+/* SlidingToggleGroup: the outer node draws the background and the sliding
+   checked toggle, the inner Adw.ToggleGroup only draws its toggles */
+toggle-group.sliding > toggle-group {
+  background: none;
+  box-shadow: none;
+  padding: 0;
+}
+
+toggle-group.sliding > toggle-group > toggle:checked {
+  background: none;
+  box-shadow: none;
+}

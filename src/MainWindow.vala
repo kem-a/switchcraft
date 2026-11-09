@@ -11,16 +11,17 @@ namespace Switchcraft {
         private HashTable<string, List<CommandEntry>> commands;
         private HashTable<string, Adw.ComboRow> theme_combo_rows;
         private HashTable<string, ThemeSettingValue> theme_settings;
-        private HashTable<string, Adw.ActionRow> wallpaper_rows;
+        private HashTable<string, Gtk.Label> wallpaper_labels;
+        private HashTable<string, string> wallpaper_paths;
         private Adw.Banner? banner = null;
         private PreferencesWindow? preferences_window = null;
         private Adw.ToastOverlay? toast_overlay = null;
         private Adw.ViewStack view_stack;
         private Gtk.ListBox enabled_command_listbox;
         private Gtk.ListBox disabled_command_listbox;
+        private Gtk.Widget disabled_section;
         private Adw.ButtonRow add_command_row;
         private AnimatedRows animated_rows;
-        private Gtk.Box builtin_columns;
         private HashTable<Gtk.ListBoxRow, CommandEntry> command_row_entries;
         private CommandEntry? drag_source_entry = null;
         private string? drag_theme = null;
@@ -45,7 +46,8 @@ namespace Switchcraft {
             set_size_request (360, 294);
 
             theme_combo_rows = new HashTable<string, Adw.ComboRow> (str_hash, str_equal);
-            wallpaper_rows = new HashTable<string, Adw.ActionRow> (str_hash, str_equal);
+            wallpaper_labels = new HashTable<string, Gtk.Label> (str_hash, str_equal);
+            wallpaper_paths = new HashTable<string, string> (str_hash, str_equal);
             command_row_entries = new HashTable<Gtk.ListBoxRow, CommandEntry> (direct_hash, direct_equal);
             row_theme_map = new GenericArray<string> ();
             row_entry_map = new GenericArray<CommandEntry> ();
@@ -125,92 +127,62 @@ namespace Switchcraft {
             var narrow = new Adw.Breakpoint (Adw.BreakpointCondition.parse ("max-width: 550sp"));
             narrow.add_setter (switcher_bar, "reveal", true);
             narrow.add_setter (header_bar, "title-widget", Value (typeof (Gtk.Widget)));
-            narrow.add_setter (builtin_columns, "orientation", Gtk.Orientation.VERTICAL);
             add_breakpoint (narrow);
         }
 
-        // ── Built-in page (two-column theme settings) ─────────────────────
+        // ── Built-in page (theme settings grouped by type) ────────────────
 
         private Gtk.Widget build_builtin_page () {
-            var scrolled = new Gtk.ScrolledWindow ();
-            scrolled.set_policy (Gtk.PolicyType.NEVER, Gtk.PolicyType.AUTOMATIC);
-            scrolled.set_hexpand (true);
-            scrolled.set_vexpand (true);
-
-            var page_box = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
+            var page_box = new Gtk.Box (Gtk.Orientation.VERTICAL, 24);
             page_box.set_margin_top (24);
             page_box.set_margin_bottom (24);
             page_box.set_margin_start (24);
             page_box.set_margin_end (24);
 
-            builtin_columns = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 24);
-            builtin_columns.set_homogeneous (true);
-            builtin_columns.set_hexpand (true);
+            page_box.append (create_page_header (
+                _("Theme Settings"),
+                _("GNOME settings applied when the system switches themes. Until you pick a value, a row shows what GNOME uses now.")
+            ));
 
             var app = get_application () as Application;
+            string[] titles = { _("Icon Theme"), _("GTK Theme"), _("Cursor Theme"), _("Shell Theme"), _("Wallpaper") };
 
-            foreach (var theme in new string[] { "light", "dark" }) {
-                var column = build_theme_column (theme, app);
-                builtin_columns.append (column);
+            for (int i = 0; i < Application.THEME_SETTING_IDS.length; i++) {
+                var setting_id = Application.THEME_SETTING_IDS[i];
+                bool supported = setting_id != "shell-theme" || (app != null && app.has_shell_theme_support ());
+
+                Gtk.ListBox listbox;
+                var section = create_section (titles[i],
+                    supported ? null : _("Requires the User Themes GNOME Shell extension."), out listbox);
+                listbox.set_sensitive (supported);
+
+                foreach (var theme in new string[] { "light", "dark" }) {
+                    if (setting_id == "wallpaper") {
+                        listbox.append (create_wallpaper_row (theme));
+                    } else {
+                        listbox.append (create_theme_combo_row (theme, setting_id, app));
+                    }
+                }
+                page_box.append (section);
             }
 
-            page_box.append (builtin_columns);
+            var scrolled = new Gtk.ScrolledWindow ();
+            scrolled.set_policy (Gtk.PolicyType.NEVER, Gtk.PolicyType.AUTOMATIC);
+            scrolled.set_hexpand (true);
+            scrolled.set_vexpand (true);
             scrolled.set_child (page_box);
             return scrolled;
         }
 
-        private Gtk.Widget build_theme_column (string theme, Application? app) {
-            var column = new Gtk.Box (Gtk.Orientation.VERTICAL, 12);
-            var group = new Adw.PreferencesGroup ();
-            var label = theme == "light" ? _("Light") : _("Dark");
-            var icon = new Gtk.Image.from_icon_name (theme == "light" ? LIGHT_ICON : DARK_ICON);
-            var header = new Gtk.Box (Gtk.Orientation.VERTICAL, 4);
-            var title_row = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 8);
-            var title = new Gtk.Label (label);
-            var description = new Gtk.Label (
-                theme == "light" ? _("Applied when light mode activates.")
-                                 : _("Applied when dark mode activates."));
-
-            title.set_xalign (0.0f);
-            title.add_css_class ("title-4");
-            description.set_xalign (0.0f);
-            description.add_css_class ("dim-label");
-
-            title_row.append (icon);
-            title_row.append (title);
-            header.append (title_row);
-            header.append (description);
-            column.append (header);
-
-            // Theme combo rows
-            string[] setting_ids = { "icon-theme", "gtk-theme", "cursor-theme", "shell-theme" };
-            string[] setting_titles = { _("Icon Theme"), _("GTK Theme"), _("Cursor Theme"), _("Shell Theme") };
-            string[] setting_icons = { "view-grid-symbolic", "preferences-desktop-theme-symbolic", "input-mouse-symbolic", "user-desktop-symbolic" };
-
-            for (int i = 0; i < setting_ids.length; i++) {
-                var combo = create_theme_combo_row (theme, setting_ids[i], setting_titles[i], app);
-                var prefix_icon = new Gtk.Image.from_icon_name (setting_icons[i]);
-                combo.add_prefix (prefix_icon);
-                group.add (combo);
-                theme_combo_rows.insert ("%s:%s".printf (theme, setting_ids[i]), combo);
-            }
-
-            // Wallpaper row
-            var wallpaper_row = create_wallpaper_row (theme);
-            group.add (wallpaper_row);
-            wallpaper_rows.insert (theme, wallpaper_row);
-
-            column.append (group);
-            return column;
-        }
-
-        private Adw.ComboRow create_theme_combo_row (string theme, string setting_id,
-                                                      string title, Application? app) {
+        private Adw.ComboRow create_theme_combo_row (string theme, string setting_id, Application? app) {
             var combo = new Adw.ComboRow ();
-            combo.set_title (title);
+            combo.set_title (theme == "light" ? _("Light") : _("Dark"));
+            combo.add_prefix (new Gtk.Image.from_icon_name (theme == "light" ? LIGHT_ICON : DARK_ICON));
 
             var model = new Gtk.StringList (null);
-            model.append (_("Don\u2019t change"));
+            if (setting_id == "shell-theme") {
+                model.append (Application.SHELL_THEME_DEFAULT);
+            }
 
             if (app != null) {
                 GenericArray<string>? available = null;
@@ -236,15 +208,13 @@ namespace Switchcraft {
             }
 
             combo.set_model (model);
-
-            // Set initial value
-            var setting_val = theme_settings.lookup (setting_id);
-            if (setting_val != null) {
-                set_combo_selection (combo, setting_val.get_for_theme (theme));
-            }
+            set_combo_selection (combo, get_display_value (setting_id, theme));
+            theme_combo_rows.insert ("%s:%s".printf (theme, setting_id), combo);
 
             combo.notify["selected"].connect (() => {
-                on_theme_combo_changed ();
+                if (!loading_theme_settings) {
+                    store_theme_value (setting_id, theme, get_combo_value (combo));
+                }
             });
 
             return combo;
@@ -252,39 +222,35 @@ namespace Switchcraft {
 
         private Adw.ActionRow create_wallpaper_row (string theme) {
             var row = new Adw.ActionRow ();
-            row.set_title (_("Wallpaper"));
-            var wp_icon = new Gtk.Image.from_icon_name ("image-x-generic-symbolic");
-            row.add_prefix (wp_icon);
+            row.set_title (theme == "light" ? _("Light") : _("Dark"));
+            row.add_prefix (new Gtk.Image.from_icon_name (theme == "light" ? LIGHT_ICON : DARK_ICON));
 
-            var setting_val = theme_settings.lookup ("wallpaper");
-            string current = setting_val != null ? setting_val.get_for_theme (theme) : "";
-
-            if (current.length > 0) {
-                row.set_subtitle (Path.get_basename (current));
-            } else {
-                row.set_subtitle (_("None"));
-            }
-
-            var clear_btn = new Gtk.Button.from_icon_name ("edit-clear-symbolic");
-            clear_btn.add_css_class ("flat");
-            clear_btn.set_valign (Gtk.Align.CENTER);
-            clear_btn.set_tooltip_text (_("Clear wallpaper"));
-            clear_btn.clicked.connect (() => {
-                on_clear_wallpaper (theme, row);
-            });
-            row.add_suffix (clear_btn);
+            var file_label = new Gtk.Label (null);
+            file_label.set_ellipsize (Pango.EllipsizeMode.MIDDLE);
+            file_label.set_max_width_chars (24);
+            row.add_suffix (file_label);
+            wallpaper_labels.insert (theme, file_label);
 
             var browse_btn = new Gtk.Button.with_label (_("Browse\u2026"));
             browse_btn.set_valign (Gtk.Align.CENTER);
             browse_btn.clicked.connect (() => {
-                on_browse_wallpaper (theme, row);
+                on_browse_wallpaper (theme);
             });
             row.add_suffix (browse_btn);
+            row.set_activatable_widget (browse_btn);
 
+            show_wallpaper (theme, get_display_value ("wallpaper", theme));
             return row;
         }
 
-        private void on_browse_wallpaper (string theme, Adw.ActionRow row) {
+        private void show_wallpaper (string theme, string path) {
+            wallpaper_paths.replace (theme, path);
+            var label = wallpaper_labels.lookup (theme);
+            label.set_label (path.length > 0 ? Path.get_basename (path) : _("None"));
+            label.set_tooltip_text (path.length > 0 ? path : null);
+        }
+
+        private void on_browse_wallpaper (string theme) {
             var dialog = new Gtk.FileDialog ();
             dialog.set_title (_("Select Wallpaper for %s Theme").printf (
                 theme == "light" ? _("Light") : _("Dark")));
@@ -303,30 +269,14 @@ namespace Switchcraft {
                     if (file != null) {
                         var path = file.get_path ();
                         if (path != null && path.length > 0) {
-                            update_wallpaper_setting (theme, path, row);
+                            show_wallpaper (theme, path);
+                            store_theme_value ("wallpaper", theme, path);
                         }
                     }
                 } catch (Error e) {
                     // User cancelled
                 }
             });
-        }
-
-        private void on_clear_wallpaper (string theme, Adw.ActionRow row) {
-            update_wallpaper_setting (theme, "", row);
-        }
-
-        private void update_wallpaper_setting (string theme, string path, Adw.ActionRow row) {
-            var setting_val = theme_settings.lookup ("wallpaper");
-            if (setting_val == null) {
-                setting_val = new ThemeSettingValue ();
-                theme_settings.insert ("wallpaper", setting_val);
-            }
-
-            setting_val.set_for_theme (theme, path);
-            row.set_subtitle (path.length > 0 ? Path.get_basename (path) : _("None"));
-
-            save_theme_settings_from_ui ();
         }
 
         // ── Custom page (unified command list) ────────────────────────────
@@ -338,22 +288,10 @@ namespace Switchcraft {
             page_box.set_margin_start (24);
             page_box.set_margin_end (24);
 
-            var header_box = new Gtk.Box (Gtk.Orientation.VERTICAL, 6);
-            var title_label = new Gtk.Label (_("Custom Commands"));
-            title_label.add_css_class ("heading");
-            title_label.set_xalign (0);
-            header_box.append (title_label);
-
-            var desc_label = new Gtk.Label (
+            page_box.append (create_page_header (
+                _("Custom Commands"),
                 _("Shell commands executed when the system switches themes. Use the toggle to assign each command to light or dark mode.")
-            );
-            desc_label.add_css_class ("body");
-            desc_label.add_css_class ("dim-label");
-            desc_label.set_xalign (0);
-            desc_label.set_wrap (true);
-            header_box.append (desc_label);
-
-            page_box.append (header_box);
+            ));
 
             add_command_row = new Adw.ButtonRow ();
             add_command_row.set_start_icon_name ("list-add-symbolic");
@@ -364,17 +302,21 @@ namespace Switchcraft {
                 on_add_command_action ();
             });
 
-            page_box.append (create_command_section (
+            page_box.append (create_section (
                 _("Commands"),
                 _("Active commands that will run when their theme matches."),
                 out enabled_command_listbox
             ));
 
-            page_box.append (create_command_section (
+            disabled_section = create_section (
                 _("Disabled"),
                 _("Saved commands that are currently turned off."),
                 out disabled_command_listbox
-            ));
+            );
+            page_box.append (disabled_section);
+
+            configure_listbox_for_reordering (enabled_command_listbox);
+            configure_listbox_for_reordering (disabled_command_listbox);
 
             animated_rows = new AnimatedRows (page_box,
                 { enabled_command_listbox, disabled_command_listbox });
@@ -391,8 +333,24 @@ namespace Switchcraft {
             return scrolled;
         }
 
-        private Gtk.Widget create_command_section (string title, string description,
-                                                   out Gtk.ListBox listbox) {
+        private Gtk.Widget create_page_header (string title, string description) {
+            var header_box = new Gtk.Box (Gtk.Orientation.VERTICAL, 6);
+            var title_label = new Gtk.Label (title);
+            title_label.add_css_class ("heading");
+            title_label.set_xalign (0);
+            header_box.append (title_label);
+
+            var desc_label = new Gtk.Label (description);
+            desc_label.add_css_class ("body");
+            desc_label.add_css_class ("dim-label");
+            desc_label.set_xalign (0);
+            desc_label.set_wrap (true);
+            header_box.append (desc_label);
+            return header_box;
+        }
+
+        private Gtk.Widget create_section (string title, string? description,
+                                           out Gtk.ListBox listbox) {
             var section_box = new Gtk.Box (Gtk.Orientation.VERTICAL, 8);
 
             var title_label = new Gtk.Label (title);
@@ -400,16 +358,17 @@ namespace Switchcraft {
             title_label.set_xalign (0);
             section_box.append (title_label);
 
-            var description_label = new Gtk.Label (description);
-            description_label.add_css_class ("dim-label");
-            description_label.set_wrap (true);
-            description_label.set_xalign (0);
-            section_box.append (description_label);
+            if (description != null) {
+                var description_label = new Gtk.Label (description);
+                description_label.add_css_class ("dim-label");
+                description_label.set_wrap (true);
+                description_label.set_xalign (0);
+                section_box.append (description_label);
+            }
 
             listbox = new Gtk.ListBox ();
             listbox.set_selection_mode (Gtk.SelectionMode.NONE);
             listbox.add_css_class ("boxed-list");
-            configure_listbox_for_reordering (listbox);
             section_box.append (listbox);
 
             return section_box;
@@ -428,6 +387,23 @@ namespace Switchcraft {
                     }
                 }
             }
+
+            // Restore the saved list order. Entries without a position keep
+            // the light-then-dark order after the others.
+            for (int i = 1; i < (int) row_entry_map.length; i++) {
+                for (int j = i; j > 0 && sort_position (row_entry_map[j - 1]) > sort_position (row_entry_map[j]); j--) {
+                    var entry = row_entry_map[j];
+                    var theme = row_theme_map[j];
+                    row_entry_map[j] = row_entry_map[j - 1];
+                    row_theme_map[j] = row_theme_map[j - 1];
+                    row_entry_map[j - 1] = entry;
+                    row_theme_map[j - 1] = theme;
+                }
+            }
+        }
+
+        private static int sort_position (CommandEntry entry) {
+            return entry.position < 0 ? int.MAX : entry.position;
         }
 
         private void refresh_command_list_ui () {
@@ -454,6 +430,9 @@ namespace Switchcraft {
             } else {
                 enabled_command_listbox.append (add_command_row);
             }
+
+            // An empty boxed list would draw as a thin line
+            disabled_section.set_visible (disabled_command_listbox.get_row_at_index (0) != null);
         }
 
         private void clear_command_listbox (Gtk.ListBox listbox) {
@@ -497,13 +476,14 @@ namespace Switchcraft {
             return "light";
         }
 
-        private Adw.ToggleGroup create_theme_toggle (string theme) {
+        private SlidingToggleGroup create_theme_toggle (string theme) {
             var group = new Adw.ToggleGroup ();
-            group.set_valign (Gtk.Align.CENTER);
             group.add (new Adw.Toggle () { name = "light", icon_name = LIGHT_ICON, tooltip = _("Light") });
             group.add (new Adw.Toggle () { name = "dark", icon_name = DARK_ICON, tooltip = _("Dark") });
             group.set_active_name (theme);
-            return group;
+            var toggle = new SlidingToggleGroup (group);
+            toggle.set_valign (Gtk.Align.CENTER);
+            return toggle;
         }
 
         private Adw.SwitchRow create_command_row (string theme, CommandEntry entry) {
@@ -562,8 +542,8 @@ namespace Switchcraft {
             // connecting to avoid a spurious change.
             var theme_toggle = create_theme_toggle (theme);
             theme_toggle.set_margin_end (6);
-            theme_toggle.notify["active-name"].connect (() => {
-                on_theme_toggle_changed (entry, theme_toggle.get_active_name ());
+            theme_toggle.group.notify["active-name"].connect (() => {
+                on_theme_toggle_changed (entry, theme_toggle.group.get_active_name ());
             });
             row.add_prefix (theme_toggle);
 
@@ -605,8 +585,8 @@ namespace Switchcraft {
             row.set_text (inline_editor_text);
 
             var theme_toggle = create_theme_toggle (inline_editor_theme);
-            theme_toggle.notify["active-name"].connect (() => {
-                inline_editor_theme = theme_toggle.get_active_name ();
+            theme_toggle.group.notify["active-name"].connect (() => {
+                inline_editor_theme = theme_toggle.group.get_active_name ();
             });
             row.add_prefix (theme_toggle);
 
@@ -662,12 +642,16 @@ namespace Switchcraft {
         }
 
         private void cancel_inline_command_edit () {
+            clear_inline_editor ();
+            refresh_command_list_ui ();
+        }
+
+        private void clear_inline_editor () {
             inline_editor_entry = null;
             inline_editor_theme = "light";
             inline_editor_text = "";
             inline_editor_is_new = false;
             should_focus_inline_editor = false;
-            refresh_command_list_ui ();
         }
 
         private void save_inline_command_row (Adw.EntryRow entry_widget) {
@@ -693,11 +677,7 @@ namespace Switchcraft {
             }
 
             rebuild_commands_from_display_order ();
-            inline_editor_entry = null;
-            inline_editor_theme = "light";
-            inline_editor_text = "";
-            inline_editor_is_new = false;
-            should_focus_inline_editor = false;
+            clear_inline_editor ();
 
             save_commands ();
             refresh_command_list_ui ();
@@ -705,39 +685,12 @@ namespace Switchcraft {
 
         private void on_theme_toggle_changed (CommandEntry entry, string new_theme) {
             int listbox_index = get_entry_index (entry);
-            if (listbox_index < 0) return;
+            if (listbox_index < 0 || row_theme_map[listbox_index] == new_theme) return;
 
-            string old_theme = row_theme_map[listbox_index];
-            if (old_theme == new_theme) return;
-
-            // Remove from old theme list
-            unowned List<CommandEntry>? old_list = commands.lookup (old_theme);
-            var updated_old = new List<CommandEntry> ();
-            if (old_list != null) {
-                foreach (var e in old_list) {
-                    if (e != entry) {
-                        updated_old.append (e);
-                    }
-                }
-            }
-            commands.replace (old_theme, (owned) updated_old);
-
-            // Add to new theme list
-            unowned List<CommandEntry>? new_list = commands.lookup (new_theme);
-            var updated_new = new List<CommandEntry> ();
-            if (new_list != null) {
-                foreach (var e in new_list) {
-                    updated_new.append (e);
-                }
-            }
-            updated_new.append (entry);
-            commands.replace (new_theme, (owned) updated_new);
-
-            // Update display tracking in-place — no UI rebuild
+            // The row keeps its place and its toggle slides, so no rebuild
             row_theme_map[listbox_index] = new_theme;
-
+            rebuild_commands_from_display_order ();
             save_commands ();
-            refresh_command_list_ui ();
         }
 
         private void update_row_state (Adw.ActionRow row, CommandEntry entry) {
@@ -750,6 +703,14 @@ namespace Switchcraft {
 
         private void on_toggle_command_state (bool state, CommandEntry entry) {
             entry.enabled = state;
+            // A newly disabled row goes to the top of the Disabled list
+            int index = get_entry_index (entry);
+            for (int i = 0; !state && i < index; i++) {
+                if (!row_entry_map[i].enabled) {
+                    reorder_display_command (index, i);
+                    return;
+                }
+            }
             save_commands ();
             // The row slides into the other section
             refresh_command_list_ui ();
@@ -788,21 +749,11 @@ namespace Switchcraft {
             });
 
             drop_target.enter.connect ((x, y) => {
-                if (drag_theme == null) {
-                    listbox.drag_unhighlight_row ();
-                    return (Gdk.DragAction) 0;
-                }
-                highlight_drop_position (listbox, y);
-                return Gdk.DragAction.MOVE;
+                return highlight_drop_position (listbox, y) ? Gdk.DragAction.MOVE : (Gdk.DragAction) 0;
             });
 
             drop_target.motion.connect ((x, y) => {
-                if (drag_theme == null) {
-                    listbox.drag_unhighlight_row ();
-                    return (Gdk.DragAction) 0;
-                }
-                highlight_drop_position (listbox, y);
-                return Gdk.DragAction.MOVE;
+                return highlight_drop_position (listbox, y) ? Gdk.DragAction.MOVE : (Gdk.DragAction) 0;
             });
 
             drop_target.leave.connect (() => {
@@ -817,30 +768,18 @@ namespace Switchcraft {
                     return false;
                 }
 
-                string source_theme = drag_theme;
                 var source_entry = (!) drag_source_entry;
                 bool source_enabled = drag_source_enabled;
                 reset_drag_state ();
 
-                // Determine target
                 var target_row = listbox.get_row_at_y ((int) y);
                 if (target_row == null) return false;
 
-                var target_entry = command_row_entries.lookup (target_row);
-                if (target_entry == null) {
-                    return false;
-                }
-
                 int source_display_idx = get_entry_index (source_entry);
-                int target_display_idx = get_entry_index (target_entry);
+                int target_display_idx = get_drop_index (target_row, source_enabled);
                 if (source_display_idx < 0 || target_display_idx < 0) {
                     return false;
                 }
-
-                string target_theme = get_entry_theme (target_entry);
-
-                // Only allow reordering within the same theme
-                if (source_theme != target_theme || source_enabled != target_entry.enabled) return false;
 
                 reorder_display_command (source_display_idx, target_display_idx);
                 return true;
@@ -849,13 +788,31 @@ namespace Switchcraft {
             listbox.add_controller (drop_target);
         }
 
-        private void highlight_drop_position (Gtk.ListBox listbox, double y) {
+        // Returns whether a drop at y would be accepted
+        private bool highlight_drop_position (Gtk.ListBox listbox, double y) {
             var row = listbox.get_row_at_y ((int) y);
-            if (row != null && command_row_entries.lookup (row) != null) {
+            if (drag_source_entry != null && row != null && get_drop_index (row, drag_source_enabled) >= 0) {
                 listbox.drag_highlight_row (row);
-            } else {
-                listbox.drag_unhighlight_row ();
+                return true;
             }
+            listbox.drag_unhighlight_row ();
+            return false;
+        }
+
+        // Index the dragged row moves to, or -1. Light and dark rows share
+        // one ordered list, so any row of the same list is a target. The "+"
+        // row stands for the end of the enabled list.
+        private int get_drop_index (Gtk.ListBoxRow row, bool source_enabled) {
+            if (row == add_command_row) {
+                for (int i = (int) row_entry_map.length - 1; source_enabled && i >= 0; i--) {
+                    if (row_entry_map[i].enabled) {
+                        return i;
+                    }
+                }
+                return -1;
+            }
+            var entry = command_row_entries.lookup (row);
+            return entry != null && entry.enabled == source_enabled ? get_entry_index (entry) : -1;
         }
 
         private void reorder_display_command (int source_idx, int target_idx) {
@@ -917,7 +874,7 @@ namespace Switchcraft {
 
         private void set_combo_selection (Adw.ComboRow combo, string value) {
             if (value.length == 0) {
-                combo.set_selected (0);
+                combo.set_selected (Gtk.INVALID_LIST_POSITION);
                 return;
             }
 
@@ -937,50 +894,51 @@ namespace Switchcraft {
 
         private string get_combo_value (Adw.ComboRow combo) {
             var selected = combo.get_selected ();
-            if (selected == Gtk.INVALID_LIST_POSITION || selected == 0) {
+            if (selected == Gtk.INVALID_LIST_POSITION) {
                 return "";
             }
             var item = combo.get_model ().get_item (selected) as Gtk.StringObject;
             return item != null ? item.get_string () : "";
         }
 
-        private void on_theme_combo_changed () {
-            if (loading_theme_settings) return;
-            save_theme_settings_from_ui ();
+        // A value that was never set shows what GNOME uses now, so applying
+        // it changes nothing
+        private string get_display_value (string setting_id, string theme) {
+            var stored = theme_settings.lookup (setting_id);
+            if (stored != null && stored.get_for_theme (theme).length > 0) {
+                return stored.get_for_theme (theme);
+            }
+            var app = get_application () as Application;
+            return app != null ? app.get_current_theme_value (setting_id, theme) : "";
         }
 
-        private void save_theme_settings_from_ui () {
+        private string get_shown_value (string setting_id, string theme) {
+            if (setting_id == "wallpaper") {
+                return wallpaper_paths.lookup (theme) ?? "";
+            }
+            var combo = theme_combo_rows.lookup ("%s:%s".printf (theme, setting_id));
+            return combo != null ? get_combo_value (combo) : "";
+        }
+
+        private void store_theme_value (string setting_id, string theme, string value) {
             var app = get_application () as Application;
             if (app == null) return;
 
-            var result = new HashTable<string, ThemeSettingValue> (str_hash, str_equal);
-            string[] setting_ids = { "icon-theme", "gtk-theme", "cursor-theme", "shell-theme" };
+            var setting_val = theme_settings.lookup (setting_id);
+            if (setting_val == null) {
+                setting_val = new ThemeSettingValue ();
+                theme_settings.insert (setting_id, setting_val);
+            }
+            setting_val.set_for_theme (theme, value);
 
-            foreach (var setting_id in setting_ids) {
-                var tsv = new ThemeSettingValue ();
-
-                foreach (var t in new string[] { "light", "dark" }) {
-                    var key = "%s:%s".printf (t, setting_id);
-                    var combo = theme_combo_rows.lookup (key);
-                    if (combo != null) {
-                        tsv.set_for_theme (t, get_combo_value (combo));
-                    }
-                }
-
-                if (tsv.light.length > 0 || tsv.dark.length > 0) {
-                    result.insert (setting_id, tsv);
-                }
+            // Store what the other row shows too, so switching back to that
+            // theme restores it
+            var other = theme == "dark" ? "light" : "dark";
+            if (setting_val.get_for_theme (other).length == 0) {
+                setting_val.set_for_theme (other, get_shown_value (setting_id, other));
             }
 
-            // Preserve wallpaper settings
-            var existing_wallpaper = theme_settings.lookup ("wallpaper");
-            if (existing_wallpaper != null &&
-                (existing_wallpaper.light.length > 0 || existing_wallpaper.dark.length > 0)) {
-                result.insert ("wallpaper", existing_wallpaper);
-            }
-
-            theme_settings = result;
-            app.save_theme_settings (result);
+            app.save_theme_settings (theme_settings);
         }
 
         private void load_theme_settings_from_application () {
@@ -992,27 +950,18 @@ namespace Switchcraft {
             }
         }
 
-        private void refresh_theme_combos () {
+        private void refresh_theme_rows () {
             loading_theme_settings = true;
-            string[] setting_ids = { "icon-theme", "gtk-theme", "cursor-theme", "shell-theme" };
-
             foreach (var t in new string[] { "light", "dark" }) {
-                foreach (var setting_id in setting_ids) {
-                    var key = "%s:%s".printf (t, setting_id);
-                    var combo = theme_combo_rows.lookup (key);
-                    if (combo != null) {
-                        var setting_val = theme_settings.lookup (setting_id);
-                        var val = setting_val != null ? setting_val.get_for_theme (t) : "";
-                        set_combo_selection (combo, val);
+                foreach (var setting_id in Application.THEME_SETTING_IDS) {
+                    if (setting_id == "wallpaper") {
+                        show_wallpaper (t, get_display_value (setting_id, t));
+                        continue;
                     }
-                }
-
-                // Refresh wallpaper rows
-                var wp_row = wallpaper_rows.lookup (t);
-                if (wp_row != null) {
-                    var wp_val = theme_settings.lookup ("wallpaper");
-                    var path = wp_val != null ? wp_val.get_for_theme (t) : "";
-                    wp_row.set_subtitle (path.length > 0 ? Path.get_basename (path) : _("None"));
+                    var combo = theme_combo_rows.lookup ("%s:%s".printf (t, setting_id));
+                    if (combo != null) {
+                        set_combo_selection (combo, get_display_value (setting_id, t));
+                    }
                 }
             }
             loading_theme_settings = false;
@@ -1042,11 +991,7 @@ namespace Switchcraft {
         private void on_show_about_action () {
             var dialog = new Adw.AboutDialog.from_appdata (
                 "/com/github/Switchcraft/com.github.Switchcraft.metainfo.xml", "com.github");
-
-            var icon_theme = Gtk.IconTheme.get_for_display (Gdk.Display.get_default ());
-            var current_dir = Environment.get_current_dir ();
-            var icon_dir = Path.build_filename (current_dir, "data", "icons");
-            icon_theme.add_search_path (icon_dir);
+            // Found in the GResource icons folder, also when run from source
             dialog.set_application_icon ("com.github.Switchcraft");
 
             dialog.present (this);
@@ -1065,15 +1010,23 @@ namespace Switchcraft {
         private void save_commands () {
             var app = get_application () as Application;
             if (app == null) return;
+            // Keeps the mixed light and dark order across restarts
+            for (int i = 0; i < (int) row_entry_map.length; i++) {
+                row_entry_map[i].position = i;
+            }
             app.save_commands (commands);
         }
 
         public void reload_commands_from_storage () {
+            // Entries are recreated, so an open editor or drag would point
+            // at old ones
+            clear_inline_editor ();
+            reset_drag_state ();
             load_commands_from_application ();
             load_theme_settings_from_application ();
             rebuild_display_order ();
             refresh_command_list_ui ();
-            refresh_theme_combos ();
+            refresh_theme_rows ();
         }
 
         public void apply_monitoring_state (bool enabled) {
@@ -1108,7 +1061,9 @@ namespace Switchcraft {
                 app_commands.foreach ((theme, cmd_list) => {
                     var new_list = new List<CommandEntry> ();
                     foreach (var entry in cmd_list) {
-                        new_list.append (new CommandEntry (entry.command, entry.enabled));
+                        new_list.append (new CommandEntry (entry.command, entry.enabled) {
+                            position = entry.position
+                        });
                     }
                     commands.insert (theme, (owned) new_list);
                 });

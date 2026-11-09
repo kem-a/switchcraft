@@ -131,6 +131,8 @@ namespace Switchcraft {
         
         private Adw.ActionRow create_constant_row (string name, string value) {
             var row = new Adw.ActionRow ();
+            // Values often contain & < > which are not valid markup
+            row.set_use_markup (false);
             row.set_title (name);
             row.set_subtitle (value);
             row.set_activatable (false);
@@ -211,7 +213,7 @@ namespace Switchcraft {
             }
             fields.append (value_entry);
             
-            var hint_label = new Gtk.Label (_("Use in commands as $NAME or ${NAME}"));
+            var hint_label = new Gtk.Label (_("Use in commands as $NAME or ${NAME}. Names use letters, numbers and underscores."));
             hint_label.set_xalign (0);
             hint_label.set_wrap (true);
             hint_label.set_wrap_mode (Pango.WrapMode.WORD_CHAR);
@@ -220,6 +222,16 @@ namespace Switchcraft {
             hint_label.add_css_class ("caption");
             form_box.append (hint_label);
             
+            // Save stays disabled until the input can be saved, so nothing
+            // typed is dropped
+            name_entry.changed.connect (() => {
+                update_save_response (dialog, name_entry, value_entry);
+            });
+            value_entry.changed.connect (() => {
+                update_save_response (dialog, name_entry, value_entry);
+            });
+            update_save_response (dialog, name_entry, value_entry);
+
             dialog.set_extra_child (form_box);
             dialog.choose.begin (this, null, (obj, res) => {
                 var response_id = dialog.choose.end (res);
@@ -227,6 +239,19 @@ namespace Switchcraft {
             });
         }
         
+        private void update_save_response (Adw.AlertDialog dialog,
+                                           Adw.EntryRow name_entry, Adw.EntryRow value_entry) {
+            var name = name_entry.get_text ().strip ();
+            bool name_valid = is_valid_variable_name (name);
+            if (name.length > 0 && !name_valid) {
+                name_entry.add_css_class ("error");
+            } else {
+                name_entry.remove_css_class ("error");
+            }
+            dialog.set_response_enabled ("save",
+                name_valid && normalize_constant_value (value_entry.get_text ()).length > 0);
+        }
+
         private void on_constant_dialog_response (string response_id,
                                                    string old_name, Adw.EntryRow name_entry, Adw.EntryRow value_entry) {
             if (response_id != "save") {
@@ -235,21 +260,6 @@ namespace Switchcraft {
             
             var name = name_entry.get_text ().strip ();
             var normalized_value = normalize_constant_value (value_entry.get_text ());
-            
-            if (name.length == 0 || normalized_value.length == 0) {
-                return;
-            }
-            
-            // Validate name (should be valid shell variable name)
-            if (!is_valid_variable_name (name)) {
-                var error_dialog = new Adw.AlertDialog (
-                    _("Invalid Name"),
-                    _("Constant name must be a valid shell variable name (letters, numbers, underscores).")
-                );
-                error_dialog.add_response ("ok", _("OK"));
-                error_dialog.choose.begin (this, null, null);
-                return;
-            }
             
             // If editing, remove old name if it changed
             if (old_name.length > 0 && old_name != name) {

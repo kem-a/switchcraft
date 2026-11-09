@@ -46,12 +46,12 @@ namespace Switchcraft {
             
             var bundle_group = new Adw.PreferencesGroup ();
             bundle_group.set_title (_("Configuration"));
-            bundle_group.set_description (_("Import or export commands and constants together as a zip archive."));
+            bundle_group.set_description (_("Import or export commands, constants and theme settings together as a zip archive."));
             general_page.add (bundle_group);
             
             var import_row = new Adw.ActionRow ();
             import_row.set_title (_("Import Configuration"));
-            import_row.set_subtitle (_("Replace local commands and constants from a zip file."));
+            import_row.set_subtitle (_("Replace local commands, constants and theme settings from a zip file."));
             import_row.set_activatable (false);
             var import_button = new Gtk.Button.with_label (_("Import"));
             import_button.set_valign (Gtk.Align.CENTER);
@@ -63,7 +63,7 @@ namespace Switchcraft {
             
             var export_row = new Adw.ActionRow ();
             export_row.set_title (_("Export Configuration"));
-            export_row.set_subtitle (_("Save commands and constants into a zip file."));
+            export_row.set_subtitle (_("Save commands, constants and theme settings into a zip file."));
             export_row.set_activatable (false);
             var export_button = new Gtk.Button.with_label (_("Export"));
             export_button.set_valign (Gtk.Align.CENTER);
@@ -75,12 +75,12 @@ namespace Switchcraft {
 
             var danger_group = new Adw.PreferencesGroup ();
             danger_group.set_title (_("Danger Zone"));
-            danger_group.set_description (_("Remove all saved commands and constants from this device."));
+            danger_group.set_description (_("Remove all saved commands, constants and theme settings from this device."));
             general_page.add (danger_group);
 
             var delete_row = new Adw.ActionRow ();
             delete_row.set_title (_("Delete All Configuration"));
-            delete_row.set_subtitle (_("Deletes commands.json and constants.json. This cannot be undone."));
+            delete_row.set_subtitle (_("Deletes commands.json, constants.json and theme_settings.json. This cannot be undone."));
             delete_row.set_activatable (false);
             var delete_button = new Gtk.Button.with_label (_("Delete"));
             delete_button.set_valign (Gtk.Align.CENTER);
@@ -148,7 +148,7 @@ namespace Switchcraft {
         private void show_delete_confirmation () {
             var dialog = new Adw.AlertDialog (
                 _("Delete all configuration?"),
-                _("This will remove every custom command and constant. This action cannot be undone.")
+                _("This will remove every custom command, constant and theme setting. This action cannot be undone.")
             );
             dialog.add_response ("cancel", _("Cancel"));
             dialog.add_response ("delete", _("Delete"));
@@ -169,7 +169,7 @@ namespace Switchcraft {
             string error_message;
             if (app.delete_configuration_files (out error_message)) {
                 main_window.reload_commands_from_storage ();
-                show_toast (_("Commands and constants deleted"));
+                show_toast (_("Configuration deleted"));
             } else {
                 show_toast (_("Delete failed: %s").printf (error_message), true);
             }
