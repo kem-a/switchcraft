@@ -215,19 +215,11 @@ namespace Switchcraft {
                 var style_manager = Adw.StyleManager.get_default ();
                 
                 style_manager.notify["dark"].connect (() => {
-                    if (style_manager.dark) {
-                        execute_commands ("dark");
-                    } else {
-                        execute_commands ("light");
-                    }
+                    execute_monitored_commands (style_manager.dark ? "dark" : "light");
                 });
                 
                 // Initial execution
-                if (style_manager.dark) {
-                    execute_commands ("dark");
-                } else {
-                    execute_commands ("light");
-                }
+                execute_monitored_commands (style_manager.dark ? "dark" : "light");
 
                 schedule = new ThemeSchedule (settings);
                 
@@ -246,6 +238,27 @@ namespace Switchcraft {
                 }
             }
             return base.local_command_line (ref args, out exit_status);
+        }
+
+        // Commands that switch the style back, like a dark command setting
+        // prefer-light, would run the commands of both styles in a loop.
+        // Switches closer together than LOOP_GAP count as a loop, and
+        // the commands stop after LOOP_MAX_RUNS of them in a row.
+        private const int64 LOOP_GAP = 2 * TimeSpan.SECOND;
+        private const int LOOP_MAX_RUNS = 4;
+        private int64 last_switch_time = 0;
+        private int quick_switches = 0;
+
+        private void execute_monitored_commands (string theme) {
+            var now = get_monotonic_time ();
+            quick_switches = last_switch_time > 0 && now - last_switch_time < LOOP_GAP ? quick_switches + 1 : 0;
+            last_switch_time = now;
+            if (quick_switches >= LOOP_MAX_RUNS) {
+                warning ("The style switched %d times in a row, skipping %s commands to stop a loop",
+                         quick_switches + 1, theme);
+                return;
+            }
+            execute_commands (theme);
         }
 
         public void execute_commands (string theme) {

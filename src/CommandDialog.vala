@@ -13,6 +13,9 @@ namespace Switchcraft {
         public signal void deleted ();
 
         private Application app;
+        private HashTable<string, List<CommandEntry>> commands;
+        private CommandEntry? entry;
+        private Gtk.Label conflict_label;
         private Adw.ComboRow type_row;
         private Gtk.ListBoxRow command_row;
         private Gtk.TextBuffer command_buffer;
@@ -49,9 +52,41 @@ namespace Switchcraft {
             }
         }
 
-        public CommandDialog (Application app, CommandEntry? entry, string theme) {
+        // Why a command cannot run in the theme's list, or null. Commands
+        // that switch to the other style would run both lists in a loop.
+        public static string? find_conflict (HashTable<string, List<CommandEntry>> commands,
+                                             CommandEntry? entry, string command, string builtin, string theme) {
+            MatchInfo match;
+            if (/color-scheme["']?\s+["']*(prefer-dark|prefer-light|default)\b/.match (command, 0, out match)) {
+                bool dark = match.fetch (1) == "prefer-dark";
+                if (theme == "dark" && !dark) {
+                    return _("Switches to the light style and would loop in Dark mode");
+                }
+                if (theme == "light" && dark) {
+                    return _("Switches to the dark style and would loop in Light mode");
+                }
+            }
+
+            foreach (var other in commands.lookup (theme)) {
+                if (other == entry || !other.enabled) {
+                    continue;
+                }
+                if (builtin.length > 0 && other.builtin == builtin) {
+                    return _("%s is already set in this mode").printf (get_builtin_title (builtin));
+                }
+                if (other.command.strip () == command.strip ()) {
+                    return _("This command is already in this mode");
+                }
+            }
+            return null;
+        }
+
+        public CommandDialog (Application app, HashTable<string, List<CommandEntry>> commands,
+                              CommandEntry? entry, string theme) {
             Object (heading: entry != null ? _("Edit Command") : _("Add Command"));
             this.app = app;
+            this.commands = commands;
+            this.entry = entry;
 
             if (entry != null) {
                 add_response ("delete", _("Delete"));
@@ -185,7 +220,18 @@ namespace Switchcraft {
             mode_row.add_suffix (mode_toggle);
             fields.append (mode_row);
 
-            set_extra_child (fields);
+            conflict_label = new Gtk.Label (null);
+            conflict_label.set_xalign (0);
+            conflict_label.set_wrap (true);
+            conflict_label.set_max_width_chars (40);
+            conflict_label.set_margin_top (12);
+            conflict_label.add_css_class ("error");
+            conflict_label.set_visible (false);
+
+            var content = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
+            content.append (fields);
+            content.append (conflict_label);
+            set_extra_child (content);
 
             // Fill in the entry being edited
             uint type_index = 0;
@@ -211,6 +257,7 @@ namespace Switchcraft {
 
             type_row.notify["selected"].connect (on_type_changed);
             value_row.notify["selected"].connect (update_save_response);
+            mode_group.notify["active-name"].connect (update_save_response);
             command_buffer.changed.connect (update_save_response);
             command_buffer.changed.connect (() => {
                 show_test_result (false, null);
@@ -299,7 +346,25 @@ namespace Switchcraft {
             } else {
                 valid = value_row.get_sensitive () && get_selected_value ().length > 0;
             }
-            set_response_enabled ("save", valid);
+
+            // Disabled commands do not run, so they cannot loop or run twice
+            string? conflict = null;
+            if (valid && (entry == null || entry.enabled)) {
+                conflict = find_conflict (commands, entry, get_command (), setting_id, mode_group.get_active_name ());
+            }
+            conflict_label.set_label (conflict ?? "");
+            conflict_label.set_visible (conflict != null);
+            set_response_enabled ("save", valid && conflict == null);
+        }
+
+        // The command Save stores
+        private string get_command () {
+            var setting_id = get_setting_id ();
+            if (setting_id == "") {
+                return command_buffer.text.strip ();
+            }
+            var value = setting_id == "wallpaper" ? wallpaper_path : get_selected_value ();
+            return app.build_builtin_command (setting_id, value);
         }
 
         private void update_test_button () {

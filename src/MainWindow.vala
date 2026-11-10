@@ -318,7 +318,10 @@ namespace Switchcraft {
             var theme_toggle = SlidingToggleGroup.for_theme (theme);
             theme_toggle.set_margin_end (6);
             theme_toggle.group.notify["active-name"].connect (() => {
-                on_theme_toggle_changed (entry, theme_toggle.group.get_active_name ());
+                if (!on_theme_toggle_changed (entry, theme_toggle.group.get_active_name ())) {
+                    // Slides back to the mode the command stays in
+                    theme_toggle.group.set_active_name (get_entry_theme (entry));
+                }
             });
             row.add_prefix (theme_toggle);
             // Prefixes are prepended, so the handle added last sits first
@@ -335,7 +338,15 @@ namespace Switchcraft {
             enable_switch.set_valign (Gtk.Align.CENTER);
             enable_switch.set_active (entry.enabled);
             enable_switch.notify["active"].connect (() => {
-                on_toggle_command_state (enable_switch.get_active (), entry);
+                bool active = enable_switch.get_active ();
+                if (active == entry.enabled) {
+                    return;
+                }
+                if (active && !check_conflict (entry, get_entry_theme (entry))) {
+                    enable_switch.set_active (false);
+                    return;
+                }
+                on_toggle_command_state (active, entry);
             });
             row.add_suffix (enable_switch);
 
@@ -348,7 +359,7 @@ namespace Switchcraft {
             var app = get_application () as Application;
             if (app == null) return;
 
-            var dialog = new CommandDialog (app, entry, entry != null ? get_entry_theme (entry) : "light");
+            var dialog = new CommandDialog (app, commands, entry, entry != null ? get_entry_theme (entry) : "light");
             dialog.saved.connect ((command, builtin, value, theme) => {
                 save_command (entry, command, builtin, value, theme);
             });
@@ -377,14 +388,26 @@ namespace Switchcraft {
             refresh_command_list_ui ();
         }
 
-        private void on_theme_toggle_changed (CommandEntry entry, string new_theme) {
+        // Returns false when the command cannot move to new_theme
+        private bool on_theme_toggle_changed (CommandEntry entry, string new_theme) {
             int listbox_index = get_entry_index (entry);
-            if (listbox_index < 0 || row_theme_map[listbox_index] == new_theme) return;
+            if (listbox_index < 0 || row_theme_map[listbox_index] == new_theme) return true;
+            if (entry.enabled && !check_conflict (entry, new_theme)) return false;
 
             // The row keeps its place and its toggle slides, so no rebuild
             row_theme_map[listbox_index] = new_theme;
             rebuild_commands_from_display_order ();
             save_commands ();
+            return true;
+        }
+
+        // Shows a toast when the command cannot run in the theme's list
+        private bool check_conflict (CommandEntry entry, string theme) {
+            var conflict = CommandDialog.find_conflict (commands, entry, entry.command, entry.builtin, theme);
+            if (conflict != null) {
+                toast_overlay.add_toast (new Adw.Toast (conflict));
+            }
+            return conflict == null;
         }
 
         private void update_row_state (Adw.ActionRow row, CommandEntry entry) {
