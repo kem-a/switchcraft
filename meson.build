@@ -21,6 +21,8 @@ libadwaita_dep = dependency('libadwaita-1', version: '>= 1.8.0')
 gio_dep = dependency('gio-2.0', version: '>= 2.66')
 glib_dep = dependency('glib-2.0', version: '>= 2.66')
 json_glib_dep = dependency('json-glib-1.0')
+# Sunrise and sunset math
+m_dep = meson.get_compiler('c').find_library('m', required: false)
 
 # Configuration
 conf = configuration_data()
@@ -63,6 +65,7 @@ sources = files(
   'src/CommandDialog.vala',
   'src/ConstantsWindow.vala',
   'src/PreferencesWindow.vala',
+  'src/ThemeSchedule.vala',
 )
 sources += config_vala
 sources += resources
@@ -83,6 +86,7 @@ executable(
     gio_dep,
     glib_dep,
     json_glib_dep,
+    m_dep,
   ],
   vala_args: vala_args,
   install: true,

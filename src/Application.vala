@@ -102,6 +102,7 @@ namespace Switchcraft {
         private string theme_settings_path;
         private string autostart_path;
         private Settings settings;
+        private ThemeSchedule? schedule = null;
 
         public Application () {
             Object (
@@ -227,6 +228,8 @@ namespace Switchcraft {
                 } else {
                     execute_commands ("light");
                 }
+
+                schedule = new ThemeSchedule (settings);
                 
                 return -1; // Keep running
             }
@@ -625,7 +628,7 @@ namespace Switchcraft {
         }
 
         public const string[] THEME_SETTING_IDS = {
-            "icon-theme", "gtk-theme", "cursor-theme", "shell-theme", "wallpaper"
+            "color-scheme", "icon-theme", "gtk-theme", "cursor-theme", "shell-theme", "wallpaper"
         };
         // Stored for the shell theme's empty name, since "" means "not set"
         public const string SHELL_THEME_DEFAULT = "Default";
@@ -722,6 +725,12 @@ namespace Switchcraft {
 
         public GenericArray<string> scan_setting_values (string setting_id) {
             switch (setting_id) {
+                case "color-scheme":
+                    var schemes = new GenericArray<string> ();
+                    foreach (var scheme in new string[] { "prefer-light", "prefer-dark", "default" }) {
+                        schemes.add (scheme);
+                    }
+                    return schemes;
                 case "icon-theme":
                     return scan_icon_themes ();
                 case "gtk-theme":

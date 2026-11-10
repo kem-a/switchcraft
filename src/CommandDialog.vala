@@ -32,6 +32,8 @@ namespace Switchcraft {
 
         public static string get_builtin_title (string setting_id) {
             switch (setting_id) {
+                case "color-scheme":
+                    return _("Color Scheme");
                 case "icon-theme":
                     return _("Icon Theme");
                 case "gtk-theme":

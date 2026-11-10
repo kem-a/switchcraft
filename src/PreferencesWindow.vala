@@ -8,24 +8,63 @@
 namespace Switchcraft {
 
     public class PreferencesWindow : Adw.PreferencesDialog {
+        // Values of the schedule-mode key, in the order of the dropdown
+        private const string[] SCHEDULE_MODES = { "off", "sun", "custom" };
+
         private Application app;
         private MainWindow main_window;
-        
+        private Settings settings;
+        private Adw.ComboRow schedule_row;
+        private Adw.ActionRow light_row;
+        private Adw.ActionRow dark_row;
+
         public PreferencesWindow (Application application, MainWindow parent) {
             Object (
                 title: _("Preferences")
             );
-            
+
             app = application;
             main_window = parent;
-            
+            settings = new Settings ("com.github.Switchcraft");
+
             build_ui ();
         }
-        
+
         private void build_ui () {
             var general_page = new Adw.PreferencesPage ();
             add (general_page);
-            
+
+            var schedule_group = new Adw.PreferencesGroup ();
+            schedule_group.set_title (_("Automatic Switching"));
+            schedule_group.set_description (_("Switch between light and dark style on a schedule. Needs background monitoring."));
+            general_page.add (schedule_group);
+
+            schedule_row = new Adw.ComboRow ();
+            schedule_row.set_title (_("Schedule"));
+            schedule_row.set_model (new Gtk.StringList ({ _("Off"), _("Sunset to Sunrise"), _("Custom Times") }));
+            var mode = settings.get_string ("schedule-mode");
+            for (uint i = 0; i < SCHEDULE_MODES.length; i++) {
+                if (SCHEDULE_MODES[i] == mode) {
+                    schedule_row.set_selected (i);
+                }
+            }
+            schedule_row.notify["selected"].connect (() => {
+                settings.set_string ("schedule-mode", SCHEDULE_MODES[schedule_row.get_selected ()]);
+                update_schedule_rows ();
+            });
+            schedule_group.add (schedule_row);
+
+            light_row = create_time_row (_("Light From"), "light-time");
+            schedule_group.add (light_row);
+            dark_row = create_time_row (_("Dark From"), "dark-time");
+            schedule_group.add (dark_row);
+
+            // The monitor saves the location when GeoClue finds one
+            settings.changed["last-coordinates"].connect (() => {
+                update_schedule_rows ();
+            });
+            update_schedule_rows ();
+
             var bundle_group = new Adw.PreferencesGroup ();
             bundle_group.set_title (_("Configuration"));
             bundle_group.set_description (_("Import or export commands and constants together as a zip archive."));
@@ -73,7 +112,93 @@ namespace Switchcraft {
             delete_row.add_suffix (delete_button);
             danger_group.add (delete_row);
         }
-        
+
+        private void update_schedule_rows () {
+            var mode = SCHEDULE_MODES[schedule_row.get_selected ()];
+            light_row.set_visible (mode == "custom");
+            dark_row.set_visible (mode == "custom");
+            schedule_row.set_subtitle (mode == "sun" ? get_sun_times_text () : "");
+        }
+
+        private string get_sun_times_text () {
+            double latitude, longitude;
+            if (!ThemeSchedule.get_location (settings, out latitude, out longitude)) {
+                return _("Location unknown");
+            }
+            DateTime sunrise, sunset;
+            ThemeSchedule.get_sun_times (latitude, longitude, new DateTime.now_local (), out sunrise, out sunset);
+            var day_length = sunset.difference (sunrise);
+            if (day_length == 0) {
+                return _("The sun stays down today");
+            }
+            if (day_length >= TimeSpan.DAY) {
+                return _("The sun stays up today");
+            }
+            return _("Sunrise %s, sunset %s").printf (sunrise.format ("%R"), sunset.format ("%R"));
+        }
+
+        // A button showing the time, with hour and minute pickers in its
+        // popover. The time is saved when the popover closes, so the
+        // monitor does not switch the style on every step.
+        private Adw.ActionRow create_time_row (string title, string key) {
+            int time = settings.get_int (key);
+            var hour_spin = create_time_spin (23, time / 60, _("Hour"));
+            var minute_spin = create_time_spin (59, time % 60, _("Minute"));
+
+            var picker = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 6);
+            picker.append (hour_spin);
+            picker.append (new Gtk.Label (":"));
+            picker.append (minute_spin);
+
+            var popover = new Gtk.Popover ();
+            popover.set_child (picker);
+
+            var button = new Gtk.MenuButton ();
+            button.set_valign (Gtk.Align.CENTER);
+            button.set_popover (popover);
+            button.set_label ("%02d:%02d".printf (time / 60, time % 60));
+
+            hour_spin.value_changed.connect (() => {
+                button.set_label ("%02d:%02d".printf (hour_spin.get_value_as_int (), minute_spin.get_value_as_int ()));
+            });
+            minute_spin.value_changed.connect (() => {
+                button.set_label ("%02d:%02d".printf (hour_spin.get_value_as_int (), minute_spin.get_value_as_int ()));
+            });
+            popover.closed.connect (() => {
+                // Takes typed text that was not confirmed with Enter
+                hour_spin.update ();
+                minute_spin.update ();
+                int new_time = hour_spin.get_value_as_int () * 60 + minute_spin.get_value_as_int ();
+                // Even an unchanged value would make the monitor re-apply the schedule
+                if (new_time != settings.get_int (key)) {
+                    settings.set_int (key, new_time);
+                }
+            });
+
+            var row = new Adw.ActionRow ();
+            row.set_title (title);
+            row.add_suffix (button);
+            row.set_activatable_widget (button);
+            return row;
+        }
+
+        private Gtk.SpinButton create_time_spin (int max, int value, string label) {
+            var spin = new Gtk.SpinButton.with_range (0, max, 1);
+            spin.set_orientation (Gtk.Orientation.VERTICAL);
+            spin.set_wrap (true);
+            spin.set_width_chars (2);
+            spin.set_alignment (0.5f);
+            spin.update_property (Gtk.AccessibleProperty.LABEL, label, -1);
+            // Two digits, like a clock. Connected first, so it formats the
+            // initial value too.
+            spin.output.connect ((source) => {
+                source.set_text ("%02d".printf (source.get_value_as_int ()));
+                return true;
+            });
+            spin.set_value (value);
+            return spin;
+        }
+
         private async void import_configuration () {
             var dialog = new Gtk.FileDialog ();
             dialog.set_title (_("Import Configuration"));

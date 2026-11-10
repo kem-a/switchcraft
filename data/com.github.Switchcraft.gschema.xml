@@ -6,5 +6,32 @@
       <summary>Enable background monitoring</summary>
       <description>Whether the background process for theme monitoring is enabled.</description>
     </key>
+    <key name="schedule-mode" type="s">
+      <choices>
+        <choice value="off"/>
+        <choice value="sun"/>
+        <choice value="custom"/>
+      </choices>
+      <default>'off'</default>
+      <summary>Automatic light and dark switching</summary>
+      <description>Switch the light/dark style at sunrise and sunset (sun), at light-time and dark-time (custom), or never (off). Runs in the background monitor.</description>
+    </key>
+    <key name="light-time" type="i">
+      <range min="0" max="1439"/>
+      <default>420</default>
+      <summary>Light style time</summary>
+      <description>Minutes after midnight when the custom schedule switches to the light style.</description>
+    </key>
+    <key name="dark-time" type="i">
+      <range min="0" max="1439"/>
+      <default>1140</default>
+      <summary>Dark style time</summary>
+      <description>Minutes after midnight when the custom schedule switches to the dark style.</description>
+    </key>
+    <key name="last-coordinates" type="(dd)">
+      <default>(91.0, 181.0)</default>
+      <summary>Last known location</summary>
+      <description>Latitude and longitude from GeoClue, used for sunrise and sunset. Out of range values mean none is known, and the system time zone gives the location.</description>
+    </key>
   </schema>
 </schemalist>
