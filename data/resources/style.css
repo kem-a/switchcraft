@@ -10,3 +10,9 @@ toggle-group.sliding > toggle-group > toggle:checked {
   background: none;
   box-shadow: none;
 }
+
+/* CommandDialog: the multiline command field blends into its row */
+textview.command-view,
+textview.command-view > text {
+  background: none;
+}

@@ -10,10 +10,12 @@ namespace Switchcraft {
     public class CommandDialog : Adw.AlertDialog {
         // builtin and value are empty for a custom command
         public signal void saved (string command, string builtin, string value, string theme);
+        public signal void deleted ();
 
         private Application app;
         private Adw.ComboRow type_row;
-        private Adw.EntryRow command_row;
+        private Gtk.ListBoxRow command_row;
+        private Gtk.TextBuffer command_buffer;
         private Adw.ComboRow value_row;
         private Adw.ActionRow image_row;
         private Gtk.Label image_label;
@@ -43,6 +45,10 @@ namespace Switchcraft {
             Object (heading: entry != null ? _("Edit Command") : _("Add Command"));
             this.app = app;
 
+            if (entry != null) {
+                add_response ("delete", _("Delete"));
+                set_response_appearance ("delete", Adw.ResponseAppearance.DESTRUCTIVE);
+            }
             add_response ("cancel", _("Cancel"));
             add_response ("save", entry != null ? _("Save") : _("Add"));
             set_default_response ("save");
@@ -65,9 +71,29 @@ namespace Switchcraft {
             type_row.set_model (type_model);
             fields.append (type_row);
 
-            command_row = new Adw.EntryRow ();
-            command_row.set_title (_("Command"));
-            command_row.set_activates_default (true);
+            // Multiline, wrapping command field that grows with its text
+            var command_title = new Gtk.Label (_("Command"));
+            command_title.set_xalign (0);
+            command_title.add_css_class ("caption");
+            command_title.add_css_class ("dim-label");
+
+            var command_view = new Gtk.TextView ();
+            command_view.set_wrap_mode (Gtk.WrapMode.WORD_CHAR);
+            command_view.set_accepts_tab (false);
+            command_view.add_css_class ("command-view");
+            command_buffer = command_view.get_buffer ();
+
+            var command_box = new Gtk.Box (Gtk.Orientation.VERTICAL, 4);
+            command_box.set_margin_top (8);
+            command_box.set_margin_bottom (10);
+            command_box.set_margin_start (12);
+            command_box.set_margin_end (12);
+            command_box.append (command_title);
+            command_box.append (command_view);
+
+            command_row = new Gtk.ListBoxRow ();
+            command_row.set_activatable (false);
+            command_row.set_child (command_box);
             fields.append (command_row);
 
             value_row = new Adw.ComboRow ();
@@ -113,18 +139,20 @@ namespace Switchcraft {
                     set_wallpaper (entry.value);
                 }
             } else if (entry != null) {
-                command_row.set_text (entry.command);
+                command_buffer.set_text (entry.command);
             }
             type_row.set_selected (type_index);
             on_type_changed ();
 
             type_row.notify["selected"].connect (on_type_changed);
             value_row.notify["selected"].connect (update_save_response);
-            command_row.changed.connect (update_save_response);
+            command_buffer.changed.connect (update_save_response);
 
             response.connect ((response_id) => {
                 if (response_id == "save") {
                     emit_saved ();
+                } else if (response_id == "delete") {
+                    deleted ();
                 }
             });
         }
@@ -189,7 +217,7 @@ namespace Switchcraft {
             var setting_id = get_setting_id ();
             bool valid;
             if (setting_id == "") {
-                valid = command_row.get_text ().strip ().length > 0;
+                valid = command_buffer.text.strip ().length > 0;
             } else if (setting_id == "wallpaper") {
                 valid = wallpaper_path.length > 0;
             } else {
@@ -233,7 +261,7 @@ namespace Switchcraft {
             var theme = mode_group.get_active_name ();
             var setting_id = get_setting_id ();
             if (setting_id == "") {
-                saved (command_row.get_text ().strip (), "", "", theme);
+                saved (command_buffer.text.strip (), "", "", theme);
                 return;
             }
 

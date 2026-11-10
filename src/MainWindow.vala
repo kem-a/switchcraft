@@ -9,7 +9,6 @@ namespace Switchcraft {
 
     public class MainWindow : Adw.ApplicationWindow {
         private HashTable<string, List<CommandEntry>> commands;
-        private Adw.Banner banner;
         private PreferencesWindow? preferences_window = null;
         private Adw.ToastOverlay toast_overlay;
         private Gtk.Switch monitor_switch;
@@ -84,12 +83,6 @@ namespace Switchcraft {
             monitor_box.append (monitor_switch);
             header_bar.pack_end (monitor_box);
 
-            // Banner for monitoring status
-            banner = new Adw.Banner (_("Background monitoring is now active"));
-            banner.set_button_label (_("Dismiss"));
-            banner.button_clicked.connect (() => { banner.set_revealed (false); });
-            banner.set_revealed (false);
-
             var placeholder = new Adw.StatusPage ();
             placeholder.set_icon_name ("utilities-terminal-symbolic");
             placeholder.set_title (_("No Commands"));
@@ -100,11 +93,7 @@ namespace Switchcraft {
             content_stack.add_named (build_command_list (), "list");
             content_stack.add_named (placeholder, "empty");
 
-            var content_box = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
-            content_box.append (banner);
-            content_box.append (content_stack);
-
-            toolbar_view.set_content (content_box);
+            toolbar_view.set_content (content_stack);
 
             toast_overlay = new Adw.ToastOverlay ();
             toast_overlay.set_child (toolbar_view);
@@ -266,8 +255,8 @@ namespace Switchcraft {
             return "light";
         }
 
-        private Adw.SwitchRow create_command_row (string theme, CommandEntry entry) {
-            var row = new Adw.SwitchRow ();
+        private Adw.ActionRow create_command_row (string theme, CommandEntry entry) {
+            var row = new Adw.ActionRow ();
             // Commands often contain & < > which are not valid markup
             row.set_use_markup (false);
             var builtin_title = CommandDialog.get_builtin_title (entry.builtin);
@@ -279,7 +268,6 @@ namespace Switchcraft {
             } else {
                 row.set_title (entry.command);
             }
-            row.set_active (entry.enabled);
             row.set_data<void*> (AnimatedRows.ROW_KEY, (void*) entry);
             command_row_entries.insert (row, entry);
 
@@ -292,7 +280,6 @@ namespace Switchcraft {
             var drag_icon = new Gtk.Image.from_icon_name ("list-drag-handle-symbolic");
             drag_icon.add_css_class ("dim-label");
             drag_handle.append (drag_icon);
-            row.add_prefix (drag_handle);
 
             var drag_source = new Gtk.DragSource ();
             drag_source.set_actions (Gdk.DragAction.MOVE);
@@ -334,33 +321,23 @@ namespace Switchcraft {
                 on_theme_toggle_changed (entry, theme_toggle.group.get_active_name ());
             });
             row.add_prefix (theme_toggle);
+            // Prefixes are prepended, so the handle added last sits first
+            row.add_prefix (drag_handle);
 
-            // Enable/disable switch
-            row.notify["active"].connect (() => {
-                on_toggle_command_state (row.get_active (), entry);
-            });
-
-            // Controls box with edit and remove buttons
-            var controls_box = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 6);
-            controls_box.set_valign (Gtk.Align.CENTER);
-
-            var edit_button = new Gtk.Button.from_icon_name ("document-edit-symbolic");
-            edit_button.add_css_class ("flat");
-            edit_button.set_tooltip_text (_("Edit command"));
-            edit_button.clicked.connect (() => {
+            // Clicking the row opens the edit dialog
+            row.set_activatable (true);
+            row.activated.connect (() => {
                 show_command_dialog (entry);
             });
-            controls_box.append (edit_button);
 
-            var remove_button = new Gtk.Button.from_icon_name ("user-trash-symbolic");
-            remove_button.add_css_class ("flat");
-            remove_button.set_tooltip_text (_("Remove command"));
-            remove_button.clicked.connect (() => {
-                on_remove_command_clicked (entry);
+            // Enable/disable switch
+            var enable_switch = new Gtk.Switch ();
+            enable_switch.set_valign (Gtk.Align.CENTER);
+            enable_switch.set_active (entry.enabled);
+            enable_switch.notify["active"].connect (() => {
+                on_toggle_command_state (enable_switch.get_active (), entry);
             });
-            controls_box.append (remove_button);
-
-            row.add_suffix (controls_box);
+            row.add_suffix (enable_switch);
 
             update_row_state (row, entry);
 
@@ -374,6 +351,9 @@ namespace Switchcraft {
             var dialog = new CommandDialog (app, entry, entry != null ? get_entry_theme (entry) : "light");
             dialog.saved.connect ((command, builtin, value, theme) => {
                 save_command (entry, command, builtin, value, theme);
+            });
+            dialog.deleted.connect (() => {
+                on_remove_command_clicked (entry);
             });
             dialog.present (this);
         }
@@ -564,12 +544,27 @@ namespace Switchcraft {
             int listbox_index = get_entry_index (entry);
             if (listbox_index < 0) return;
 
+            var theme = row_theme_map[listbox_index];
             row_theme_map.remove_index ((uint) listbox_index);
             row_entry_map.remove_index ((uint) listbox_index);
 
             rebuild_commands_from_display_order ();
             save_commands ();
             refresh_command_list_ui ();
+
+            var toast = new Adw.Toast (_("Command deleted"));
+            toast.set_button_label (_("Undo"));
+            toast.button_clicked.connect (() => {
+                // The list may have shrunk since, so clamp the old position
+                int index = int.min (listbox_index, row_entry_map.length);
+                row_theme_map.insert (index, theme);
+                row_entry_map.insert (index, entry);
+
+                rebuild_commands_from_display_order ();
+                save_commands ();
+                refresh_command_list_ui ();
+            });
+            toast_overlay.add_toast (toast);
         }
 
         // ── Actions ───────────────────────────────────────────────────────
@@ -643,7 +638,9 @@ namespace Switchcraft {
             if (app.get_monitoring_enabled () == enabled) return;
 
             app.set_monitoring_enabled (enabled);
-            banner.set_revealed (enabled);
+            show_toast (enabled
+                ? _("Background monitoring is now active")
+                : _("Background monitoring is now inactive"));
         }
 
         public void show_toast (string message, bool is_error = false) {
