@@ -16,6 +16,12 @@ namespace Switchcraft {
         private Adw.ComboRow type_row;
         private Gtk.ListBoxRow command_row;
         private Gtk.TextBuffer command_buffer;
+        private Gtk.Box error_box;
+        private Gtk.Label error_label;
+        private Gtk.Label test_status;
+        private Adw.Spinner test_spinner;
+        private Gtk.Button test_button;
+        private Cancellable? test_cancellable = null;
         private Adw.ComboRow value_row;
         private Adw.ActionRow image_row;
         private Gtk.Label image_label;
@@ -91,6 +97,62 @@ namespace Switchcraft {
             command_box.append (command_title);
             command_box.append (command_view);
 
+            // Output of a failed test, selectable and copyable
+            error_label = new Gtk.Label (null);
+            error_label.set_xalign (0);
+            error_label.set_wrap (true);
+            error_label.set_wrap_mode (Pango.WrapMode.WORD_CHAR);
+            error_label.set_max_width_chars (40);
+            error_label.set_selectable (true);
+            error_label.set_hexpand (true);
+            error_label.set_valign (Gtk.Align.START);
+            error_label.set_margin_top (8);
+            error_label.set_margin_bottom (8);
+            error_label.set_margin_start (10);
+            error_label.add_css_class ("monospace");
+
+            var error_scroll = new Gtk.ScrolledWindow ();
+            error_scroll.set_policy (Gtk.PolicyType.NEVER, Gtk.PolicyType.AUTOMATIC);
+            error_scroll.set_propagate_natural_height (true);
+            error_scroll.set_max_content_height (160);
+            error_scroll.set_child (error_label);
+
+            var copy_button = new Gtk.Button.from_icon_name ("edit-copy-symbolic");
+            copy_button.set_tooltip_text (_("Copy Error"));
+            copy_button.set_valign (Gtk.Align.START);
+            copy_button.set_margin_top (4);
+            copy_button.set_margin_end (4);
+            copy_button.add_css_class ("flat");
+            copy_button.clicked.connect (() => {
+                get_clipboard ().set_text (error_label.get_text ());
+            });
+
+            error_box = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 6);
+            error_box.set_margin_top (6);
+            error_box.add_css_class ("card");
+            error_box.append (error_scroll);
+            error_box.append (copy_button);
+            error_box.set_visible (false);
+            command_box.append (error_box);
+
+            test_status = new Gtk.Label (null);
+            test_status.set_xalign (0);
+            test_status.set_hexpand (true);
+            test_status.set_wrap (true);
+
+            test_spinner = new Adw.Spinner ();
+            test_spinner.set_visible (false);
+
+            test_button = new Gtk.Button.with_label (_("Test"));
+            test_button.clicked.connect (on_test_command);
+
+            var test_bar = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 6);
+            test_bar.set_margin_top (6);
+            test_bar.append (test_status);
+            test_bar.append (test_spinner);
+            test_bar.append (test_button);
+            command_box.append (test_bar);
+
             command_row = new Gtk.ListBoxRow ();
             command_row.set_activatable (false);
             command_row.set_child (command_box);
@@ -143,10 +205,22 @@ namespace Switchcraft {
             }
             type_row.set_selected (type_index);
             on_type_changed ();
+            update_test_button ();
 
             type_row.notify["selected"].connect (on_type_changed);
             value_row.notify["selected"].connect (update_save_response);
             command_buffer.changed.connect (update_save_response);
+            command_buffer.changed.connect (() => {
+                show_test_result (false, null);
+                update_test_button ();
+            });
+
+            // Stop a test that is still running
+            closed.connect (() => {
+                if (test_cancellable != null) {
+                    test_cancellable.cancel ();
+                }
+            });
 
             response.connect ((response_id) => {
                 if (response_id == "save") {
@@ -224,6 +298,45 @@ namespace Switchcraft {
                 valid = value_row.get_sensitive () && get_selected_value ().length > 0;
             }
             set_response_enabled ("save", valid);
+        }
+
+        private void update_test_button () {
+            test_button.set_sensitive (test_cancellable == null && command_buffer.text.strip ().length > 0);
+        }
+
+        private void on_test_command () {
+            show_test_result (false, null);
+            test_cancellable = new Cancellable ();
+            test_spinner.set_visible (true);
+            update_test_button ();
+
+            app.test_command.begin (command_buffer.text.strip (), test_cancellable, (obj, res) => {
+                string? error_text;
+                try {
+                    error_text = app.test_command.end (res);
+                } catch (IOError.CANCELLED e) {
+                    return;
+                } catch (Error e) {
+                    error_text = e.message;
+                }
+                test_cancellable = null;
+                test_spinner.set_visible (false);
+                update_test_button ();
+                show_test_result (true, error_text);
+            });
+        }
+
+        // Shows nothing when not finished, else success or the error text
+        private void show_test_result (bool finished, string? error_text) {
+            bool failed = finished && error_text != null;
+            test_status.remove_css_class ("success");
+            test_status.remove_css_class ("error");
+            if (finished) {
+                test_status.add_css_class (failed ? "error" : "success");
+            }
+            test_status.set_label (!finished ? "" : failed ? _("Command failed") : _("Command succeeded"));
+            error_label.set_text (failed ? error_text : "");
+            error_box.set_visible (failed);
         }
 
         private void set_wallpaper (string path) {

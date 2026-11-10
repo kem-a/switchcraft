@@ -250,29 +250,13 @@ namespace Switchcraft {
             if (!commands.contains (theme)) return;
             
             unowned List<CommandEntry> theme_commands = commands.get (theme);
-            var constants = get_constants ();
-            
-            string[] env = Environ.get ();
-            // Constants arrive as plain variables. The prefix expands $VARS
-            // in their values, like the old bash monitor's eval did.
-            var prefix = new StringBuilder ();
-            var names = constants.get_keys ();
-            names.sort (strcmp);
-            foreach (var key in names) {
-                env = Environ.set_variable (env, key, constants.get (key));
-                if (Regex.match_simple ("^[A-Za-z_][A-Za-z0-9_]*$", key)) {
-                    prefix.append_printf (
-                        "__sc=$(eval \"printf '%%s' \\\"$%s\\\"\" 2>/dev/null) && %s=$__sc\n", key, key);
-                }
-            }
-            if (prefix.len > 0) {
-                prefix.append ("unset __sc\n");
-            }
+            string prefix;
+            var env = build_command_env (out prefix);
 
             foreach (var entry in theme_commands) {
                 if (entry.enabled) {
                     try {
-                        string[] argv = { "/bin/sh", "-c", prefix.str + entry.command };
+                        string[] argv = { "/bin/sh", "-c", prefix + entry.command };
                         Process.spawn_async (
                             null,
                             argv,
@@ -285,6 +269,69 @@ namespace Switchcraft {
                         warning ("Failed to execute command: %s", e.message);
                     }
                 }
+            }
+        }
+
+        private string[] build_command_env (out string prefix) {
+            var constants = get_constants ();
+
+            string[] env = Environ.get ();
+            // Constants arrive as plain variables. The prefix expands $VARS
+            // in their values, like the old bash monitor's eval did.
+            var builder = new StringBuilder ();
+            var names = constants.get_keys ();
+            names.sort (strcmp);
+            foreach (var key in names) {
+                env = Environ.set_variable (env, key, constants.get (key));
+                if (Regex.match_simple ("^[A-Za-z_][A-Za-z0-9_]*$", key)) {
+                    builder.append_printf (
+                        "__sc=$(eval \"printf '%%s' \\\"$%s\\\"\" 2>/dev/null) && %s=$__sc\n", key, key);
+                }
+            }
+            if (builder.len > 0) {
+                builder.append ("unset __sc\n");
+            }
+            prefix = builder.str;
+            return env;
+        }
+
+        // Runs a command the way execute_commands does and waits for it.
+        // Returns null on success, else its output and exit status.
+        public async string? test_command (string command, Cancellable cancellable) throws Error {
+            string prefix;
+            var env = build_command_env (out prefix);
+
+            // Output goes to a file, so background jobs that keep
+            // it open do not hold up the result
+            FileIOStream stream;
+            var output_file = File.new_tmp ("switchcraft-test-XXXXXX", out stream);
+            stream.close ();
+            var output_path = output_file.get_path ();
+
+            try {
+                var launcher = new SubprocessLauncher (SubprocessFlags.STDERR_MERGE);
+                launcher.set_environ (env);
+                launcher.set_stdout_file_path (output_path);
+                var process = launcher.spawnv ({ "/bin/sh", "-c", prefix + command });
+                try {
+                    yield process.wait_async (cancellable);
+                } catch (IOError.CANCELLED e) {
+                    process.force_exit ();
+                    throw e;
+                }
+                if (process.get_successful ()) {
+                    return null;
+                }
+
+                var status = process.get_if_exited ()
+                    ? _("Exited with code %d").printf (process.get_exit_status ())
+                    : _("Killed by signal %d").printf (process.get_term_sig ());
+                string output;
+                FileUtils.get_contents (output_path, out output);
+                output = output.make_valid ().strip ();
+                return output.length > 0 ? output + "\n" + status : status;
+            } finally {
+                FileUtils.remove (output_path);
             }
         }
 
