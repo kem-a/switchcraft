@@ -30,41 +30,71 @@ namespace Switchcraft {
         private Gtk.Label image_label;
         private Adw.ToggleGroup mode_group;
         private string wallpaper_path = "";
+        // Built-in settings offered in the Type list, after Custom Command
+        private string[] setting_ids = {};
         private string initial_builtin = "";
         private string initial_value = "";
 
         public static string get_builtin_title (string setting_id) {
             switch (setting_id) {
                 case "color-scheme":
+                case "kde-color-scheme":
                     return _("Color Scheme");
+                case "accent-color":
+                    return _("Accent Color");
                 case "icon-theme":
+                case "kde-icon-theme":
                     return _("Icon Theme");
                 case "gtk-theme":
                     return _("GTK Theme");
                 case "cursor-theme":
+                case "kde-cursor-theme":
                     return _("Cursor Theme");
                 case "shell-theme":
                     return _("Shell Theme");
                 case "wallpaper":
+                case "kde-wallpaper":
                     return _("Wallpaper");
+                case "night-light":
+                    return _("Night Light");
+                case "kde-global-theme":
+                    return _("Global Theme");
+                case "kde-plasma-style":
+                    return _("Plasma Style");
+                case "kvantum-theme":
+                    return _("Kvantum Theme");
                 default:
                     return "";
             }
+        }
+
+        // Wallpapers are picked as files instead of from a list
+        public static bool is_image_setting (string setting_id) {
+            return setting_id == "wallpaper" || setting_id == "kde-wallpaper";
         }
 
         // Why a command cannot run in the theme's list, or null. Commands
         // that switch to the other style would run both lists in a loop.
         public static string? find_conflict (HashTable<string, List<CommandEntry>> commands,
                                              CommandEntry? entry, string command, string builtin, string theme) {
+            // GNOME follows its color-scheme key, KDE the window color of
+            // its color scheme, which a global theme can also change
+            bool known = false;
+            bool dark = false;
             MatchInfo match;
             if (/color-scheme["']?\s+["']*(prefer-dark|prefer-light|default)\b/.match (command, 0, out match)) {
-                bool dark = match.fetch (1) == "prefer-dark";
-                if (theme == "dark" && !dark) {
-                    return _("Switches to the light style and would loop in Dark mode");
-                }
-                if (theme == "light" && dark) {
-                    return _("Switches to the dark style and would loop in Light mode");
-                }
+                known = true;
+                dark = match.fetch (1) == "prefer-dark";
+            } else if (/plasma-apply-colorscheme\s+["']?([^"'\s]+)/.match (command, 0, out match)) {
+                known = Application.get_kde_scheme_dark (match.fetch (1), out dark);
+            } else if (/plasma-apply-lookandfeel\s+(?:-a|--apply)\s+["']?([^"'\s]+)/.match (command, 0, out match)) {
+                known = Application.get_kde_global_theme_dark (match.fetch (1), out dark);
+            }
+            if (known && theme == "dark" && !dark) {
+                return _("Switches to the light style and would loop in Dark mode");
+            }
+            if (known && theme == "light" && dark) {
+                return _("Switches to the dark style and would loop in Light mode");
             }
 
             foreach (var other in commands.lookup (theme)) {
@@ -103,11 +133,16 @@ namespace Switchcraft {
             fields.add_css_class ("boxed-list");
             fields.set_size_request (420, -1);
 
-            // First item is a custom command, the rest are built-in settings
+            // First item is a custom command, the rest are the built-in
+            // settings for this desktop
             var type_model = new Gtk.StringList (null);
             type_model.append (_("Custom Command"));
             foreach (var setting_id in Application.THEME_SETTING_IDS) {
-                type_model.append (get_builtin_title (setting_id));
+                // One from another desktop stays while it is being edited
+                if (app.is_setting_available (setting_id) || (entry != null && entry.builtin == setting_id)) {
+                    setting_ids += setting_id;
+                    type_model.append (get_builtin_title (setting_id));
+                }
             }
             type_row = new Adw.ComboRow ();
             type_row.set_title (_("Type"));
@@ -236,8 +271,8 @@ namespace Switchcraft {
             // Fill in the entry being edited
             uint type_index = 0;
             if (entry != null && entry.builtin.length > 0) {
-                for (int i = 0; i < Application.THEME_SETTING_IDS.length; i++) {
-                    if (Application.THEME_SETTING_IDS[i] == entry.builtin) {
+                for (int i = 0; i < setting_ids.length; i++) {
+                    if (setting_ids[i] == entry.builtin) {
                         type_index = i + 1;
                     }
                 }
@@ -245,7 +280,7 @@ namespace Switchcraft {
             if (type_index > 0) {
                 initial_builtin = entry.builtin;
                 initial_value = entry.value;
-                if (entry.builtin == "wallpaper") {
+                if (is_image_setting (entry.builtin)) {
                     set_wallpaper (entry.value);
                 }
             } else if (entry != null) {
@@ -285,14 +320,14 @@ namespace Switchcraft {
             if (selected == 0 || selected == Gtk.INVALID_LIST_POSITION) {
                 return "";
             }
-            return Application.THEME_SETTING_IDS[selected - 1];
+            return setting_ids[selected - 1];
         }
 
         private void on_type_changed () {
             var setting_id = get_setting_id ();
             command_row.set_visible (setting_id == "");
-            image_row.set_visible (setting_id == "wallpaper");
-            value_row.set_visible (setting_id != "" && setting_id != "wallpaper");
+            image_row.set_visible (is_image_setting (setting_id));
+            value_row.set_visible (setting_id != "" && !is_image_setting (setting_id));
 
             if (value_row.get_visible ()) {
                 fill_values (setting_id);
@@ -341,7 +376,7 @@ namespace Switchcraft {
             bool valid;
             if (setting_id == "") {
                 valid = command_buffer.text.strip ().length > 0;
-            } else if (setting_id == "wallpaper") {
+            } else if (is_image_setting (setting_id)) {
                 valid = wallpaper_path.length > 0;
             } else {
                 valid = value_row.get_sensitive () && get_selected_value ().length > 0;
@@ -363,7 +398,7 @@ namespace Switchcraft {
             if (setting_id == "") {
                 return command_buffer.text.strip ();
             }
-            var value = setting_id == "wallpaper" ? wallpaper_path : get_selected_value ();
+            var value = is_image_setting (setting_id) ? wallpaper_path : get_selected_value ();
             return app.build_builtin_command (setting_id, value);
         }
 
@@ -445,7 +480,7 @@ namespace Switchcraft {
                 return;
             }
 
-            var value = setting_id == "wallpaper" ? wallpaper_path : get_selected_value ();
+            var value = is_image_setting (setting_id) ? wallpaper_path : get_selected_value ();
             saved (app.build_builtin_command (setting_id, value), setting_id, value, theme);
         }
     }

@@ -34,9 +34,14 @@ namespace Switchcraft {
             var general_page = new Adw.PreferencesPage ();
             add (general_page);
 
+            // Plasma ignores the GNOME setting the schedule changes, and
+            // switches between light and dark on its own
+            bool kde = Application.get_desktop () == "kde";
             var schedule_group = new Adw.PreferencesGroup ();
             schedule_group.set_title (_("Automatic Switching"));
-            schedule_group.set_description (_("Switch between light and dark style on a schedule. Needs background monitoring."));
+            schedule_group.set_description (kde
+                ? _("KDE Plasma switches between light and dark itself. Turn it on in System Settings under Colors & Themes, Global Theme.")
+                : _("Switch between light and dark style on a schedule. Needs background monitoring."));
             general_page.add (schedule_group);
 
             schedule_row = new Adw.ComboRow ();
@@ -52,12 +57,13 @@ namespace Switchcraft {
                 settings.set_string ("schedule-mode", SCHEDULE_MODES[schedule_row.get_selected ()]);
                 update_schedule_rows ();
             });
-            schedule_group.add (schedule_row);
-
             light_row = create_time_row (_("Light From"), "light-time");
-            schedule_group.add (light_row);
             dark_row = create_time_row (_("Dark From"), "dark-time");
-            schedule_group.add (dark_row);
+            if (!kde) {
+                schedule_group.add (schedule_row);
+                schedule_group.add (light_row);
+                schedule_group.add (dark_row);
+            }
 
             // The monitor saves the location when GeoClue finds one
             settings.changed["last-coordinates"].connect (() => {

@@ -221,7 +221,11 @@ namespace Switchcraft {
                 // Initial execution
                 execute_monitored_commands (style_manager.dark ? "dark" : "light");
 
-                schedule = new ThemeSchedule (settings);
+                // Plasma ignores the GNOME setting the schedule changes,
+                // and switches between light and dark on its own
+                if (get_desktop () != "kde") {
+                    schedule = new ThemeSchedule (settings);
+                }
                 
                 return -1; // Keep running
             }
@@ -641,7 +645,14 @@ namespace Switchcraft {
         }
 
         public const string[] THEME_SETTING_IDS = {
-            "color-scheme", "icon-theme", "gtk-theme", "cursor-theme", "shell-theme", "wallpaper"
+            // GNOME
+            "color-scheme", "accent-color", "icon-theme", "gtk-theme", "cursor-theme", "shell-theme",
+            "wallpaper", "night-light",
+            // KDE Plasma
+            "kde-global-theme", "kde-color-scheme", "kde-plasma-style", "kde-icon-theme",
+            "kde-cursor-theme", "kde-wallpaper",
+            // Any desktop
+            "kvantum-theme"
         };
         // Stored for the shell theme's empty name, since "" means "not set"
         public const string SHELL_THEME_DEFAULT = "Default";
@@ -657,6 +668,130 @@ namespace Switchcraft {
             } else if (setting_id == "wallpaper") {
                 schema_id = "org.gnome.desktop.background";
                 key = theme == "dark" ? "picture-uri-dark" : "picture-uri";
+            } else if (setting_id == "night-light") {
+                schema_id = "org.gnome.settings-daemon.plugins.color";
+                key = "night-light-enabled";
+            }
+        }
+
+        // "gnome", "kde", or "" for other desktops
+        public static string get_desktop () {
+            var desktops = (Environment.get_variable ("XDG_CURRENT_DESKTOP") ?? "").down ().split (":");
+            if ("kde" in desktops) {
+                return "kde";
+            }
+            return "gnome" in desktops ? "gnome" : "";
+        }
+
+        // Built-ins are offered for the running desktop when their tool is installed
+        public bool is_setting_available (string setting_id) {
+            if (setting_id == "kvantum-theme") {
+                return Environment.find_program_in_path ("kvantummanager") != null;
+            }
+            if (setting_id.has_prefix ("kde-")) {
+                return get_desktop () == "kde" && get_kde_program (setting_id) != null;
+            }
+            if (get_desktop () != "gnome") {
+                return false;
+            }
+            // The value row explains how to get shell themes
+            if (setting_id == "shell-theme") {
+                return true;
+            }
+            string schema_id, key;
+            string? schema_dir;
+            get_setting_key (setting_id, "light", out schema_id, out key);
+            var schema = lookup_schema (schema_id, out schema_dir);
+            return schema != null && schema.has_key (key);
+        }
+
+        // Full path of the Plasma tool that applies the setting, or null
+        private static string? get_kde_program (string setting_id) {
+            switch (setting_id) {
+                case "kde-global-theme":
+                    return Environment.find_program_in_path ("plasma-apply-lookandfeel");
+                case "kde-color-scheme":
+                    return Environment.find_program_in_path ("plasma-apply-colorscheme");
+                case "kde-plasma-style":
+                    return Environment.find_program_in_path ("plasma-apply-desktoptheme");
+                case "kde-cursor-theme":
+                    return Environment.find_program_in_path ("plasma-apply-cursortheme");
+                case "kde-wallpaper":
+                    return Environment.find_program_in_path ("plasma-apply-wallpaperimage");
+                case "kde-icon-theme":
+                    // Not on PATH, and each distribution keeps it elsewhere
+                    foreach (var dir in new string[] { "/usr/libexec", "/usr/lib", "/usr/lib64/libexec",
+                                                       "/usr/lib/x86_64-linux-gnu/libexec",
+                                                       "/usr/lib/aarch64-linux-gnu/libexec" }) {
+                        var path = Path.build_filename (dir, "plasma-changeicons");
+                        if (FileUtils.test (path, FileTest.IS_EXECUTABLE)) {
+                            return path;
+                        }
+                    }
+                    return Environment.find_program_in_path ("plasma-changeicons");
+                default:
+                    return null;
+            }
+        }
+
+        // Whether KDE reports the dark style for this color scheme. Like
+        // its portal, a window background darker than gray 192 is dark.
+        // Returns false when the scheme is not found.
+        public static bool get_kde_scheme_dark (string name, out bool dark) {
+            dark = false;
+            foreach (var dir in get_data_dirs ("color-schemes")) {
+                var key_file = new KeyFile ();
+                key_file.set_list_separator (',');
+                try {
+                    key_file.load_from_file (Path.build_filename (dir, name + ".colors"), KeyFileFlags.NONE);
+                    var rgb = key_file.get_integer_list ("Colors:Window", "BackgroundNormal");
+                    if (rgb.length < 3) {
+                        return false;
+                    }
+                    dark = (rgb[0] * 11 + rgb[1] * 16 + rgb[2] * 5) / 32 < 192;
+                    return true;
+                } catch (Error e) {
+                    // Not in this folder
+                }
+            }
+            return false;
+        }
+
+        // A global theme applies a color scheme, which decides the style
+        public static bool get_kde_global_theme_dark (string id, out bool dark) {
+            dark = false;
+            foreach (var dir in get_data_dirs (Path.build_filename ("plasma", "look-and-feel"))) {
+                string contents;
+                try {
+                    FileUtils.get_contents (Path.build_filename (dir, id, "contents", "defaults"), out contents);
+                } catch (FileError e) {
+                    // Not in this folder
+                    continue;
+                }
+                // KeyFile rejects group lines like [kdeglobals][General]
+                bool in_general = false;
+                foreach (var line in contents.split ("\n")) {
+                    line = line.strip ();
+                    if (line.has_prefix ("[")) {
+                        in_general = line == "[kdeglobals][General]";
+                    } else if (in_general && line.has_prefix ("ColorScheme=")) {
+                        return get_kde_scheme_dark (line.substring ("ColorScheme=".length), out dark);
+                    }
+                }
+                return false;
+            }
+            return false;
+        }
+
+        // A value from an ini file in the config folder, as KDE keeps them, or ""
+        private static string read_config_value (string file_name, string group, string key) {
+            var key_file = new KeyFile ();
+            try {
+                key_file.load_from_file (Path.build_filename (Environment.get_user_config_dir (), file_name),
+                                         KeyFileFlags.NONE);
+                return key_file.get_string (group, key);
+            } catch (Error e) {
+                return "";
             }
         }
 
@@ -696,6 +831,24 @@ namespace Switchcraft {
 
         // What GNOME currently uses, shown for settings the user has not set
         public string get_current_theme_value (string setting_id, string theme) {
+            switch (setting_id) {
+                case "kde-global-theme":
+                    return read_config_value ("kdeglobals", "KDE", "LookAndFeelPackage");
+                case "kde-color-scheme":
+                    return read_config_value ("kdeglobals", "General", "ColorScheme");
+                case "kde-plasma-style":
+                    return read_config_value ("plasmarc", "Theme", "name");
+                case "kde-icon-theme":
+                    return read_config_value ("kdeglobals", "Icons", "Theme");
+                case "kde-cursor-theme":
+                    return read_config_value ("kcminputrc", "Mouse", "cursorTheme");
+                case "kvantum-theme":
+                    return read_config_value (Path.build_filename ("Kvantum", "kvantum.kvconfig"), "General", "theme");
+                case "kde-wallpaper":
+                    // Plasma keeps one per desktop
+                    return "";
+            }
+
             string schema_id, key;
             string? schema_dir;
             get_setting_key (setting_id, theme, out schema_id, out key);
@@ -704,7 +857,11 @@ namespace Switchcraft {
                 return "";
             }
 
-            var value = new Settings.full (schema, null, null).get_string (key);
+            var key_settings = new Settings.full (schema, null, null);
+            if (setting_id == "night-light") {
+                return key_settings.get_boolean (key).to_string ();
+            }
+            var value = key_settings.get_string (key);
             if (setting_id == "shell-theme" && value == "") {
                 return SHELL_THEME_DEFAULT;
             }
@@ -717,6 +874,24 @@ namespace Switchcraft {
         // The gsettings line a built-in command runs. The wallpaper sets both
         // keys, so it shows whichever style GNOME is in.
         public string build_builtin_command (string setting_id, string value) {
+            switch (setting_id) {
+                case "kde-global-theme":
+                    return "plasma-apply-lookandfeel -a %s".printf (Shell.quote (value));
+                case "kde-color-scheme":
+                    return "plasma-apply-colorscheme %s".printf (Shell.quote (value));
+                case "kde-plasma-style":
+                    return "plasma-apply-desktoptheme %s".printf (Shell.quote (value));
+                case "kde-icon-theme":
+                    return "%s %s".printf (Shell.quote (get_kde_program (setting_id) ?? "plasma-changeicons"),
+                                           Shell.quote (value));
+                case "kde-cursor-theme":
+                    return "plasma-apply-cursortheme %s".printf (Shell.quote (value));
+                case "kde-wallpaper":
+                    return "plasma-apply-wallpaperimage %s".printf (Shell.quote (value));
+                case "kvantum-theme":
+                    return "kvantummanager --set %s".printf (Shell.quote (value));
+            }
+
             string schema_id, key;
             string? schema_dir;
             get_setting_key (setting_id, "light", out schema_id, out key);
@@ -739,16 +914,33 @@ namespace Switchcraft {
         public GenericArray<string> scan_setting_values (string setting_id) {
             switch (setting_id) {
                 case "color-scheme":
-                    var schemes = new GenericArray<string> ();
-                    foreach (var scheme in new string[] { "prefer-light", "prefer-dark", "default" }) {
-                        schemes.add (scheme);
-                    }
-                    return schemes;
+                    return string_array ({ "prefer-light", "prefer-dark", "default" });
+                case "accent-color":
+                    return string_array ({ "blue", "teal", "green", "yellow", "orange", "red", "pink", "purple", "slate" });
+                case "night-light":
+                    return string_array ({ "true", "false" });
+                case "kde-global-theme":
+                    return scan_names (get_data_dirs (Path.build_filename ("plasma", "look-and-feel")), match_kde_package);
+                case "kde-color-scheme":
+                    return scan_names (get_data_dirs ("color-schemes"), (dir_path, name) => {
+                        return name.has_suffix (".colors") ? name.substring (0, name.length - ".colors".length) : null;
+                    });
+                case "kde-plasma-style":
+                    return scan_names (get_data_dirs (Path.build_filename ("plasma", "desktoptheme")), match_kde_package);
+                case "kvantum-theme":
+                    string[] kvantum_dirs = get_data_dirs ("Kvantum");
+                    kvantum_dirs += Path.build_filename (Environment.get_user_config_dir (), "Kvantum");
+                    return scan_names (kvantum_dirs, (dir_path, name) => {
+                        var config = Path.build_filename (dir_path, name, name + ".kvconfig");
+                        return FileUtils.test (config, FileTest.EXISTS) ? name : null;
+                    });
                 case "icon-theme":
+                case "kde-icon-theme":
                     return scan_icon_themes ();
                 case "gtk-theme":
                     return scan_gtk_themes ();
                 case "cursor-theme":
+                case "kde-cursor-theme":
                     return scan_cursor_themes ();
                 case "shell-theme":
                     var themes = scan_shell_themes ();
@@ -760,6 +952,52 @@ namespace Switchcraft {
         }
 
         // --- Theme discovery ---
+
+        private static GenericArray<string> string_array (string[] values) {
+            var array = new GenericArray<string> ();
+            foreach (var value in values) {
+                array.add (value);
+            }
+            return array;
+        }
+
+        // The subfolder in the user's and the system's data folders
+        private static string[] get_data_dirs (string subdir) {
+            string[] dirs = { Path.build_filename (Environment.get_user_data_dir (), subdir) };
+            foreach (unowned string dir in Environment.get_system_data_dirs ()) {
+                dirs += Path.build_filename (dir, subdir);
+            }
+            return dirs;
+        }
+
+        // The name to list for a folder entry, or null to skip it
+        private delegate string? NameMatcher (string dir_path, string name);
+
+        // Sorted names matched in any of the folders, without duplicates
+        private GenericArray<string> scan_names (string[] dirs, NameMatcher match) {
+            var names = new GenericArray<string> ();
+            foreach (var dir_path in dirs) {
+                try {
+                    var dir = Dir.open (dir_path, 0);
+                    string? file_name;
+                    while ((file_name = dir.read_name ()) != null) {
+                        var name = file_name.has_prefix (".") ? null : match (dir_path, file_name);
+                        if (name != null && !array_has_string (names, name)) {
+                            names.add (name);
+                        }
+                    }
+                } catch (FileError e) {}
+            }
+            names.sort (strcmp);
+            return names;
+        }
+
+        // Plasma packages, like global themes and Plasma styles
+        private static string? match_kde_package (string dir_path, string name) {
+            var json = Path.build_filename (dir_path, name, "metadata.json");
+            var desktop = Path.build_filename (dir_path, name, "metadata.desktop");
+            return FileUtils.test (json, FileTest.EXISTS) || FileUtils.test (desktop, FileTest.EXISTS) ? name : null;
+        }
 
         public GenericArray<string> scan_icon_themes () {
             var themes = new GenericArray<string> ();

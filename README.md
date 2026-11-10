@@ -18,11 +18,15 @@ Switchcraft watches GNOME's light/dark preference and runs your shell commands w
 - Watches `org.gnome.desktop.interface color-scheme` and executes commands instantly.
 - Polished libadwaita interface with light/dark pages, icons, and header-bar actions.
 - Add, edit, enable/disable, reorder or remove commands per theme.
-- Built-in commands for icon, GTK, cursor and shell theme or wallpaper: pick the setting and a value from a list instead of typing a command.
+- Built-in commands: pick a setting and a value from a list instead of typing a command. Only the ones for the running desktop are offered:
+  - GNOME: color scheme, accent color, icon, GTK, cursor and shell theme, wallpaper, Night Light.
+  - KDE Plasma: global theme, color scheme, Plasma style, icon and cursor theme, wallpaper.
+  - Any desktop: Kvantum theme, when Kvantum is installed.
+- Blocks commands that would switch the style back and run in a loop, and the same command or setting twice in one mode.
 - Define reusable constants for common variables in commands.
 - **Independent background monitoring** - a `switchcraft --background` process runs even when the GUI is closed.
 - Turn the background monitor on or off from the header bar.
-- Switch between light and dark style automatically at sunset and sunrise, or at custom times (Preferences). Uses GeoClue for the location when allowed, else the system time zone.
+- Switch between light and dark style automatically at sunset and sunrise, or at custom times (Preferences). Uses GeoClue for the location when allowed, else the system time zone. On KDE Plasma, use Plasma's own day/night switching instead.
 - Keyboard shortcuts (<kbd>Ctrl</kbd>+<kbd>N</kbd> to add, <kbd>Ctrl</kbd>+<kbd>Q</kbd> to quit) plus About and Shortcuts dialogs from the menu.
 
 <details> <summary> Command Examples <b>(click to open)</b> </summary>
@@ -59,7 +63,7 @@ Dark theme:
 - Desktop: GNOME 42+ (Switchcraft follows the `org.gnome.desktop.interface color-scheme` setting)
 - Build tools: a C compiler, `valac`, `meson` (>= 0.59), `ninja`, `pkg-config`, `gettext`, `glib-compile-resources`, `glib-compile-schemas`
 - Libraries (with development headers): `gtk4`, `libadwaita-1` (>= 1.8), `glib-2.0` (>= 2.66), `gio-2.0`, `json-glib-1.0`
-- Runtime tools: `gsettings`, `zip` and `unzip` (configuration export and import), `pgrep` and `pkill` (managing the background monitor). Optional: GeoClue with location services on, for exact sunrise and sunset
+- Runtime tools: `gsettings`, `zip` and `unzip` (configuration export and import), `pgrep` and `pkill` (managing the background monitor). Optional: GeoClue with location services on, for exact sunrise and sunset; Plasma's `plasma-apply-*` tools for the KDE built-ins; `kvantummanager` for the Kvantum built-in
 - AnyLinux AppImage packaging with `scripts/make-anyimage.sh`: `podman` (the build runs in an Arch Linux container)
 - Local AppImage packaging with `scripts/make-appimage.sh`: `bash`, `jq` and `appimagetool` (downloaded automatically if missing)
 

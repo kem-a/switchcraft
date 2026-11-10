@@ -263,7 +263,7 @@ namespace Switchcraft {
             if (builtin_title.length > 0) {
                 // Built-in settings show the setting and value, not the gsettings line
                 row.set_title (builtin_title);
-                row.set_subtitle (entry.builtin == "wallpaper" ? Path.get_basename (entry.value) : entry.value);
+                row.set_subtitle (CommandDialog.is_image_setting (entry.builtin) ? Path.get_basename (entry.value) : entry.value);
                 row.set_tooltip_text (entry.command);
             } else {
                 row.set_title (entry.command);
