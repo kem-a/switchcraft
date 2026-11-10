@@ -143,7 +143,12 @@ rm -f "$datadir/applications/com.github.Switchcraft.desktop"
 rm -f "$datadir/icons/hicolor/512x512/apps/com.github.Switchcraft.png"
 rm -f "$datadir/icons/hicolor/scalable/apps/com.github.Switchcraft.svg"
 rm -f "$autostart_entry"
-command -v pkill >/dev/null 2>&1 && pkill -u "$(id -un)" -f '(^|/)switchcraft --background$' >/dev/null 2>&1 || true
+rm -f "$monitor_script"
+if command -v pgrep >/dev/null 2>&1; then
+  for pid in $(pgrep -f switchcraft-monitor); do
+    [ "$pid" = "$$" ] || kill "$pid" 2>/dev/null || true
+  done
+fi
 echo "Uninstallation complete."
 '''
 

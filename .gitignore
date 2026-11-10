@@ -1,5 +1,18 @@
-AppDir/
-build*/
+# Sample/reference code directory
+samples
+*.log
+*ns.md
+
+# IDEs and editors
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Build artifacts
+builddir/
+build/
 dist/
 squashfs-root/
 squashfs-*.img
