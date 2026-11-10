@@ -19,8 +19,8 @@ namespace Switchcraft {
             app = application;
             constants = new HashTable<string, string> (str_hash, str_equal);
             
-            set_title ("Constants");
-            set_default_size (600, 400);
+            set_title (_("Constants"));
+            set_default_size (600, 450);
             set_transient_for (parent);
             set_modal (true);
             
@@ -36,7 +36,7 @@ namespace Switchcraft {
             
             var add_button = new Gtk.Button ();
             add_button.set_icon_name ("list-add-symbolic");
-            add_button.set_tooltip_text ("Add Constant");
+            add_button.set_tooltip_text (_("Add Constant"));
             add_button.add_css_class ("flat");
             add_button.clicked.connect (on_add_constant);
             header_bar.pack_start (add_button);
@@ -48,7 +48,7 @@ namespace Switchcraft {
             content_box.set_margin_start (24);
             content_box.set_margin_end (24);
             
-            var description = new Gtk.Label ("Define constants to use in your commands. Reference them with $NAME or ${NAME}.");
+            var description = new Gtk.Label (_("Define constants to use in your commands. Reference them with $NAME or ${NAME}."));
             description.set_xalign (0);
             description.set_wrap (true);
             description.add_css_class ("body");
@@ -66,8 +66,8 @@ namespace Switchcraft {
             
             var placeholder = new Adw.StatusPage ();
             placeholder.set_icon_name ("text-x-generic-symbolic");
-            placeholder.set_title ("No Constants");
-            placeholder.set_description ("Click the + button to define a constant.");
+            placeholder.set_title (_("No Constants"));
+            placeholder.set_description (_("Click the + button to define a constant."));
             
             content_stack = new Gtk.Stack ();
             content_stack.set_transition_type (Gtk.StackTransitionType.CROSSFADE);
@@ -131,6 +131,8 @@ namespace Switchcraft {
         
         private Adw.ActionRow create_constant_row (string name, string value) {
             var row = new Adw.ActionRow ();
+            // Values often contain & < > which are not valid markup
+            row.set_use_markup (false);
             row.set_title (name);
             row.set_subtitle (value);
             row.set_activatable (false);
@@ -140,7 +142,7 @@ namespace Switchcraft {
             
             var edit_button = new Gtk.Button.from_icon_name ("document-edit-symbolic");
             edit_button.add_css_class ("flat");
-            edit_button.set_tooltip_text ("Edit constant");
+            edit_button.set_tooltip_text (_("Edit constant"));
             edit_button.clicked.connect (() => {
                 on_edit_constant (name);
             });
@@ -148,7 +150,7 @@ namespace Switchcraft {
             
             var remove_button = new Gtk.Button.from_icon_name ("user-trash-symbolic");
             remove_button.add_css_class ("flat");
-            remove_button.set_tooltip_text ("Remove constant");
+            remove_button.set_tooltip_text (_("Remove constant"));
             remove_button.clicked.connect (() => {
                 on_remove_constant (name);
             });
@@ -177,11 +179,11 @@ namespace Switchcraft {
         
         private void show_constant_dialog (string existing_name, string existing_value) {
             bool editing = existing_name.length > 0;
-            string title = editing ? "Edit Constant" : "Add Constant";
+            string title = editing ? _("Edit Constant") : _("Add Constant");
             
-            var dialog = new Adw.MessageDialog (this, title, "Define a constant name and value.");
-            dialog.add_response ("cancel", "Cancel");
-            dialog.add_response ("save", editing ? "Save" : "Add");
+            var dialog = new Adw.AlertDialog (title, _("Define a constant name and value."));
+            dialog.add_response ("cancel", _("Cancel"));
+            dialog.add_response ("save", editing ? _("Save") : _("Add"));
             dialog.set_default_response ("save");
             dialog.set_response_appearance ("save", Adw.ResponseAppearance.SUGGESTED);
             
@@ -189,62 +191,75 @@ namespace Switchcraft {
             var form_box = new Gtk.Box (Gtk.Orientation.VERTICAL, 12);
             form_box.set_margin_top (12);
             form_box.set_margin_bottom (12);
+            form_box.set_size_request (450, -1);
             
-            var name_entry = new Gtk.Entry ();
-            name_entry.set_placeholder_text ("Constant name (e.g., D2DL_SCHEMA)");
+            var fields = new Gtk.ListBox ();
+            fields.set_selection_mode (Gtk.SelectionMode.NONE);
+            fields.add_css_class ("boxed-list");
+            form_box.append (fields);
+
+            var name_entry = new Adw.EntryRow ();
+            name_entry.set_title (_("Constant name (e.g., D2DL_SCHEMA)"));
             if (existing_name.length > 0) {
                 name_entry.set_text (existing_name);
                 name_entry.set_sensitive (false); // Don't allow renaming
             }
-            form_box.append (name_entry);
-            
-            var value_entry = new Gtk.Entry ();
-            value_entry.set_placeholder_text ("Value (e.g., org.gnome.shell.extensions.dash2dock-lite)");
+            fields.append (name_entry);
+
+            var value_entry = new Adw.EntryRow ();
+            value_entry.set_title (_("Value (e.g., org.gnome.shell.extensions.dash2dock-lite)"));
             if (existing_value.length > 0) {
                 value_entry.set_text (existing_value);
             }
-            form_box.append (value_entry);
+            fields.append (value_entry);
             
-            var hint_label = new Gtk.Label ("Use in commands as $NAME or ${NAME}");
+            var hint_label = new Gtk.Label (_("Use in commands as $NAME or ${NAME}. Names use letters, numbers and underscores."));
             hint_label.set_xalign (0);
+            hint_label.set_wrap (true);
+            hint_label.set_wrap_mode (Pango.WrapMode.WORD_CHAR);
+            hint_label.set_max_width_chars (50);
             hint_label.add_css_class ("dim-label");
             hint_label.add_css_class ("caption");
             form_box.append (hint_label);
             
-            dialog.set_extra_child (form_box);
-            dialog.response.connect ((response_id) => {
-                on_constant_dialog_response (dialog, response_id, existing_name, name_entry, value_entry);
+            // Save stays disabled until the input can be saved, so nothing
+            // typed is dropped
+            name_entry.changed.connect (() => {
+                update_save_response (dialog, name_entry, value_entry);
             });
-            dialog.present ();
+            value_entry.changed.connect (() => {
+                update_save_response (dialog, name_entry, value_entry);
+            });
+            update_save_response (dialog, name_entry, value_entry);
+
+            dialog.set_extra_child (form_box);
+            dialog.choose.begin (this, null, (obj, res) => {
+                var response_id = dialog.choose.end (res);
+                on_constant_dialog_response (response_id, existing_name, name_entry, value_entry);
+            });
         }
         
-        private void on_constant_dialog_response (Adw.MessageDialog dialog, string response_id,
-                                                   string old_name, Gtk.Entry name_entry, Gtk.Entry value_entry) {
+        private void update_save_response (Adw.AlertDialog dialog,
+                                           Adw.EntryRow name_entry, Adw.EntryRow value_entry) {
+            var name = name_entry.get_text ().strip ();
+            bool name_valid = is_valid_variable_name (name);
+            if (name.length > 0 && !name_valid) {
+                name_entry.add_css_class ("error");
+            } else {
+                name_entry.remove_css_class ("error");
+            }
+            dialog.set_response_enabled ("save",
+                name_valid && normalize_constant_value (value_entry.get_text ()).length > 0);
+        }
+
+        private void on_constant_dialog_response (string response_id,
+                                                   string old_name, Adw.EntryRow name_entry, Adw.EntryRow value_entry) {
             if (response_id != "save") {
-                dialog.destroy ();
                 return;
             }
             
             var name = name_entry.get_text ().strip ();
             var normalized_value = normalize_constant_value (value_entry.get_text ());
-            
-            if (name.length == 0 || normalized_value.length == 0) {
-                dialog.destroy ();
-                return;
-            }
-            
-            // Validate name (should be valid shell variable name)
-            if (!is_valid_variable_name (name)) {
-                var error_dialog = new Adw.MessageDialog (
-                    this,
-                    "Invalid Name",
-                    "Constant name must be a valid shell variable name (letters, numbers, underscores)."
-                );
-                error_dialog.add_response ("ok", "OK");
-                error_dialog.present ();
-                dialog.destroy ();
-                return;
-            }
             
             // If editing, remove old name if it changed
             if (old_name.length > 0 && old_name != name) {
@@ -254,7 +269,6 @@ namespace Switchcraft {
             constants.insert (name, normalized_value);
             save_constants ();
             refresh_list ();
-            dialog.destroy ();
         }
 
         private string normalize_constant_value (string value) {

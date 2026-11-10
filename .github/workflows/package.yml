@@ -1,0 +1,64 @@
+name: Build and Package
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: "Build AppImage (${{ matrix.arch }})"
+    permissions:
+      contents: read
+    runs-on: ${{ matrix.runs-on }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - runs-on: ubuntu-latest
+            arch: x86_64
+          - runs-on: ubuntu-24.04-arm
+            arch: aarch64
+    container: ghcr.io/pkgforge-dev/archlinux:latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Preparing Container
+        uses: pkgforge-dev/anylinux-setup-action@v1
+
+      - name: Build AnyLinux AppImage
+        run: sh scripts/make-anyimage.sh
+
+      - name: Upload AppImage artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: Switchcraft-anylinux-${{ matrix.arch }}.AppImage
+          path: build-anyimage/dist/*.AppImage
+
+      - name: Upload zsync artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: Switchcraft-anylinux-${{ matrix.arch }}.AppImage.zsync
+          path: build-anyimage/dist/*.AppImage.zsync
+
+  release:
+    if: startsWith(github.ref, 'refs/tags/')
+    needs: [build]
+    permissions:
+      contents: write
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v8
+        with:
+          pattern: Switchcraft-*
+          merge-multiple: true
+
+      - name: Release AppImage
+        uses: softprops/action-gh-release@v3
+        with:
+          files: |
+            *.AppImage
+            *.AppImage.zsync

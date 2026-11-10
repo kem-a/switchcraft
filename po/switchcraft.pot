@@ -1,0 +1,382 @@
+# Switchcraft translation template.
+# Copyright (C) YEAR kem-a
+# This file is distributed under the same license as the switchcraft package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: switchcraft 2.0.0\n"
+"Report-Msgid-Bugs-To: https://github.com/kem-a/switchcraft/issues\n"
+"POT-Creation-Date: 2026-11-09 23:59+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: src/Application.vala:125
+msgid "Show version information"
+msgstr ""
+
+#: src/Application.vala:126
+msgid "Run in background for theme monitoring"
+msgstr ""
+
+#: src/Application.vala:800
+msgid "The 'zip' command is required to export."
+msgstr ""
+
+#: src/Application.vala:806
+msgid "Destination must be a local file."
+msgstr ""
+
+#: src/Application.vala:813
+msgid "Failed to prepare destination directory."
+msgstr ""
+
+#: src/Application.vala:821 src/Application.vala:894
+msgid "Failed to create temporary directory."
+msgstr ""
+
+#: src/Application.vala:852
+msgid "Unable to overwrite existing archive."
+msgstr ""
+
+#: src/Application.vala:864
+#, c-format
+msgid "Failed to write archive: %s"
+msgstr ""
+
+#: src/Application.vala:881
+msgid "The 'unzip' command is required to import."
+msgstr ""
+
+#: src/Application.vala:887
+msgid "Archive must be a local file."
+msgstr ""
+
+#: src/Application.vala:905
+#, c-format
+msgid "Failed to unpack archive: %s"
+msgstr ""
+
+#: src/Application.vala:913
+msgid "Archive must contain commands.json and constants.json at the top level."
+msgstr ""
+
+#: src/Application.vala:925
+msgid "commands.json is not a JSON object."
+msgstr ""
+
+#: src/Application.vala:936
+msgid "constants.json is not a JSON object."
+msgstr ""
+
+#: src/Application.vala:953
+msgid "constants.json must only contain string values."
+msgstr ""
+
+#: src/Application.vala:966
+msgid "theme_settings.json is not a JSON object."
+msgstr ""
+
+#: src/Application.vala:989
+msgid "Failed to remove commands.json."
+msgstr ""
+
+#: src/Application.vala:996
+msgid "Failed to remove constants.json."
+msgstr ""
+
+#: src/Application.vala:1003
+msgid "Failed to remove theme_settings.json."
+msgstr ""
+
+#: src/Application.vala:1189
+#, c-format
+msgid "Switchcraft Monitor"
+msgstr ""
+
+#: src/Application.vala:1190
+msgid "Monitor GNOME theme changes and run commands"
+msgstr ""
+
+#: src/ConstantsWindow.vala:22
+msgid "Constants"
+msgstr ""
+
+#: src/ConstantsWindow.vala:39 src/ConstantsWindow.vala:182
+msgid "Add Constant"
+msgstr ""
+
+#: src/ConstantsWindow.vala:51
+msgid ""
+"Define constants to use in your commands. Reference them with $NAME or $"
+"{NAME}."
+msgstr ""
+
+#: src/ConstantsWindow.vala:69
+msgid "No Constants"
+msgstr ""
+
+#: src/ConstantsWindow.vala:70
+msgid "Click the + button to define a constant."
+msgstr ""
+
+#: src/ConstantsWindow.vala:145
+msgid "Edit constant"
+msgstr ""
+
+#: src/ConstantsWindow.vala:153
+msgid "Remove constant"
+msgstr ""
+
+#: src/ConstantsWindow.vala:182
+msgid "Edit Constant"
+msgstr ""
+
+#: src/ConstantsWindow.vala:184
+msgid "Define a constant name and value."
+msgstr ""
+
+#: src/ConstantsWindow.vala:185
+msgid "Cancel"
+msgstr ""
+
+#: src/ConstantsWindow.vala:186
+msgid "Save"
+msgstr ""
+
+#: src/ConstantsWindow.vala:186
+msgid "Add"
+msgstr ""
+
+#: src/ConstantsWindow.vala:202
+msgid "Constant name (e.g., D2DL_SCHEMA)"
+msgstr ""
+
+#: src/ConstantsWindow.vala:210
+msgid "Value (e.g., org.gnome.shell.extensions.dash2dock-lite)"
+msgstr ""
+
+#: src/ConstantsWindow.vala:216
+msgid ""
+"Use in commands as $NAME or ${NAME}. Names use letters, numbers and "
+"underscores."
+msgstr ""
+
+#: src/MainWindow.vala:57
+msgid "Add Command"
+msgstr ""
+
+#: src/MainWindow.vala:65
+msgid "Preferences"
+msgstr ""
+
+#: src/MainWindow.vala:68
+msgid "Keyboard Shortcuts"
+msgstr ""
+
+#: src/MainWindow.vala:69
+msgid "About Switchcraft"
+msgstr ""
+
+#: src/MainWindow.vala:70
+msgid "Quit"
+msgstr ""
+
+#: src/MainWindow.vala:79
+msgid "Run the background process that reacts to GNOME theme changes."
+msgstr ""
+
+#: src/MainWindow.vala:80 src/MainWindow.vala:83
+msgid "Monitor"
+msgstr ""
+
+#: src/MainWindow.vala:88
+msgid "Background monitoring is now active"
+msgstr ""
+
+#: src/MainWindow.vala:89
+msgid "Dismiss"
+msgstr ""
+
+#: src/MainWindow.vala:95
+msgid "No Commands"
+msgstr ""
+
+#: src/MainWindow.vala:96
+msgid "Click the + button to add a command."
+msgstr ""
+
+#: src/MainWindow.vala:127
+msgid "Commands"
+msgstr ""
+
+#: src/MainWindow.vala:128
+msgid "Active commands that will run when their theme matches."
+msgstr ""
+
+#: src/MainWindow.vala:134
+msgid "Disabled"
+msgstr ""
+
+#: src/MainWindow.vala:135
+msgid "Saved commands that are currently turned off."
+msgstr ""
+
+#: src/MainWindow.vala:290
+msgid "Drag to reorder"
+msgstr ""
+
+#: src/MainWindow.vala:349
+msgid "Edit command"
+msgstr ""
+
+#: src/MainWindow.vala:357
+msgid "Remove command"
+msgstr ""
+
+#: src/PreferencesWindow.vala:30
+msgid "Configuration"
+msgstr ""
+
+#: src/PreferencesWindow.vala:31
+msgid "Import or export commands and constants together as a zip archive."
+msgstr ""
+
+#: src/PreferencesWindow.vala:35 src/PreferencesWindow.vala:79
+msgid "Import Configuration"
+msgstr ""
+
+#: src/PreferencesWindow.vala:36
+msgid "Replace local commands and constants from a zip file."
+msgstr ""
+
+#: src/PreferencesWindow.vala:38
+msgid "Import"
+msgstr ""
+
+#: src/PreferencesWindow.vala:47 src/PreferencesWindow.vala:102
+msgid "Export Configuration"
+msgstr ""
+
+#: src/PreferencesWindow.vala:48
+msgid "Save commands and constants into a zip file."
+msgstr ""
+
+#: src/PreferencesWindow.vala:50
+msgid "Export"
+msgstr ""
+
+#: src/PreferencesWindow.vala:59
+msgid "Danger Zone"
+msgstr ""
+
+#: src/PreferencesWindow.vala:60
+msgid "Remove all saved commands and constants from this device."
+msgstr ""
+
+#: src/PreferencesWindow.vala:64
+msgid "Delete All Configuration"
+msgstr ""
+
+#: src/PreferencesWindow.vala:65
+msgid "Deletes commands.json and constants.json. This cannot be undone."
+msgstr ""
+
+#: src/PreferencesWindow.vala:67 src/PreferencesWindow.vala:129
+msgid "Delete"
+msgstr ""
+
+#: src/PreferencesWindow.vala:88
+msgid "Configuration imported"
+msgstr ""
+
+#: src/PreferencesWindow.vala:90 src/PreferencesWindow.vala:96
+#, c-format
+msgid "Import failed: %s"
+msgstr ""
+
+#: src/PreferencesWindow.vala:111
+msgid "Configuration exported"
+msgstr ""
+
+#: src/PreferencesWindow.vala:113 src/PreferencesWindow.vala:119
+#, c-format
+msgid "Export failed: %s"
+msgstr ""
+
+#: src/PreferencesWindow.vala:125
+msgid "Delete all configuration?"
+msgstr ""
+
+#: src/PreferencesWindow.vala:126
+msgid ""
+"This will remove every command and constant. This action cannot be undone."
+msgstr ""
+
+#: src/PreferencesWindow.vala:147
+msgid "Configuration deleted"
+msgstr ""
+
+#: src/PreferencesWindow.vala:149
+#, c-format
+msgid "Delete failed: %s"
+msgstr ""
+
+#: data/resources/shortcuts-dialog.ui:6
+msgid "General"
+msgstr ""
+
+#: data/resources/shortcuts-dialog.ui:9
+msgid "Add command"
+msgstr ""
+
+#: data/resources/shortcuts-dialog.ui:15
+msgid "Open preferences"
+msgstr ""
+
+#: data/resources/shortcuts-dialog.ui:21
+msgid "Show keyboard shortcuts"
+msgstr ""
+
+#: data/com.github.Switchcraft.desktop.in:3
+msgid "Switchcraft"
+msgstr ""
+
+#: data/com.github.Switchcraft.desktop.in:4
+msgid "Run commands when GNOME theme switches"
+msgstr ""
+
+#: data/com.github.Switchcraft.desktop.in:10
+msgid "theme;switch;gtk;gnome;"
+msgstr ""
+
+#: data/com.github.Switchcraft.gschema.xml:6
+msgid "Enable background monitoring"
+msgstr ""
+
+#: data/com.github.Switchcraft.gschema.xml:7
+msgid "Whether the background process for theme monitoring is enabled."
+msgstr ""
+
+#: data/com.github.Switchcraft.metainfo.xml.in:6
+#: data/com.github.Switchcraft.metainfo.xml.in:8
+msgid "Arnis Kemlers"
+msgstr ""
+
+#: data/com.github.Switchcraft.metainfo.xml.in:13
+msgid ""
+"Switchcraft watches GNOME's color-scheme preference and runs user-defined "
+"shell commands when the theme switches between light and dark. It allows you "
+"to automate theme-dependent adjustments for applications that don't follow "
+"system settings automatically."
+msgstr ""
+
+#: data/com.github.Switchcraft.metainfo.xml.in:24
+msgid "Refactored icon structure and updated metadata integration."
+msgstr ""

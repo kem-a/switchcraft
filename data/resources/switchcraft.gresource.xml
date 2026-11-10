@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gresources>
+  <gresource prefix="/com/github/Switchcraft">
+    <file preprocess="xml-stripblanks">com.github.Switchcraft.metainfo.xml</file>
+    <file preprocess="xml-stripblanks">shortcuts-dialog.ui</file>
+    <file>style.css</file>
+    <file alias="icons/scalable/apps/com.github.Switchcraft.svg">data/icons/com.github.Switchcraft.svg</file>
+  </gresource>
+</gresources>
