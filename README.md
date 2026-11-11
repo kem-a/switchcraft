@@ -64,9 +64,9 @@ D2DL_SCHEMA="org.gnome.shell.extensions.dash2dock-lite"
 
 ## Install
 
-Simply [download](https://github.com/kem-a/switchcraft/releases/latest) the latest AppImage, enable execute and run it.
+Simply [download](https://github.com/kem-a/switchcraft/releases/latest) the latest AppImage and double click to run it.
 
-For seamless AppImage installation use [AppManager](https://github.com/kem-a/AppManager).
+For seamless AppImage integration use [AppManager](https://github.com/kem-a/AppManager).
 
 ## Requirements
 
