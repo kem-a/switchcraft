@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: switchcraft 2.0.0\n"
 "Report-Msgid-Bugs-To: https://github.com/kem-a/switchcraft/issues\n"
-"POT-Creation-Date: 2026-11-11 13:09+0200\n"
+"POT-Creation-Date: 2026-11-12 00:18+0200\n"
 "PO-Revision-Date: 2026-11-11 12:02+0000\n"
 "Last-Translator: Switchcraft translators\n"
 "Language-Team: none\n"
@@ -25,93 +25,93 @@ msgstr "Hiển thị thông tin phiên bản"
 msgid "Run in background for theme monitoring"
 msgstr "Chạy ở chế độ nền để theo dõi chủ đề"
 
-#: src/Application.vala:343
+#: src/Application.vala:352
 #, c-format
 msgid "Exited with code %d"
 msgstr "Đã thoát với mã %d"
 
-#: src/Application.vala:344
+#: src/Application.vala:353
 #, c-format
 msgid "Killed by signal %d"
 msgstr "Bị giết bởi tín hiệu %d"
 
-#: src/Application.vala:1331
+#: src/Application.vala:1367
 msgid "The 'zip' command is required to export."
 msgstr "Cần có lệnh 'zip' để xuất."
 
-#: src/Application.vala:1337
+#: src/Application.vala:1373
 msgid "Destination must be a local file."
 msgstr "Đích đến phải là một tập tin cục bộ."
 
-#: src/Application.vala:1344
+#: src/Application.vala:1380
 msgid "Failed to prepare destination directory."
 msgstr "Không chuẩn bị được thư mục đích."
 
-#: src/Application.vala:1352 src/Application.vala:1425
+#: src/Application.vala:1388 src/Application.vala:1461
 msgid "Failed to create temporary directory."
 msgstr "Không tạo được thư mục tạm thời."
 
-#: src/Application.vala:1383
+#: src/Application.vala:1419
 msgid "Unable to overwrite existing archive."
 msgstr "Không thể ghi đè lên kho lưu trữ hiện có."
 
-#: src/Application.vala:1395
+#: src/Application.vala:1431
 #, c-format
 msgid "Failed to write archive: %s"
 msgstr "Không thể ghi vào kho lưu trữ: %s"
 
-#: src/Application.vala:1412
+#: src/Application.vala:1448
 msgid "The 'unzip' command is required to import."
 msgstr "Cần có lệnh 'unzip' để nhập."
 
-#: src/Application.vala:1418
+#: src/Application.vala:1454
 msgid "Archive must be a local file."
 msgstr "Lưu trữ phải là một tập tin cục bộ."
 
-#: src/Application.vala:1436
+#: src/Application.vala:1472
 #, c-format
 msgid "Failed to unpack archive: %s"
 msgstr "Không giải nén được kho lưu trữ: %s"
 
-#: src/Application.vala:1444
+#: src/Application.vala:1480
 msgid "Archive must contain commands.json and constants.json at the top level."
 msgstr "Lưu trữ phải chứa commands.json và constants.json ở cấp cao nhất."
 
-#: src/Application.vala:1456
+#: src/Application.vala:1492
 msgid "commands.json is not a JSON object."
 msgstr "commands.json không phải là đối tượng JSON."
 
-#: src/Application.vala:1467
+#: src/Application.vala:1503
 msgid "constants.json is not a JSON object."
 msgstr "constants.json không phải là đối tượng JSON."
 
-#: src/Application.vala:1484
+#: src/Application.vala:1520
 msgid "constants.json must only contain string values."
 msgstr "constants.json chỉ được chứa các giá trị chuỗi."
 
-#: src/Application.vala:1497
+#: src/Application.vala:1533
 msgid "theme_settings.json is not a JSON object."
 msgstr "theme_settings.json không phải là đối tượng JSON."
 
-#: src/Application.vala:1520
+#: src/Application.vala:1556
 msgid "Failed to remove commands.json."
 msgstr "Không thể xóa commands.json."
 
-#: src/Application.vala:1527
+#: src/Application.vala:1563
 msgid "Failed to remove constants.json."
 msgstr "Không thể xóa constants.json."
 
-#: src/Application.vala:1534
+#: src/Application.vala:1570
 msgid "Failed to remove theme_settings.json."
 msgstr "Không thể xóa theme_settings.json."
 
-#: src/Application.vala:1720
+#: src/Application.vala:1756
 msgid "Switchcraft Monitor"
 msgstr "Giám sát Switchcraft"
 
-#: src/Application.vala:1721
-msgid "Monitor GNOME theme changes and run commands"
-msgstr "Giám sát các thay đổi chủ đề GNOME và chạy lệnh"
+#: src/Application.vala:1757
+msgid "Monitor theme changes and run commands"
+msgstr "Giám sát các thay đổi chủ đề và chạy lệnh"
 
 #: src/CommandDialog.vala:44
 msgid "Color Scheme"
@@ -170,83 +170,83 @@ msgstr "Chuyển sang kiểu tối và sẽ lặp ở chế độ Sáng"
 msgid "%s is already set in this mode"
 msgstr "%s đã được đặt ở chế độ này"
 
-#: src/CommandDialog.vala:116
+#: src/CommandDialog.vala:118
 msgid "This command is already in this mode"
 msgstr "Lệnh này đã ở chế độ này"
 
-#: src/CommandDialog.vala:124
+#: src/CommandDialog.vala:128
 msgid "Edit Command"
 msgstr "Chỉnh sửa lệnh"
 
-#: src/CommandDialog.vala:124
+#: src/CommandDialog.vala:128
 msgid "Add Command"
 msgstr "Thêm lệnh"
 
-#: src/CommandDialog.vala:131
+#: src/CommandDialog.vala:135
 msgid "Delete"
 msgstr "Xoá"
 
-#: src/CommandDialog.vala:134
+#: src/CommandDialog.vala:138
 msgid "Cancel"
 msgstr "Hủy"
 
-#: src/CommandDialog.vala:135
+#: src/CommandDialog.vala:139
 msgid "Save"
 msgstr "Lưu"
 
-#: src/CommandDialog.vala:135
+#: src/CommandDialog.vala:139
 msgid "Add"
 msgstr "Thêm"
 
-#: src/CommandDialog.vala:148
+#: src/CommandDialog.vala:152
 msgid "Custom Command"
 msgstr "Lệnh tự chọn"
 
-#: src/CommandDialog.vala:170
+#: src/CommandDialog.vala:174
 msgid "Type"
 msgstr "Kiểu"
 
-#: src/CommandDialog.vala:175
+#: src/CommandDialog.vala:179
 msgid "Command"
 msgstr "Lệnh"
 
-#: src/CommandDialog.vala:215
+#: src/CommandDialog.vala:219
 msgid "Copy Error"
 msgstr "Sao chép lỗi"
 
-#: src/CommandDialog.vala:240
+#: src/CommandDialog.vala:244
 msgid "Test"
 msgstr "Kiểm tra"
 
-#: src/CommandDialog.vala:256
+#: src/CommandDialog.vala:260
 msgid "Value"
 msgstr "Giá trị"
 
-#: src/CommandDialog.vala:261
+#: src/CommandDialog.vala:265
 msgid "Image"
 msgstr "Ảnh"
 
-#: src/CommandDialog.vala:266
+#: src/CommandDialog.vala:270
 msgid "Browse…"
 msgstr "Duyệt…"
 
-#: src/CommandDialog.vala:276
+#: src/CommandDialog.vala:280
 msgid "Mode"
 msgstr "Chế độ"
 
-#: src/CommandDialog.vala:402
+#: src/CommandDialog.vala:406
 msgid "Requires the User Themes GNOME Shell extension."
 msgstr "Yêu cầu tiện ích mở rộng GNOME Shell của Chủ đề Người dùng."
 
-#: src/CommandDialog.vala:514
+#: src/CommandDialog.vala:521
 msgid "Command failed"
 msgstr "Lệnh không thành công"
 
-#: src/CommandDialog.vala:514
+#: src/CommandDialog.vala:521
 msgid "Command succeeded"
 msgstr "Lệnh đã thành công"
 
-#: src/CommandDialog.vala:527
+#: src/CommandDialog.vala:534
 msgid "Select Wallpaper"
 msgstr "Chọn hình nền"
 
@@ -263,8 +263,8 @@ msgid ""
 "Define constants to use in your commands. Reference them with $NAME or $"
 "{NAME}."
 msgstr ""
-"Xác định các hằng số để sử dụng trong các lệnh của bạn. Tham chiếu chúng với"
-" $NAME hoặc ${NAME}."
+"Xác định các hằng số để sử dụng trong các lệnh của bạn. Tham chiếu chúng với "
+"$NAME hoặc ${NAME}."
 
 #: src/ConstantsWindow.vala:69
 msgid "No Constants"
@@ -303,8 +303,8 @@ msgid ""
 "Use in commands as $NAME or ${NAME}. Names use letters, numbers and "
 "underscores."
 msgstr ""
-"Sử dụng trong các lệnh dưới dạng $NAME hoặc ${NAME}. Tên sử dụng chữ cái, số"
-" và dấu gạch dưới."
+"Sử dụng trong các lệnh dưới dạng $NAME hoặc ${NAME}. Tên sử dụng chữ cái, số "
+"và dấu gạch dưới."
 
 #: src/MainWindow.vala:64
 msgid "Preferences"
@@ -323,8 +323,8 @@ msgid "Quit"
 msgstr "Thoát"
 
 #: src/MainWindow.vala:78
-msgid "Run the background process that reacts to GNOME theme changes."
-msgstr "Chạy quy trình nền phản ứng với các thay đổi chủ đề GNOME."
+msgid "Run the background process that reacts to theme changes."
+msgstr "Chạy quy trình nền phản ứng với các thay đổi chủ đề."
 
 #: src/MainWindow.vala:79 src/MainWindow.vala:82
 msgid "Monitor"
@@ -335,7 +335,8 @@ msgid "No Commands"
 msgstr "Không có lệnh"
 
 #: src/MainWindow.vala:89
-msgid "Use the '+' button in the header bar or press (Ctrl+N) to add a command."
+msgid ""
+"Use the '+' button in the header bar or press (Ctrl+N) to add a command."
 msgstr "Sử dụng nút '+' trong thanh tiêu đề hoặc nhấn (Ctrl+N) để thêm lệnh."
 
 #: src/MainWindow.vala:128
@@ -370,11 +371,19 @@ msgstr "Lệnh đã bị xóa"
 msgid "Undo"
 msgstr "Hoàn tác"
 
-#: src/MainWindow.vala:697
+#: src/MainWindow.vala:652
+msgid "Contributors"
+msgstr "Người đóng góp"
+
+#: src/MainWindow.vala:653
+msgid "Credits"
+msgstr "Ghi công"
+
+#: src/MainWindow.vala:700
 msgid "Background monitoring is now active"
 msgstr "Giám sát nền hiện đang hoạt động"
 
-#: src/MainWindow.vala:698
+#: src/MainWindow.vala:701
 msgid "Background monitoring is now inactive"
 msgstr "Giám sát nền hiện không hoạt động"
 
@@ -387,22 +396,23 @@ msgid ""
 "KDE Plasma is set to switch global themes automatically. Turn that off to "
 "use this schedule."
 msgstr ""
-"KDE Plasma được thiết lập để tự động chuyển đổi chủ đề chung. Tắt nó đi để"
-" sử dụng lịch trình này."
+"KDE Plasma được thiết lập để tự động chuyển đổi chủ đề chung. Tắt nó đi để "
+"sử dụng lịch trình này."
 
 #: src/PreferencesWindow.vala:47
 msgid ""
 "Switch KDE's default light and dark global themes on a schedule. Needs "
 "background monitoring."
 msgstr ""
-"Chuyển đổi chủ đề toàn cầu sáng và tối mặc định của KDE theo lịch trình. Cần"
-" theo dõi nền."
+"Chuyển đổi chủ đề toàn cầu sáng và tối mặc định của KDE theo lịch trình. Cần "
+"theo dõi nền."
 
 #: src/PreferencesWindow.vala:48
 msgid ""
 "Switch between light and dark style on a schedule. Needs background "
 "monitoring."
-msgstr "Chuyển đổi giữa phong cách sáng và tối theo lịch trình. Cần theo dõi nền."
+msgstr ""
+"Chuyển đổi giữa phong cách sáng và tối theo lịch trình. Cần theo dõi nền."
 
 #: src/PreferencesWindow.vala:54
 msgid "Automatic Switching Is Set in KDE"
@@ -413,8 +423,8 @@ msgid ""
 "Turn off “Switch to Dark Mode at Night” in System Settings to use this "
 "schedule."
 msgstr ""
-"Tắt “Chuyển sang chế độ tối vào ban đêm” trong Cài đặt hệ thống để sử dụng"
-" lịch trình này."
+"Tắt “Chuyển sang chế độ tối vào ban đêm” trong Cài đặt hệ thống để sử dụng "
+"lịch trình này."
 
 #: src/PreferencesWindow.vala:61
 msgid "Open Settings"
@@ -454,7 +464,8 @@ msgstr "Cấu hình"
 
 #: src/PreferencesWindow.vala:100
 msgid "Import or export commands and constants together as a zip archive."
-msgstr "Nhập hoặc xuất các lệnh và hằng số cùng nhau dưới dạng kho lưu trữ zip."
+msgstr ""
+"Nhập hoặc xuất các lệnh và hằng số cùng nhau dưới dạng kho lưu trữ zip."
 
 #: src/PreferencesWindow.vala:104 src/PreferencesWindow.vala:237
 msgid "Import Configuration"
@@ -546,7 +557,8 @@ msgstr "Xóa tất cả cấu hình?"
 #: src/PreferencesWindow.vala:284
 msgid ""
 "This will remove every command and constant. This action cannot be undone."
-msgstr "Điều này sẽ loại bỏ mọi lệnh và hằng số. Không thể hoàn tác hành động này."
+msgstr ""
+"Điều này sẽ loại bỏ mọi lệnh và hằng số. Không thể hoàn tác hành động này."
 
 #: src/PreferencesWindow.vala:305
 msgid "Configuration deleted"
@@ -581,18 +593,6 @@ msgstr "Mở tùy chọn"
 msgid "Show keyboard shortcuts"
 msgstr "Hiển thị phím tắt"
 
-#: data/com.github.Switchcraft.desktop.in:3
-msgid "Switchcraft"
-msgstr "Switchcraft"
-
-#: data/com.github.Switchcraft.desktop.in:4
-msgid "Run commands when GNOME theme switches"
-msgstr "Chạy lệnh khi chủ đề GNOME chuyển đổi"
-
-#: data/com.github.Switchcraft.desktop.in:10
-msgid "theme;switch;gtk;gnome;"
-msgstr "chủ đề;chuyển đổi;gtk;gnome;"
-
 #: data/com.github.Switchcraft.gschema.xml:6
 msgid "Enable background monitoring"
 msgstr "Bật giám sát nền"
@@ -610,8 +610,8 @@ msgid ""
 "Switch the light/dark style at sunrise and sunset (sun), at light-time and "
 "dark-time (custom), or never (off). Runs in the background monitor."
 msgstr ""
-"Chuyển đổi kiểu sáng/tối lúc bình minh và hoàng hôn (mặt trời), lúc sáng và"
-" lúc tối (tùy chỉnh) hoặc không bao giờ (tắt). Chạy trong màn hình nền."
+"Chuyển đổi kiểu sáng/tối lúc bình minh và hoàng hôn (mặt trời), lúc sáng và "
+"lúc tối (tùy chỉnh) hoặc không bao giờ (tắt). Chạy trong màn hình nền."
 
 #: data/com.github.Switchcraft.gschema.xml:22
 msgid "Light style time"
@@ -640,29 +640,91 @@ msgid ""
 "Latitude and longitude from GeoClue, used for sunrise and sunset. Out of "
 "range values mean none is known, and the system time zone gives the location."
 msgstr ""
-"Vĩ độ và kinh độ từ GeoClue, được sử dụng cho bình minh và hoàng hôn. Các"
-" giá trị ngoài phạm vi có nghĩa là không xác định được giá trị nào và múi"
-" giờ của hệ thống sẽ cung cấp vị trí."
+"Vĩ độ và kinh độ từ GeoClue, được sử dụng cho bình minh và hoàng hôn. Các "
+"giá trị ngoài phạm vi có nghĩa là không xác định được giá trị nào và múi giờ "
+"của hệ thống sẽ cung cấp vị trí."
+
+#: data/com.github.Switchcraft.metainfo.xml.in:4
+msgid "Switchcraft"
+msgstr "Switchcraft"
 
 #: data/com.github.Switchcraft.metainfo.xml.in:6
 #: data/com.github.Switchcraft.metainfo.xml.in:8
 msgid "Arnis Kemlers"
 msgstr "Arnis Kemlers"
 
+#: data/com.github.Switchcraft.metainfo.xml.in:9
+msgid "Automate light and dark theme switching"
+msgstr "Tự động hóa việc chuyển đổi chủ đề sáng và tối"
+
 #: data/com.github.Switchcraft.metainfo.xml.in:13
 msgid ""
-"Switchcraft watches GNOME's color-scheme preference and runs user-defined "
-"shell commands when the theme switches between light and dark. It allows you "
-"to automate theme-dependent adjustments for applications that don't follow "
-"system settings automatically."
+"Switchcraft follows the light and dark style of GNOME and KDE Plasma. On "
+"every switch it runs your shell commands and applies per-theme settings such "
+"as the wallpaper, icon, GTK and Kvantum themes. Applications that do not "
+"follow the system style stay in sync."
 msgstr ""
-"Switchcraft theo dõi tùy chọn bảng màu của GNOME và chạy các lệnh shell do"
-" người dùng xác định khi chủ đề chuyển đổi giữa sáng và tối. Nó cho phép bạn"
-" tự động hóa các điều chỉnh phụ thuộc vào chủ đề cho các ứng dụng không tự"
-" động tuân theo cài đặt hệ thống."
+"Switchcraft theo dõi phong cách sáng và tối của GNOME và KDE Plasma. Mỗi lần "
+"chuyển đổi, nó chạy các lệnh shell của bạn và áp dụng các cài đặt theo từng "
+"chủ đề, chẳng hạn như hình nền, chủ đề biểu tượng, GTK và Kvantum. Nhờ đó, "
+"các ứng dụng không tuân theo phong cách hệ thống vẫn được đồng bộ."
 
-#: data/com.github.Switchcraft.metainfo.xml.in:24
-msgid "Refactored icon structure and updated metadata integration."
+#: data/com.github.Switchcraft.metainfo.xml.in:14
+msgid ""
+"It can also switch the style for you at sunset and sunrise or at custom "
+"times."
 msgstr ""
-"Cấu trúc biểu tượng được tái cấu trúc và tích hợp siêu dữ liệu được cập"
-" nhật."
+"Nó cũng có thể tự chuyển đổi phong cách cho bạn vào lúc hoàng hôn và bình "
+"minh hoặc vào thời gian tùy chỉnh."
+
+#: data/com.github.Switchcraft.metainfo.xml.in:41
+msgid ""
+"Built-in commands: pick a setting and a value from a list instead of typing "
+"a command"
+msgstr "Lệnh tích hợp sẵn: chọn một cài đặt và một giá trị từ danh sách thay vì gõ lệnh"
+
+#: data/com.github.Switchcraft.metainfo.xml.in:42
+msgid "KDE Plasma and Kvantum support"
+msgstr "Hỗ trợ KDE Plasma và Kvantum"
+
+#: data/com.github.Switchcraft.metainfo.xml.in:43
+msgid "Automatic switching at sunset and sunrise or at custom times"
+msgstr "Tự động chuyển đổi vào lúc hoàng hôn và bình minh hoặc vào thời gian tùy chỉnh"
+
+#: data/com.github.Switchcraft.metainfo.xml.in:44
+msgid ""
+"Redesigned command list with drag-and-drop reordering, command testing and "
+"undo"
+msgstr "Danh sách lệnh được thiết kế lại với sắp xếp bằng kéo thả, kiểm tra lệnh và hoàn tác"
+
+#: data/com.github.Switchcraft.metainfo.xml.in:45
+msgid "Translated into 22 languages"
+msgstr "Đã dịch sang 22 ngôn ngữ"
+
+#~ msgid "Monitor GNOME theme changes and run commands"
+#~ msgstr "Giám sát các thay đổi chủ đề GNOME và chạy lệnh"
+
+#~ msgid "Run the background process that reacts to GNOME theme changes."
+#~ msgstr "Chạy quy trình nền phản ứng với các thay đổi chủ đề GNOME."
+
+#~ msgid "Refactored icon structure and updated metadata integration."
+#~ msgstr ""
+#~ "Cấu trúc biểu tượng được tái cấu trúc và tích hợp siêu dữ liệu được cập "
+#~ "nhật."
+
+#~ msgid "Run commands when GNOME theme switches"
+#~ msgstr "Chạy lệnh khi chủ đề GNOME chuyển đổi"
+
+#~ msgid "theme;switch;gtk;gnome;"
+#~ msgstr "chủ đề;chuyển đổi;gtk;gnome;"
+
+#~ msgid ""
+#~ "Switchcraft watches GNOME's color-scheme preference and runs user-defined "
+#~ "shell commands when the theme switches between light and dark. It allows "
+#~ "you to automate theme-dependent adjustments for applications that don't "
+#~ "follow system settings automatically."
+#~ msgstr ""
+#~ "Switchcraft theo dõi tùy chọn bảng màu của GNOME và chạy các lệnh shell "
+#~ "do người dùng xác định khi chủ đề chuyển đổi giữa sáng và tối. Nó cho "
+#~ "phép bạn tự động hóa các điều chỉnh phụ thuộc vào chủ đề cho các ứng dụng "
+#~ "không tự động tuân theo cài đặt hệ thống."

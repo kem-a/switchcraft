@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: switchcraft 2.0.0\n"
 "Report-Msgid-Bugs-To: https://github.com/kem-a/switchcraft/issues\n"
-"POT-Creation-Date: 2026-11-11 13:09+0200\n"
+"POT-Creation-Date: 2026-11-12 00:18+0200\n"
 "PO-Revision-Date: 2026-11-11 12:02+0000\n"
 "Last-Translator: Switchcraft translators\n"
 "Language-Team: none\n"
@@ -25,95 +25,95 @@ msgstr "Taispeáin eolas faoin leagan"
 msgid "Run in background for theme monitoring"
 msgstr "Rith sa chúlra le haghaidh monatóireachta téama"
 
-#: src/Application.vala:343
+#: src/Application.vala:352
 #, c-format
 msgid "Exited with code %d"
 msgstr "Scoir le cód %d"
 
-#: src/Application.vala:344
+#: src/Application.vala:353
 #, c-format
 msgid "Killed by signal %d"
 msgstr "Maraíodh le comhartha %d"
 
-#: src/Application.vala:1331
+#: src/Application.vala:1367
 msgid "The 'zip' command is required to export."
 msgstr "Tá an t-ordú 'zip' riachtanach chun easpórtáil."
 
-#: src/Application.vala:1337
+#: src/Application.vala:1373
 msgid "Destination must be a local file."
 msgstr "Ní mór don cheann scríbe a bheith ina chomhad áitiúil."
 
-#: src/Application.vala:1344
+#: src/Application.vala:1380
 msgid "Failed to prepare destination directory."
 msgstr "Theip ar ullmhú eolaire sprice."
 
-#: src/Application.vala:1352 src/Application.vala:1425
+#: src/Application.vala:1388 src/Application.vala:1461
 msgid "Failed to create temporary directory."
 msgstr "Theip ar chruthú eolaire sealadach."
 
-#: src/Application.vala:1383
+#: src/Application.vala:1419
 msgid "Unable to overwrite existing archive."
 msgstr "Ní féidir an chartlann reatha a scríobh."
 
-#: src/Application.vala:1395
+#: src/Application.vala:1431
 #, c-format
 msgid "Failed to write archive: %s"
 msgstr "Níorbh fhéidir an chartlann a scríobh: %s"
 
-#: src/Application.vala:1412
+#: src/Application.vala:1448
 msgid "The 'unzip' command is required to import."
 msgstr "Tá an t-ordú 'unzip' riachtanach chun iompórtáil."
 
-#: src/Application.vala:1418
+#: src/Application.vala:1454
 msgid "Archive must be a local file."
 msgstr "Ní mór don chartlann a bheith ina comhad áitiúil."
 
-#: src/Application.vala:1436
+#: src/Application.vala:1472
 #, c-format
 msgid "Failed to unpack archive: %s"
 msgstr "Níorbh fhéidir an chartlann a dhíphacáil: %s"
 
-#: src/Application.vala:1444
+#: src/Application.vala:1480
 msgid "Archive must contain commands.json and constants.json at the top level."
 msgstr ""
-"Caithfidh commands.json agus constants.json ag an mbarrleibhéal a bheith sa"
-" chartlann."
+"Caithfidh commands.json agus constants.json ag an mbarrleibhéal a bheith sa "
+"chartlann."
 
-#: src/Application.vala:1456
+#: src/Application.vala:1492
 msgid "commands.json is not a JSON object."
 msgstr "Ní réad JSON é commands.json."
 
-#: src/Application.vala:1467
+#: src/Application.vala:1503
 msgid "constants.json is not a JSON object."
 msgstr "Ní réad JSON é constants.json."
 
-#: src/Application.vala:1484
+#: src/Application.vala:1520
 msgid "constants.json must only contain string values."
 msgstr "Ní mór ach luachanna teaghrán a bheith i constants.json."
 
-#: src/Application.vala:1497
+#: src/Application.vala:1533
 msgid "theme_settings.json is not a JSON object."
 msgstr "Ní réad JSON é theme_settings.json."
 
-#: src/Application.vala:1520
+#: src/Application.vala:1556
 msgid "Failed to remove commands.json."
 msgstr "Theip ar commands.json a bhaint."
 
-#: src/Application.vala:1527
+#: src/Application.vala:1563
 msgid "Failed to remove constants.json."
 msgstr "Theip ar bhaint constants.json."
 
-#: src/Application.vala:1534
+#: src/Application.vala:1570
 msgid "Failed to remove theme_settings.json."
 msgstr "Theip ar bhaint theme_settings.json."
 
-#: src/Application.vala:1720
+#: src/Application.vala:1756
 msgid "Switchcraft Monitor"
 msgstr "Monatóir Switchcraft"
 
-#: src/Application.vala:1721
-msgid "Monitor GNOME theme changes and run commands"
-msgstr "Monatóireacht a dhéanamh ar athruithe téama GNOME agus orduithe a rith"
+#: src/Application.vala:1757
+msgid "Monitor theme changes and run commands"
+msgstr "Monatóireacht a dhéanamh ar athruithe téama agus orduithe a rith"
 
 #: src/CommandDialog.vala:44
 msgid "Color Scheme"
@@ -172,83 +172,83 @@ msgstr "Lasca go dtí an stíl dorcha agus lúb i mód Solas"
 msgid "%s is already set in this mode"
 msgstr "Tá %s socraithe sa mhód seo cheana"
 
-#: src/CommandDialog.vala:116
+#: src/CommandDialog.vala:118
 msgid "This command is already in this mode"
 msgstr "Tá an t-ordú seo sa mhód seo cheana féin"
 
-#: src/CommandDialog.vala:124
+#: src/CommandDialog.vala:128
 msgid "Edit Command"
 msgstr "Cuir Ordú in Eagar"
 
-#: src/CommandDialog.vala:124
+#: src/CommandDialog.vala:128
 msgid "Add Command"
 msgstr "Cuir Ordú"
 
-#: src/CommandDialog.vala:131
+#: src/CommandDialog.vala:135
 msgid "Delete"
 msgstr "Scrios"
 
-#: src/CommandDialog.vala:134
+#: src/CommandDialog.vala:138
 msgid "Cancel"
 msgstr "Cealaigh"
 
-#: src/CommandDialog.vala:135
+#: src/CommandDialog.vala:139
 msgid "Save"
 msgstr "Sábháil"
 
-#: src/CommandDialog.vala:135
+#: src/CommandDialog.vala:139
 msgid "Add"
 msgstr "Cuir Leis"
 
-#: src/CommandDialog.vala:148
+#: src/CommandDialog.vala:152
 msgid "Custom Command"
 msgstr "Ordú saincheaptha"
 
-#: src/CommandDialog.vala:170
+#: src/CommandDialog.vala:174
 msgid "Type"
 msgstr "Cineál"
 
-#: src/CommandDialog.vala:175
+#: src/CommandDialog.vala:179
 msgid "Command"
 msgstr "Ordú"
 
-#: src/CommandDialog.vala:215
+#: src/CommandDialog.vala:219
 msgid "Copy Error"
 msgstr "Cóipeáil an earráid"
 
-#: src/CommandDialog.vala:240
+#: src/CommandDialog.vala:244
 msgid "Test"
 msgstr "Scrúdú"
 
-#: src/CommandDialog.vala:256
+#: src/CommandDialog.vala:260
 msgid "Value"
 msgstr "Luach"
 
-#: src/CommandDialog.vala:261
+#: src/CommandDialog.vala:265
 msgid "Image"
 msgstr "Íomhá"
 
-#: src/CommandDialog.vala:266
+#: src/CommandDialog.vala:270
 msgid "Browse…"
 msgstr "Brabhsáil…"
 
-#: src/CommandDialog.vala:276
+#: src/CommandDialog.vala:280
 msgid "Mode"
 msgstr "Mód"
 
-#: src/CommandDialog.vala:402
+#: src/CommandDialog.vala:406
 msgid "Requires the User Themes GNOME Shell extension."
 msgstr "Teastaíonn síneadh GNOME Shell ar Théamaí Úsáideora."
 
-#: src/CommandDialog.vala:514
+#: src/CommandDialog.vala:521
 msgid "Command failed"
 msgstr "Theip ar an ordú"
 
-#: src/CommandDialog.vala:514
+#: src/CommandDialog.vala:521
 msgid "Command succeeded"
 msgstr "D'éirigh leis an ordú"
 
-#: src/CommandDialog.vala:527
+#: src/CommandDialog.vala:534
 msgid "Select Wallpaper"
 msgstr "Roghnaigh cúlbhrat"
 
@@ -265,8 +265,8 @@ msgid ""
 "Define constants to use in your commands. Reference them with $NAME or $"
 "{NAME}."
 msgstr ""
-"Sainmhínigh tairisigh le húsáid i d'orduithe. Déan tagairt dóibh le $NAME nó"
-" ${NAME}."
+"Sainmhínigh tairisigh le húsáid i d'orduithe. Déan tagairt dóibh le $NAME nó "
+"${NAME}."
 
 #: src/ConstantsWindow.vala:69
 msgid "No Constants"
@@ -305,8 +305,8 @@ msgid ""
 "Use in commands as $NAME or ${NAME}. Names use letters, numbers and "
 "underscores."
 msgstr ""
-"Úsáid in orduithe mar $NAME nó ${NAME}. Úsáideann ainmneacha litreacha,"
-" uimhreacha agus béim."
+"Úsáid in orduithe mar $NAME nó ${NAME}. Úsáideann ainmneacha litreacha, "
+"uimhreacha agus béim."
 
 #: src/MainWindow.vala:64
 msgid "Preferences"
@@ -325,8 +325,8 @@ msgid "Quit"
 msgstr "Scoir"
 
 #: src/MainWindow.vala:78
-msgid "Run the background process that reacts to GNOME theme changes."
-msgstr "Rith an próiseas cúlra a imoibríonn le hathruithe téama GNOME."
+msgid "Run the background process that reacts to theme changes."
+msgstr "Rith an próiseas cúlra a imoibríonn le hathruithe téama."
 
 #: src/MainWindow.vala:79 src/MainWindow.vala:82
 msgid "Monitor"
@@ -337,10 +337,11 @@ msgid "No Commands"
 msgstr "Gan orduithe"
 
 #: src/MainWindow.vala:89
-msgid "Use the '+' button in the header bar or press (Ctrl+N) to add a command."
+msgid ""
+"Use the '+' button in the header bar or press (Ctrl+N) to add a command."
 msgstr ""
-"Úsáid an cnaipe '+' sa bharra ceanntásc nó brúigh (Ctrl+N) chun ordú a"
-" chur leis."
+"Úsáid an cnaipe '+' sa bharra ceanntásc nó brúigh (Ctrl+N) chun ordú a chur "
+"leis."
 
 #: src/MainWindow.vala:128
 msgid "Commands"
@@ -374,11 +375,19 @@ msgstr "Ordú scriosta"
 msgid "Undo"
 msgstr "Cealaigh"
 
-#: src/MainWindow.vala:697
+#: src/MainWindow.vala:652
+msgid "Contributors"
+msgstr "Rannpháirtithe"
+
+#: src/MainWindow.vala:653
+msgid "Credits"
+msgstr "Creidiúintí"
+
+#: src/MainWindow.vala:700
 msgid "Background monitoring is now active"
 msgstr "Tá monatóireacht chúlra gníomhach anois"
 
-#: src/MainWindow.vala:698
+#: src/MainWindow.vala:701
 msgid "Background monitoring is now inactive"
 msgstr "Tá monatóireacht chúlra neamhghníomhach anois"
 
@@ -391,24 +400,24 @@ msgid ""
 "KDE Plasma is set to switch global themes automatically. Turn that off to "
 "use this schedule."
 msgstr ""
-"Tá KDE Plasma socraithe chun téamaí domhanda a athrú go huathoibríoch. Cas"
-" as chun an sceideal seo a úsáid."
+"Tá KDE Plasma socraithe chun téamaí domhanda a athrú go huathoibríoch. Cas "
+"as chun an sceideal seo a úsáid."
 
 #: src/PreferencesWindow.vala:47
 msgid ""
 "Switch KDE's default light and dark global themes on a schedule. Needs "
 "background monitoring."
 msgstr ""
-"Athraigh téamaí domhanda éadroma agus dorcha réamhshocraithe KDE ar"
-" sceideal. Tá monatóireacht chúlra de dhíth."
+"Athraigh téamaí domhanda éadroma agus dorcha réamhshocraithe KDE ar "
+"sceideal. Tá monatóireacht chúlra de dhíth."
 
 #: src/PreferencesWindow.vala:48
 msgid ""
 "Switch between light and dark style on a schedule. Needs background "
 "monitoring."
 msgstr ""
-"Athraigh idir stíl éadrom agus dorcha ar sceideal. Tá monatóireacht chúlra"
-" de dhíth."
+"Athraigh idir stíl éadrom agus dorcha ar sceideal. Tá monatóireacht chúlra "
+"de dhíth."
 
 #: src/PreferencesWindow.vala:54
 msgid "Automatic Switching Is Set in KDE"
@@ -419,8 +428,8 @@ msgid ""
 "Turn off “Switch to Dark Mode at Night” in System Settings to use this "
 "schedule."
 msgstr ""
-"Múch “Athraigh go Mód Dorcha san Oíche” i Socruithe an Chórais chun an"
-" sceideal seo a úsáid."
+"Múch “Athraigh go Mód Dorcha san Oíche” i Socruithe an Chórais chun an "
+"sceideal seo a úsáid."
 
 #: src/PreferencesWindow.vala:61
 msgid "Open Settings"
@@ -461,8 +470,7 @@ msgstr "Cumraíocht"
 #: src/PreferencesWindow.vala:100
 msgid "Import or export commands and constants together as a zip archive."
 msgstr ""
-"Iompórtáil nó easpórtáil orduithe agus tairisigh le chéile mar chartlann"
-" zip."
+"Iompórtáil nó easpórtáil orduithe agus tairisigh le chéile mar chartlann zip."
 
 #: src/PreferencesWindow.vala:104 src/PreferencesWindow.vala:237
 msgid "Import Configuration"
@@ -555,8 +563,7 @@ msgstr "An bhfuil fonn ort gach cumraíocht a scriosadh?"
 msgid ""
 "This will remove every command and constant. This action cannot be undone."
 msgstr ""
-"Bainfidh sé seo gach ordú agus tairiseach. Ní féidir an gníomh seo a"
-" chealú."
+"Bainfidh sé seo gach ordú agus tairiseach. Ní féidir an gníomh seo a chealú."
 
 #: src/PreferencesWindow.vala:305
 msgid "Configuration deleted"
@@ -591,18 +598,6 @@ msgstr "Roghanna oscailte"
 msgid "Show keyboard shortcuts"
 msgstr "Taispeáin aicearraí méarchláir"
 
-#: data/com.github.Switchcraft.desktop.in:3
-msgid "Switchcraft"
-msgstr "Switchcraft"
-
-#: data/com.github.Switchcraft.desktop.in:4
-msgid "Run commands when GNOME theme switches"
-msgstr "Rith orduithe nuair a athraíonn téama GNOME"
-
-#: data/com.github.Switchcraft.desktop.in:10
-msgid "theme;switch;gtk;gnome;"
-msgstr "téama;athrú;gtk;gnome;"
-
 #: data/com.github.Switchcraft.gschema.xml:6
 msgid "Enable background monitoring"
 msgstr "Cumasaigh monatóireacht chúlra"
@@ -610,8 +605,8 @@ msgstr "Cumasaigh monatóireacht chúlra"
 #: data/com.github.Switchcraft.gschema.xml:7
 msgid "Whether the background process for theme monitoring is enabled."
 msgstr ""
-"Cibé an bhfuil an próiseas cúlra le haghaidh monatóireachta téamaí"
-" cumasaithe."
+"Cibé an bhfuil an próiseas cúlra le haghaidh monatóireachta téamaí "
+"cumasaithe."
 
 #: data/com.github.Switchcraft.gschema.xml:16
 msgid "Automatic light and dark switching"
@@ -622,9 +617,9 @@ msgid ""
 "Switch the light/dark style at sunrise and sunset (sun), at light-time and "
 "dark-time (custom), or never (off). Runs in the background monitor."
 msgstr ""
-"Athraigh an stíl éadrom/dorcha ag éirí agus ag luí na gréine (an ghrian), ag"
-" am an tsolais agus ag am dorcha (gnáth), nó ná bíodh (scoth). Ritheann sa"
-" mhonatóir cúlra."
+"Athraigh an stíl éadrom/dorcha ag éirí agus ag luí na gréine (an ghrian), ag "
+"am an tsolais agus ag am dorcha (gnáth), nó ná bíodh (scoth). Ritheann sa "
+"mhonatóir cúlra."
 
 #: data/com.github.Switchcraft.gschema.xml:22
 msgid "Light style time"
@@ -634,8 +629,8 @@ msgstr "Am stíl éadrom"
 msgid ""
 "Minutes after midnight when the custom schedule switches to the light style."
 msgstr ""
-"Nóiméad tar éis meán oíche nuair a athraíonn an sceideal saincheaptha go dtí"
-" an stíl éadrom."
+"Nóiméad tar éis meán oíche nuair a athraíonn an sceideal saincheaptha go dtí "
+"an stíl éadrom."
 
 #: data/com.github.Switchcraft.gschema.xml:28
 msgid "Dark style time"
@@ -645,8 +640,8 @@ msgstr "Am stíl dorcha"
 msgid ""
 "Minutes after midnight when the custom schedule switches to the dark style."
 msgstr ""
-"Nóiméad tar éis meán oíche nuair a athraíonn an sceideal saincheaptha go dtí"
-" an stíl dorcha."
+"Nóiméad tar éis meán oíche nuair a athraíonn an sceideal saincheaptha go dtí "
+"an stíl dorcha."
 
 #: data/com.github.Switchcraft.gschema.xml:33
 msgid "Last known location"
@@ -657,30 +652,94 @@ msgid ""
 "Latitude and longitude from GeoClue, used for sunrise and sunset. Out of "
 "range values mean none is known, and the system time zone gives the location."
 msgstr ""
-"Domhanleithead agus domhanfhad ó GeoClue, a úsáidtear le haghaidh éirí"
-" gréine agus luí na gréine. Ciallaíonn luachanna as raon nach bhfuil aon"
-" eolas ar fáil, agus tugann crios ama an chórais an suíomh."
+"Domhanleithead agus domhanfhad ó GeoClue, a úsáidtear le haghaidh éirí "
+"gréine agus luí na gréine. Ciallaíonn luachanna as raon nach bhfuil aon "
+"eolas ar fáil, agus tugann crios ama an chórais an suíomh."
+
+#: data/com.github.Switchcraft.metainfo.xml.in:4
+msgid "Switchcraft"
+msgstr "Switchcraft"
 
 #: data/com.github.Switchcraft.metainfo.xml.in:6
 #: data/com.github.Switchcraft.metainfo.xml.in:8
 msgid "Arnis Kemlers"
 msgstr "Arnis Kemlers"
 
+#: data/com.github.Switchcraft.metainfo.xml.in:9
+msgid "Automate light and dark theme switching"
+msgstr "Uathoibrigh an t-athrú idir téama éadrom agus dorcha"
+
 #: data/com.github.Switchcraft.metainfo.xml.in:13
 msgid ""
-"Switchcraft watches GNOME's color-scheme preference and runs user-defined "
-"shell commands when the theme switches between light and dark. It allows you "
-"to automate theme-dependent adjustments for applications that don't follow "
-"system settings automatically."
+"Switchcraft follows the light and dark style of GNOME and KDE Plasma. On "
+"every switch it runs your shell commands and applies per-theme settings such "
+"as the wallpaper, icon, GTK and Kvantum themes. Applications that do not "
+"follow the system style stay in sync."
 msgstr ""
-"Féachann Switchcraft ar rogha scéime dathanna GNOME agus ritheann sé"
-" orduithe sliogán sainithe ag an úsáideoir nuair a athraíonn an téama idir"
-" solas agus dorchadas. Ligeann sé duit coigeartuithe a bhraitheann ar théama"
-" a uathoibriú d’fheidhmchláir nach leanann socruithe an chórais go"
-" huathoibríoch."
+"Leanann Switchcraft stíl éadrom agus dorcha GNOME agus KDE Plasma. Ag gach "
+"athrú, ritheann sé d’orduithe sliogáin agus cuireann sé socruithe de réir "
+"téama i bhfeidhm, mar shampla an cúlbhrat agus téamaí deilbhíní, GTK agus "
+"Kvantum. Ar an gcaoi sin, fanann feidhmchláir nach leanann stíl an chórais i "
+"gcomhréir."
 
-#: data/com.github.Switchcraft.metainfo.xml.in:24
-msgid "Refactored icon structure and updated metadata integration."
+#: data/com.github.Switchcraft.metainfo.xml.in:14
+msgid ""
+"It can also switch the style for you at sunset and sunrise or at custom "
+"times."
 msgstr ""
-"Struchtúr deilbhín athmhéadaithe agus comhtháthú meiteashonraí"
-" nuashonraithe."
+"Is féidir leis an stíl a athrú duit freisin ag luí na gréine agus ag éirí na "
+"gréine nó ag amanna saincheaptha."
+
+#: data/com.github.Switchcraft.metainfo.xml.in:41
+msgid ""
+"Built-in commands: pick a setting and a value from a list instead of typing "
+"a command"
+msgstr "Orduithe ionsuite: roghnaigh socrú agus luach as liosta in ionad ordú a chlóscríobh"
+
+#: data/com.github.Switchcraft.metainfo.xml.in:42
+msgid "KDE Plasma and Kvantum support"
+msgstr "Tacaíocht do KDE Plasma agus Kvantum"
+
+#: data/com.github.Switchcraft.metainfo.xml.in:43
+msgid "Automatic switching at sunset and sunrise or at custom times"
+msgstr "Athrú uathoibríoch ag luí na gréine agus ag éirí na gréine nó ag amanna saincheaptha"
+
+#: data/com.github.Switchcraft.metainfo.xml.in:44
+msgid ""
+"Redesigned command list with drag-and-drop reordering, command testing and "
+"undo"
+msgstr "Liosta orduithe athdheartha le hathordú trí tharraingt agus scaoileadh, tástáil orduithe agus cealú"
+
+#: data/com.github.Switchcraft.metainfo.xml.in:45
+msgid "Translated into 22 languages"
+msgstr "Aistrithe go 22 teanga"
+
+#~ msgid "Monitor GNOME theme changes and run commands"
+#~ msgstr ""
+#~ "Monatóireacht a dhéanamh ar athruithe téama GNOME agus orduithe a rith"
+
+#~ msgid "Run the background process that reacts to GNOME theme changes."
+#~ msgstr "Rith an próiseas cúlra a imoibríonn le hathruithe téama GNOME."
+
+#~ msgid "Refactored icon structure and updated metadata integration."
+#~ msgstr ""
+#~ "Struchtúr deilbhín athmhéadaithe agus comhtháthú meiteashonraí "
+#~ "nuashonraithe."
+
+#~ msgid "Run commands when GNOME theme switches"
+#~ msgstr "Rith orduithe nuair a athraíonn téama GNOME"
+
+#~ msgid "theme;switch;gtk;gnome;"
+#~ msgstr "téama;athrú;gtk;gnome;"
+
+#~ msgid ""
+#~ "Switchcraft watches GNOME's color-scheme preference and runs user-defined "
+#~ "shell commands when the theme switches between light and dark. It allows "
+#~ "you to automate theme-dependent adjustments for applications that don't "
+#~ "follow system settings automatically."
+#~ msgstr ""
+#~ "Féachann Switchcraft ar rogha scéime dathanna GNOME agus ritheann sé "
+#~ "orduithe sliogán sainithe ag an úsáideoir nuair a athraíonn an téama idir "
+#~ "solas agus dorchadas. Ligeann sé duit coigeartuithe a bhraitheann ar "
+#~ "théama a uathoibriú d’fheidhmchláir nach leanann socruithe an chórais go "
+#~ "huathoibríoch."

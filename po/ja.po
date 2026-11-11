@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: switchcraft 2.0.0\n"
 "Report-Msgid-Bugs-To: https://github.com/kem-a/switchcraft/issues\n"
-"POT-Creation-Date: 2026-11-11 13:09+0200\n"
+"POT-Creation-Date: 2026-11-12 00:18+0200\n"
 "PO-Revision-Date: 2026-11-11 12:02+0000\n"
 "Last-Translator: Switchcraft translators\n"
 "Language-Team: none\n"
@@ -25,93 +25,95 @@ msgstr "バージョン情報を表示する"
 msgid "Run in background for theme monitoring"
 msgstr "テーマ監視のためにバックグラウンドで実行"
 
-#: src/Application.vala:343
+#: src/Application.vala:352
 #, c-format
 msgid "Exited with code %d"
 msgstr "コード %d で終了しました"
 
-#: src/Application.vala:344
+#: src/Application.vala:353
 #, c-format
 msgid "Killed by signal %d"
 msgstr "シグナル %d により強制終了されました"
 
-#: src/Application.vala:1331
+#: src/Application.vala:1367
 msgid "The 'zip' command is required to export."
 msgstr "エクスポートするには「zip」コマンドが必要です。"
 
-#: src/Application.vala:1337
+#: src/Application.vala:1373
 msgid "Destination must be a local file."
 msgstr "宛先はローカル ファイルである必要があります。"
 
-#: src/Application.vala:1344
+#: src/Application.vala:1380
 msgid "Failed to prepare destination directory."
 msgstr "宛先ディレクトリの準備に失敗しました。"
 
-#: src/Application.vala:1352 src/Application.vala:1425
+#: src/Application.vala:1388 src/Application.vala:1461
 msgid "Failed to create temporary directory."
 msgstr "一時ディレクトリの作成に失敗しました。"
 
-#: src/Application.vala:1383
+#: src/Application.vala:1419
 msgid "Unable to overwrite existing archive."
 msgstr "既存のアーカイブを上書きできません。"
 
-#: src/Application.vala:1395
+#: src/Application.vala:1431
 #, c-format
 msgid "Failed to write archive: %s"
 msgstr "アーカイブの書き込みに失敗しました: %s"
 
-#: src/Application.vala:1412
+#: src/Application.vala:1448
 msgid "The 'unzip' command is required to import."
 msgstr "インポートには「unzip」コマンドが必要です。"
 
-#: src/Application.vala:1418
+#: src/Application.vala:1454
 msgid "Archive must be a local file."
 msgstr "アーカイブはローカル ファイルである必要があります。"
 
-#: src/Application.vala:1436
+#: src/Application.vala:1472
 #, c-format
 msgid "Failed to unpack archive: %s"
 msgstr "アーカイブを解凍できませんでした: %s"
 
-#: src/Application.vala:1444
+#: src/Application.vala:1480
 msgid "Archive must contain commands.json and constants.json at the top level."
-msgstr "アーカイブには最上位に commands.json と constants.json が含まれている必要があります。"
+msgstr ""
+"アーカイブには最上位に commands.json と constants.json が含まれている必要があ"
+"ります。"
 
-#: src/Application.vala:1456
+#: src/Application.vala:1492
 msgid "commands.json is not a JSON object."
 msgstr "commands.json は JSON オブジェクトではありません。"
 
-#: src/Application.vala:1467
+#: src/Application.vala:1503
 msgid "constants.json is not a JSON object."
 msgstr "constants.json は JSON オブジェクトではありません。"
 
-#: src/Application.vala:1484
+#: src/Application.vala:1520
 msgid "constants.json must only contain string values."
 msgstr "constants.json には文字列値のみを含める必要があります。"
 
-#: src/Application.vala:1497
+#: src/Application.vala:1533
 msgid "theme_settings.json is not a JSON object."
 msgstr "theme_settings.json は JSON オブジェクトではありません。"
 
-#: src/Application.vala:1520
+#: src/Application.vala:1556
 msgid "Failed to remove commands.json."
 msgstr "commands.jsonの削除に失敗しました。"
 
-#: src/Application.vala:1527
+#: src/Application.vala:1563
 msgid "Failed to remove constants.json."
 msgstr "constants.jsonの削除に失敗しました。"
 
-#: src/Application.vala:1534
+#: src/Application.vala:1570
 msgid "Failed to remove theme_settings.json."
 msgstr "theme_settings.jsonの削除に失敗しました。"
 
-#: src/Application.vala:1720
+#: src/Application.vala:1756
 msgid "Switchcraft Monitor"
 msgstr "Switchcraft モニター"
 
-#: src/Application.vala:1721
-msgid "Monitor GNOME theme changes and run commands"
-msgstr "GNOME テーマの変更を監視し、コマンドを実行する"
+#: src/Application.vala:1757
+msgid "Monitor theme changes and run commands"
+msgstr "テーマの変更を監視し、コマンドを実行する"
 
 #: src/CommandDialog.vala:44
 msgid "Color Scheme"
@@ -170,83 +172,83 @@ msgstr "ダーク スタイルに切り替え、ライト モードでループ�
 msgid "%s is already set in this mode"
 msgstr "%s はすでにこのモードに設定されています"
 
-#: src/CommandDialog.vala:116
+#: src/CommandDialog.vala:118
 msgid "This command is already in this mode"
 msgstr "このコマンドはすでにこのモードになっています"
 
-#: src/CommandDialog.vala:124
+#: src/CommandDialog.vala:128
 msgid "Edit Command"
 msgstr "コマンドを編集"
 
-#: src/CommandDialog.vala:124
+#: src/CommandDialog.vala:128
 msgid "Add Command"
 msgstr "コマンドの追加"
 
-#: src/CommandDialog.vala:131
+#: src/CommandDialog.vala:135
 msgid "Delete"
 msgstr "削除"
 
-#: src/CommandDialog.vala:134
+#: src/CommandDialog.vala:138
 msgid "Cancel"
 msgstr "キャンセル"
 
-#: src/CommandDialog.vala:135
+#: src/CommandDialog.vala:139
 msgid "Save"
 msgstr "保存"
 
-#: src/CommandDialog.vala:135
+#: src/CommandDialog.vala:139
 msgid "Add"
 msgstr "追加"
 
-#: src/CommandDialog.vala:148
+#: src/CommandDialog.vala:152
 msgid "Custom Command"
 msgstr "カスタムコマンド"
 
-#: src/CommandDialog.vala:170
+#: src/CommandDialog.vala:174
 msgid "Type"
 msgstr "種類"
 
-#: src/CommandDialog.vala:175
+#: src/CommandDialog.vala:179
 msgid "Command"
 msgstr "コマンド"
 
-#: src/CommandDialog.vala:215
+#: src/CommandDialog.vala:219
 msgid "Copy Error"
 msgstr "エラーをコピー"
 
-#: src/CommandDialog.vala:240
+#: src/CommandDialog.vala:244
 msgid "Test"
 msgstr "テスト"
 
-#: src/CommandDialog.vala:256
+#: src/CommandDialog.vala:260
 msgid "Value"
 msgstr "値"
 
-#: src/CommandDialog.vala:261
+#: src/CommandDialog.vala:265
 msgid "Image"
 msgstr "画像"
 
-#: src/CommandDialog.vala:266
+#: src/CommandDialog.vala:270
 msgid "Browse…"
 msgstr "参照…"
 
-#: src/CommandDialog.vala:276
+#: src/CommandDialog.vala:280
 msgid "Mode"
 msgstr "モード"
 
-#: src/CommandDialog.vala:402
+#: src/CommandDialog.vala:406
 msgid "Requires the User Themes GNOME Shell extension."
 msgstr "ユーザー テーマ GNOME シェル拡張機能が必要です。"
 
-#: src/CommandDialog.vala:514
+#: src/CommandDialog.vala:521
 msgid "Command failed"
 msgstr "コマンドに失敗しました"
 
-#: src/CommandDialog.vala:514
+#: src/CommandDialog.vala:521
 msgid "Command succeeded"
 msgstr "コマンドは成功しました"
 
-#: src/CommandDialog.vala:527
+#: src/CommandDialog.vala:534
 msgid "Select Wallpaper"
 msgstr "壁紙を選択"
 
@@ -262,7 +264,9 @@ msgstr "定数を追加"
 msgid ""
 "Define constants to use in your commands. Reference them with $NAME or $"
 "{NAME}."
-msgstr "コマンドで使用する定数を定義します。 $NAME または ${NAME} を使用してそれらを参照します。"
+msgstr ""
+"コマンドで使用する定数を定義します。 $NAME または ${NAME} を使用してそれらを"
+"参照します。"
 
 #: src/ConstantsWindow.vala:69
 msgid "No Constants"
@@ -300,7 +304,9 @@ msgstr "値 (例: org.gnome.shell.extensions.dash2dock-lite)"
 msgid ""
 "Use in commands as $NAME or ${NAME}. Names use letters, numbers and "
 "underscores."
-msgstr "コマンドでは $NAME または ${NAME} として使用します。名前には文字、数字、アンダースコアが使用されます。"
+msgstr ""
+"コマンドでは $NAME または ${NAME} として使用します。名前には文字、数字、アン"
+"ダースコアが使用されます。"
 
 #: src/MainWindow.vala:64
 msgid "Preferences"
@@ -319,8 +325,8 @@ msgid "Quit"
 msgstr "終了"
 
 #: src/MainWindow.vala:78
-msgid "Run the background process that reacts to GNOME theme changes."
-msgstr "GNOME テーマの変更に反応するバックグラウンド プロセスを実行します。"
+msgid "Run the background process that reacts to theme changes."
+msgstr "テーマの変更に反応するバックグラウンド プロセスを実行します。"
 
 #: src/MainWindow.vala:79 src/MainWindow.vala:82
 msgid "Monitor"
@@ -331,8 +337,11 @@ msgid "No Commands"
 msgstr "コマンドはありません"
 
 #: src/MainWindow.vala:89
-msgid "Use the '+' button in the header bar or press (Ctrl+N) to add a command."
-msgstr "ヘッダー バーの '+' ボタンを使用するか、(Ctrl+N) を押してコマンドを追加します。"
+msgid ""
+"Use the '+' button in the header bar or press (Ctrl+N) to add a command."
+msgstr ""
+"ヘッダー バーの '+' ボタンを使用するか、(Ctrl+N) を押してコマンドを追加しま"
+"す。"
 
 #: src/MainWindow.vala:128
 msgid "Commands"
@@ -366,11 +375,19 @@ msgstr "コマンドが削除されました"
 msgid "Undo"
 msgstr "元に戻す"
 
-#: src/MainWindow.vala:697
+#: src/MainWindow.vala:652
+msgid "Contributors"
+msgstr "貢献者"
+
+#: src/MainWindow.vala:653
+msgid "Credits"
+msgstr "クレジット"
+
+#: src/MainWindow.vala:700
 msgid "Background monitoring is now active"
 msgstr "バックグラウンド監視がアクティブになりました"
 
-#: src/MainWindow.vala:698
+#: src/MainWindow.vala:701
 msgid "Background monitoring is now inactive"
 msgstr "バックグラウンド監視は現在非アクティブです"
 
@@ -382,19 +399,25 @@ msgstr "自動切り替え"
 msgid ""
 "KDE Plasma is set to switch global themes automatically. Turn that off to "
 "use this schedule."
-msgstr "KDE Plasma は、グローバル テーマを自動的に切り替えるように設定されています。このスケジュールを使用するには、それをオフにしてください。"
+msgstr ""
+"KDE Plasma は、グローバル テーマを自動的に切り替えるように設定されています。"
+"このスケジュールを使用するには、それをオフにしてください。"
 
 #: src/PreferencesWindow.vala:47
 msgid ""
 "Switch KDE's default light and dark global themes on a schedule. Needs "
 "background monitoring."
-msgstr "KDE のデフォルトの明るいグローバル テーマと暗いグローバル テーマをスケジュールに従って切り替えます。バックグラウンド監視が必要です。"
+msgstr ""
+"KDE のデフォルトの明るいグローバル テーマと暗いグローバル テーマをスケジュー"
+"ルに従って切り替えます。バックグラウンド監視が必要です。"
 
 #: src/PreferencesWindow.vala:48
 msgid ""
 "Switch between light and dark style on a schedule. Needs background "
 "monitoring."
-msgstr "スケジュールに従って明るいスタイルと暗いスタイルを切り替えます。バックグラウンド監視が必要です。"
+msgstr ""
+"スケジュールに従って明るいスタイルと暗いスタイルを切り替えます。バックグラウ"
+"ンド監視が必要です。"
 
 #: src/PreferencesWindow.vala:54
 msgid "Automatic Switching Is Set in KDE"
@@ -404,7 +427,9 @@ msgstr "KDE で自動切り替えが設定されています"
 msgid ""
 "Turn off “Switch to Dark Mode at Night” in System Settings to use this "
 "schedule."
-msgstr "このスケジュールを使用するには、システム設定で「夜間にダークモードに切り替える」をオフにします。"
+msgstr ""
+"このスケジュールを使用するには、システム設定で「夜間にダークモードに切り替え"
+"る」をオフにします。"
 
 #: src/PreferencesWindow.vala:61
 msgid "Open Settings"
@@ -444,7 +469,9 @@ msgstr "設定"
 
 #: src/PreferencesWindow.vala:100
 msgid "Import or export commands and constants together as a zip archive."
-msgstr "コマンドと定数をまとめて zip アーカイブとしてインポートまたはエクスポートします。"
+msgstr ""
+"コマンドと定数をまとめて zip アーカイブとしてインポートまたはエクスポートしま"
+"す。"
 
 #: src/PreferencesWindow.vala:104 src/PreferencesWindow.vala:237
 msgid "Import Configuration"
@@ -484,7 +511,8 @@ msgstr "すべての設定を削除"
 
 #: src/PreferencesWindow.vala:134
 msgid "Deletes commands.json and constants.json. This cannot be undone."
-msgstr "commands.jsonとconstants.jsonを削除します。これを元に戻すことはできません。"
+msgstr ""
+"commands.jsonとconstants.jsonを削除します。これを元に戻すことはできません。"
 
 #: src/PreferencesWindow.vala:159
 msgid "Location unknown"
@@ -536,7 +564,9 @@ msgstr "すべての設定を削除しますか?"
 #: src/PreferencesWindow.vala:284
 msgid ""
 "This will remove every command and constant. This action cannot be undone."
-msgstr "これにより、すべてのコマンドと定数が削除されます。この操作は元に戻すことができません。"
+msgstr ""
+"これにより、すべてのコマンドと定数が削除されます。この操作は元に戻すことがで"
+"きません。"
 
 #: src/PreferencesWindow.vala:305
 msgid "Configuration deleted"
@@ -571,18 +601,6 @@ msgstr "設定を開く"
 msgid "Show keyboard shortcuts"
 msgstr "キーボード ショートカットを表示する"
 
-#: data/com.github.Switchcraft.desktop.in:3
-msgid "Switchcraft"
-msgstr "Switchcraft"
-
-#: data/com.github.Switchcraft.desktop.in:4
-msgid "Run commands when GNOME theme switches"
-msgstr "GNOME テーマが切り替わったときにコマンドを実行する"
-
-#: data/com.github.Switchcraft.desktop.in:10
-msgid "theme;switch;gtk;gnome;"
-msgstr "テーマ;スイッチ;gtk;gnome;"
-
 #: data/com.github.Switchcraft.gschema.xml:6
 msgid "Enable background monitoring"
 msgstr "バックグラウンド監視を有効にする"
@@ -600,8 +618,9 @@ msgid ""
 "Switch the light/dark style at sunrise and sunset (sun), at light-time and "
 "dark-time (custom), or never (off). Runs in the background monitor."
 msgstr ""
-"日の出と日の入り（太陽）、明るい時間と暗い時間（カスタム）、またはまったくしない（オフ）時に明暗スタイルを切り替えます。バックグラウンドモニターで実行しま"
-"す。"
+"日の出と日の入り（太陽）、明るい時間と暗い時間（カスタム）、またはまったくし"
+"ない（オフ）時に明暗スタイルを切り替えます。バックグラウンドモニターで実行し"
+"ます。"
 
 #: data/com.github.Switchcraft.gschema.xml:22
 msgid "Light style time"
@@ -630,24 +649,87 @@ msgid ""
 "Latitude and longitude from GeoClue, used for sunrise and sunset. Out of "
 "range values mean none is known, and the system time zone gives the location."
 msgstr ""
-"GeoClue"
-" から取得した緯度と経度。日の出と日の入りに使用されます。範囲外の値は何も不明であることを意味し、システムのタイムゾーンによって場所が示されます。"
+"GeoClue から取得した緯度と経度。日の出と日の入りに使用されます。範囲外の値は"
+"何も不明であることを意味し、システムのタイムゾーンによって場所が示されます。"
+
+#: data/com.github.Switchcraft.metainfo.xml.in:4
+msgid "Switchcraft"
+msgstr "Switchcraft"
 
 #: data/com.github.Switchcraft.metainfo.xml.in:6
 #: data/com.github.Switchcraft.metainfo.xml.in:8
 msgid "Arnis Kemlers"
 msgstr "Arnis Kemlers"
 
+#: data/com.github.Switchcraft.metainfo.xml.in:9
+msgid "Automate light and dark theme switching"
+msgstr "明るいテーマと暗いテーマの切り替えを自動化"
+
 #: data/com.github.Switchcraft.metainfo.xml.in:13
 msgid ""
-"Switchcraft watches GNOME's color-scheme preference and runs user-defined "
-"shell commands when the theme switches between light and dark. It allows you "
-"to automate theme-dependent adjustments for applications that don't follow "
-"system settings automatically."
+"Switchcraft follows the light and dark style of GNOME and KDE Plasma. On "
+"every switch it runs your shell commands and applies per-theme settings such "
+"as the wallpaper, icon, GTK and Kvantum themes. Applications that do not "
+"follow the system style stay in sync."
 msgstr ""
-"Switchcraft は GNOME のカラースキーム設定を監視し、テーマが明暗間で切り替わったときにユーザー定義のシェル"
-" コマンドを実行します。システム設定に自動的に従わないアプリケーションのテーマに依存した調整を自動化できます。"
+"Switchcraft は GNOME と KDE Plasma の明るいスタイルと暗いスタイルに追従しま"
+"す。切り替えのたびにシェルコマンドを実行し、壁紙やアイコン、GTK、Kvantum の"
+"テーマなど、テーマごとの設定を適用します。システムのスタイルに従わないアプリ"
+"ケーションも同期した状態に保てます。"
 
-#: data/com.github.Switchcraft.metainfo.xml.in:24
-msgid "Refactored icon structure and updated metadata integration."
-msgstr "アイコン構造がリファクタリングされ、メタデータ統合が更新されました。"
+#: data/com.github.Switchcraft.metainfo.xml.in:14
+msgid ""
+"It can also switch the style for you at sunset and sunrise or at custom "
+"times."
+msgstr ""
+"日没と日の出、またはカスタム時間にスタイルを自動で切り替えることもできます。"
+
+#: data/com.github.Switchcraft.metainfo.xml.in:41
+msgid ""
+"Built-in commands: pick a setting and a value from a list instead of typing "
+"a command"
+msgstr "組み込みコマンド: コマンドを入力する代わりに、一覧から設定と値を選択"
+
+#: data/com.github.Switchcraft.metainfo.xml.in:42
+msgid "KDE Plasma and Kvantum support"
+msgstr "KDE Plasma と Kvantum に対応"
+
+#: data/com.github.Switchcraft.metainfo.xml.in:43
+msgid "Automatic switching at sunset and sunrise or at custom times"
+msgstr "日没と日の出、またはカスタム時間での自動切り替え"
+
+#: data/com.github.Switchcraft.metainfo.xml.in:44
+msgid ""
+"Redesigned command list with drag-and-drop reordering, command testing and "
+"undo"
+msgstr "ドラッグ＆ドロップでの並べ替え、コマンドのテスト、元に戻す機能を備えた新しいコマンド一覧"
+
+#: data/com.github.Switchcraft.metainfo.xml.in:45
+msgid "Translated into 22 languages"
+msgstr "22 言語に翻訳"
+
+#~ msgid "Monitor GNOME theme changes and run commands"
+#~ msgstr "GNOME テーマの変更を監視し、コマンドを実行する"
+
+#~ msgid "Run the background process that reacts to GNOME theme changes."
+#~ msgstr "GNOME テーマの変更に反応するバックグラウンド プロセスを実行します。"
+
+#~ msgid "Refactored icon structure and updated metadata integration."
+#~ msgstr ""
+#~ "アイコン構造がリファクタリングされ、メタデータ統合が更新されました。"
+
+#~ msgid "Run commands when GNOME theme switches"
+#~ msgstr "GNOME テーマが切り替わったときにコマンドを実行する"
+
+#~ msgid "theme;switch;gtk;gnome;"
+#~ msgstr "テーマ;スイッチ;gtk;gnome;"
+
+#~ msgid ""
+#~ "Switchcraft watches GNOME's color-scheme preference and runs user-defined "
+#~ "shell commands when the theme switches between light and dark. It allows "
+#~ "you to automate theme-dependent adjustments for applications that don't "
+#~ "follow system settings automatically."
+#~ msgstr ""
+#~ "Switchcraft は GNOME のカラースキーム設定を監視し、テーマが明暗間で切り替"
+#~ "わったときにユーザー定義のシェル コマンドを実行します。システム設定に自動"
+#~ "的に従わないアプリケーションのテーマに依存した調整を自動化できます。"

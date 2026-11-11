@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: switchcraft 2.0.0\n"
 "Report-Msgid-Bugs-To: https://github.com/kem-a/switchcraft/issues\n"
-"POT-Creation-Date: 2026-11-11 16:19+0200\n"
+"POT-Creation-Date: 2026-11-12 00:18+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -110,7 +110,7 @@ msgid "Switchcraft Monitor"
 msgstr ""
 
 #: src/Application.vala:1757
-msgid "Monitor GNOME theme changes and run commands"
+msgid "Monitor theme changes and run commands"
 msgstr ""
 
 #: src/CommandDialog.vala:44
@@ -319,7 +319,7 @@ msgid "Quit"
 msgstr ""
 
 #: src/MainWindow.vala:78
-msgid "Run the background process that reacts to GNOME theme changes."
+msgid "Run the background process that reacts to theme changes."
 msgstr ""
 
 #: src/MainWindow.vala:79 src/MainWindow.vala:82
@@ -580,18 +580,6 @@ msgstr ""
 msgid "Show keyboard shortcuts"
 msgstr ""
 
-#: data/com.github.Switchcraft.desktop.in:3
-msgid "Switchcraft"
-msgstr ""
-
-#: data/com.github.Switchcraft.desktop.in:4
-msgid "Run commands when GNOME theme switches"
-msgstr ""
-
-#: data/com.github.Switchcraft.desktop.in:10
-msgid "theme;switch;gtk;gnome;"
-msgstr ""
-
 #: data/com.github.Switchcraft.gschema.xml:6
 msgid "Enable background monitoring"
 msgstr ""
@@ -638,19 +626,53 @@ msgid ""
 "range values mean none is known, and the system time zone gives the location."
 msgstr ""
 
+#: data/com.github.Switchcraft.metainfo.xml.in:4
+msgid "Switchcraft"
+msgstr ""
+
 #: data/com.github.Switchcraft.metainfo.xml.in:6
 #: data/com.github.Switchcraft.metainfo.xml.in:8
 msgid "Arnis Kemlers"
 msgstr ""
 
-#: data/com.github.Switchcraft.metainfo.xml.in:13
-msgid ""
-"Switchcraft watches GNOME's color-scheme preference and runs user-defined "
-"shell commands when the theme switches between light and dark. It allows you "
-"to automate theme-dependent adjustments for applications that don't follow "
-"system settings automatically."
+#: data/com.github.Switchcraft.metainfo.xml.in:9
+msgid "Automate light and dark theme switching"
 msgstr ""
 
-#: data/com.github.Switchcraft.metainfo.xml.in:25
-msgid "Refactored icon structure and updated metadata integration."
+#: data/com.github.Switchcraft.metainfo.xml.in:13
+msgid ""
+"Switchcraft follows the light and dark style of GNOME and KDE Plasma. On "
+"every switch it runs your shell commands and applies per-theme settings such "
+"as the wallpaper, icon, GTK and Kvantum themes. Applications that do not "
+"follow the system style stay in sync."
+msgstr ""
+
+#: data/com.github.Switchcraft.metainfo.xml.in:14
+msgid ""
+"It can also switch the style for you at sunset and sunrise or at custom "
+"times."
+msgstr ""
+
+#: data/com.github.Switchcraft.metainfo.xml.in:41
+msgid ""
+"Built-in commands: pick a setting and a value from a list instead of typing "
+"a command"
+msgstr ""
+
+#: data/com.github.Switchcraft.metainfo.xml.in:42
+msgid "KDE Plasma and Kvantum support"
+msgstr ""
+
+#: data/com.github.Switchcraft.metainfo.xml.in:43
+msgid "Automatic switching at sunset and sunrise or at custom times"
+msgstr ""
+
+#: data/com.github.Switchcraft.metainfo.xml.in:44
+msgid ""
+"Redesigned command list with drag-and-drop reordering, command testing and "
+"undo"
+msgstr ""
+
+#: data/com.github.Switchcraft.metainfo.xml.in:45
+msgid "Translated into 22 languages"
 msgstr ""

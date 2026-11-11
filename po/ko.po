@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: switchcraft 2.0.0\n"
 "Report-Msgid-Bugs-To: https://github.com/kem-a/switchcraft/issues\n"
-"POT-Creation-Date: 2026-11-11 13:09+0200\n"
+"POT-Creation-Date: 2026-11-12 00:18+0200\n"
 "PO-Revision-Date: 2026-11-11 12:02+0000\n"
 "Last-Translator: Switchcraft translators\n"
 "Language-Team: none\n"
@@ -25,93 +25,95 @@ msgstr "버전 정보 표시"
 msgid "Run in background for theme monitoring"
 msgstr "테마 모니터링을 위해 백그라운드에서 실행"
 
-#: src/Application.vala:343
+#: src/Application.vala:352
 #, c-format
 msgid "Exited with code %d"
 msgstr "%d 코드로 종료되었습니다."
 
-#: src/Application.vala:344
+#: src/Application.vala:353
 #, c-format
 msgid "Killed by signal %d"
 msgstr "신호 %d에 의해 종료됨"
 
-#: src/Application.vala:1331
+#: src/Application.vala:1367
 msgid "The 'zip' command is required to export."
 msgstr "내보내려면 'zip' 명령이 필요합니다."
 
-#: src/Application.vala:1337
+#: src/Application.vala:1373
 msgid "Destination must be a local file."
 msgstr "대상은 로컬 파일이어야 합니다."
 
-#: src/Application.vala:1344
+#: src/Application.vala:1380
 msgid "Failed to prepare destination directory."
 msgstr "대상 디렉터리를 준비하지 못했습니다."
 
-#: src/Application.vala:1352 src/Application.vala:1425
+#: src/Application.vala:1388 src/Application.vala:1461
 msgid "Failed to create temporary directory."
 msgstr "임시 디렉터리를 생성하지 못했습니다."
 
-#: src/Application.vala:1383
+#: src/Application.vala:1419
 msgid "Unable to overwrite existing archive."
 msgstr "기존 아카이브를 덮어쓸 수 없습니다."
 
-#: src/Application.vala:1395
+#: src/Application.vala:1431
 #, c-format
 msgid "Failed to write archive: %s"
 msgstr "아카이브를 쓰지 못했습니다: %s"
 
-#: src/Application.vala:1412
+#: src/Application.vala:1448
 msgid "The 'unzip' command is required to import."
 msgstr "가져오려면 'unzip' 명령이 필요합니다."
 
-#: src/Application.vala:1418
+#: src/Application.vala:1454
 msgid "Archive must be a local file."
 msgstr "아카이브는 로컬 파일이어야 합니다."
 
-#: src/Application.vala:1436
+#: src/Application.vala:1472
 #, c-format
 msgid "Failed to unpack archive: %s"
 msgstr "아카이브 압축을 풀지 못했습니다: %s"
 
-#: src/Application.vala:1444
+#: src/Application.vala:1480
 msgid "Archive must contain commands.json and constants.json at the top level."
-msgstr "아카이브에는 최상위 수준의 commands.json 및 constants.json가 포함되어야 합니다."
+msgstr ""
+"아카이브에는 최상위 수준의 commands.json 및 constants.json가 포함되어야 합니"
+"다."
 
-#: src/Application.vala:1456
+#: src/Application.vala:1492
 msgid "commands.json is not a JSON object."
 msgstr "commands.json은 JSON 객체가 아닙니다."
 
-#: src/Application.vala:1467
+#: src/Application.vala:1503
 msgid "constants.json is not a JSON object."
 msgstr "constants.json는 JSON 개체가 아닙니다."
 
-#: src/Application.vala:1484
+#: src/Application.vala:1520
 msgid "constants.json must only contain string values."
 msgstr "constants.json에는 문자열 값만 포함되어야 합니다."
 
-#: src/Application.vala:1497
+#: src/Application.vala:1533
 msgid "theme_settings.json is not a JSON object."
 msgstr "theme_settings.json은 JSON 개체가 아닙니다."
 
-#: src/Application.vala:1520
+#: src/Application.vala:1556
 msgid "Failed to remove commands.json."
 msgstr "commands.json을 제거하지 못했습니다."
 
-#: src/Application.vala:1527
+#: src/Application.vala:1563
 msgid "Failed to remove constants.json."
 msgstr "constants.json를 제거하지 못했습니다."
 
-#: src/Application.vala:1534
+#: src/Application.vala:1570
 msgid "Failed to remove theme_settings.json."
 msgstr "theme_settings.json을 제거하지 못했습니다."
 
-#: src/Application.vala:1720
+#: src/Application.vala:1756
 msgid "Switchcraft Monitor"
 msgstr "Switchcraft 모니터"
 
-#: src/Application.vala:1721
-msgid "Monitor GNOME theme changes and run commands"
-msgstr "GNOME 테마 변경 사항을 모니터링하고 명령을 실행하세요"
+#: src/Application.vala:1757
+msgid "Monitor theme changes and run commands"
+msgstr "테마 변경 사항을 모니터링하고 명령을 실행하세요"
 
 #: src/CommandDialog.vala:44
 msgid "Color Scheme"
@@ -170,83 +172,83 @@ msgstr "어두운 스타일로 전환하고 밝은 모드에서 반복됩니다.
 msgid "%s is already set in this mode"
 msgstr "%s은(는) 이미 이 모드로 설정되어 있습니다."
 
-#: src/CommandDialog.vala:116
+#: src/CommandDialog.vala:118
 msgid "This command is already in this mode"
 msgstr "이 명령은 이미 이 모드에 있습니다."
 
-#: src/CommandDialog.vala:124
+#: src/CommandDialog.vala:128
 msgid "Edit Command"
 msgstr "명령 편집"
 
-#: src/CommandDialog.vala:124
+#: src/CommandDialog.vala:128
 msgid "Add Command"
 msgstr "명령 추가"
 
-#: src/CommandDialog.vala:131
+#: src/CommandDialog.vala:135
 msgid "Delete"
 msgstr "삭제"
 
-#: src/CommandDialog.vala:134
+#: src/CommandDialog.vala:138
 msgid "Cancel"
 msgstr "취소"
 
-#: src/CommandDialog.vala:135
+#: src/CommandDialog.vala:139
 msgid "Save"
 msgstr "저장"
 
-#: src/CommandDialog.vala:135
+#: src/CommandDialog.vala:139
 msgid "Add"
 msgstr "추가"
 
-#: src/CommandDialog.vala:148
+#: src/CommandDialog.vala:152
 msgid "Custom Command"
 msgstr "사용자 정의 명령"
 
-#: src/CommandDialog.vala:170
+#: src/CommandDialog.vala:174
 msgid "Type"
 msgstr "종류"
 
-#: src/CommandDialog.vala:175
+#: src/CommandDialog.vala:179
 msgid "Command"
 msgstr "명령"
 
-#: src/CommandDialog.vala:215
+#: src/CommandDialog.vala:219
 msgid "Copy Error"
 msgstr "오류 복사"
 
-#: src/CommandDialog.vala:240
+#: src/CommandDialog.vala:244
 msgid "Test"
 msgstr "테스트"
 
-#: src/CommandDialog.vala:256
+#: src/CommandDialog.vala:260
 msgid "Value"
 msgstr "값"
 
-#: src/CommandDialog.vala:261
+#: src/CommandDialog.vala:265
 msgid "Image"
 msgstr "이미지"
 
-#: src/CommandDialog.vala:266
+#: src/CommandDialog.vala:270
 msgid "Browse…"
 msgstr "찾아보기…"
 
-#: src/CommandDialog.vala:276
+#: src/CommandDialog.vala:280
 msgid "Mode"
 msgstr "모드"
 
-#: src/CommandDialog.vala:402
+#: src/CommandDialog.vala:406
 msgid "Requires the User Themes GNOME Shell extension."
 msgstr "사용자 테마 GNOME 쉘 확장이 필요합니다."
 
-#: src/CommandDialog.vala:514
+#: src/CommandDialog.vala:521
 msgid "Command failed"
 msgstr "명령 실패"
 
-#: src/CommandDialog.vala:514
+#: src/CommandDialog.vala:521
 msgid "Command succeeded"
 msgstr "명령 성공"
 
-#: src/CommandDialog.vala:527
+#: src/CommandDialog.vala:534
 msgid "Select Wallpaper"
 msgstr "배경화면 선택"
 
@@ -300,7 +302,9 @@ msgstr "값(예: org.gnome.shell.extensions.dash2dock-lite)"
 msgid ""
 "Use in commands as $NAME or ${NAME}. Names use letters, numbers and "
 "underscores."
-msgstr "$NAME 또는 ${NAME}으로 명령에 사용합니다. 이름에는 문자, 숫자, 밑줄이 사용됩니다."
+msgstr ""
+"$NAME 또는 ${NAME}으로 명령에 사용합니다. 이름에는 문자, 숫자, 밑줄이 사용됩"
+"니다."
 
 #: src/MainWindow.vala:64
 msgid "Preferences"
@@ -319,8 +323,8 @@ msgid "Quit"
 msgstr "끝내기"
 
 #: src/MainWindow.vala:78
-msgid "Run the background process that reacts to GNOME theme changes."
-msgstr "GNOME 테마 변경에 반응하는 백그라운드 프로세스를 실행합니다."
+msgid "Run the background process that reacts to theme changes."
+msgstr "테마 변경에 반응하는 백그라운드 프로세스를 실행합니다."
 
 #: src/MainWindow.vala:79 src/MainWindow.vala:82
 msgid "Monitor"
@@ -331,7 +335,8 @@ msgid "No Commands"
 msgstr "명령 없음"
 
 #: src/MainWindow.vala:89
-msgid "Use the '+' button in the header bar or press (Ctrl+N) to add a command."
+msgid ""
+"Use the '+' button in the header bar or press (Ctrl+N) to add a command."
 msgstr "헤더 표시줄의 '+' 버튼을 사용하거나 (Ctrl+N)을 눌러 명령을 추가하세요."
 
 #: src/MainWindow.vala:128
@@ -366,11 +371,19 @@ msgstr "명령이 삭제되었습니다."
 msgid "Undo"
 msgstr "실행 취소"
 
-#: src/MainWindow.vala:697
+#: src/MainWindow.vala:652
+msgid "Contributors"
+msgstr "기여자"
+
+#: src/MainWindow.vala:653
+msgid "Credits"
+msgstr "크레딧"
+
+#: src/MainWindow.vala:700
 msgid "Background monitoring is now active"
 msgstr "이제 백그라운드 모니터링이 활성화되었습니다."
 
-#: src/MainWindow.vala:698
+#: src/MainWindow.vala:701
 msgid "Background monitoring is now inactive"
 msgstr "이제 백그라운드 모니터링이 비활성화되었습니다."
 
@@ -382,19 +395,25 @@ msgstr "자동 전환"
 msgid ""
 "KDE Plasma is set to switch global themes automatically. Turn that off to "
 "use this schedule."
-msgstr "KDE Plasma는 전역 테마를 자동으로 전환하도록 설정되어 있습니다. 이 일정을 사용하려면 이 기능을 끄세요."
+msgstr ""
+"KDE Plasma는 전역 테마를 자동으로 전환하도록 설정되어 있습니다. 이 일정을 사"
+"용하려면 이 기능을 끄세요."
 
 #: src/PreferencesWindow.vala:47
 msgid ""
 "Switch KDE's default light and dark global themes on a schedule. Needs "
 "background monitoring."
-msgstr "KDE의 기본 밝은 테마와 어두운 전역 테마를 일정에 따라 전환하세요. 백그라운드 모니터링이 필요합니다."
+msgstr ""
+"KDE의 기본 밝은 테마와 어두운 전역 테마를 일정에 따라 전환하세요. 백그라운드 "
+"모니터링이 필요합니다."
 
 #: src/PreferencesWindow.vala:48
 msgid ""
 "Switch between light and dark style on a schedule. Needs background "
 "monitoring."
-msgstr "일정에 따라 밝은 스타일과 어두운 스타일 사이를 전환하세요. 백그라운드 모니터링이 필요합니다."
+msgstr ""
+"일정에 따라 밝은 스타일과 어두운 스타일 사이를 전환하세요. 백그라운드 모니터"
+"링이 필요합니다."
 
 #: src/PreferencesWindow.vala:54
 msgid "Automatic Switching Is Set in KDE"
@@ -404,7 +423,8 @@ msgstr "KDE에서 자동 전환이 설정되었습니다"
 msgid ""
 "Turn off “Switch to Dark Mode at Night” in System Settings to use this "
 "schedule."
-msgstr "이 일정을 사용하려면 시스템 설정에서 \"밤에 다크 모드로 전환\"을 끄세요."
+msgstr ""
+"이 일정을 사용하려면 시스템 설정에서 \"밤에 다크 모드로 전환\"을 끄세요."
 
 #: src/PreferencesWindow.vala:61
 msgid "Open Settings"
@@ -484,7 +504,8 @@ msgstr "모든 구성 삭제"
 
 #: src/PreferencesWindow.vala:134
 msgid "Deletes commands.json and constants.json. This cannot be undone."
-msgstr "commands.json과 constants.json를 삭제합니다. 이 작업은 취소할 수 없습니다."
+msgstr ""
+"commands.json과 constants.json를 삭제합니다. 이 작업은 취소할 수 없습니다."
 
 #: src/PreferencesWindow.vala:159
 msgid "Location unknown"
@@ -571,25 +592,14 @@ msgstr "환경설정 열기"
 msgid "Show keyboard shortcuts"
 msgstr "키보드 단축키 표시"
 
-#: data/com.github.Switchcraft.desktop.in:3
-msgid "Switchcraft"
-msgstr "Switchcraft"
-
-#: data/com.github.Switchcraft.desktop.in:4
-msgid "Run commands when GNOME theme switches"
-msgstr "GNOME 테마가 전환될 때 명령 실행"
-
-#: data/com.github.Switchcraft.desktop.in:10
-msgid "theme;switch;gtk;gnome;"
-msgstr "테마;전환;gtk;gnome;"
-
 #: data/com.github.Switchcraft.gschema.xml:6
 msgid "Enable background monitoring"
 msgstr "백그라운드 모니터링 활성화"
 
 #: data/com.github.Switchcraft.gschema.xml:7
 msgid "Whether the background process for theme monitoring is enabled."
-msgstr "테마 모니터링을 위한 백그라운드 프로세스가 활성화되어 있는지 여부입니다."
+msgstr ""
+"테마 모니터링을 위한 백그라운드 프로세스가 활성화되어 있는지 여부입니다."
 
 #: data/com.github.Switchcraft.gschema.xml:16
 msgid "Automatic light and dark switching"
@@ -600,8 +610,8 @@ msgid ""
 "Switch the light/dark style at sunrise and sunset (sun), at light-time and "
 "dark-time (custom), or never (off). Runs in the background monitor."
 msgstr ""
-"일출과 일몰(태양), 밝은 시간과 어두운 시간(사용자 정의) 또는 사용하지 않음(꺼짐)에 밝은/어두운 스타일을 전환합니다. 백그라운드"
-" 모니터에서 실행됩니다."
+"일출과 일몰(태양), 밝은 시간과 어두운 시간(사용자 정의) 또는 사용하지 않음(꺼"
+"짐)에 밝은/어두운 스타일을 전환합니다. 백그라운드 모니터에서 실행됩니다."
 
 #: data/com.github.Switchcraft.gschema.xml:22
 msgid "Light style time"
@@ -630,24 +640,86 @@ msgid ""
 "Latitude and longitude from GeoClue, used for sunrise and sunset. Out of "
 "range values mean none is known, and the system time zone gives the location."
 msgstr ""
-"일출과 일몰에 사용되는 GeoClue의 위도와 경도입니다. 범위를 벗어난 값은 알려진 것이 없음을 의미하며 시스템 시간대가 위치를"
-" 제공합니다."
+"일출과 일몰에 사용되는 GeoClue의 위도와 경도입니다. 범위를 벗어난 값은 알려"
+"진 것이 없음을 의미하며 시스템 시간대가 위치를 제공합니다."
+
+#: data/com.github.Switchcraft.metainfo.xml.in:4
+msgid "Switchcraft"
+msgstr "Switchcraft"
 
 #: data/com.github.Switchcraft.metainfo.xml.in:6
 #: data/com.github.Switchcraft.metainfo.xml.in:8
 msgid "Arnis Kemlers"
 msgstr "Arnis Kemlers"
 
+#: data/com.github.Switchcraft.metainfo.xml.in:9
+msgid "Automate light and dark theme switching"
+msgstr "밝은 테마와 어두운 테마 전환 자동화"
+
 #: data/com.github.Switchcraft.metainfo.xml.in:13
 msgid ""
-"Switchcraft watches GNOME's color-scheme preference and runs user-defined "
-"shell commands when the theme switches between light and dark. It allows you "
-"to automate theme-dependent adjustments for applications that don't follow "
-"system settings automatically."
+"Switchcraft follows the light and dark style of GNOME and KDE Plasma. On "
+"every switch it runs your shell commands and applies per-theme settings such "
+"as the wallpaper, icon, GTK and Kvantum themes. Applications that do not "
+"follow the system style stay in sync."
 msgstr ""
-"Switchcraft는 GNOME의 색 구성표 기본 설정을 관찰하고 테마가 밝음과 어두움 사이를 전환할 때 사용자 정의 쉘 명령을"
-" 실행합니다. 시스템 설정을 자동으로 따르지 않는 응용 프로그램에 대한 테마별 조정을 자동화할 수 있습니다."
+"Switchcraft는 GNOME과 KDE Plasma의 밝은 스타일과 어두운 스타일을 따릅니다. 전"
+"환할 때마다 사용자의 쉘 명령을 실행하고 바탕화면, 아이콘, GTK, Kvantum 테마"
+"와 같은 테마별 설정을 적용합니다. 시스템 스타일을 따르지 않는 응용 프로그램"
+"도 동기화된 상태로 유지됩니다."
 
-#: data/com.github.Switchcraft.metainfo.xml.in:24
-msgid "Refactored icon structure and updated metadata integration."
-msgstr "아이콘 구조를 리팩터링하고 메타데이터 통합을 업데이트했습니다."
+#: data/com.github.Switchcraft.metainfo.xml.in:14
+msgid ""
+"It can also switch the style for you at sunset and sunrise or at custom "
+"times."
+msgstr ""
+"일몰과 일출 시 또는 맞춤 시간에 스타일을 자동으로 전환할 수도 있습니다."
+
+#: data/com.github.Switchcraft.metainfo.xml.in:41
+msgid ""
+"Built-in commands: pick a setting and a value from a list instead of typing "
+"a command"
+msgstr "내장 명령: 명령을 입력하는 대신 목록에서 설정과 값을 선택"
+
+#: data/com.github.Switchcraft.metainfo.xml.in:42
+msgid "KDE Plasma and Kvantum support"
+msgstr "KDE Plasma 및 Kvantum 지원"
+
+#: data/com.github.Switchcraft.metainfo.xml.in:43
+msgid "Automatic switching at sunset and sunrise or at custom times"
+msgstr "일몰과 일출 시 또는 맞춤 시간에 자동 전환"
+
+#: data/com.github.Switchcraft.metainfo.xml.in:44
+msgid ""
+"Redesigned command list with drag-and-drop reordering, command testing and "
+"undo"
+msgstr "드래그 앤 드롭 재정렬, 명령 테스트, 실행 취소를 갖춘 새로운 명령 목록"
+
+#: data/com.github.Switchcraft.metainfo.xml.in:45
+msgid "Translated into 22 languages"
+msgstr "22개 언어로 번역"
+
+#~ msgid "Monitor GNOME theme changes and run commands"
+#~ msgstr "GNOME 테마 변경 사항을 모니터링하고 명령을 실행하세요"
+
+#~ msgid "Run the background process that reacts to GNOME theme changes."
+#~ msgstr "GNOME 테마 변경에 반응하는 백그라운드 프로세스를 실행합니다."
+
+#~ msgid "Refactored icon structure and updated metadata integration."
+#~ msgstr "아이콘 구조를 리팩터링하고 메타데이터 통합을 업데이트했습니다."
+
+#~ msgid "Run commands when GNOME theme switches"
+#~ msgstr "GNOME 테마가 전환될 때 명령 실행"
+
+#~ msgid "theme;switch;gtk;gnome;"
+#~ msgstr "테마;전환;gtk;gnome;"
+
+#~ msgid ""
+#~ "Switchcraft watches GNOME's color-scheme preference and runs user-defined "
+#~ "shell commands when the theme switches between light and dark. It allows "
+#~ "you to automate theme-dependent adjustments for applications that don't "
+#~ "follow system settings automatically."
+#~ msgstr ""
+#~ "Switchcraft는 GNOME의 색 구성표 기본 설정을 관찰하고 테마가 밝음과 어두움 "
+#~ "사이를 전환할 때 사용자 정의 쉘 명령을 실행합니다. 시스템 설정을 자동으로 "
+#~ "따르지 않는 응용 프로그램에 대한 테마별 조정을 자동화할 수 있습니다."

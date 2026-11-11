@@ -91,38 +91,44 @@ Useful flags:
 
 - Vala sources in `src/`
 - GtkBuilder UI files in `data/resources/ui/`
-- The desktop entry in `data/`
 - The GSettings schema
 - The AppStream metainfo file
 
+## Desktop entry
+
+`data/com.github.Switchcraft.desktop.in` is not in `po/POTFILES`. Its
+`GenericName`, `Comment` and `Keywords` are translated inline, one
+`Key[code]=` line per language in `po/LINGUAS`. Add those lines when adding a
+language.
+
 ## Translation Status
 
-Counted with `./scripts/translations.sh --check-only` on 2026-11-11, out of 149 strings.
+Counted with `./scripts/translations.sh --check-only` on 2026-11-12, out of 155 strings.
 
 | Language | Code | Translated | Fuzzy |
 | -------- | ---- | ---------- | ----- |
-| Arabic | ar | 100.0% (149) | 0 |
-| German | de | 100.0% (149) | 0 |
-| Greek | el | 100.0% (149) | 0 |
-| Spanish | es | 100.0% (149) | 0 |
-| Estonian | et | 100.0% (149) | 0 |
-| Finnish | fi | 100.0% (149) | 0 |
-| French | fr | 100.0% (149) | 0 |
-| Irish | ga | 100.0% (149) | 0 |
-| Italian | it | 100.0% (149) | 0 |
-| Japanese | ja | 100.0% (149) | 0 |
-| Kazakh | kk | 100.0% (149) | 0 |
-| Korean | ko | 100.0% (149) | 0 |
-| Lithuanian | lt | 100.0% (149) | 0 |
-| Latvian | lv | 100.0% (149) | 0 |
-| Norwegian Bokmål | nb | 100.0% (149) | 0 |
-| Dutch | nl | 100.0% (149) | 0 |
-| Polish | pl | 100.0% (149) | 0 |
-| Portuguese (Brazil) | pt_BR | 100.0% (149) | 0 |
-| Swedish | sv | 100.0% (149) | 0 |
-| Ukrainian | uk | 100.0% (149) | 0 |
-| Vietnamese | vi | 100.0% (149) | 0 |
-| Chinese (Simplified) | zh_CN | 100.0% (149) | 0 |
+| Arabic | ar | 100.0% (155) | 0 |
+| German | de | 100.0% (155) | 0 |
+| Greek | el | 100.0% (155) | 0 |
+| Spanish | es | 100.0% (155) | 0 |
+| Estonian | et | 100.0% (155) | 0 |
+| Finnish | fi | 100.0% (155) | 0 |
+| French | fr | 100.0% (155) | 0 |
+| Irish | ga | 100.0% (155) | 0 |
+| Italian | it | 100.0% (155) | 0 |
+| Japanese | ja | 100.0% (155) | 0 |
+| Kazakh | kk | 100.0% (155) | 0 |
+| Korean | ko | 100.0% (155) | 0 |
+| Lithuanian | lt | 100.0% (155) | 0 |
+| Latvian | lv | 100.0% (155) | 0 |
+| Norwegian Bokmål | nb | 100.0% (155) | 0 |
+| Dutch | nl | 100.0% (155) | 0 |
+| Polish | pl | 100.0% (155) | 0 |
+| Portuguese (Brazil) | pt_BR | 100.0% (155) | 0 |
+| Swedish | sv | 100.0% (155) | 0 |
+| Ukrainian | uk | 100.0% (155) | 0 |
+| Vietnamese | vi | 100.0% (155) | 0 |
+| Chinese (Simplified) | zh_CN | 100.0% (155) | 0 |
 
 ## Note
 

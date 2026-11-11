@@ -8,6 +8,5 @@ src/PreferencesWindow.vala
 src/SlidingToggleGroup.vala
 
 data/resources/shortcuts-dialog.ui
-data/com.github.Switchcraft.desktop.in
 data/com.github.Switchcraft.gschema.xml
 data/com.github.Switchcraft.metainfo.xml.in

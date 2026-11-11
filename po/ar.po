@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: switchcraft 2.0.0\n"
 "Report-Msgid-Bugs-To: https://github.com/kem-a/switchcraft/issues\n"
-"POT-Creation-Date: 2026-11-11 13:09+0200\n"
+"POT-Creation-Date: 2026-11-12 00:18+0200\n"
 "PO-Revision-Date: 2026-11-11 12:02+0000\n"
 "Last-Translator: Switchcraft translators\n"
 "Language-Team: none\n"
@@ -24,93 +24,94 @@ msgstr "إظهار معلومات الإصدار"
 msgid "Run in background for theme monitoring"
 msgstr "تشغيل في الخلفية لمراقبة السمات"
 
-#: src/Application.vala:343
+#: src/Application.vala:352
 #, c-format
 msgid "Exited with code %d"
 msgstr "تم الخروج بالرمز %d"
 
-#: src/Application.vala:344
+#: src/Application.vala:353
 #, c-format
 msgid "Killed by signal %d"
 msgstr "تم القتل بواسطة الإشارة %d"
 
-#: src/Application.vala:1331
+#: src/Application.vala:1367
 msgid "The 'zip' command is required to export."
 msgstr "الأمر \"zip\" مطلوب للتصدير."
 
-#: src/Application.vala:1337
+#: src/Application.vala:1373
 msgid "Destination must be a local file."
 msgstr "يجب أن تكون الوجهة ملفًا محليًا."
 
-#: src/Application.vala:1344
+#: src/Application.vala:1380
 msgid "Failed to prepare destination directory."
 msgstr "فشل في إعداد دليل الوجهة."
 
-#: src/Application.vala:1352 src/Application.vala:1425
+#: src/Application.vala:1388 src/Application.vala:1461
 msgid "Failed to create temporary directory."
 msgstr "فشل في إنشاء الدليل المؤقت."
 
-#: src/Application.vala:1383
+#: src/Application.vala:1419
 msgid "Unable to overwrite existing archive."
 msgstr "غير قادر على الكتابة فوق الأرشيف الموجود."
 
-#: src/Application.vala:1395
+#: src/Application.vala:1431
 #, c-format
 msgid "Failed to write archive: %s"
 msgstr "فشل في كتابة الأرشيف: %s"
 
-#: src/Application.vala:1412
+#: src/Application.vala:1448
 msgid "The 'unzip' command is required to import."
 msgstr "الأمر \"unzip\" مطلوب للاستيراد."
 
-#: src/Application.vala:1418
+#: src/Application.vala:1454
 msgid "Archive must be a local file."
 msgstr "يجب أن يكون الأرشيف ملفًا محليًا."
 
-#: src/Application.vala:1436
+#: src/Application.vala:1472
 #, c-format
 msgid "Failed to unpack archive: %s"
 msgstr "فشل في فك ضغط الأرشيف: %s"
 
-#: src/Application.vala:1444
+#: src/Application.vala:1480
 msgid "Archive must contain commands.json and constants.json at the top level."
-msgstr "يجب أن يحتوي الأرشيف على commands.json وconstants.json في المستوى الأعلى."
+msgstr ""
+"يجب أن يحتوي الأرشيف على commands.json وconstants.json في المستوى الأعلى."
 
-#: src/Application.vala:1456
+#: src/Application.vala:1492
 msgid "commands.json is not a JSON object."
 msgstr "commands.json ليس كائن JSON."
 
-#: src/Application.vala:1467
+#: src/Application.vala:1503
 msgid "constants.json is not a JSON object."
 msgstr "constants.json ليس كائن JSON."
 
-#: src/Application.vala:1484
+#: src/Application.vala:1520
 msgid "constants.json must only contain string values."
 msgstr "يجب أن يحتوي constants.json على قيم سلسلة فقط."
 
-#: src/Application.vala:1497
+#: src/Application.vala:1533
 msgid "theme_settings.json is not a JSON object."
 msgstr "theme_settings.json ليس كائن JSON."
 
-#: src/Application.vala:1520
+#: src/Application.vala:1556
 msgid "Failed to remove commands.json."
 msgstr "فشل في إزالة commands.json."
 
-#: src/Application.vala:1527
+#: src/Application.vala:1563
 msgid "Failed to remove constants.json."
 msgstr "فشل في إزالة constants.json."
 
-#: src/Application.vala:1534
+#: src/Application.vala:1570
 msgid "Failed to remove theme_settings.json."
 msgstr "فشل في إزالة theme_settings.json."
 
-#: src/Application.vala:1720
+#: src/Application.vala:1756
 msgid "Switchcraft Monitor"
 msgstr "مراقب Switchcraft"
 
-#: src/Application.vala:1721
-msgid "Monitor GNOME theme changes and run commands"
-msgstr "مراقبة تغييرات سمة GNOME وتشغيل الأوامر"
+#: src/Application.vala:1757
+msgid "Monitor theme changes and run commands"
+msgstr "مراقبة تغييرات السمة وتشغيل الأوامر"
 
 #: src/CommandDialog.vala:44
 msgid "Color Scheme"
@@ -169,83 +170,83 @@ msgstr "يتحول إلى النمط الداكن وسيتكرر في الوضع
 msgid "%s is already set in this mode"
 msgstr "تم تعيين %s بالفعل في هذا الوضع"
 
-#: src/CommandDialog.vala:116
+#: src/CommandDialog.vala:118
 msgid "This command is already in this mode"
 msgstr "هذا الأمر موجود بالفعل في هذا الوضع"
 
-#: src/CommandDialog.vala:124
+#: src/CommandDialog.vala:128
 msgid "Edit Command"
 msgstr "تحرير الأمر"
 
-#: src/CommandDialog.vala:124
+#: src/CommandDialog.vala:128
 msgid "Add Command"
 msgstr "إضافة أمر"
 
-#: src/CommandDialog.vala:131
+#: src/CommandDialog.vala:135
 msgid "Delete"
 msgstr "احذف"
 
-#: src/CommandDialog.vala:134
+#: src/CommandDialog.vala:138
 msgid "Cancel"
 msgstr "ألغِ"
 
-#: src/CommandDialog.vala:135
+#: src/CommandDialog.vala:139
 msgid "Save"
 msgstr "احفظ"
 
-#: src/CommandDialog.vala:135
+#: src/CommandDialog.vala:139
 msgid "Add"
 msgstr "أضف"
 
-#: src/CommandDialog.vala:148
+#: src/CommandDialog.vala:152
 msgid "Custom Command"
 msgstr "أمر مخصص"
 
-#: src/CommandDialog.vala:170
+#: src/CommandDialog.vala:174
 msgid "Type"
 msgstr "النوع"
 
-#: src/CommandDialog.vala:175
+#: src/CommandDialog.vala:179
 msgid "Command"
 msgstr "أمر"
 
-#: src/CommandDialog.vala:215
+#: src/CommandDialog.vala:219
 msgid "Copy Error"
 msgstr "نسخ الخطأ"
 
-#: src/CommandDialog.vala:240
+#: src/CommandDialog.vala:244
 msgid "Test"
 msgstr "اختبر"
 
-#: src/CommandDialog.vala:256
+#: src/CommandDialog.vala:260
 msgid "Value"
 msgstr "القيمة"
 
-#: src/CommandDialog.vala:261
+#: src/CommandDialog.vala:265
 msgid "Image"
 msgstr "الصورة"
 
-#: src/CommandDialog.vala:266
+#: src/CommandDialog.vala:270
 msgid "Browse…"
 msgstr "تصفّح…"
 
-#: src/CommandDialog.vala:276
+#: src/CommandDialog.vala:280
 msgid "Mode"
 msgstr "الوضع"
 
-#: src/CommandDialog.vala:402
+#: src/CommandDialog.vala:406
 msgid "Requires the User Themes GNOME Shell extension."
 msgstr "يتطلب امتداد سمات المستخدم GNOME Shell."
 
-#: src/CommandDialog.vala:514
+#: src/CommandDialog.vala:521
 msgid "Command failed"
 msgstr "فشل الأمر"
 
-#: src/CommandDialog.vala:514
+#: src/CommandDialog.vala:521
 msgid "Command succeeded"
 msgstr "نجح الأمر"
 
-#: src/CommandDialog.vala:527
+#: src/CommandDialog.vala:534
 msgid "Select Wallpaper"
 msgstr "اختيار خلفية"
 
@@ -300,8 +301,8 @@ msgid ""
 "Use in commands as $NAME or ${NAME}. Names use letters, numbers and "
 "underscores."
 msgstr ""
-"استخدم في الأوامر كـ $NAME أو ${NAME}. تستخدم الأسماء الحروف والأرقام"
-" والشرطات السفلية."
+"استخدم في الأوامر كـ $NAME أو ${NAME}. تستخدم الأسماء الحروف والأرقام "
+"والشرطات السفلية."
 
 #: src/MainWindow.vala:64
 msgid "Preferences"
@@ -320,8 +321,8 @@ msgid "Quit"
 msgstr "أنهِ"
 
 #: src/MainWindow.vala:78
-msgid "Run the background process that reacts to GNOME theme changes."
-msgstr "قم بتشغيل عملية الخلفية التي تتفاعل مع تغييرات سمة GNOME."
+msgid "Run the background process that reacts to theme changes."
+msgstr "قم بتشغيل عملية الخلفية التي تتفاعل مع تغييرات السمة."
 
 #: src/MainWindow.vala:79 src/MainWindow.vala:82
 msgid "Monitor"
@@ -332,7 +333,8 @@ msgid "No Commands"
 msgstr "لا توجد أوامر"
 
 #: src/MainWindow.vala:89
-msgid "Use the '+' button in the header bar or press (Ctrl+N) to add a command."
+msgid ""
+"Use the '+' button in the header bar or press (Ctrl+N) to add a command."
 msgstr "استخدم الزر '+' في شريط الرأس أو اضغط على (Ctrl+N) لإضافة أمر."
 
 #: src/MainWindow.vala:128
@@ -367,11 +369,19 @@ msgstr "تم حذف الأمر"
 msgid "Undo"
 msgstr "تراجع"
 
-#: src/MainWindow.vala:697
+#: src/MainWindow.vala:652
+msgid "Contributors"
+msgstr "المساهمون"
+
+#: src/MainWindow.vala:653
+msgid "Credits"
+msgstr "شكر وتقدير"
+
+#: src/MainWindow.vala:700
 msgid "Background monitoring is now active"
 msgstr "مراقبة الخلفية نشطة الآن"
 
-#: src/MainWindow.vala:698
+#: src/MainWindow.vala:701
 msgid "Background monitoring is now inactive"
 msgstr "مراقبة الخلفية غير نشطة الآن"
 
@@ -384,24 +394,23 @@ msgid ""
 "KDE Plasma is set to switch global themes automatically. Turn that off to "
 "use this schedule."
 msgstr ""
-"تم ضبط KDE Plasma لتبديل السمات العالمية تلقائيًا. قم بإيقاف تشغيل ذلك"
-" لاستخدام هذا الجدول الزمني."
+"تم ضبط KDE Plasma لتبديل السمات العالمية تلقائيًا. قم بإيقاف تشغيل ذلك "
+"لاستخدام هذا الجدول الزمني."
 
 #: src/PreferencesWindow.vala:47
 msgid ""
 "Switch KDE's default light and dark global themes on a schedule. Needs "
 "background monitoring."
 msgstr ""
-"قم بتبديل سمات KDE الافتراضية الفاتحة والداكنة وفقًا لجدول زمني. يحتاج إلى"
-" مراقبة الخلفية."
+"قم بتبديل سمات KDE الافتراضية الفاتحة والداكنة وفقًا لجدول زمني. يحتاج إلى "
+"مراقبة الخلفية."
 
 #: src/PreferencesWindow.vala:48
 msgid ""
 "Switch between light and dark style on a schedule. Needs background "
 "monitoring."
 msgstr ""
-"التبديل بين النمط الفاتح والداكن وفقًا لجدول زمني. يحتاج إلى مراقبة"
-" الخلفية."
+"التبديل بين النمط الفاتح والداكن وفقًا لجدول زمني. يحتاج إلى مراقبة الخلفية."
 
 #: src/PreferencesWindow.vala:54
 msgid "Automatic Switching Is Set in KDE"
@@ -412,8 +421,8 @@ msgid ""
 "Turn off “Switch to Dark Mode at Night” in System Settings to use this "
 "schedule."
 msgstr ""
-"قم بإيقاف تشغيل \"التبديل إلى الوضع الداكن ليلاً\" في إعدادات النظام لاستخدام"
-" هذا الجدول الزمني."
+"قم بإيقاف تشغيل \"التبديل إلى الوضع الداكن ليلاً\" في إعدادات النظام لاستخدام "
+"هذا الجدول الزمني."
 
 #: src/PreferencesWindow.vala:61
 msgid "Open Settings"
@@ -580,18 +589,6 @@ msgstr "افتح التفضيلات"
 msgid "Show keyboard shortcuts"
 msgstr "إظهار اختصارات لوحة المفاتيح"
 
-#: data/com.github.Switchcraft.desktop.in:3
-msgid "Switchcraft"
-msgstr "Switchcraft"
-
-#: data/com.github.Switchcraft.desktop.in:4
-msgid "Run commands when GNOME theme switches"
-msgstr "قم بتشغيل الأوامر عند تبديل سمة GNOME"
-
-#: data/com.github.Switchcraft.desktop.in:10
-msgid "theme;switch;gtk;gnome;"
-msgstr "سمة;تبديل;gtk;gnome;"
-
 #: data/com.github.Switchcraft.gschema.xml:6
 msgid "Enable background monitoring"
 msgstr "تمكين مراقبة الخلفية"
@@ -609,8 +606,8 @@ msgid ""
 "Switch the light/dark style at sunrise and sunset (sun), at light-time and "
 "dark-time (custom), or never (off). Runs in the background monitor."
 msgstr ""
-"بدّل النمط الفاتح/الداكن عند شروق الشمس وغروبها (الشمس)، أو في وقت النمط"
-" الفاتح والداكن (مخصص)، أو أبدًا (إيقاف). يعمل في مراقب الخلفية."
+"بدّل النمط الفاتح/الداكن عند شروق الشمس وغروبها (الشمس)، أو في وقت النمط "
+"الفاتح والداكن (مخصص)، أو أبدًا (إيقاف). يعمل في مراقب الخلفية."
 
 #: data/com.github.Switchcraft.gschema.xml:22
 msgid "Light style time"
@@ -639,25 +636,86 @@ msgid ""
 "Latitude and longitude from GeoClue, used for sunrise and sunset. Out of "
 "range values mean none is known, and the system time zone gives the location."
 msgstr ""
-"خطوط الطول والعرض من GeoClue، تستخدم لشروق الشمس وغروبها. تعني القيم خارج"
-" النطاق أن لا شيء معروف، وأن المنطقة الزمنية للنظام تحدد الموقع."
+"خطوط الطول والعرض من GeoClue، تستخدم لشروق الشمس وغروبها. تعني القيم خارج "
+"النطاق أن لا شيء معروف، وأن المنطقة الزمنية للنظام تحدد الموقع."
+
+#: data/com.github.Switchcraft.metainfo.xml.in:4
+msgid "Switchcraft"
+msgstr "Switchcraft"
 
 #: data/com.github.Switchcraft.metainfo.xml.in:6
 #: data/com.github.Switchcraft.metainfo.xml.in:8
 msgid "Arnis Kemlers"
 msgstr "Arnis Kemlers"
 
+#: data/com.github.Switchcraft.metainfo.xml.in:9
+msgid "Automate light and dark theme switching"
+msgstr "أتمتة التبديل بين السمة الفاتحة والداكنة"
+
 #: data/com.github.Switchcraft.metainfo.xml.in:13
 msgid ""
-"Switchcraft watches GNOME's color-scheme preference and runs user-defined "
-"shell commands when the theme switches between light and dark. It allows you "
-"to automate theme-dependent adjustments for applications that don't follow "
-"system settings automatically."
+"Switchcraft follows the light and dark style of GNOME and KDE Plasma. On "
+"every switch it runs your shell commands and applies per-theme settings such "
+"as the wallpaper, icon, GTK and Kvantum themes. Applications that do not "
+"follow the system style stay in sync."
 msgstr ""
-"تراقب Switchcraft تفضيل نظام الألوان في GNOME وتشغّل أوامر shell التي يحددها"
-" المستخدم عندما تتبدل السمة بين الفاتح والداكن. وهي تتيح لك أتمتة التعديلات"
-" المرتبطة بالسمة للتطبيقات التي لا تتبع إعدادات النظام تلقائيًا."
+"يتابع Switchcraft النمط الفاتح والداكن في GNOME و KDE Plasma. عند كل تبديل "
+"يشغّل أوامر shell الخاصة بك ويطبّق إعدادات خاصة بكل سمة، مثل صورة الخلفية "
+"وسمات الأيقونات و GTK و Kvantum. وبذلك تبقى التطبيقات التي لا تتبع نمط "
+"النظام متوافقة معه."
 
-#: data/com.github.Switchcraft.metainfo.xml.in:24
-msgid "Refactored icon structure and updated metadata integration."
-msgstr "هيكل أيقونة مُعاد تشكيله وتكامل بيانات التعريف المحدثة."
+#: data/com.github.Switchcraft.metainfo.xml.in:14
+msgid ""
+"It can also switch the style for you at sunset and sunrise or at custom "
+"times."
+msgstr ""
+"يمكنه أيضًا تبديل النمط تلقائيًا عند غروب الشمس وشروقها أو في أوقات مخصصة."
+
+#: data/com.github.Switchcraft.metainfo.xml.in:41
+msgid ""
+"Built-in commands: pick a setting and a value from a list instead of typing "
+"a command"
+msgstr "أوامر مضمّنة: اختر إعدادًا وقيمة من قائمة بدلًا من كتابة أمر"
+
+#: data/com.github.Switchcraft.metainfo.xml.in:42
+msgid "KDE Plasma and Kvantum support"
+msgstr "دعم KDE Plasma و Kvantum"
+
+#: data/com.github.Switchcraft.metainfo.xml.in:43
+msgid "Automatic switching at sunset and sunrise or at custom times"
+msgstr "تبديل تلقائي عند غروب الشمس وشروقها أو في أوقات مخصصة"
+
+#: data/com.github.Switchcraft.metainfo.xml.in:44
+msgid ""
+"Redesigned command list with drag-and-drop reordering, command testing and "
+"undo"
+msgstr "قائمة أوامر معاد تصميمها مع إعادة الترتيب بالسحب والإفلات واختبار الأوامر والتراجع"
+
+#: data/com.github.Switchcraft.metainfo.xml.in:45
+msgid "Translated into 22 languages"
+msgstr "مترجم إلى 22 لغة"
+
+#~ msgid "Monitor GNOME theme changes and run commands"
+#~ msgstr "مراقبة تغييرات سمة GNOME وتشغيل الأوامر"
+
+#~ msgid "Run the background process that reacts to GNOME theme changes."
+#~ msgstr "قم بتشغيل عملية الخلفية التي تتفاعل مع تغييرات سمة GNOME."
+
+#~ msgid "Refactored icon structure and updated metadata integration."
+#~ msgstr "هيكل أيقونة مُعاد تشكيله وتكامل بيانات التعريف المحدثة."
+
+#~ msgid "Run commands when GNOME theme switches"
+#~ msgstr "قم بتشغيل الأوامر عند تبديل سمة GNOME"
+
+#~ msgid "theme;switch;gtk;gnome;"
+#~ msgstr "سمة;تبديل;gtk;gnome;"
+
+#~ msgid ""
+#~ "Switchcraft watches GNOME's color-scheme preference and runs user-defined "
+#~ "shell commands when the theme switches between light and dark. It allows "
+#~ "you to automate theme-dependent adjustments for applications that don't "
+#~ "follow system settings automatically."
+#~ msgstr ""
+#~ "تراقب Switchcraft تفضيل نظام الألوان في GNOME وتشغّل أوامر shell التي "
+#~ "يحددها المستخدم عندما تتبدل السمة بين الفاتح والداكن. وهي تتيح لك أتمتة "
+#~ "التعديلات المرتبطة بالسمة للتطبيقات التي لا تتبع إعدادات النظام تلقائيًا."

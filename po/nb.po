@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: switchcraft 2.0.0\n"
 "Report-Msgid-Bugs-To: https://github.com/kem-a/switchcraft/issues\n"
-"POT-Creation-Date: 2026-11-11 13:09+0200\n"
+"POT-Creation-Date: 2026-11-12 00:18+0200\n"
 "PO-Revision-Date: 2026-11-11 12:02+0000\n"
 "Last-Translator: Switchcraft translators\n"
 "Language-Team: none\n"
@@ -25,93 +25,93 @@ msgstr "Vis versjonsinformasjon"
 msgid "Run in background for theme monitoring"
 msgstr "Kjør i bakgrunnen for temaovervåking"
 
-#: src/Application.vala:343
+#: src/Application.vala:352
 #, c-format
 msgid "Exited with code %d"
 msgstr "Avsluttet med koden %d"
 
-#: src/Application.vala:344
+#: src/Application.vala:353
 #, c-format
 msgid "Killed by signal %d"
 msgstr "Drept av signal %d"
 
-#: src/Application.vala:1331
+#: src/Application.vala:1367
 msgid "The 'zip' command is required to export."
 msgstr "Kommandoen 'zip' er nødvendig for å eksportere."
 
-#: src/Application.vala:1337
+#: src/Application.vala:1373
 msgid "Destination must be a local file."
 msgstr "Destinasjonen må være en lokal fil."
 
-#: src/Application.vala:1344
+#: src/Application.vala:1380
 msgid "Failed to prepare destination directory."
 msgstr "Kunne ikke klargjøre målkatalogen."
 
-#: src/Application.vala:1352 src/Application.vala:1425
+#: src/Application.vala:1388 src/Application.vala:1461
 msgid "Failed to create temporary directory."
 msgstr "Kunne ikke opprette midlertidig katalog."
 
-#: src/Application.vala:1383
+#: src/Application.vala:1419
 msgid "Unable to overwrite existing archive."
 msgstr "Kan ikke overskrive eksisterende arkiv."
 
-#: src/Application.vala:1395
+#: src/Application.vala:1431
 #, c-format
 msgid "Failed to write archive: %s"
 msgstr "Kunne ikke skrive arkiv: %s"
 
-#: src/Application.vala:1412
+#: src/Application.vala:1448
 msgid "The 'unzip' command is required to import."
 msgstr "Kommandoen 'unzip' er nødvendig for å importere."
 
-#: src/Application.vala:1418
+#: src/Application.vala:1454
 msgid "Archive must be a local file."
 msgstr "Arkivet må være en lokal fil."
 
-#: src/Application.vala:1436
+#: src/Application.vala:1472
 #, c-format
 msgid "Failed to unpack archive: %s"
 msgstr "Kunne ikke pakke ut arkivet: %s"
 
-#: src/Application.vala:1444
+#: src/Application.vala:1480
 msgid "Archive must contain commands.json and constants.json at the top level."
 msgstr "Arkiv må inneholde commands.json og constants.json på toppnivå."
 
-#: src/Application.vala:1456
+#: src/Application.vala:1492
 msgid "commands.json is not a JSON object."
 msgstr "commands.json er ikke et JSON-objekt."
 
-#: src/Application.vala:1467
+#: src/Application.vala:1503
 msgid "constants.json is not a JSON object."
 msgstr "constants.json er ikke et JSON-objekt."
 
-#: src/Application.vala:1484
+#: src/Application.vala:1520
 msgid "constants.json must only contain string values."
 msgstr "constants.json må bare inneholde strengverdier."
 
-#: src/Application.vala:1497
+#: src/Application.vala:1533
 msgid "theme_settings.json is not a JSON object."
 msgstr "theme_settings.json er ikke et JSON-objekt."
 
-#: src/Application.vala:1520
+#: src/Application.vala:1556
 msgid "Failed to remove commands.json."
 msgstr "Kunne ikke fjerne commands.json."
 
-#: src/Application.vala:1527
+#: src/Application.vala:1563
 msgid "Failed to remove constants.json."
 msgstr "Kunne ikke fjerne constants.json."
 
-#: src/Application.vala:1534
+#: src/Application.vala:1570
 msgid "Failed to remove theme_settings.json."
 msgstr "Kunne ikke fjerne theme_settings.json."
 
-#: src/Application.vala:1720
+#: src/Application.vala:1756
 msgid "Switchcraft Monitor"
 msgstr "Switchcraft-overvåking"
 
-#: src/Application.vala:1721
-msgid "Monitor GNOME theme changes and run commands"
-msgstr "Overvåk GNOME-temaendringer og kjør kommandoer"
+#: src/Application.vala:1757
+msgid "Monitor theme changes and run commands"
+msgstr "Overvåk temaendringer og kjør kommandoer"
 
 #: src/CommandDialog.vala:44
 msgid "Color Scheme"
@@ -170,83 +170,83 @@ msgstr "Byter til mørk stil og vil gå i løkke i lys modus"
 msgid "%s is already set in this mode"
 msgstr "%s er allerede satt i denne modusen"
 
-#: src/CommandDialog.vala:116
+#: src/CommandDialog.vala:118
 msgid "This command is already in this mode"
 msgstr "Denne kommandoen er allerede i denne modusen"
 
-#: src/CommandDialog.vala:124
+#: src/CommandDialog.vala:128
 msgid "Edit Command"
 msgstr "Rediger kommando"
 
-#: src/CommandDialog.vala:124
+#: src/CommandDialog.vala:128
 msgid "Add Command"
 msgstr "Legg til kommando"
 
-#: src/CommandDialog.vala:131
+#: src/CommandDialog.vala:135
 msgid "Delete"
 msgstr "Slett"
 
-#: src/CommandDialog.vala:134
+#: src/CommandDialog.vala:138
 msgid "Cancel"
 msgstr "Avbryt"
 
-#: src/CommandDialog.vala:135
+#: src/CommandDialog.vala:139
 msgid "Save"
 msgstr "Lagre"
 
-#: src/CommandDialog.vala:135
+#: src/CommandDialog.vala:139
 msgid "Add"
 msgstr "Legg til"
 
-#: src/CommandDialog.vala:148
+#: src/CommandDialog.vala:152
 msgid "Custom Command"
 msgstr "Egendefinert kommando"
 
-#: src/CommandDialog.vala:170
+#: src/CommandDialog.vala:174
 msgid "Type"
 msgstr "Type"
 
-#: src/CommandDialog.vala:175
+#: src/CommandDialog.vala:179
 msgid "Command"
 msgstr "Kommando"
 
-#: src/CommandDialog.vala:215
+#: src/CommandDialog.vala:219
 msgid "Copy Error"
 msgstr "Kopier feil"
 
-#: src/CommandDialog.vala:240
+#: src/CommandDialog.vala:244
 msgid "Test"
 msgstr "Test"
 
-#: src/CommandDialog.vala:256
+#: src/CommandDialog.vala:260
 msgid "Value"
 msgstr "Verdi"
 
-#: src/CommandDialog.vala:261
+#: src/CommandDialog.vala:265
 msgid "Image"
 msgstr "Bilde"
 
-#: src/CommandDialog.vala:266
+#: src/CommandDialog.vala:270
 msgid "Browse…"
 msgstr "Bla gjennom…"
 
-#: src/CommandDialog.vala:276
+#: src/CommandDialog.vala:280
 msgid "Mode"
 msgstr "Modus"
 
-#: src/CommandDialog.vala:402
+#: src/CommandDialog.vala:406
 msgid "Requires the User Themes GNOME Shell extension."
 msgstr "Krever User Themes GNOME Shell-utvidelsen."
 
-#: src/CommandDialog.vala:514
+#: src/CommandDialog.vala:521
 msgid "Command failed"
 msgstr "Klarte ikke å kjøre kommandoen"
 
-#: src/CommandDialog.vala:514
+#: src/CommandDialog.vala:521
 msgid "Command succeeded"
 msgstr "Kommandoen lyktes"
 
-#: src/CommandDialog.vala:527
+#: src/CommandDialog.vala:534
 msgid "Select Wallpaper"
 msgstr "Velg bakgrunnsbilde"
 
@@ -263,8 +263,8 @@ msgid ""
 "Define constants to use in your commands. Reference them with $NAME or $"
 "{NAME}."
 msgstr ""
-"Definer konstanter som skal brukes i kommandoene dine. Referer dem med $NAME"
-" eller ${NAME}."
+"Definer konstanter som skal brukes i kommandoene dine. Referer dem med $NAME "
+"eller ${NAME}."
 
 #: src/ConstantsWindow.vala:69
 msgid "No Constants"
@@ -303,8 +303,8 @@ msgid ""
 "Use in commands as $NAME or ${NAME}. Names use letters, numbers and "
 "underscores."
 msgstr ""
-"Bruk i kommandoer som $NAME eller ${NAME}. Navn bruker bokstaver, tall og"
-" understreker."
+"Bruk i kommandoer som $NAME eller ${NAME}. Navn bruker bokstaver, tall og "
+"understreker."
 
 #: src/MainWindow.vala:64
 msgid "Preferences"
@@ -323,8 +323,8 @@ msgid "Quit"
 msgstr "Avslutt"
 
 #: src/MainWindow.vala:78
-msgid "Run the background process that reacts to GNOME theme changes."
-msgstr "Kjør bakgrunnsprosessen som reagerer på GNOME-temaendringer."
+msgid "Run the background process that reacts to theme changes."
+msgstr "Kjør bakgrunnsprosessen som reagerer på temaendringer."
 
 #: src/MainWindow.vala:79 src/MainWindow.vala:82
 msgid "Monitor"
@@ -335,10 +335,11 @@ msgid "No Commands"
 msgstr "Ingen kommandoer"
 
 #: src/MainWindow.vala:89
-msgid "Use the '+' button in the header bar or press (Ctrl+N) to add a command."
+msgid ""
+"Use the '+' button in the header bar or press (Ctrl+N) to add a command."
 msgstr ""
-"Bruk '+'-knappen i overskriftslinjen eller trykk (Ctrl+N) for å legge til en"
-" kommando."
+"Bruk '+'-knappen i overskriftslinjen eller trykk (Ctrl+N) for å legge til en "
+"kommando."
 
 #: src/MainWindow.vala:128
 msgid "Commands"
@@ -372,11 +373,19 @@ msgstr "Kommando slettet"
 msgid "Undo"
 msgstr "Angre"
 
-#: src/MainWindow.vala:697
+#: src/MainWindow.vala:652
+msgid "Contributors"
+msgstr "Bidragsytere"
+
+#: src/MainWindow.vala:653
+msgid "Credits"
+msgstr "Takk til"
+
+#: src/MainWindow.vala:700
 msgid "Background monitoring is now active"
 msgstr "Bakgrunnsovervåking er nå aktiv"
 
-#: src/MainWindow.vala:698
+#: src/MainWindow.vala:701
 msgid "Background monitoring is now inactive"
 msgstr "Bakgrunnsovervåking er nå inaktiv"
 
@@ -389,22 +398,23 @@ msgid ""
 "KDE Plasma is set to switch global themes automatically. Turn that off to "
 "use this schedule."
 msgstr ""
-"KDE Plasma er satt til å bytte globale temaer automatisk. Slå den av for å"
-" bruke denne tidsplanen."
+"KDE Plasma er satt til å bytte globale temaer automatisk. Slå den av for å "
+"bruke denne tidsplanen."
 
 #: src/PreferencesWindow.vala:47
 msgid ""
 "Switch KDE's default light and dark global themes on a schedule. Needs "
 "background monitoring."
 msgstr ""
-"Bytt KDEs standard lyse og mørke globale temaer etter en tidsplan. Trenger"
-" bakgrunnsovervåking."
+"Bytt KDEs standard lyse og mørke globale temaer etter en tidsplan. Trenger "
+"bakgrunnsovervåking."
 
 #: src/PreferencesWindow.vala:48
 msgid ""
 "Switch between light and dark style on a schedule. Needs background "
 "monitoring."
-msgstr "Bytt mellom lys og mørk stil på en timeplan. Trenger bakgrunnsovervåking."
+msgstr ""
+"Bytt mellom lys og mørk stil på en timeplan. Trenger bakgrunnsovervåking."
 
 #: src/PreferencesWindow.vala:54
 msgid "Automatic Switching Is Set in KDE"
@@ -415,8 +425,8 @@ msgid ""
 "Turn off “Switch to Dark Mode at Night” in System Settings to use this "
 "schedule."
 msgstr ""
-"Slå av \"Bytt til mørk modus om natten\" i systeminnstillinger for å bruke"
-" denne tidsplanen."
+"Slå av \"Bytt til mørk modus om natten\" i systeminnstillinger for å bruke "
+"denne tidsplanen."
 
 #: src/PreferencesWindow.vala:61
 msgid "Open Settings"
@@ -456,7 +466,8 @@ msgstr "Konfigurasjon"
 
 #: src/PreferencesWindow.vala:100
 msgid "Import or export commands and constants together as a zip archive."
-msgstr "Importer eller eksporter kommandoer og konstanter sammen som et zip-arkiv."
+msgstr ""
+"Importer eller eksporter kommandoer og konstanter sammen som et zip-arkiv."
 
 #: src/PreferencesWindow.vala:104 src/PreferencesWindow.vala:237
 msgid "Import Configuration"
@@ -549,8 +560,7 @@ msgstr "Vil du slette all konfigurasjon?"
 msgid ""
 "This will remove every command and constant. This action cannot be undone."
 msgstr ""
-"Dette vil fjerne hver kommando og konstant. Denne handlingen kan ikke"
-" angres."
+"Dette vil fjerne hver kommando og konstant. Denne handlingen kan ikke angres."
 
 #: src/PreferencesWindow.vala:305
 msgid "Configuration deleted"
@@ -585,18 +595,6 @@ msgstr "Åpne preferanser"
 msgid "Show keyboard shortcuts"
 msgstr "Vis hurtigtaster"
 
-#: data/com.github.Switchcraft.desktop.in:3
-msgid "Switchcraft"
-msgstr "Switchcraft"
-
-#: data/com.github.Switchcraft.desktop.in:4
-msgid "Run commands when GNOME theme switches"
-msgstr "Kjør kommandoer når GNOME-temaet bytter"
-
-#: data/com.github.Switchcraft.desktop.in:10
-msgid "theme;switch;gtk;gnome;"
-msgstr "tema;bryter;gtk;gnome;"
-
 #: data/com.github.Switchcraft.gschema.xml:6
 msgid "Enable background monitoring"
 msgstr "Aktiver bakgrunnsovervåking"
@@ -614,8 +612,8 @@ msgid ""
 "Switch the light/dark style at sunrise and sunset (sun), at light-time and "
 "dark-time (custom), or never (off). Runs in the background monitor."
 msgstr ""
-"Bytt lys/mørke-stil ved soloppgang og solnedgang (sol), ved lys- og mørketid"
-" (egendefinert), eller aldri (av). Kjører i bakgrunnsmonitoren."
+"Bytt lys/mørke-stil ved soloppgang og solnedgang (sol), ved lys- og mørketid "
+"(egendefinert), eller aldri (av). Kjører i bakgrunnsmonitoren."
 
 #: data/com.github.Switchcraft.gschema.xml:22
 msgid "Light style time"
@@ -625,8 +623,7 @@ msgstr "Lett stiltid"
 msgid ""
 "Minutes after midnight when the custom schedule switches to the light style."
 msgstr ""
-"Minutter etter midnatt når den egendefinerte timeplanen bytter til"
-" lysstilen."
+"Minutter etter midnatt når den egendefinerte timeplanen bytter til lysstilen."
 
 #: data/com.github.Switchcraft.gschema.xml:28
 msgid "Dark style time"
@@ -636,8 +633,7 @@ msgstr "Mørk stiltid"
 msgid ""
 "Minutes after midnight when the custom schedule switches to the dark style."
 msgstr ""
-"Minutter etter midnatt når den egendefinerte timeplanen bytter til mørk"
-" stil."
+"Minutter etter midnatt når den egendefinerte timeplanen bytter til mørk stil."
 
 #: data/com.github.Switchcraft.gschema.xml:33
 msgid "Last known location"
@@ -648,27 +644,89 @@ msgid ""
 "Latitude and longitude from GeoClue, used for sunrise and sunset. Out of "
 "range values mean none is known, and the system time zone gives the location."
 msgstr ""
-"Bredde- og lengdegrad fra GeoClue, brukt for soloppgang og solnedgang."
-" Verdier utenfor rekkevidde betyr at ingen er kjent, og systemets tidssone"
-" angir plasseringen."
+"Bredde- og lengdegrad fra GeoClue, brukt for soloppgang og solnedgang. "
+"Verdier utenfor rekkevidde betyr at ingen er kjent, og systemets tidssone "
+"angir plasseringen."
+
+#: data/com.github.Switchcraft.metainfo.xml.in:4
+msgid "Switchcraft"
+msgstr "Switchcraft"
 
 #: data/com.github.Switchcraft.metainfo.xml.in:6
 #: data/com.github.Switchcraft.metainfo.xml.in:8
 msgid "Arnis Kemlers"
 msgstr "Arnis Kemlers"
 
+#: data/com.github.Switchcraft.metainfo.xml.in:9
+msgid "Automate light and dark theme switching"
+msgstr "Automatiser bytte mellom lyst og mørkt tema"
+
 #: data/com.github.Switchcraft.metainfo.xml.in:13
 msgid ""
-"Switchcraft watches GNOME's color-scheme preference and runs user-defined "
-"shell commands when the theme switches between light and dark. It allows you "
-"to automate theme-dependent adjustments for applications that don't follow "
-"system settings automatically."
+"Switchcraft follows the light and dark style of GNOME and KDE Plasma. On "
+"every switch it runs your shell commands and applies per-theme settings such "
+"as the wallpaper, icon, GTK and Kvantum themes. Applications that do not "
+"follow the system style stay in sync."
 msgstr ""
-"Switchcraft ser på GNOMEs fargeskjemapreferanse og kjører brukerdefinerte"
-" skallkommandoer når temaet veksler mellom lyst og mørkt. Den lar deg"
-" automatisere temaavhengige justeringer for applikasjoner som ikke følger"
-" systeminnstillingene automatisk."
+"Switchcraft følger den lyse og mørke stilen i GNOME og KDE Plasma. Ved hvert "
+"bytte kjører det skallkommandoene dine og bruker innstillinger per tema, for "
+"eksempel bakgrunnsbilde og ikon-, GTK- og Kvantum-temaer. Slik holder "
+"programmer som ikke følger systemstilen seg synkronisert."
 
-#: data/com.github.Switchcraft.metainfo.xml.in:24
-msgid "Refactored icon structure and updated metadata integration."
-msgstr "Refaktorert ikonstruktur og oppdatert metadataintegrasjon."
+#: data/com.github.Switchcraft.metainfo.xml.in:14
+msgid ""
+"It can also switch the style for you at sunset and sunrise or at custom "
+"times."
+msgstr ""
+"Det kan også bytte stil for deg ved solnedgang og soloppgang eller til "
+"egendefinerte tider."
+
+#: data/com.github.Switchcraft.metainfo.xml.in:41
+msgid ""
+"Built-in commands: pick a setting and a value from a list instead of typing "
+"a command"
+msgstr "Innebygde kommandoer: velg en innstilling og en verdi fra en liste i stedet for å skrive en kommando"
+
+#: data/com.github.Switchcraft.metainfo.xml.in:42
+msgid "KDE Plasma and Kvantum support"
+msgstr "Støtte for KDE Plasma og Kvantum"
+
+#: data/com.github.Switchcraft.metainfo.xml.in:43
+msgid "Automatic switching at sunset and sunrise or at custom times"
+msgstr "Automatisk bytte ved solnedgang og soloppgang eller til egendefinerte tider"
+
+#: data/com.github.Switchcraft.metainfo.xml.in:44
+msgid ""
+"Redesigned command list with drag-and-drop reordering, command testing and "
+"undo"
+msgstr "Ny kommandoliste med omorganisering ved å dra og slippe, kommandotesting og angring"
+
+#: data/com.github.Switchcraft.metainfo.xml.in:45
+msgid "Translated into 22 languages"
+msgstr "Oversatt til 22 språk"
+
+#~ msgid "Monitor GNOME theme changes and run commands"
+#~ msgstr "Overvåk GNOME-temaendringer og kjør kommandoer"
+
+#~ msgid "Run the background process that reacts to GNOME theme changes."
+#~ msgstr "Kjør bakgrunnsprosessen som reagerer på GNOME-temaendringer."
+
+#~ msgid "Refactored icon structure and updated metadata integration."
+#~ msgstr "Refaktorert ikonstruktur og oppdatert metadataintegrasjon."
+
+#~ msgid "Run commands when GNOME theme switches"
+#~ msgstr "Kjør kommandoer når GNOME-temaet bytter"
+
+#~ msgid "theme;switch;gtk;gnome;"
+#~ msgstr "tema;bryter;gtk;gnome;"
+
+#~ msgid ""
+#~ "Switchcraft watches GNOME's color-scheme preference and runs user-defined "
+#~ "shell commands when the theme switches between light and dark. It allows "
+#~ "you to automate theme-dependent adjustments for applications that don't "
+#~ "follow system settings automatically."
+#~ msgstr ""
+#~ "Switchcraft ser på GNOMEs fargeskjemapreferanse og kjører brukerdefinerte "
+#~ "skallkommandoer når temaet veksler mellom lyst og mørkt. Den lar deg "
+#~ "automatisere temaavhengige justeringer for applikasjoner som ikke følger "
+#~ "systeminnstillingene automatisk."

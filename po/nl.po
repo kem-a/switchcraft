@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: switchcraft 2.0.0\n"
 "Report-Msgid-Bugs-To: https://github.com/kem-a/switchcraft/issues\n"
-"POT-Creation-Date: 2026-11-11 13:09+0200\n"
+"POT-Creation-Date: 2026-11-12 00:18+0200\n"
 "PO-Revision-Date: 2026-11-11 12:02+0000\n"
 "Last-Translator: Switchcraft translators\n"
 "Language-Team: none\n"
@@ -25,95 +25,95 @@ msgstr "Versie-informatie weergeven"
 msgid "Run in background for theme monitoring"
 msgstr "Wordt op de achtergrond uitgevoerd voor themabewaking"
 
-#: src/Application.vala:343
+#: src/Application.vala:352
 #, c-format
 msgid "Exited with code %d"
 msgstr "Afgesloten met code %d"
 
-#: src/Application.vala:344
+#: src/Application.vala:353
 #, c-format
 msgid "Killed by signal %d"
 msgstr "Gedood door signaal %d"
 
-#: src/Application.vala:1331
+#: src/Application.vala:1367
 msgid "The 'zip' command is required to export."
 msgstr "Om te exporteren is het commando 'zip' vereist."
 
-#: src/Application.vala:1337
+#: src/Application.vala:1373
 msgid "Destination must be a local file."
 msgstr "Bestemming moet een lokaal bestand zijn."
 
-#: src/Application.vala:1344
+#: src/Application.vala:1380
 msgid "Failed to prepare destination directory."
 msgstr "Kan de doelmap niet voorbereiden."
 
-#: src/Application.vala:1352 src/Application.vala:1425
+#: src/Application.vala:1388 src/Application.vala:1461
 msgid "Failed to create temporary directory."
 msgstr "Kan tijdelijke map niet maken."
 
-#: src/Application.vala:1383
+#: src/Application.vala:1419
 msgid "Unable to overwrite existing archive."
 msgstr "Kan bestaand archief niet overschrijven."
 
-#: src/Application.vala:1395
+#: src/Application.vala:1431
 #, c-format
 msgid "Failed to write archive: %s"
 msgstr "Kan archief niet schrijven: %s"
 
-#: src/Application.vala:1412
+#: src/Application.vala:1448
 msgid "The 'unzip' command is required to import."
 msgstr "Voor het importeren is het commando 'unzip' vereist."
 
-#: src/Application.vala:1418
+#: src/Application.vala:1454
 msgid "Archive must be a local file."
 msgstr "Het archief moet een lokaal bestand zijn."
 
-#: src/Application.vala:1436
+#: src/Application.vala:1472
 #, c-format
 msgid "Failed to unpack archive: %s"
 msgstr "Kan archief niet uitpakken: %s"
 
-#: src/Application.vala:1444
+#: src/Application.vala:1480
 msgid "Archive must contain commands.json and constants.json at the top level."
 msgstr ""
-"Het archief moet commands.json en constants.json op het hoogste niveau"
-" bevatten."
+"Het archief moet commands.json en constants.json op het hoogste niveau "
+"bevatten."
 
-#: src/Application.vala:1456
+#: src/Application.vala:1492
 msgid "commands.json is not a JSON object."
 msgstr "commands.json is geen JSON-object."
 
-#: src/Application.vala:1467
+#: src/Application.vala:1503
 msgid "constants.json is not a JSON object."
 msgstr "constants.json is geen JSON-object."
 
-#: src/Application.vala:1484
+#: src/Application.vala:1520
 msgid "constants.json must only contain string values."
 msgstr "constants.json mag alleen stringwaarden bevatten."
 
-#: src/Application.vala:1497
+#: src/Application.vala:1533
 msgid "theme_settings.json is not a JSON object."
 msgstr "theme_settings.json is geen JSON-object."
 
-#: src/Application.vala:1520
+#: src/Application.vala:1556
 msgid "Failed to remove commands.json."
 msgstr "Kan commands.json niet verwijderen."
 
-#: src/Application.vala:1527
+#: src/Application.vala:1563
 msgid "Failed to remove constants.json."
 msgstr "Kan constants.json niet verwijderen."
 
-#: src/Application.vala:1534
+#: src/Application.vala:1570
 msgid "Failed to remove theme_settings.json."
 msgstr "Kan theme_settings.json niet verwijderen."
 
-#: src/Application.vala:1720
+#: src/Application.vala:1756
 msgid "Switchcraft Monitor"
 msgstr "Switchcraft-monitor"
 
-#: src/Application.vala:1721
-msgid "Monitor GNOME theme changes and run commands"
-msgstr "Houd toezicht op GNOME-themawijzigingen en voer opdrachten uit"
+#: src/Application.vala:1757
+msgid "Monitor theme changes and run commands"
+msgstr "Houd toezicht op themawijzigingen en voer opdrachten uit"
 
 #: src/CommandDialog.vala:44
 msgid "Color Scheme"
@@ -172,83 +172,83 @@ msgstr "Schakelt over naar de donkere stijl en loopt in de lichte modus"
 msgid "%s is already set in this mode"
 msgstr "%s is al ingesteld in deze modus"
 
-#: src/CommandDialog.vala:116
+#: src/CommandDialog.vala:118
 msgid "This command is already in this mode"
 msgstr "Deze opdracht bevindt zich al in deze modus"
 
-#: src/CommandDialog.vala:124
+#: src/CommandDialog.vala:128
 msgid "Edit Command"
 msgstr "Opdracht bewerken"
 
-#: src/CommandDialog.vala:124
+#: src/CommandDialog.vala:128
 msgid "Add Command"
 msgstr "Opdracht toevoegen"
 
-#: src/CommandDialog.vala:131
+#: src/CommandDialog.vala:135
 msgid "Delete"
 msgstr "Verwijderen"
 
-#: src/CommandDialog.vala:134
+#: src/CommandDialog.vala:138
 msgid "Cancel"
 msgstr "Annuleren"
 
-#: src/CommandDialog.vala:135
+#: src/CommandDialog.vala:139
 msgid "Save"
 msgstr "Opslaan"
 
-#: src/CommandDialog.vala:135
+#: src/CommandDialog.vala:139
 msgid "Add"
 msgstr "Toevoegen"
 
-#: src/CommandDialog.vala:148
+#: src/CommandDialog.vala:152
 msgid "Custom Command"
 msgstr "Aangepaste opdracht"
 
-#: src/CommandDialog.vala:170
+#: src/CommandDialog.vala:174
 msgid "Type"
 msgstr "Typ"
 
-#: src/CommandDialog.vala:175
+#: src/CommandDialog.vala:179
 msgid "Command"
 msgstr "Opdracht"
 
-#: src/CommandDialog.vala:215
+#: src/CommandDialog.vala:219
 msgid "Copy Error"
 msgstr "Fout kopiëren"
 
-#: src/CommandDialog.vala:240
+#: src/CommandDialog.vala:244
 msgid "Test"
 msgstr "Testen"
 
-#: src/CommandDialog.vala:256
+#: src/CommandDialog.vala:260
 msgid "Value"
 msgstr "Waarde"
 
-#: src/CommandDialog.vala:261
+#: src/CommandDialog.vala:265
 msgid "Image"
 msgstr "Afbeelding"
 
-#: src/CommandDialog.vala:266
+#: src/CommandDialog.vala:270
 msgid "Browse…"
 msgstr "Bladeren…"
 
-#: src/CommandDialog.vala:276
+#: src/CommandDialog.vala:280
 msgid "Mode"
 msgstr "Modus"
 
-#: src/CommandDialog.vala:402
+#: src/CommandDialog.vala:406
 msgid "Requires the User Themes GNOME Shell extension."
 msgstr "Vereist de GNOME Shell-extensie User Themes."
 
-#: src/CommandDialog.vala:514
+#: src/CommandDialog.vala:521
 msgid "Command failed"
 msgstr "Opdracht is niet gelukt"
 
-#: src/CommandDialog.vala:514
+#: src/CommandDialog.vala:521
 msgid "Command succeeded"
 msgstr "Opdracht is gelukt"
 
-#: src/CommandDialog.vala:527
+#: src/CommandDialog.vala:534
 msgid "Select Wallpaper"
 msgstr "Achtergrond selecteren"
 
@@ -265,8 +265,8 @@ msgid ""
 "Define constants to use in your commands. Reference them with $NAME or $"
 "{NAME}."
 msgstr ""
-"Definieer constanten die u in uw opdrachten wilt gebruiken. Verwijs ernaar"
-" met $NAME of ${NAME}."
+"Definieer constanten die u in uw opdrachten wilt gebruiken. Verwijs ernaar "
+"met $NAME of ${NAME}."
 
 #: src/ConstantsWindow.vala:69
 msgid "No Constants"
@@ -305,8 +305,8 @@ msgid ""
 "Use in commands as $NAME or ${NAME}. Names use letters, numbers and "
 "underscores."
 msgstr ""
-"Gebruik in opdrachten als $NAME of ${NAME}. Namen gebruiken letters, cijfers"
-" en onderstrepingstekens."
+"Gebruik in opdrachten als $NAME of ${NAME}. Namen gebruiken letters, cijfers "
+"en onderstrepingstekens."
 
 #: src/MainWindow.vala:64
 msgid "Preferences"
@@ -325,8 +325,8 @@ msgid "Quit"
 msgstr "Afsluiten"
 
 #: src/MainWindow.vala:78
-msgid "Run the background process that reacts to GNOME theme changes."
-msgstr "Voer het achtergrondproces uit dat reageert op GNOME-themawijzigingen."
+msgid "Run the background process that reacts to theme changes."
+msgstr "Voer het achtergrondproces uit dat reageert op themawijzigingen."
 
 #: src/MainWindow.vala:79 src/MainWindow.vala:82
 msgid "Monitor"
@@ -337,10 +337,11 @@ msgid "No Commands"
 msgstr "Geen opdrachten"
 
 #: src/MainWindow.vala:89
-msgid "Use the '+' button in the header bar or press (Ctrl+N) to add a command."
+msgid ""
+"Use the '+' button in the header bar or press (Ctrl+N) to add a command."
 msgstr ""
-"Gebruik de knop '+' in de kopbalk of druk op (Ctrl+N) om een opdracht toe"
-" te voegen."
+"Gebruik de knop '+' in de kopbalk of druk op (Ctrl+N) om een opdracht toe te "
+"voegen."
 
 #: src/MainWindow.vala:128
 msgid "Commands"
@@ -348,7 +349,8 @@ msgstr "Opdrachten"
 
 #: src/MainWindow.vala:129
 msgid "Active commands that will run when their theme matches."
-msgstr "Actieve opdrachten die worden uitgevoerd wanneer hun thema overeenkomt."
+msgstr ""
+"Actieve opdrachten die worden uitgevoerd wanneer hun thema overeenkomt."
 
 #: src/MainWindow.vala:135
 msgid "Disabled"
@@ -374,11 +376,19 @@ msgstr "Opdracht verwijderd"
 msgid "Undo"
 msgstr "Ongedaan maken"
 
-#: src/MainWindow.vala:697
+#: src/MainWindow.vala:652
+msgid "Contributors"
+msgstr "Bijdragers"
+
+#: src/MainWindow.vala:653
+msgid "Credits"
+msgstr "Met dank aan"
+
+#: src/MainWindow.vala:700
 msgid "Background monitoring is now active"
 msgstr "Achtergrondmonitoring is nu actief"
 
-#: src/MainWindow.vala:698
+#: src/MainWindow.vala:701
 msgid "Background monitoring is now inactive"
 msgstr "Achtergrondmonitoring is nu inactief"
 
@@ -391,24 +401,24 @@ msgid ""
 "KDE Plasma is set to switch global themes automatically. Turn that off to "
 "use this schedule."
 msgstr ""
-"KDE Plasma is ingesteld om automatisch van globale thema te wisselen."
-" Schakel dat uit om dit schema te gebruiken."
+"KDE Plasma is ingesteld om automatisch van globale thema te wisselen. "
+"Schakel dat uit om dit schema te gebruiken."
 
 #: src/PreferencesWindow.vala:47
 msgid ""
 "Switch KDE's default light and dark global themes on a schedule. Needs "
 "background monitoring."
 msgstr ""
-"Schakel de standaard lichte en donkere globale thema's van KDE volgens een"
-" schema. Heeft achtergrondmonitoring nodig."
+"Schakel de standaard lichte en donkere globale thema's van KDE volgens een "
+"schema. Heeft achtergrondmonitoring nodig."
 
 #: src/PreferencesWindow.vala:48
 msgid ""
 "Switch between light and dark style on a schedule. Needs background "
 "monitoring."
 msgstr ""
-"Wissel volgens een schema tussen lichte en donkere stijl. Heeft"
-" achtergrondmonitoring nodig."
+"Wissel volgens een schema tussen lichte en donkere stijl. Heeft "
+"achtergrondmonitoring nodig."
 
 #: src/PreferencesWindow.vala:54
 msgid "Automatic Switching Is Set in KDE"
@@ -419,8 +429,8 @@ msgid ""
 "Turn off “Switch to Dark Mode at Night” in System Settings to use this "
 "schedule."
 msgstr ""
-"Schakel 'S nachts overschakelen naar donkere modus' uit in"
-" Systeeminstellingen om dit schema te gebruiken."
+"Schakel 'S nachts overschakelen naar donkere modus' uit in "
+"Systeeminstellingen om dit schema te gebruiken."
 
 #: src/PreferencesWindow.vala:61
 msgid "Open Settings"
@@ -460,7 +470,8 @@ msgstr "Configuratie"
 
 #: src/PreferencesWindow.vala:100
 msgid "Import or export commands and constants together as a zip archive."
-msgstr "Importeer of exporteer opdrachten en constanten samen als een zip-archief."
+msgstr ""
+"Importeer of exporteer opdrachten en constanten samen als een zip-archief."
 
 #: src/PreferencesWindow.vala:104 src/PreferencesWindow.vala:237
 msgid "Import Configuration"
@@ -501,8 +512,8 @@ msgstr "Verwijder alle configuratie"
 #: src/PreferencesWindow.vala:134
 msgid "Deletes commands.json and constants.json. This cannot be undone."
 msgstr ""
-"Verwijdert commands.json en constants.json. Dit kan niet ongedaan worden"
-" gemaakt."
+"Verwijdert commands.json en constants.json. Dit kan niet ongedaan worden "
+"gemaakt."
 
 #: src/PreferencesWindow.vala:159
 msgid "Location unknown"
@@ -555,8 +566,8 @@ msgstr "Alle configuratie verwijderen?"
 msgid ""
 "This will remove every command and constant. This action cannot be undone."
 msgstr ""
-"Hiermee wordt elk commando en elke constante verwijderd. Deze actie kan niet"
-" ongedaan worden gemaakt."
+"Hiermee wordt elk commando en elke constante verwijderd. Deze actie kan niet "
+"ongedaan worden gemaakt."
 
 #: src/PreferencesWindow.vala:305
 msgid "Configuration deleted"
@@ -591,18 +602,6 @@ msgstr "Voorkeuren openen"
 msgid "Show keyboard shortcuts"
 msgstr "Sneltoetsen weergeven"
 
-#: data/com.github.Switchcraft.desktop.in:3
-msgid "Switchcraft"
-msgstr "Switchcraft"
-
-#: data/com.github.Switchcraft.desktop.in:4
-msgid "Run commands when GNOME theme switches"
-msgstr "Voer opdrachten uit wanneer het GNOME-thema verandert"
-
-#: data/com.github.Switchcraft.desktop.in:10
-msgid "theme;switch;gtk;gnome;"
-msgstr "thema;wisselen;gtk;gnome;"
-
 #: data/com.github.Switchcraft.gschema.xml:6
 msgid "Enable background monitoring"
 msgstr "Schakel achtergrondbewaking in"
@@ -620,9 +619,8 @@ msgid ""
 "Switch the light/dark style at sunrise and sunset (sun), at light-time and "
 "dark-time (custom), or never (off). Runs in the background monitor."
 msgstr ""
-"Schakel de licht/donker-stijl bij zonsopgang en zonsondergang (zon), bij"
-" licht en donker (aangepast) of nooit (uit). Draait in de"
-" achtergrondmonitor."
+"Schakel de licht/donker-stijl bij zonsopgang en zonsondergang (zon), bij "
+"licht en donker (aangepast) of nooit (uit). Draait in de achtergrondmonitor."
 
 #: data/com.github.Switchcraft.gschema.xml:22
 msgid "Light style time"
@@ -632,8 +630,8 @@ msgstr "Lichte stijltijd"
 msgid ""
 "Minutes after midnight when the custom schedule switches to the light style."
 msgstr ""
-"Minuten na middernacht wanneer het aangepaste schema overschakelt naar de"
-" lichte stijl."
+"Minuten na middernacht wanneer het aangepaste schema overschakelt naar de "
+"lichte stijl."
 
 #: data/com.github.Switchcraft.gschema.xml:28
 msgid "Dark style time"
@@ -643,8 +641,8 @@ msgstr "Donkere stijltijd"
 msgid ""
 "Minutes after midnight when the custom schedule switches to the dark style."
 msgstr ""
-"Minuten na middernacht wanneer het aangepaste schema overschakelt naar de"
-" donkere stijl."
+"Minuten na middernacht wanneer het aangepaste schema overschakelt naar de "
+"donkere stijl."
 
 #: data/com.github.Switchcraft.gschema.xml:33
 msgid "Last known location"
@@ -655,28 +653,92 @@ msgid ""
 "Latitude and longitude from GeoClue, used for sunrise and sunset. Out of "
 "range values mean none is known, and the system time zone gives the location."
 msgstr ""
-"Breedte- en lengtegraad van GeoClue, gebruikt voor zonsopgang en"
-" zonsondergang. Waarden die buiten het bereik vallen, betekenen dat er geen"
-" bekend is, en de systeemtijdzone geeft de locatie aan."
+"Breedte- en lengtegraad van GeoClue, gebruikt voor zonsopgang en "
+"zonsondergang. Waarden die buiten het bereik vallen, betekenen dat er geen "
+"bekend is, en de systeemtijdzone geeft de locatie aan."
+
+#: data/com.github.Switchcraft.metainfo.xml.in:4
+msgid "Switchcraft"
+msgstr "Switchcraft"
 
 #: data/com.github.Switchcraft.metainfo.xml.in:6
 #: data/com.github.Switchcraft.metainfo.xml.in:8
 msgid "Arnis Kemlers"
 msgstr "Arnis Kemlers"
 
+#: data/com.github.Switchcraft.metainfo.xml.in:9
+msgid "Automate light and dark theme switching"
+msgstr "Automatiseer het wisselen tussen licht en donker thema"
+
 #: data/com.github.Switchcraft.metainfo.xml.in:13
 msgid ""
-"Switchcraft watches GNOME's color-scheme preference and runs user-defined "
-"shell commands when the theme switches between light and dark. It allows you "
-"to automate theme-dependent adjustments for applications that don't follow "
-"system settings automatically."
+"Switchcraft follows the light and dark style of GNOME and KDE Plasma. On "
+"every switch it runs your shell commands and applies per-theme settings such "
+"as the wallpaper, icon, GTK and Kvantum themes. Applications that do not "
+"follow the system style stay in sync."
 msgstr ""
-"Switchcraft let op de kleurschemavoorkeur van GNOME en voert door de"
-" gebruiker gedefinieerde shell-opdrachten uit wanneer het thema schakelt"
-" tussen licht en donker. Hiermee kunt u thema-afhankelijke aanpassingen"
-" automatiseren voor applicaties die de systeeminstellingen niet automatisch"
-" volgen."
+"Switchcraft volgt de lichte en donkere stijl van GNOME en KDE Plasma. Bij "
+"elke wissel voert het uw shell-opdrachten uit en past het instellingen per "
+"thema toe, zoals de bureaubladachtergrond en pictogram-, GTK- en Kvantum-"
+"thema's. Zo blijven toepassingen die de systeemstijl niet volgen "
+"gesynchroniseerd."
 
-#: data/com.github.Switchcraft.metainfo.xml.in:24
-msgid "Refactored icon structure and updated metadata integration."
-msgstr "Herziene pictogramstructuur en bijgewerkte metadata-integratie."
+#: data/com.github.Switchcraft.metainfo.xml.in:14
+msgid ""
+"It can also switch the style for you at sunset and sunrise or at custom "
+"times."
+msgstr ""
+"Het kan de stijl ook voor u wisselen bij zonsondergang en zonsopgang of op "
+"aangepaste tijden."
+
+#: data/com.github.Switchcraft.metainfo.xml.in:41
+msgid ""
+"Built-in commands: pick a setting and a value from a list instead of typing "
+"a command"
+msgstr "Ingebouwde opdrachten: kies een instelling en een waarde uit een lijst in plaats van een opdracht te typen"
+
+#: data/com.github.Switchcraft.metainfo.xml.in:42
+msgid "KDE Plasma and Kvantum support"
+msgstr "Ondersteuning voor KDE Plasma en Kvantum"
+
+#: data/com.github.Switchcraft.metainfo.xml.in:43
+msgid "Automatic switching at sunset and sunrise or at custom times"
+msgstr "Automatisch wisselen bij zonsondergang en zonsopgang of op aangepaste tijden"
+
+#: data/com.github.Switchcraft.metainfo.xml.in:44
+msgid ""
+"Redesigned command list with drag-and-drop reordering, command testing and "
+"undo"
+msgstr "Vernieuwde opdrachtenlijst met herschikken via slepen en neerzetten, opdrachten testen en ongedaan maken"
+
+#: data/com.github.Switchcraft.metainfo.xml.in:45
+msgid "Translated into 22 languages"
+msgstr "Vertaald in 22 talen"
+
+#~ msgid "Monitor GNOME theme changes and run commands"
+#~ msgstr "Houd toezicht op GNOME-themawijzigingen en voer opdrachten uit"
+
+#~ msgid "Run the background process that reacts to GNOME theme changes."
+#~ msgstr ""
+#~ "Voer het achtergrondproces uit dat reageert op GNOME-themawijzigingen."
+
+#~ msgid "Refactored icon structure and updated metadata integration."
+#~ msgstr "Herziene pictogramstructuur en bijgewerkte metadata-integratie."
+
+#~ msgid "Run commands when GNOME theme switches"
+#~ msgstr "Voer opdrachten uit wanneer het GNOME-thema verandert"
+
+#~ msgid "theme;switch;gtk;gnome;"
+#~ msgstr "thema;wisselen;gtk;gnome;"
+
+#~ msgid ""
+#~ "Switchcraft watches GNOME's color-scheme preference and runs user-defined "
+#~ "shell commands when the theme switches between light and dark. It allows "
+#~ "you to automate theme-dependent adjustments for applications that don't "
+#~ "follow system settings automatically."
+#~ msgstr ""
+#~ "Switchcraft let op de kleurschemavoorkeur van GNOME en voert door de "
+#~ "gebruiker gedefinieerde shell-opdrachten uit wanneer het thema schakelt "
+#~ "tussen licht en donker. Hiermee kunt u thema-afhankelijke aanpassingen "
+#~ "automatiseren voor applicaties die de systeeminstellingen niet "
+#~ "automatisch volgen."

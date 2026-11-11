@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: switchcraft 2.0.0\n"
 "Report-Msgid-Bugs-To: https://github.com/kem-a/switchcraft/issues\n"
-"POT-Creation-Date: 2026-11-11 13:09+0200\n"
+"POT-Creation-Date: 2026-11-12 00:18+0200\n"
 "PO-Revision-Date: 2026-11-11 12:02+0000\n"
 "Last-Translator: Switchcraft translators\n"
 "Language-Team: none\n"
@@ -26,95 +26,94 @@ msgstr "Pokaż informacje o wersji"
 msgid "Run in background for theme monitoring"
 msgstr "Uruchom w tle w celu monitorowania motywu"
 
-#: src/Application.vala:343
+#: src/Application.vala:352
 #, c-format
 msgid "Exited with code %d"
 msgstr "Zakończono z kodem %d"
 
-#: src/Application.vala:344
+#: src/Application.vala:353
 #, c-format
 msgid "Killed by signal %d"
 msgstr "Zabity przez sygnał %d"
 
-#: src/Application.vala:1331
+#: src/Application.vala:1367
 msgid "The 'zip' command is required to export."
 msgstr "Do eksportu wymagane jest polecenie „zip”."
 
-#: src/Application.vala:1337
+#: src/Application.vala:1373
 msgid "Destination must be a local file."
 msgstr "Miejscem docelowym musi być plik lokalny."
 
-#: src/Application.vala:1344
+#: src/Application.vala:1380
 msgid "Failed to prepare destination directory."
 msgstr "Nie udało się przygotować katalogu docelowego."
 
-#: src/Application.vala:1352 src/Application.vala:1425
+#: src/Application.vala:1388 src/Application.vala:1461
 msgid "Failed to create temporary directory."
 msgstr "Nie udało się utworzyć katalogu tymczasowego."
 
-#: src/Application.vala:1383
+#: src/Application.vala:1419
 msgid "Unable to overwrite existing archive."
 msgstr "Nie można zastąpić istniejącego archiwum."
 
-#: src/Application.vala:1395
+#: src/Application.vala:1431
 #, c-format
 msgid "Failed to write archive: %s"
 msgstr "Nie udało się zapisać archiwum: %s"
 
-#: src/Application.vala:1412
+#: src/Application.vala:1448
 msgid "The 'unzip' command is required to import."
 msgstr "Do importu wymagane jest polecenie „unzip”."
 
-#: src/Application.vala:1418
+#: src/Application.vala:1454
 msgid "Archive must be a local file."
 msgstr "Archiwum musi być plikiem lokalnym."
 
-#: src/Application.vala:1436
+#: src/Application.vala:1472
 #, c-format
 msgid "Failed to unpack archive: %s"
 msgstr "Nie udało się rozpakować archiwum: %s"
 
-#: src/Application.vala:1444
+#: src/Application.vala:1480
 msgid "Archive must contain commands.json and constants.json at the top level."
 msgstr ""
-"Archiwum musi zawierać commands.json i constants.json na najwyższym"
-" poziomie."
+"Archiwum musi zawierać commands.json i constants.json na najwyższym poziomie."
 
-#: src/Application.vala:1456
+#: src/Application.vala:1492
 msgid "commands.json is not a JSON object."
 msgstr "commands.json nie jest obiektem JSON."
 
-#: src/Application.vala:1467
+#: src/Application.vala:1503
 msgid "constants.json is not a JSON object."
 msgstr "constants.json nie jest obiektem JSON."
 
-#: src/Application.vala:1484
+#: src/Application.vala:1520
 msgid "constants.json must only contain string values."
 msgstr "constants.json może zawierać tylko wartości łańcuchowe."
 
-#: src/Application.vala:1497
+#: src/Application.vala:1533
 msgid "theme_settings.json is not a JSON object."
 msgstr "theme_settings.json nie jest obiektem JSON."
 
-#: src/Application.vala:1520
+#: src/Application.vala:1556
 msgid "Failed to remove commands.json."
 msgstr "Nie udało się usunąć commands.json."
 
-#: src/Application.vala:1527
+#: src/Application.vala:1563
 msgid "Failed to remove constants.json."
 msgstr "Nie udało się usunąć constants.json."
 
-#: src/Application.vala:1534
+#: src/Application.vala:1570
 msgid "Failed to remove theme_settings.json."
 msgstr "Nie udało się usunąć theme_settings.json."
 
-#: src/Application.vala:1720
+#: src/Application.vala:1756
 msgid "Switchcraft Monitor"
 msgstr "Monitor Switchcraft"
 
-#: src/Application.vala:1721
-msgid "Monitor GNOME theme changes and run commands"
-msgstr "Monitoruj zmiany motywu GNOME i uruchamiaj polecenia"
+#: src/Application.vala:1757
+msgid "Monitor theme changes and run commands"
+msgstr "Monitoruj zmiany motywu i uruchamiaj polecenia"
 
 #: src/CommandDialog.vala:44
 msgid "Color Scheme"
@@ -173,83 +172,83 @@ msgstr "Przełącza na ciemny styl i zapętla się w trybie jasnym"
 msgid "%s is already set in this mode"
 msgstr "%s jest już ustawiony w tym trybie"
 
-#: src/CommandDialog.vala:116
+#: src/CommandDialog.vala:118
 msgid "This command is already in this mode"
 msgstr "To polecenie jest już w tym trybie"
 
-#: src/CommandDialog.vala:124
+#: src/CommandDialog.vala:128
 msgid "Edit Command"
 msgstr "Edytuj polecenie"
 
-#: src/CommandDialog.vala:124
+#: src/CommandDialog.vala:128
 msgid "Add Command"
 msgstr "Dodaj polecenie"
 
-#: src/CommandDialog.vala:131
+#: src/CommandDialog.vala:135
 msgid "Delete"
 msgstr "Usuń"
 
-#: src/CommandDialog.vala:134
+#: src/CommandDialog.vala:138
 msgid "Cancel"
 msgstr "Anuluj"
 
-#: src/CommandDialog.vala:135
+#: src/CommandDialog.vala:139
 msgid "Save"
 msgstr "Zapisz"
 
-#: src/CommandDialog.vala:135
+#: src/CommandDialog.vala:139
 msgid "Add"
 msgstr "Dodaj"
 
-#: src/CommandDialog.vala:148
+#: src/CommandDialog.vala:152
 msgid "Custom Command"
 msgstr "Niestandardowe polecenie"
 
-#: src/CommandDialog.vala:170
+#: src/CommandDialog.vala:174
 msgid "Type"
 msgstr "Typ"
 
-#: src/CommandDialog.vala:175
+#: src/CommandDialog.vala:179
 msgid "Command"
 msgstr "Polecenie"
 
-#: src/CommandDialog.vala:215
+#: src/CommandDialog.vala:219
 msgid "Copy Error"
 msgstr "Kopiuj błąd"
 
-#: src/CommandDialog.vala:240
+#: src/CommandDialog.vala:244
 msgid "Test"
 msgstr "Testuj"
 
-#: src/CommandDialog.vala:256
+#: src/CommandDialog.vala:260
 msgid "Value"
 msgstr "Wartość"
 
-#: src/CommandDialog.vala:261
+#: src/CommandDialog.vala:265
 msgid "Image"
 msgstr "Obraz"
 
-#: src/CommandDialog.vala:266
+#: src/CommandDialog.vala:270
 msgid "Browse…"
 msgstr "Przeglądaj…"
 
-#: src/CommandDialog.vala:276
+#: src/CommandDialog.vala:280
 msgid "Mode"
 msgstr "Tryb"
 
-#: src/CommandDialog.vala:402
+#: src/CommandDialog.vala:406
 msgid "Requires the User Themes GNOME Shell extension."
 msgstr "Wymaga rozszerzenia User Themes GNOME Shell."
 
-#: src/CommandDialog.vala:514
+#: src/CommandDialog.vala:521
 msgid "Command failed"
 msgstr "Polecenie się nie powiodło"
 
-#: src/CommandDialog.vala:514
+#: src/CommandDialog.vala:521
 msgid "Command succeeded"
 msgstr "Polecenie powiodło się"
 
-#: src/CommandDialog.vala:527
+#: src/CommandDialog.vala:534
 msgid "Select Wallpaper"
 msgstr "Wybierz tapetę"
 
@@ -266,8 +265,8 @@ msgid ""
 "Define constants to use in your commands. Reference them with $NAME or $"
 "{NAME}."
 msgstr ""
-"Zdefiniuj stałe, które będą używane w poleceniach. Odwołuj się do nich za"
-" pomocą $NAME lub ${NAME}."
+"Zdefiniuj stałe, które będą używane w poleceniach. Odwołuj się do nich za "
+"pomocą $NAME lub ${NAME}."
 
 #: src/ConstantsWindow.vala:69
 msgid "No Constants"
@@ -306,8 +305,8 @@ msgid ""
 "Use in commands as $NAME or ${NAME}. Names use letters, numbers and "
 "underscores."
 msgstr ""
-"Używaj w poleceniach jako $NAME lub ${NAME}. W nazwach używane są litery,"
-" cyfry i podkreślenia."
+"Używaj w poleceniach jako $NAME lub ${NAME}. W nazwach używane są litery, "
+"cyfry i podkreślenia."
 
 #: src/MainWindow.vala:64
 msgid "Preferences"
@@ -326,8 +325,8 @@ msgid "Quit"
 msgstr "Zakończ"
 
 #: src/MainWindow.vala:78
-msgid "Run the background process that reacts to GNOME theme changes."
-msgstr "Uruchom proces w tle, który reaguje na zmiany motywu GNOME."
+msgid "Run the background process that reacts to theme changes."
+msgstr "Uruchom proces w tle, który reaguje na zmiany motywu."
 
 #: src/MainWindow.vala:79 src/MainWindow.vala:82
 msgid "Monitor"
@@ -338,10 +337,11 @@ msgid "No Commands"
 msgstr "Brak poleceń"
 
 #: src/MainWindow.vala:89
-msgid "Use the '+' button in the header bar or press (Ctrl+N) to add a command."
+msgid ""
+"Use the '+' button in the header bar or press (Ctrl+N) to add a command."
 msgstr ""
-"Użyj przycisku '+' na pasku nagłówka lub naciśnij (Ctrl+N), aby dodać"
-" polecenie."
+"Użyj przycisku '+' na pasku nagłówka lub naciśnij (Ctrl+N), aby dodać "
+"polecenie."
 
 #: src/MainWindow.vala:128
 msgid "Commands"
@@ -349,7 +349,8 @@ msgstr "Polecenia"
 
 #: src/MainWindow.vala:129
 msgid "Active commands that will run when their theme matches."
-msgstr "Aktywne polecenia, które zostaną uruchomione, gdy ich motyw będzie zgodny."
+msgstr ""
+"Aktywne polecenia, które zostaną uruchomione, gdy ich motyw będzie zgodny."
 
 #: src/MainWindow.vala:135
 msgid "Disabled"
@@ -375,11 +376,19 @@ msgstr "Polecenie usunięte"
 msgid "Undo"
 msgstr "Cofnij"
 
-#: src/MainWindow.vala:697
+#: src/MainWindow.vala:652
+msgid "Contributors"
+msgstr "Współtwórcy"
+
+#: src/MainWindow.vala:653
+msgid "Credits"
+msgstr "Zasługi"
+
+#: src/MainWindow.vala:700
 msgid "Background monitoring is now active"
 msgstr "Monitorowanie w tle jest teraz aktywne"
 
-#: src/MainWindow.vala:698
+#: src/MainWindow.vala:701
 msgid "Background monitoring is now inactive"
 msgstr "Monitorowanie w tle jest teraz nieaktywne"
 
@@ -392,24 +401,24 @@ msgid ""
 "KDE Plasma is set to switch global themes automatically. Turn that off to "
 "use this schedule."
 msgstr ""
-"KDE Plasma jest ustawione tak, aby automatycznie przełączać motywy globalne."
-" Wyłącz tę opcję, aby korzystać z tego harmonogramu."
+"KDE Plasma jest ustawione tak, aby automatycznie przełączać motywy globalne. "
+"Wyłącz tę opcję, aby korzystać z tego harmonogramu."
 
 #: src/PreferencesWindow.vala:47
 msgid ""
 "Switch KDE's default light and dark global themes on a schedule. Needs "
 "background monitoring."
 msgstr ""
-"Przełączaj domyślne jasne i ciemne motywy globalne KDE zgodnie z"
-" harmonogramem. Potrzebuje monitorowania w tle."
+"Przełączaj domyślne jasne i ciemne motywy globalne KDE zgodnie z "
+"harmonogramem. Potrzebuje monitorowania w tle."
 
 #: src/PreferencesWindow.vala:48
 msgid ""
 "Switch between light and dark style on a schedule. Needs background "
 "monitoring."
 msgstr ""
-"Przełączaj się między jasnym i ciemnym stylem zgodnie z harmonogramem."
-" Potrzebuje monitorowania w tle."
+"Przełączaj się między jasnym i ciemnym stylem zgodnie z harmonogramem. "
+"Potrzebuje monitorowania w tle."
 
 #: src/PreferencesWindow.vala:54
 msgid "Automatic Switching Is Set in KDE"
@@ -420,8 +429,8 @@ msgid ""
 "Turn off “Switch to Dark Mode at Night” in System Settings to use this "
 "schedule."
 msgstr ""
-"Aby skorzystać z tego harmonogramu, wyłącz opcję „Przełącz na tryb ciemny w"
-" nocy” w Ustawieniach systemu."
+"Aby skorzystać z tego harmonogramu, wyłącz opcję „Przełącz na tryb ciemny w "
+"nocy” w Ustawieniach systemu."
 
 #: src/PreferencesWindow.vala:61
 msgid "Open Settings"
@@ -554,8 +563,8 @@ msgstr "Usunąć całą konfigurację?"
 msgid ""
 "This will remove every command and constant. This action cannot be undone."
 msgstr ""
-"Spowoduje to usunięcie wszystkich poleceń i stałych. Tej akcji nie można"
-" cofnąć."
+"Spowoduje to usunięcie wszystkich poleceń i stałych. Tej akcji nie można "
+"cofnąć."
 
 #: src/PreferencesWindow.vala:305
 msgid "Configuration deleted"
@@ -590,18 +599,6 @@ msgstr "Otwórz preferencje"
 msgid "Show keyboard shortcuts"
 msgstr "Pokaż skróty klawiaturowe"
 
-#: data/com.github.Switchcraft.desktop.in:3
-msgid "Switchcraft"
-msgstr "Switchcraft"
-
-#: data/com.github.Switchcraft.desktop.in:4
-msgid "Run commands when GNOME theme switches"
-msgstr "Uruchamiaj polecenia po przełączeniu motywu GNOME"
-
-#: data/com.github.Switchcraft.desktop.in:10
-msgid "theme;switch;gtk;gnome;"
-msgstr "motyw;przełącz;gtk;gnome;"
-
 #: data/com.github.Switchcraft.gschema.xml:6
 msgid "Enable background monitoring"
 msgstr "Włącz monitorowanie w tle"
@@ -619,9 +616,9 @@ msgid ""
 "Switch the light/dark style at sunrise and sunset (sun), at light-time and "
 "dark-time (custom), or never (off). Runs in the background monitor."
 msgstr ""
-"Przełączaj styl jasny/ciemny o wschodzie i zachodzie słońca (słońce), o"
-" jasnej i ciemnej porze (niestandardowe) lub nigdy (wyłączone). Działa na"
-" monitorze w tle."
+"Przełączaj styl jasny/ciemny o wschodzie i zachodzie słońca (słońce), o "
+"jasnej i ciemnej porze (niestandardowe) lub nigdy (wyłączone). Działa na "
+"monitorze w tle."
 
 #: data/com.github.Switchcraft.gschema.xml:22
 msgid "Light style time"
@@ -631,8 +628,8 @@ msgstr "Czas na lekki styl"
 msgid ""
 "Minutes after midnight when the custom schedule switches to the light style."
 msgstr ""
-"Minuty po północy, kiedy harmonogram niestandardowy przełącza się na styl"
-" jasny."
+"Minuty po północy, kiedy harmonogram niestandardowy przełącza się na styl "
+"jasny."
 
 #: data/com.github.Switchcraft.gschema.xml:28
 msgid "Dark style time"
@@ -642,8 +639,8 @@ msgstr "Czas na ciemny styl"
 msgid ""
 "Minutes after midnight when the custom schedule switches to the dark style."
 msgstr ""
-"Minuty po północy, kiedy harmonogram niestandardowy przełącza się na styl"
-" ciemny."
+"Minuty po północy, kiedy harmonogram niestandardowy przełącza się na styl "
+"ciemny."
 
 #: data/com.github.Switchcraft.gschema.xml:33
 msgid "Last known location"
@@ -654,28 +651,91 @@ msgid ""
 "Latitude and longitude from GeoClue, used for sunrise and sunset. Out of "
 "range values mean none is known, and the system time zone gives the location."
 msgstr ""
-"Szerokość i długość geograficzna z GeoClue, używane do wschodu i zachodu"
-" słońca. Wartości spoza zakresu oznaczają, że nic nie jest znane, a strefa"
-" czasowa systemu podaje lokalizację."
+"Szerokość i długość geograficzna z GeoClue, używane do wschodu i zachodu "
+"słońca. Wartości spoza zakresu oznaczają, że nic nie jest znane, a strefa "
+"czasowa systemu podaje lokalizację."
+
+#: data/com.github.Switchcraft.metainfo.xml.in:4
+msgid "Switchcraft"
+msgstr "Switchcraft"
 
 #: data/com.github.Switchcraft.metainfo.xml.in:6
 #: data/com.github.Switchcraft.metainfo.xml.in:8
 msgid "Arnis Kemlers"
 msgstr "Arnis Kemlers"
 
+#: data/com.github.Switchcraft.metainfo.xml.in:9
+msgid "Automate light and dark theme switching"
+msgstr "Automatyzuj przełączanie jasnego i ciemnego motywu"
+
 #: data/com.github.Switchcraft.metainfo.xml.in:13
 msgid ""
-"Switchcraft watches GNOME's color-scheme preference and runs user-defined "
-"shell commands when the theme switches between light and dark. It allows you "
-"to automate theme-dependent adjustments for applications that don't follow "
-"system settings automatically."
+"Switchcraft follows the light and dark style of GNOME and KDE Plasma. On "
+"every switch it runs your shell commands and applies per-theme settings such "
+"as the wallpaper, icon, GTK and Kvantum themes. Applications that do not "
+"follow the system style stay in sync."
 msgstr ""
-"Switchcraft obserwuje preferencje schematu kolorów GNOME i uruchamia"
-" zdefiniowane przez użytkownika polecenia powłoki, gdy motyw przełącza się"
-" między jasnym i ciemnym. Umożliwia automatyzację dostosowań zależnych od"
-" motywu dla aplikacji, które nie dostosowują się automatycznie do ustawień"
-" systemowych."
+"Switchcraft podąża za jasnym i ciemnym stylem GNOME i KDE Plasma. Przy "
+"każdym przełączeniu uruchamia Twoje polecenia powłoki i stosuje ustawienia "
+"dla danego motywu, takie jak tapeta oraz motywy ikon, GTK i Kvantum. Dzięki "
+"temu aplikacje, które nie dostosowują się do stylu systemu, pozostają "
+"zsynchronizowane."
 
-#: data/com.github.Switchcraft.metainfo.xml.in:24
-msgid "Refactored icon structure and updated metadata integration."
-msgstr "Przebudowana struktura ikon i zaktualizowana integracja metadanych."
+#: data/com.github.Switchcraft.metainfo.xml.in:14
+msgid ""
+"It can also switch the style for you at sunset and sunrise or at custom "
+"times."
+msgstr ""
+"Może też przełączać styl za Ciebie o zachodzie i wschodzie słońca lub o "
+"niestandardowych porach."
+
+#: data/com.github.Switchcraft.metainfo.xml.in:41
+msgid ""
+"Built-in commands: pick a setting and a value from a list instead of typing "
+"a command"
+msgstr "Wbudowane polecenia: wybierz ustawienie i wartość z listy zamiast wpisywać polecenie"
+
+#: data/com.github.Switchcraft.metainfo.xml.in:42
+msgid "KDE Plasma and Kvantum support"
+msgstr "Obsługa KDE Plasma i Kvantum"
+
+#: data/com.github.Switchcraft.metainfo.xml.in:43
+msgid "Automatic switching at sunset and sunrise or at custom times"
+msgstr "Automatyczne przełączanie o zachodzie i wschodzie słońca lub o niestandardowych porach"
+
+#: data/com.github.Switchcraft.metainfo.xml.in:44
+msgid ""
+"Redesigned command list with drag-and-drop reordering, command testing and "
+"undo"
+msgstr "Przeprojektowana lista poleceń ze zmianą kolejności metodą „przeciągnij i upuść”, testowaniem poleceń i cofaniem"
+
+#: data/com.github.Switchcraft.metainfo.xml.in:45
+msgid "Translated into 22 languages"
+msgstr "Przetłumaczono na 22 języki"
+
+#~ msgid "Monitor GNOME theme changes and run commands"
+#~ msgstr "Monitoruj zmiany motywu GNOME i uruchamiaj polecenia"
+
+#~ msgid "Run the background process that reacts to GNOME theme changes."
+#~ msgstr "Uruchom proces w tle, który reaguje na zmiany motywu GNOME."
+
+#~ msgid "Refactored icon structure and updated metadata integration."
+#~ msgstr "Przebudowana struktura ikon i zaktualizowana integracja metadanych."
+
+#~ msgid "Run commands when GNOME theme switches"
+#~ msgstr "Uruchamiaj polecenia po przełączeniu motywu GNOME"
+
+#~ msgid "theme;switch;gtk;gnome;"
+#~ msgstr "motyw;przełącz;gtk;gnome;"
+
+#~ msgid ""
+#~ "Switchcraft watches GNOME's color-scheme preference and runs user-defined "
+#~ "shell commands when the theme switches between light and dark. It allows "
+#~ "you to automate theme-dependent adjustments for applications that don't "
+#~ "follow system settings automatically."
+#~ msgstr ""
+#~ "Switchcraft obserwuje preferencje schematu kolorów GNOME i uruchamia "
+#~ "zdefiniowane przez użytkownika polecenia powłoki, gdy motyw przełącza się "
+#~ "między jasnym i ciemnym. Umożliwia automatyzację dostosowań zależnych od "
+#~ "motywu dla aplikacji, które nie dostosowują się automatycznie do ustawień "
+#~ "systemowych."
