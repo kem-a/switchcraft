@@ -17,7 +17,7 @@ Switchcraft doesn't require FUSE to run, thanks to the [uruntime](https://github
 
 ## Preview
 
-<img width="900" height="670" alt="Screenshot From 2026-11-11 22-43-39" src="https://github.com/user-attachments/assets/1a31d5b4-9f38-42a5-8005-e705730cb095" />
+<img width="967" height="737" alt="Switchcraft-light" src="https://github.com/user-attachments/assets/36fb4e97-45f7-4c1d-bc4c-ebff35c124e9" />
 
 ## Features
 
