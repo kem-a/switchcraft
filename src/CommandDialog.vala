@@ -110,10 +110,14 @@ namespace Switchcraft {
                     continue;
                 }
                 if (builtin.length > 0 && other.builtin == builtin) {
-                    return _("%s is already set in this mode").printf (get_builtin_title (builtin));
+                    var message = _("%s is already set in this mode").printf (get_builtin_title (builtin));
+                    print ("%s\n", message);
+                    return message;
                 }
                 if (other.command.strip () == command.strip ()) {
-                    return _("This command is already in this mode");
+                    var message = _("This command is already in this mode");
+                    print ("%s\n", message);
+                    return message;
                 }
             }
             return null;
@@ -506,6 +510,9 @@ namespace Switchcraft {
         // Shows nothing when not finished, else success or the error text
         private void show_test_result (bool finished, string? error_text) {
             bool failed = finished && error_text != null;
+            if (failed) {
+                print ("%s\n", error_text);
+            }
             test_status.remove_css_class ("success");
             test_status.remove_css_class ("error");
             if (finished) {
