@@ -75,7 +75,7 @@ namespace Switchcraft {
             monitor_switch = new Gtk.Switch ();
             monitor_switch.set_valign (Gtk.Align.CENTER);
             monitor_switch.set_active (app != null && app.get_monitoring_enabled ());
-            monitor_switch.set_tooltip_text (_("Run the background process that reacts to GNOME theme changes."));
+            monitor_switch.set_tooltip_text (_("Run the background process that reacts to theme changes."));
             monitor_switch.update_property (Gtk.AccessibleProperty.LABEL, _("Monitor"), -1);
             monitor_switch.notify["active"].connect (on_monitor_switch_changed);
             var monitor_box = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 6);

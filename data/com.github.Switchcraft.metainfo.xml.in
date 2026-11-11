@@ -6,23 +6,44 @@
     <name>Arnis Kemlers</name>
   </developer>
   <developer_name>Arnis Kemlers</developer_name>
-  <summary>Run commands when GNOME theme switches</summary>
+  <summary>Automate light and dark theme switching</summary>
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-3.0-or-later</project_license>
   <description>
-    <p>Switchcraft watches GNOME's color-scheme preference and runs user-defined shell commands when the theme switches between light and dark. It allows you to automate theme-dependent adjustments for applications that don't follow system settings automatically.</p>
+    <p>Switchcraft follows the light and dark style of GNOME and KDE Plasma. On every switch it runs your shell commands and applies per-theme settings such as the wallpaper, icon, GTK and Kvantum themes. Applications that do not follow the system style stay in sync.</p>
+    <p>It can also switch the style for you at sunset and sunrise or at custom times.</p>
   </description>
   <launchable type="desktop-id">com.github.Switchcraft.desktop</launchable>
   <url type="homepage">https://github.com/kem-a/switchcraft</url>
   <url type="bugtracker">https://github.com/kem-a/switchcraft/issues</url>
   <url type="contribute">https://github.com/kem-a/switchcraft/graphs/contributors</url>
+  <screenshots>
+    <screenshot type="default">
+      <image>https://raw.githubusercontent.com/kem-a/switchcraft/main/data/screenshots/1-Switchcraft-light.png</image>
+    </screenshot>
+    <screenshot>
+      <image>https://raw.githubusercontent.com/kem-a/switchcraft/main/data/screenshots/2-Switchcraft-light.png</image>
+    </screenshot>
+    <screenshot>
+      <image>https://raw.githubusercontent.com/kem-a/switchcraft/main/data/screenshots/3-Switchcraft-dark.png</image>
+    </screenshot>
+    <screenshot>
+      <image>https://raw.githubusercontent.com/kem-a/switchcraft/main/data/screenshots/4-Switchcraft-dark.png</image>
+    </screenshot>
+  </screenshots>
   <provides>
     <binary>switchcraft</binary>
   </provides>
   <releases>
-    <release version="@VERSION@" date="2025-12-19">
+    <release version="@VERSION@" date="2026-11-12">
       <description>
-        <p>Refactored icon structure and updated metadata integration.</p>
+        <ul>
+          <li>Built-in commands: pick a setting and a value from a list instead of typing a command</li>
+          <li>KDE Plasma and Kvantum support</li>
+          <li>Automatic switching at sunset and sunrise or at custom times</li>
+          <li>Redesigned command list with drag-and-drop reordering, command testing and undo</li>
+          <li>Translated into 22 languages</li>
+        </ul>
       </description>
     </release>
   </releases>

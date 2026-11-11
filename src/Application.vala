@@ -1754,7 +1754,7 @@ namespace Switchcraft {
                 "Hidden=false\n";
             desktop_entry = desktop_entry.printf (
                 _("Switchcraft Monitor"),
-                _("Monitor GNOME theme changes and run commands"),
+                _("Monitor theme changes and run commands"),
                 exe_path);
             
             try {
