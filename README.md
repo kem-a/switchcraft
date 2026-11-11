@@ -9,7 +9,7 @@
 
 # <img width="48" height="48" alt="switchcraft" src="https://github.com/user-attachments/assets/410929d4-a94f-49f7-af37-b0f090270f79" /> Switchcraft
 
-**Switchcraft** watches GNOME's or KDE Plasma light/dark preference and runs your shell commands when the theme changes.
+**Switchcraft** is a GTK/Libadwaita developed desktop utility in **Vala** that makes your whole desktop follow the light/dark style on GNOME and KDE Plasma. A lightweight **background monitor** watches the system preference and, on every switch, runs your shell commands and applies per-theme settings such as icons, wallpaper, GTK, shell and Kvantum themes. It can also switch the style for you **at sunset and sunrise** or at custom times.
 
 > **This AppImage bundles everything and it should work on any Linux distro, including old and musl-based ones.**
 
@@ -21,14 +21,16 @@ Switchcraft doesn't require FUSE to run, thanks to the [uruntime](https://github
 
 ## Features
 
-- Run custom commands on theme switch.
-- Switch between light and dark style automatically at sunset and sunrise, or at custom times (Preferences). Uses GeoClue for the location when allowed, else the system time zone. On KDE Plasma it switches the default light and dark global themes, unless Plasma's own automatic switching is enabled.
-- Built-in commands: pick a setting and a value from a list instead of typing a command. Only the ones for the running desktop are offered:
+- **Custom commands**: Run any shell command when the desktop switches to light or dark style.
+- **Built-in commands**: Pick a setting and a value from a list instead of typing a command. Only the ones for the running desktop are offered:
   - GNOME: color scheme, accent color, icon, GTK, cursor and shell theme, wallpaper, Night Light.
   - KDE Plasma: global theme, color scheme, Plasma style, icon and cursor theme, wallpaper.
   - Any desktop: Kvantum theme, when Kvantum is installed.
-- Define reusable constants for common variables in commands.
-- Add, edit, enable/disable, reorder or remove commands per theme.
+- **Automatic switching**: Switch between light and dark style at sunset and sunrise, or at custom times, in **Preferences → Automatic Switching**. Uses GeoClue for the location when allowed, else the system time zone. On KDE Plasma it switches the default light and dark global themes, unless Plasma's own automatic switching is enabled.
+- **Background monitor**: The **Monitor** switch in the header starts the background process and adds it to autostart. The window can stay closed, and edits apply on the next theme switch without a restart.
+- **Constants**: Define reusable variables once and reference them in commands as `$NAME` or `${NAME}`.
+- **Command management**: Add, edit, enable or disable and delete commands, with undo for deletes. Drag rows to reorder them and flip a command between light and dark with one toggle.
+- **Import and export**: Save commands and constants into a zip archive and restore them on another machine.
 
 <details> <summary> Command Examples <b>(click to open)</b> </summary>
 
