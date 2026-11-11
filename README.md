@@ -7,7 +7,7 @@
 ![Vala](https://img.shields.io/badge/Vala-compiler-blue?logo=vala)
 [![Stars](https://img.shields.io/github/stars/kem-a/switchcraft?style=social)](https://github.com/kem-a/switchcraft/stargazers)
 
-# <img width="48" height="48" alt="switchcraft" src="https://github.com/user-attachments/assets/410929d4-a94f-49f7-af37-b0f090270f79" /> Switchcraft
+# <img width="48" height="48" alt="switchcraft" src="https://github.com/user-attachments/assets/755cac4d-c0aa-4ea6-985f-6a6e601953b8" /> Switchcraft
 
 **Switchcraft** is a GTK/Libadwaita developed desktop utility in **Vala** that makes your whole desktop follow the light/dark style on GNOME and KDE Plasma. A lightweight **background monitor** watches the system preference and, on every switch, runs your shell commands and applies per-theme settings such as icons, wallpaper, GTK, shell and Kvantum themes. It can also switch the style for you **at sunset and sunrise** or at custom times.
 
