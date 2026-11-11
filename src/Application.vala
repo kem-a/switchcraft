@@ -292,6 +292,15 @@ namespace Switchcraft {
             var constants = get_constants ();
 
             string[] env = Environ.get ();
+            // Plasma's cursor theme tool only searches ~/.icons when
+            // XCURSOR_PATH is unset, while libXcursor also reads
+            // ~/.local/share/icons. Pass the standard path so the tool can
+            // apply themes that scan_cursor_themes () lists.
+            var xcursor_path = Environment.get_variable ("XCURSOR_PATH");
+            if (xcursor_path == null || xcursor_path.length == 0) {
+                env = Environ.set_variable (env, "XCURSOR_PATH",
+                    string.joinv (":", get_cursor_search_dirs ()));
+            }
             // Constants arrive as plain variables. The prefix expands $VARS
             // in their values, like the old bash monitor's eval did.
             var builder = new StringBuilder ();
@@ -1265,7 +1274,7 @@ namespace Switchcraft {
 
         public GenericArray<string> scan_cursor_themes () {
             var themes = new GenericArray<string> ();
-            foreach (var dir_path in get_icon_search_dirs ()) {
+            foreach (var dir_path in get_cursor_search_dirs ()) {
                 try {
                     var dir = Dir.open (dir_path, 0);
                     string? name;
@@ -1314,6 +1323,33 @@ namespace Switchcraft {
                 Path.build_filename (Environment.get_home_dir (), ".local", "share", "icons"),
                 Path.build_filename (Environment.get_home_dir (), ".icons")
             };
+        }
+
+        // The directories libXcursor searches, or XCURSOR_PATH when it is
+        // set. Plasma's cursor theme tool uses this path only when the
+        // variable is set; otherwise it leaves out ~/.local/share/icons.
+        private static string[] get_cursor_search_dirs () {
+            var path = Environment.get_variable ("XCURSOR_PATH");
+            string[] dirs;
+            if (path != null && path.length > 0) {
+                dirs = path.split (":");
+            } else {
+                dirs = {
+                    Path.build_filename (Environment.get_home_dir (), ".local", "share", "icons"),
+                    Path.build_filename (Environment.get_home_dir (), ".icons"),
+                    "/usr/share/icons",
+                    "/usr/share/pixmaps",
+                    "/usr/X11R6/lib/X11/icons"
+                };
+            }
+
+            // XCURSOR_PATH expands a leading ~/ to the home folder
+            for (int i = 0; i < dirs.length; i++) {
+                if (dirs[i].has_prefix ("~/")) {
+                    dirs[i] = Path.build_filename (Environment.get_home_dir (), dirs[i].substring (2));
+                }
+            }
+            return dirs;
         }
 
         private static string[] get_theme_search_dirs () {
