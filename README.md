@@ -22,11 +22,11 @@ Switchcraft watches GNOME's light/dark preference and runs your shell commands w
   - GNOME: color scheme, accent color, icon, GTK, cursor and shell theme, wallpaper, Night Light.
   - KDE Plasma: global theme, color scheme, Plasma style, icon and cursor theme, wallpaper.
   - Any desktop: Kvantum theme, when Kvantum is installed.
-- Blocks commands that would switch the style back and run in a loop, and the same command or setting twice in one mode.
+- Blocks commands that would switch the style back and run in a loop. Duplicate commands are allowed, with a warning and a Duplicate tag on the row.
 - Define reusable constants for common variables in commands.
 - **Independent background monitoring** - a `switchcraft --background` process runs even when the GUI is closed.
 - Turn the background monitor on or off from the header bar.
-- Switch between light and dark style automatically at sunset and sunrise, or at custom times (Preferences). Uses GeoClue for the location when allowed, else the system time zone. On KDE Plasma, use Plasma's own day/night switching instead.
+- Switch between light and dark style automatically at sunset and sunrise, or at custom times (Preferences). Uses GeoClue for the location when allowed, else the system time zone. On KDE Plasma it switches the default light and dark global themes, unless Plasma's own automatic switching is enabled.
 - Keyboard shortcuts (<kbd>Ctrl</kbd>+<kbd>N</kbd> to add, <kbd>Ctrl</kbd>+<kbd>Q</kbd> to quit) plus About and Shortcuts dialogs from the menu.
 
 <details> <summary> Command Examples <b>(click to open)</b> </summary>

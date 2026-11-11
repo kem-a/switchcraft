@@ -16,6 +16,7 @@ namespace Switchcraft {
         private HashTable<string, List<CommandEntry>> commands;
         private CommandEntry? entry;
         private Gtk.Label conflict_label;
+        private Gtk.Label duplicate_label;
         private Adw.ComboRow type_row;
         private Gtk.ListBoxRow command_row;
         private Gtk.TextBuffer command_buffer;
@@ -29,6 +30,7 @@ namespace Switchcraft {
         private Adw.ActionRow image_row;
         private Gtk.Label image_label;
         private Adw.ToggleGroup mode_group;
+        private GenericArray<string> value_ids;
         private string wallpaper_path = "";
         // Built-in settings offered in the Type list, after Custom Command
         private string[] setting_ids = {};
@@ -75,8 +77,8 @@ namespace Switchcraft {
 
         // Why a command cannot run in the theme's list, or null. Commands
         // that switch to the other style would run both lists in a loop.
-        public static string? find_conflict (HashTable<string, List<CommandEntry>> commands,
-                                             CommandEntry? entry, string command, string builtin, string theme) {
+        public static string? find_loop_conflict (HashTable<string, List<CommandEntry>> commands,
+                                                  CommandEntry? entry, string command, string builtin, string theme) {
             // GNOME follows its color-scheme key, KDE the window color of
             // its color scheme, which a global theme can also change
             bool known = false;
@@ -96,9 +98,15 @@ namespace Switchcraft {
             if (known && theme == "light" && dark) {
                 return _("Switches to the dark style and would loop in Light mode");
             }
+            return null;
+        }
 
+        // A command or setting that already exists in this mode. This is a
+        // warning only, duplicates are allowed.
+        public static string? find_duplicate (HashTable<string, List<CommandEntry>> commands,
+                                              CommandEntry? entry, string command, string builtin, string theme) {
             foreach (var other in commands.lookup (theme)) {
-                if (other == entry || !other.enabled) {
+                if (other == entry) {
                     continue;
                 }
                 if (builtin.length > 0 && other.builtin == builtin) {
@@ -117,6 +125,7 @@ namespace Switchcraft {
             this.app = app;
             this.commands = commands;
             this.entry = entry;
+            value_ids = new GenericArray<string> ();
 
             if (entry != null) {
                 add_response ("delete", _("Delete"));
@@ -131,14 +140,27 @@ namespace Switchcraft {
             var fields = new Gtk.ListBox ();
             fields.set_selection_mode (Gtk.SelectionMode.NONE);
             fields.add_css_class ("boxed-list");
-            fields.set_size_request (420, -1);
+            fields.set_size_request (520, -1);
 
             // First item is a custom command, the rest are the built-in
             // settings for this desktop
             var type_model = new Gtk.StringList (null);
             type_model.append (_("Custom Command"));
+            // Wallpaper is always the last entry in the list
             foreach (var setting_id in Application.THEME_SETTING_IDS) {
+                if (is_image_setting (setting_id)) {
+                    continue;
+                }
                 // One from another desktop stays while it is being edited
+                if (app.is_setting_available (setting_id) || (entry != null && entry.builtin == setting_id)) {
+                    setting_ids += setting_id;
+                    type_model.append (get_builtin_title (setting_id));
+                }
+            }
+            foreach (var setting_id in Application.THEME_SETTING_IDS) {
+                if (!is_image_setting (setting_id)) {
+                    continue;
+                }
                 if (app.is_setting_available (setting_id) || (entry != null && entry.builtin == setting_id)) {
                     setting_ids += setting_id;
                     type_model.append (get_builtin_title (setting_id));
@@ -263,8 +285,17 @@ namespace Switchcraft {
             conflict_label.add_css_class ("error");
             conflict_label.set_visible (false);
 
+            duplicate_label = new Gtk.Label (null);
+            duplicate_label.set_xalign (0);
+            duplicate_label.set_wrap (true);
+            duplicate_label.set_max_width_chars (40);
+            duplicate_label.set_margin_top (6);
+            duplicate_label.add_css_class ("warning");
+            duplicate_label.set_visible (false);
+
             var content = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
             content.append (fields);
+            content.append (duplicate_label);
             content.append (conflict_label);
             set_extra_child (content);
 
@@ -335,30 +366,35 @@ namespace Switchcraft {
             update_save_response ();
         }
 
-        // Starts at the edited value, or at what GNOME uses now
+        // Starts at the edited value, or at what the desktop uses now
         private void fill_values (string setting_id) {
+            value_ids = app.scan_setting_values (setting_id);
             var model = new Gtk.StringList (null);
-            var values = app.scan_setting_values (setting_id);
-            for (uint i = 0; i < values.length; i++) {
-                model.append (values[i]);
+            for (uint i = 0; i < value_ids.length; i++) {
+                model.append (Application.get_setting_value_label (setting_id, value_ids[i]));
             }
 
             var current = setting_id == initial_builtin
                 ? initial_value
                 : app.get_current_theme_value (setting_id, mode_group.get_active_name ());
             uint selected = Gtk.INVALID_LIST_POSITION;
-            for (uint i = 0; i < values.length; i++) {
-                if (values[i] == current) {
+            for (uint i = 0; i < value_ids.length; i++) {
+                if (value_ids[i] == current) {
                     selected = i;
                 }
             }
             if (selected == Gtk.INVALID_LIST_POSITION && current.length > 0) {
                 // Keep a value that discovery did not find
-                model.append (current);
-                selected = model.get_n_items () - 1;
+                value_ids.add (current);
+                model.append (Application.get_setting_value_label (setting_id, current));
+                selected = value_ids.length - 1;
             }
 
+            // Long package ids are shown by their desktop names. The
+            // tooltip still gives the full text when the label is clipped.
             value_row.set_model (model);
+            value_row.set_factory (create_value_factory ());
+            value_row.set_list_factory (create_value_factory ());
             value_row.set_selected (selected);
 
             bool supported = setting_id != "shell-theme" || app.has_shell_theme_support ();
@@ -366,9 +402,42 @@ namespace Switchcraft {
             value_row.set_subtitle (supported ? "" : _("Requires the User Themes GNOME Shell extension."));
         }
 
+        private Gtk.ListItemFactory create_value_factory () {
+            var factory = new Gtk.SignalListItemFactory ();
+            factory.setup.connect ((object) => {
+                var item = object as Gtk.ListItem;
+                if (item == null) {
+                    return;
+                }
+                var label = new Gtk.Label (null);
+                label.set_xalign (0);
+                label.set_ellipsize (Pango.EllipsizeMode.END);
+                label.set_max_width_chars (60);
+                item.set_child (label);
+            });
+            factory.bind.connect ((object) => {
+                var item = object as Gtk.ListItem;
+                if (item == null) {
+                    return;
+                }
+                var label = item.get_child () as Gtk.Label;
+                var string_object = item.get_item () as Gtk.StringObject;
+                if (label == null || string_object == null) {
+                    return;
+                }
+                var text = string_object.get_string ();
+                label.set_label (text);
+                label.set_tooltip_text (text);
+            });
+            return factory;
+        }
+
         private string get_selected_value () {
-            var item = value_row.get_selected_item () as Gtk.StringObject;
-            return item != null ? item.get_string () : "";
+            uint selected = value_row.get_selected ();
+            if (selected == Gtk.INVALID_LIST_POSITION || selected >= value_ids.length) {
+                return "";
+            }
+            return value_ids[selected];
         }
 
         private void update_save_response () {
@@ -382,13 +451,19 @@ namespace Switchcraft {
                 valid = value_row.get_sensitive () && get_selected_value ().length > 0;
             }
 
-            // Disabled commands do not run, so they cannot loop or run twice
+            // Disabled commands do not run, so they cannot loop
             string? conflict = null;
             if (valid && (entry == null || entry.enabled)) {
-                conflict = find_conflict (commands, entry, get_command (), setting_id, mode_group.get_active_name ());
+                conflict = find_loop_conflict (commands, entry, get_command (), setting_id, mode_group.get_active_name ());
             }
+            string? duplicate = valid
+                ? find_duplicate (commands, entry, get_command (), setting_id, mode_group.get_active_name ())
+                : null;
+
             conflict_label.set_label (conflict ?? "");
             conflict_label.set_visible (conflict != null);
+            duplicate_label.set_label (duplicate ?? "");
+            duplicate_label.set_visible (duplicate != null);
             set_response_enabled ("save", valid && conflict == null);
         }
 

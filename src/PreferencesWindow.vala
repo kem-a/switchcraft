@@ -17,6 +17,7 @@ namespace Switchcraft {
         private Adw.ComboRow schedule_row;
         private Adw.ActionRow light_row;
         private Adw.ActionRow dark_row;
+        private bool schedule_locked = false;
 
         public PreferencesWindow (Application application, MainWindow parent) {
             Object (
@@ -34,15 +35,40 @@ namespace Switchcraft {
             var general_page = new Adw.PreferencesPage ();
             add (general_page);
 
-            // Plasma ignores the GNOME setting the schedule changes, and
-            // switches between light and dark on its own
             bool kde = Application.get_desktop () == "kde";
+            bool kde_auto = kde && Application.is_kde_auto_switch_enabled ();
+            schedule_locked = kde_auto;
+
             var schedule_group = new Adw.PreferencesGroup ();
             schedule_group.set_title (_("Automatic Switching"));
-            schedule_group.set_description (kde
-                ? _("KDE Plasma switches between light and dark itself. Turn it on in System Settings under Colors & Themes, Global Theme.")
+            schedule_group.set_description (kde_auto
+                ? _("KDE Plasma is set to switch global themes automatically. Turn that off to use this schedule.")
+                : kde
+                ? _("Switch KDE's default light and dark global themes on a schedule. Needs background monitoring.")
                 : _("Switch between light and dark style on a schedule. Needs background monitoring."));
             general_page.add (schedule_group);
+
+            // KDE's own switch and this schedule would fight over the theme
+            if (kde_auto) {
+                var kde_row = new Adw.ActionRow ();
+                kde_row.set_title (_("Automatic Switching Is Set in KDE"));
+                kde_row.set_subtitle (_("Turn off “Switch to Dark Mode at Night” in System Settings to use this schedule."));
+
+                var warning_icon = new Gtk.Image.from_icon_name ("dialog-warning-symbolic");
+                warning_icon.add_css_class ("warning");
+                kde_row.add_prefix (warning_icon);
+
+                var settings_button = new Gtk.Button.with_label (_("Open Settings"));
+                settings_button.set_valign (Gtk.Align.CENTER);
+                settings_button.clicked.connect (() => {
+                    if (!app.open_kde_global_theme_settings ()) {
+                        show_toast (_("Could not open System Settings"), true);
+                    }
+                });
+                kde_row.add_suffix (settings_button);
+                kde_row.set_activatable_widget (settings_button);
+                schedule_group.add (kde_row);
+            }
 
             schedule_row = new Adw.ComboRow ();
             schedule_row.set_title (_("Schedule"));
@@ -59,11 +85,9 @@ namespace Switchcraft {
             });
             light_row = create_time_row (_("Light From"), "light-time");
             dark_row = create_time_row (_("Dark From"), "dark-time");
-            if (!kde) {
-                schedule_group.add (schedule_row);
-                schedule_group.add (light_row);
-                schedule_group.add (dark_row);
-            }
+            schedule_group.add (schedule_row);
+            schedule_group.add (light_row);
+            schedule_group.add (dark_row);
 
             // The monitor saves the location when GeoClue finds one
             settings.changed["last-coordinates"].connect (() => {
@@ -123,6 +147,9 @@ namespace Switchcraft {
             var mode = SCHEDULE_MODES[schedule_row.get_selected ()];
             light_row.set_visible (mode == "custom");
             dark_row.set_visible (mode == "custom");
+            light_row.set_sensitive (!schedule_locked);
+            dark_row.set_sensitive (!schedule_locked);
+            schedule_row.set_sensitive (!schedule_locked);
             schedule_row.set_subtitle (mode == "sun" ? get_sun_times_text () : "");
         }
 

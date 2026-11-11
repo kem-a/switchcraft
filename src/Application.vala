@@ -221,11 +221,7 @@ namespace Switchcraft {
                 // Initial execution
                 execute_monitored_commands (style_manager.dark ? "dark" : "light");
 
-                // Plasma ignores the GNOME setting the schedule changes,
-                // and switches between light and dark on its own
-                if (get_desktop () != "kde") {
-                    schedule = new ThemeSchedule (settings);
-                }
+                schedule = new ThemeSchedule (settings);
                 
                 return -1; // Keep running
             }
@@ -740,19 +736,26 @@ namespace Switchcraft {
         public static bool get_kde_scheme_dark (string name, out bool dark) {
             dark = false;
             foreach (var dir in get_data_dirs ("color-schemes")) {
-                var key_file = new KeyFile ();
-                key_file.set_list_separator (',');
-                try {
-                    key_file.load_from_file (Path.build_filename (dir, name + ".colors"), KeyFileFlags.NONE);
-                    var rgb = key_file.get_integer_list ("Colors:Window", "BackgroundNormal");
-                    if (rgb.length < 3) {
-                        return false;
-                    }
-                    dark = (rgb[0] * 11 + rgb[1] * 16 + rgb[2] * 5) / 32 < 192;
-                    return true;
-                } catch (Error e) {
-                    // Not in this folder
+                var path = Path.build_filename (dir, name + ".colors");
+                if (!FileUtils.test (path, FileTest.EXISTS)) {
+                    continue;
                 }
+
+                // KDE color schemes also use nested group headers, which
+                // KeyFile cannot parse.
+                var value = read_key_file_value (path, "Colors:Window", "BackgroundNormal");
+                var parts = value.split (",");
+                if (parts.length < 3) {
+                    return false;
+                }
+                int red = 0, green = 0, blue = 0;
+                if (!int.try_parse (parts[0].strip (), out red)
+                    || !int.try_parse (parts[1].strip (), out green)
+                    || !int.try_parse (parts[2].strip (), out blue)) {
+                    return false;
+                }
+                dark = (red * 11 + green * 16 + blue * 5) / 32 < 192;
+                return true;
             }
             return false;
         }
@@ -783,16 +786,150 @@ namespace Switchcraft {
             return false;
         }
 
-        // A value from an ini file in the config folder, as KDE keeps them, or ""
-        private static string read_config_value (string file_name, string group, string key) {
-            var key_file = new KeyFile ();
+        private static string unescape_config_value (string value) {
+            if (!value.contains ("\\")) {
+                return value;
+            }
+
+            var builder = new StringBuilder ();
+            for (int i = 0; i < value.length; i++) {
+                char c = value[i];
+                if (c != '\\' || i + 1 >= value.length) {
+                    builder.append_c (c);
+                    continue;
+                }
+                char next = value[++i];
+                switch (next) {
+                    case 's':
+                        builder.append_c (' ');
+                        break;
+                    case 't':
+                        builder.append_c ('\t');
+                        break;
+                    case 'n':
+                        builder.append_c ('\n');
+                        break;
+                    case 'r':
+                        builder.append_c ('\r');
+                        break;
+                    default:
+                        builder.append_c (next);
+                        break;
+                }
+            }
+            return builder.str;
+        }
+
+        // KConfig files are not strict ini files. They use nested group
+        // headers like [Colors:Header][Inactive], which KeyFile rejects.
+        // Read the keys directly instead, and accept KConfig's Theme[$e].
+        private static string read_key_file_value (string path, string group, string key) {
+            string contents;
             try {
-                key_file.load_from_file (Path.build_filename (Environment.get_user_config_dir (), file_name),
-                                         KeyFileFlags.NONE);
-                return key_file.get_string (group, key);
+                FileUtils.get_contents (path, out contents);
             } catch (Error e) {
                 return "";
             }
+
+            bool in_group = false;
+            foreach (var raw_line in contents.split ("\n")) {
+                var line = raw_line.strip ();
+                if (line.length == 0 || line.has_prefix ("#") || line.has_prefix (";")) {
+                    continue;
+                }
+                if (line.has_prefix ("[")) {
+                    int end = line.index_of_char (']');
+                    // The first bracket is the top-level group, e.g.
+                    // [Colors:Header][Inactive] is Colors:Header.
+                    in_group = end > 1 && line.substring (1, end - 1) == group;
+                    continue;
+                }
+                if (!in_group) {
+                    continue;
+                }
+                int equals = line.index_of_char ('=');
+                if (equals < 0) {
+                    continue;
+                }
+                var name = line.substring (0, equals).strip ();
+                if (name != key && name != key + "[$e]") {
+                    continue;
+                }
+                return unescape_config_value (line.substring (equals + 1).strip ());
+            }
+            return "";
+        }
+
+        // A value from an ini file in the config folder, as KDE keeps them, or
+        // "". KDE falls back to kdedefaults and the system config directories
+        // when the user's file has no value, so do the same here.
+        private static string read_config_value (string file_name, string group, string key) {
+            string[] paths = {
+                Path.build_filename (Environment.get_user_config_dir (), file_name),
+                Path.build_filename (Environment.get_user_config_dir (), "kdedefaults", file_name)
+            };
+            foreach (unowned string dir in Environment.get_system_config_dirs ()) {
+                paths += Path.build_filename (dir, file_name);
+                paths += Path.build_filename (dir, "kdedefaults", file_name);
+            }
+
+            foreach (var path in paths) {
+                if (!FileUtils.test (path, FileTest.EXISTS)) {
+                    continue;
+                }
+                var value = read_key_file_value (path, group, key);
+                if (value.length > 0) {
+                    return value;
+                }
+            }
+            return "";
+        }
+
+        private static bool read_config_bool (string file_name, string group, string key, bool fallback) {
+            var value = read_config_value (file_name, group, key).down ();
+            if (value.length == 0) {
+                return fallback;
+            }
+            return value == "true" || value == "1";
+        }
+
+        // Plasma's own automatic light/dark switch. When it is on,
+        // Switchcraft's schedule must stay out of the way.
+        public static bool is_kde_auto_switch_enabled () {
+            return get_desktop () == "kde"
+                && read_config_bool ("kdeglobals", "KDE", "AutomaticLookAndFeel", false);
+        }
+
+        public static string get_kde_current_look_and_feel () {
+            return read_config_value ("kdeglobals", "KDE", "LookAndFeelPackage");
+        }
+
+        // The global themes Plasma's automatic switch uses. Plasma keeps
+        // these next to the current theme in kdeglobals.
+        public static string get_kde_default_look_and_feel (bool dark) {
+            var value = read_config_value ("kdeglobals", "KDE",
+                dark ? "DefaultDarkLookAndFeel" : "DefaultLightLookAndFeel");
+            if (value.length > 0) {
+                return value;
+            }
+            return dark ? "org.kde.breezedark.desktop" : "org.kde.breeze.desktop";
+        }
+
+        public bool open_kde_global_theme_settings () {
+            foreach (var name in new string[] { "systemsettings", "systemsettings5", "kcmshell6", "kcmshell5" }) {
+                var program = Environment.find_program_in_path (name);
+                if (program == null) {
+                    continue;
+                }
+                try {
+                    string[] argv = { program, "kcm_lookandfeel" };
+                    Process.spawn_async (null, argv, null, SpawnFlags.SEARCH_PATH, null, null);
+                    return true;
+                } catch (Error e) {
+                    warning ("Failed to open System Settings: %s", e.message);
+                }
+            }
+            return false;
         }
 
         // Extensions from extensions.gnome.org keep their schema in their
@@ -869,6 +1006,93 @@ namespace Switchcraft {
                 return File.new_for_uri (value).get_path () ?? value;
             }
             return value;
+        }
+
+        // The name the desktop shows for a built-in value. The stored value
+        // stays the package id a tool expects.
+        public static string get_setting_value_label (string setting_id, string value) {
+            if (value.length == 0) {
+                return value;
+            }
+            switch (setting_id) {
+                case "kde-global-theme":
+                    return get_kde_package_name (Path.build_filename ("plasma", "look-and-feel"), value);
+                case "kde-plasma-style":
+                    return get_kde_package_name (Path.build_filename ("plasma", "desktoptheme"), value);
+                case "kde-color-scheme":
+                    return get_kde_color_scheme_name (value);
+                case "icon-theme":
+                case "kde-icon-theme":
+                case "cursor-theme":
+                case "kde-cursor-theme":
+                    return get_icon_theme_name (value);
+                default:
+                    return value;
+            }
+        }
+
+        private static string get_kde_package_name (string subdir, string id) {
+            foreach (var dir in get_data_dirs (subdir)) {
+                var package_dir = Path.build_filename (dir, id);
+                var metadata = Path.build_filename (package_dir, "metadata.json");
+                if (FileUtils.test (metadata, FileTest.EXISTS)) {
+                    try {
+                        string contents;
+                        FileUtils.get_contents (metadata, out contents);
+                        var parser = new Json.Parser ();
+                        parser.load_from_data (contents);
+                        var root = parser.get_root ();
+                        if (root != null && root.get_node_type () == Json.NodeType.OBJECT) {
+                            var plugin_node = root.get_object ().get_member ("KPlugin");
+                            if (plugin_node != null && plugin_node.get_node_type () == Json.NodeType.OBJECT) {
+                                var name = string_value (plugin_node.get_object ().get_member ("Name"));
+                                if (name != null && name.length > 0) {
+                                    return name;
+                                }
+                            }
+                        }
+                    } catch (Error e) {
+                        // Try the desktop file below
+                    }
+                }
+
+                var desktop = Path.build_filename (package_dir, "metadata.desktop");
+                if (FileUtils.test (desktop, FileTest.EXISTS)) {
+                    var name = read_key_file_value (desktop, "Desktop Entry", "Name");
+                    if (name.length > 0) {
+                        return name;
+                    }
+                }
+            }
+            return id;
+        }
+
+        private static string get_kde_color_scheme_name (string id) {
+            foreach (var dir in get_data_dirs ("color-schemes")) {
+                var path = Path.build_filename (dir, id + ".colors");
+                if (!FileUtils.test (path, FileTest.EXISTS)) {
+                    continue;
+                }
+                var name = read_key_file_value (path, "General", "Name");
+                if (name.length > 0) {
+                    return name;
+                }
+            }
+            return id;
+        }
+
+        private static string get_icon_theme_name (string id) {
+            foreach (var dir in get_icon_search_dirs ()) {
+                var path = Path.build_filename (dir, id, "index.theme");
+                if (!FileUtils.test (path, FileTest.EXISTS)) {
+                    continue;
+                }
+                var name = read_key_file_value (path, "Icon Theme", "Name");
+                if (name.length > 0) {
+                    return name;
+                }
+            }
+            return id;
         }
 
         // The gsettings line a built-in command runs. The wallpaper sets both
@@ -1084,7 +1308,7 @@ namespace Switchcraft {
             return false;
         }
 
-        private string[] get_icon_search_dirs () {
+        private static string[] get_icon_search_dirs () {
             return {
                 "/usr/share/icons",
                 Path.build_filename (Environment.get_home_dir (), ".local", "share", "icons"),
@@ -1092,7 +1316,7 @@ namespace Switchcraft {
             };
         }
 
-        private string[] get_theme_search_dirs () {
+        private static string[] get_theme_search_dirs () {
             return {
                 "/usr/share/themes",
                 Path.build_filename (Environment.get_home_dir (), ".local", "share", "themes"),

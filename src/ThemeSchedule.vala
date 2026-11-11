@@ -39,19 +39,31 @@ namespace Switchcraft {
         // What the schedule set last. A manual switch stays until the
         // schedule wants another style.
         private string? applied_scheme = null;
+        private bool kde = false;
+        private string? kde_tool = null;
         private GeoClueClient? geoclue = null;
         private bool geoclue_starting = false;
 
         public ThemeSchedule (Settings settings) {
             this.settings = settings;
 
-            var source = SettingsSchemaSource.get_default ();
-            var schema = source != null ? source.lookup ("org.gnome.desktop.interface", true) : null;
-            if (schema == null || !schema.has_key ("color-scheme")) {
-                warning ("No color-scheme setting, the theme schedule is off");
-                return;
+            kde = Application.get_desktop () == "kde";
+            if (kde) {
+                kde_tool = Environment.find_program_in_path ("plasma-apply-lookandfeel")
+                    ?? Environment.find_program_in_path ("lookandfeeltool");
+                if (kde_tool == null) {
+                    warning ("No plasma-apply-lookandfeel, the theme schedule is off");
+                    return;
+                }
+            } else {
+                var source = SettingsSchemaSource.get_default ();
+                var schema = source != null ? source.lookup ("org.gnome.desktop.interface", true) : null;
+                if (schema == null || !schema.has_key ("color-scheme")) {
+                    warning ("No color-scheme setting, the theme schedule is off");
+                    return;
+                }
+                interface_settings = new Settings.full (schema, null, null);
             }
-            interface_settings = new Settings.full (schema, null, null);
 
             settings.changed.connect (on_settings_changed);
             // Polling the clock also catches up after suspend
@@ -80,10 +92,50 @@ namespace Switchcraft {
                 applied_scheme = null;
                 return;
             }
+
+            if (kde) {
+                check_kde (dark);
+                return;
+            }
+
             var scheme = dark ? "prefer-dark" : "default";
             if (scheme != applied_scheme) {
                 applied_scheme = scheme;
                 interface_settings.set_string ("color-scheme", scheme);
+            }
+        }
+
+        // Plasma has its own automatic switch, which takes precedence. When
+        // it is off, apply the user's default light or dark global theme.
+        private void check_kde (bool dark) {
+            if (Application.is_kde_auto_switch_enabled ()) {
+                // Start over with a fresh theme once KDE's switch is off
+                applied_scheme = null;
+                return;
+            }
+
+            var target = Application.get_kde_default_look_and_feel (dark);
+            if (target.length == 0 || kde_tool == null) {
+                return;
+            }
+            var scheme = dark ? "prefer-dark" : "default";
+            if (target == Application.get_kde_current_look_and_feel ()) {
+                // Already there, for example after a restart
+                applied_scheme = scheme;
+                return;
+            }
+            // A manual switch stays until the schedule wants another style
+            if (scheme == applied_scheme) {
+                return;
+            }
+            applied_scheme = scheme;
+
+            try {
+                string[] argv = { kde_tool, "-a", target };
+                Process.spawn_async (null, argv, null, SpawnFlags.SEARCH_PATH, null, null);
+                message ("Applying KDE global theme %s", target);
+            } catch (Error e) {
+                warning ("Failed to apply KDE global theme %s: %s", target, e.message);
             }
         }
 

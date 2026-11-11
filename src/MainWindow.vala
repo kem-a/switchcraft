@@ -86,7 +86,19 @@ namespace Switchcraft {
             var placeholder = new Adw.StatusPage ();
             placeholder.set_icon_name ("utilities-terminal-symbolic");
             placeholder.set_title (_("No Commands"));
-            placeholder.set_description (_("Click the + button to add a command."));
+            placeholder.set_description (_("Use the + button in the header bar or press Ctrl + N to add a command."));
+
+            var empty_add_content = new Adw.ButtonContent ();
+            empty_add_content.set_icon_name ("list-add-symbolic");
+            empty_add_content.set_label (_("Add Command"));
+
+            var empty_add_button = new Gtk.Button ();
+            empty_add_button.set_child (empty_add_content);
+            empty_add_button.set_action_name ("win.add-command");
+            empty_add_button.add_css_class ("pill");
+            empty_add_button.add_css_class ("suggested-action");
+            empty_add_button.set_halign (Gtk.Align.CENTER);
+            placeholder.set_child (empty_add_button);
 
             content_stack = new Gtk.Stack ();
             content_stack.set_vexpand (true);
@@ -263,13 +275,33 @@ namespace Switchcraft {
             if (builtin_title.length > 0) {
                 // Built-in settings show the setting and value, not the gsettings line
                 row.set_title (builtin_title);
-                row.set_subtitle (CommandDialog.is_image_setting (entry.builtin) ? Path.get_basename (entry.value) : entry.value);
+                row.set_subtitle (CommandDialog.is_image_setting (entry.builtin)
+                    ? Path.get_basename (entry.value)
+                    : Application.get_setting_value_label (entry.builtin, entry.value));
                 row.set_tooltip_text (entry.command);
             } else {
                 row.set_title (entry.command);
             }
             row.set_data<void*> (AnimatedRows.ROW_KEY, (void*) entry);
             command_row_entries.insert (row, entry);
+
+            // Duplicates are allowed, but make them easy to spot
+            var duplicate = CommandDialog.find_duplicate (commands, entry, entry.command, entry.builtin, theme);
+            if (duplicate != null) {
+                var duplicate_box = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 4);
+                duplicate_box.set_valign (Gtk.Align.CENTER);
+                duplicate_box.set_tooltip_text (duplicate);
+
+                var duplicate_icon = new Gtk.Image.from_icon_name ("dialog-warning-symbolic");
+                duplicate_icon.add_css_class ("warning");
+                var duplicate_text = new Gtk.Label (_("Duplicate"));
+                duplicate_text.add_css_class ("caption");
+                duplicate_text.add_css_class ("warning");
+
+                duplicate_box.append (duplicate_icon);
+                duplicate_box.append (duplicate_text);
+                row.add_suffix (duplicate_box);
+            }
 
             // Drag handle
             var drag_handle = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 0);
@@ -403,7 +435,7 @@ namespace Switchcraft {
 
         // Shows a toast when the command cannot run in the theme's list
         private bool check_conflict (CommandEntry entry, string theme) {
-            var conflict = CommandDialog.find_conflict (commands, entry, entry.command, entry.builtin, theme);
+            var conflict = CommandDialog.find_loop_conflict (commands, entry, entry.command, entry.builtin, theme);
             if (conflict != null) {
                 toast_overlay.add_toast (new Adw.Toast (conflict));
             }
