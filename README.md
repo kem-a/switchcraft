@@ -2,49 +2,36 @@
 [![Download](https://img.shields.io/badge/Download-latest-blue)](https://github.com/kem-a/switchcraft/releases/latest)
 [![Release](https://img.shields.io/github/v/release/kem-a/switchcraft?semver)](https://github.com/kem-a/switchcraft/releases/latest)
 [![License](https://img.shields.io/github/license/kem-a/switchcraft)](https://github.com/kem-a/switchcraft/blob/main/LICENSE)
-![GNOME 42+](https://img.shields.io/badge/GNOME-42%2B-blue?logo=gnome)
+[![AnyLinux](https://img.shields.io/badge/AnyLinux-compatible-green?logo=linux&logoColor=white)](https://pkgforge-dev.github.io/Anylinux-AppImages/)
 ![GTK 4](https://img.shields.io/badge/GTK-4-blue?logo=gtk)
 ![Vala](https://img.shields.io/badge/Vala-compiler-blue?logo=vala)
 [![Stars](https://img.shields.io/github/stars/kem-a/switchcraft?style=social)](https://github.com/kem-a/switchcraft/stargazers)
 
 # <img width="48" height="48" alt="switchcraft" src="https://github.com/user-attachments/assets/410929d4-a94f-49f7-af37-b0f090270f79" /> Switchcraft
 
-Switchcraft watches GNOME's light/dark preference and runs your shell commands when the theme changes.
+**Switchcraft** watches GNOME's or KDE Plasma light/dark preference and runs your shell commands when the theme changes.
 
-<img width="607" height="400" alt="Screenshot From 2025-11-25 13-38-16" src="https://github.com/user-attachments/assets/c4e4f154-45b5-4084-bac2-c02be4b58361" />
+> **This AppImage bundles everything and it should work on any Linux distro, including old and musl-based ones.**
+
+Switchcraft doesn't require FUSE to run, thanks to the [uruntime](https://github.com/VHSgunzo/uruntime)
+
+## Preview
+
+<img width="900" height="670" alt="Screenshot From 2026-11-11 22-43-39" src="https://github.com/user-attachments/assets/1a31d5b4-9f38-42a5-8005-e705730cb095" />
 
 ## Features
 
-- Watches `org.gnome.desktop.interface color-scheme` and executes commands instantly.
-- Polished libadwaita interface with light/dark pages, icons, and header-bar actions.
-- Add, edit, enable/disable, reorder or remove commands per theme.
+- Run custom commands on theme switch.
+- Switch between light and dark style automatically at sunset and sunrise, or at custom times (Preferences). Uses GeoClue for the location when allowed, else the system time zone. On KDE Plasma it switches the default light and dark global themes, unless Plasma's own automatic switching is enabled.
 - Built-in commands: pick a setting and a value from a list instead of typing a command. Only the ones for the running desktop are offered:
   - GNOME: color scheme, accent color, icon, GTK, cursor and shell theme, wallpaper, Night Light.
   - KDE Plasma: global theme, color scheme, Plasma style, icon and cursor theme, wallpaper.
   - Any desktop: Kvantum theme, when Kvantum is installed.
-- Blocks commands that would switch the style back and run in a loop. Duplicate commands are allowed, with a warning and a Duplicate tag on the row.
 - Define reusable constants for common variables in commands.
-- **Independent background monitoring** - a `switchcraft --background` process runs even when the GUI is closed.
-- Turn the background monitor on or off from the header bar.
-- Switch between light and dark style automatically at sunset and sunrise, or at custom times (Preferences). Uses GeoClue for the location when allowed, else the system time zone. On KDE Plasma it switches the default light and dark global themes, unless Plasma's own automatic switching is enabled.
-- Keyboard shortcuts (<kbd>Ctrl</kbd>+<kbd>N</kbd> to add, <kbd>Ctrl</kbd>+<kbd>Q</kbd> to quit) plus About and Shortcuts dialogs from the menu.
+- Add, edit, enable/disable, reorder or remove commands per theme.
 
 <details> <summary> Command Examples <b>(click to open)</b> </summary>
 
-- Change legacy theme to dark:
-  
-`gsettings set org.gnome.desktop.interface gtk-theme 'adw-gtk3-dark'`
-
-- Change icon theme to light:
-
-`gsettings set org.gnome.desktop.interface icon-theme 'MacTahoe-light'`
-
-- Set constants:
-
-```bash
-D2DL_SCHEMADIR="$HOME/.local/share/gnome-shell/extensions/dash2dock-lite@icedman.github.com/schemas"
-D2DL_SCHEMA="org.gnome.shell.extensions.dash2dock-lite"
-```
 
 - Change Dash 2 Dock Lite background based on theme and using constants
 
@@ -56,23 +43,36 @@ Dark theme:
 
 `gsettings --schemadir $D2DL_SCHEMADIR set $D2DL_SCHEMA background-color '(0.3373, 0.4392, 0.5294, 1.0)'`
 
+- Set constants:
+
+```bash
+D2DL_SCHEMADIR="$HOME/.local/share/gnome-shell/extensions/dash2dock-lite@icedman.github.com/schemas"
+D2DL_SCHEMA="org.gnome.shell.extensions.dash2dock-lite"
+```
+
+- Change legacy theme to dark:
+  
+`gsettings set org.gnome.desktop.interface gtk-theme 'adw-gtk3-dark'`
+
+- Change icon theme to light:
+
+`gsettings set org.gnome.desktop.interface icon-theme 'MacTahoe-light'`
+
 </details>
+
+## Install
+
+Simply [download](https://github.com/kem-a/switchcraft/releases/latest) the latest AppImage, enable execute and run it.
+
+For seamless AppImage installation use [AppManager](https://github.com/kem-a/AppManager).
 
 ## Requirements
 
-- Desktop: GNOME 42+ (Switchcraft follows the `org.gnome.desktop.interface color-scheme` setting)
 - Build tools: a C compiler, `valac`, `meson` (>= 0.59), `ninja`, `pkg-config`, `gettext`, `glib-compile-resources`, `glib-compile-schemas`
 - Libraries (with development headers): `gtk4`, `libadwaita-1` (>= 1.8), `glib-2.0` (>= 2.66), `gio-2.0`, `json-glib-1.0`
 - Runtime tools: `gsettings`, `zip` and `unzip` (configuration export and import), `pgrep` and `pkill` (managing the background monitor). Optional: GeoClue with location services on, for exact sunrise and sunset; Plasma's `plasma-apply-*` tools for the KDE built-ins; `kvantummanager` for the Kvantum built-in
 - AnyLinux AppImage packaging with `scripts/make-anyimage.sh`: `podman` (the build runs in an Arch Linux container)
 - Local AppImage packaging with `scripts/make-appimage.sh`: `bash`, `jq` and `appimagetool` (downloaded automatically if missing)
-
-## Install
-
-Simply [download](https://github.com/kem-a/switchcraft/releases/latest) the latest AppImage, enable execute and run it.
-For seamless AppImage installation use [AppManager](https://github.com/kem-a/AppManager).
-
-> The AnyLinux AppImage bundles GTK 4 and libadwaita, so it runs on any distro with a GNOME desktop.
 
 ## Build
 
@@ -127,10 +127,11 @@ ninja -C build remove
 
 For a system-wide install use `--prefix=/usr/local` and run the install and remove steps with `sudo`.
 
-Build the portable AnyLinux AppImage (output in `build-anyimage/dist/`)
+Build portable AppImage versions:
 
 ```bash
-./scripts/make-anyimage.sh
+scripts/make-anyimage.sh  # anylinux version (long build)
+scripts/make-appimage.sh  # standard AppImage (requires FUSE)
 ```
 
 ## Translations
@@ -172,10 +173,4 @@ Built-in commands are stored in `commands.json` as normal `gsettings` lines with
   "enabled": true, "builtin": "gtk-theme", "value": "adw-gtk3-dark" }
 ```
 
-A `theme_settings.json` from older versions is turned into built-in commands on start.
-
 </details>
-
-## License
-
-This project is provided under the terms in `LICENSE`.
