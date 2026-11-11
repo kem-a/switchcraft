@@ -8,99 +8,109 @@ msgid ""
 msgstr ""
 "Project-Id-Version: switchcraft 2.0.0\n"
 "Report-Msgid-Bugs-To: https://github.com/kem-a/switchcraft/issues\n"
-"POT-Creation-Date: 2026-11-09 23:59+0200\n"
+"POT-Creation-Date: 2026-11-11 11:39+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/Application.vala:125
+#: src/Application.vala:126
 msgid "Show version information"
 msgstr ""
 
-#: src/Application.vala:126
+#: src/Application.vala:127
 msgid "Run in background for theme monitoring"
 msgstr ""
 
-#: src/Application.vala:800
+#: src/Application.vala:343
+#, c-format
+msgid "Exited with code %d"
+msgstr ""
+
+#: src/Application.vala:344
+#, c-format
+msgid "Killed by signal %d"
+msgstr ""
+
+#: src/Application.vala:1331
 msgid "The 'zip' command is required to export."
 msgstr ""
 
-#: src/Application.vala:806
+#: src/Application.vala:1337
 msgid "Destination must be a local file."
 msgstr ""
 
-#: src/Application.vala:813
+#: src/Application.vala:1344
 msgid "Failed to prepare destination directory."
 msgstr ""
 
-#: src/Application.vala:821 src/Application.vala:894
+#: src/Application.vala:1352 src/Application.vala:1425
 msgid "Failed to create temporary directory."
 msgstr ""
 
-#: src/Application.vala:852
+#: src/Application.vala:1383
 msgid "Unable to overwrite existing archive."
 msgstr ""
 
-#: src/Application.vala:864
+#: src/Application.vala:1395
 #, c-format
 msgid "Failed to write archive: %s"
 msgstr ""
 
-#: src/Application.vala:881
+#: src/Application.vala:1412
 msgid "The 'unzip' command is required to import."
 msgstr ""
 
-#: src/Application.vala:887
+#: src/Application.vala:1418
 msgid "Archive must be a local file."
 msgstr ""
 
-#: src/Application.vala:905
+#: src/Application.vala:1436
 #, c-format
 msgid "Failed to unpack archive: %s"
 msgstr ""
 
-#: src/Application.vala:913
+#: src/Application.vala:1444
 msgid "Archive must contain commands.json and constants.json at the top level."
 msgstr ""
 
-#: src/Application.vala:925
+#: src/Application.vala:1456
 msgid "commands.json is not a JSON object."
 msgstr ""
 
-#: src/Application.vala:936
+#: src/Application.vala:1467
 msgid "constants.json is not a JSON object."
 msgstr ""
 
-#: src/Application.vala:953
+#: src/Application.vala:1484
 msgid "constants.json must only contain string values."
 msgstr ""
 
-#: src/Application.vala:966
+#: src/Application.vala:1497
 msgid "theme_settings.json is not a JSON object."
 msgstr ""
 
-#: src/Application.vala:989
+#: src/Application.vala:1520
 msgid "Failed to remove commands.json."
 msgstr ""
 
-#: src/Application.vala:996
+#: src/Application.vala:1527
 msgid "Failed to remove constants.json."
 msgstr ""
 
-#: src/Application.vala:1003
+#: src/Application.vala:1534
 msgid "Failed to remove theme_settings.json."
 msgstr ""
 
-#: src/Application.vala:1189
+#: src/Application.vala:1720
 #, c-format
 msgid "Switchcraft Monitor"
 msgstr ""
 
-#: src/Application.vala:1190
+#: src/Application.vala:1721
 msgid "Monitor GNOME theme changes and run commands"
 msgstr ""
 
@@ -168,162 +178,255 @@ msgid ""
 "underscores."
 msgstr ""
 
-#: src/MainWindow.vala:57
+#: src/MainWindow.vala:56 src/MainWindow.vala:93
 msgid "Add Command"
 msgstr ""
 
-#: src/MainWindow.vala:65
+#: src/MainWindow.vala:64
 msgid "Preferences"
 msgstr ""
 
-#: src/MainWindow.vala:68
+#: src/MainWindow.vala:67
 msgid "Keyboard Shortcuts"
 msgstr ""
 
-#: src/MainWindow.vala:69
+#: src/MainWindow.vala:68
 msgid "About Switchcraft"
 msgstr ""
 
-#: src/MainWindow.vala:70
+#: src/MainWindow.vala:69
 msgid "Quit"
 msgstr ""
 
-#: src/MainWindow.vala:79
+#: src/MainWindow.vala:78
 msgid "Run the background process that reacts to GNOME theme changes."
 msgstr ""
 
-#: src/MainWindow.vala:80 src/MainWindow.vala:83
+#: src/MainWindow.vala:79 src/MainWindow.vala:82
 msgid "Monitor"
 msgstr ""
 
 #: src/MainWindow.vala:88
-msgid "Background monitoring is now active"
-msgstr ""
-
-#: src/MainWindow.vala:89
-msgid "Dismiss"
-msgstr ""
-
-#: src/MainWindow.vala:95
 msgid "No Commands"
 msgstr ""
 
-#: src/MainWindow.vala:96
-msgid "Click the + button to add a command."
-msgstr ""
-
-#: src/MainWindow.vala:127
-msgid "Commands"
+#: src/MainWindow.vala:89
+msgid "Use the + button in the header bar or press Ctrl + N to add a command."
 msgstr ""
 
 #: src/MainWindow.vala:128
+msgid "Commands"
+msgstr ""
+
+#: src/MainWindow.vala:129
 msgid "Active commands that will run when their theme matches."
 msgstr ""
 
-#: src/MainWindow.vala:134
+#: src/MainWindow.vala:135
 msgid "Disabled"
 msgstr ""
 
-#: src/MainWindow.vala:135
+#: src/MainWindow.vala:136
 msgid "Saved commands that are currently turned off."
 msgstr ""
 
-#: src/MainWindow.vala:290
+#: src/MainWindow.vala:297
+msgid "Duplicate"
+msgstr ""
+
+#: src/MainWindow.vala:310
 msgid "Drag to reorder"
 msgstr ""
 
-#: src/MainWindow.vala:349
-msgid "Edit command"
+#: src/MainWindow.vala:610
+msgid "Command deleted"
 msgstr ""
 
-#: src/MainWindow.vala:357
-msgid "Remove command"
+#: src/MainWindow.vala:611
+msgid "Undo"
 msgstr ""
 
-#: src/PreferencesWindow.vala:30
-msgid "Configuration"
+#: src/MainWindow.vala:697
+msgid "Background monitoring is now active"
 msgstr ""
 
-#: src/PreferencesWindow.vala:31
-msgid "Import or export commands and constants together as a zip archive."
+#: src/MainWindow.vala:698
+msgid "Background monitoring is now inactive"
 msgstr ""
 
-#: src/PreferencesWindow.vala:35 src/PreferencesWindow.vala:79
-msgid "Import Configuration"
+#: src/PreferencesWindow.vala:43
+msgid "Automatic Switching"
 msgstr ""
 
-#: src/PreferencesWindow.vala:36
-msgid "Replace local commands and constants from a zip file."
+#: src/PreferencesWindow.vala:45
+msgid ""
+"KDE Plasma is set to switch global themes automatically. Turn that off to "
+"use this schedule."
 msgstr ""
 
-#: src/PreferencesWindow.vala:38
-msgid "Import"
-msgstr ""
-
-#: src/PreferencesWindow.vala:47 src/PreferencesWindow.vala:102
-msgid "Export Configuration"
+#: src/PreferencesWindow.vala:47
+msgid ""
+"Switch KDE's default light and dark global themes on a schedule. Needs "
+"background monitoring."
 msgstr ""
 
 #: src/PreferencesWindow.vala:48
-msgid "Save commands and constants into a zip file."
+msgid ""
+"Switch between light and dark style on a schedule. Needs background "
+"monitoring."
 msgstr ""
 
-#: src/PreferencesWindow.vala:50
-msgid "Export"
+#: src/PreferencesWindow.vala:54
+msgid "Automatic Switching Is Set in KDE"
 msgstr ""
 
-#: src/PreferencesWindow.vala:59
-msgid "Danger Zone"
+#: src/PreferencesWindow.vala:55
+msgid ""
+"Turn off “Switch to Dark Mode at Night” in System Settings to use this "
+"schedule."
 msgstr ""
 
-#: src/PreferencesWindow.vala:60
-msgid "Remove all saved commands and constants from this device."
-msgstr ""
-
-#: src/PreferencesWindow.vala:64
-msgid "Delete All Configuration"
+#: src/PreferencesWindow.vala:61
+msgid "Open Settings"
 msgstr ""
 
 #: src/PreferencesWindow.vala:65
+msgid "Could not open System Settings"
+msgstr ""
+
+#: src/PreferencesWindow.vala:74
+msgid "Schedule"
+msgstr ""
+
+#: src/PreferencesWindow.vala:75
+msgid "Off"
+msgstr ""
+
+#: src/PreferencesWindow.vala:75
+msgid "Sunset to Sunrise"
+msgstr ""
+
+#: src/PreferencesWindow.vala:75
+msgid "Custom Times"
+msgstr ""
+
+#: src/PreferencesWindow.vala:86
+msgid "Light From"
+msgstr ""
+
+#: src/PreferencesWindow.vala:87
+msgid "Dark From"
+msgstr ""
+
+#: src/PreferencesWindow.vala:99
+msgid "Configuration"
+msgstr ""
+
+#: src/PreferencesWindow.vala:100
+msgid "Import or export commands and constants together as a zip archive."
+msgstr ""
+
+#: src/PreferencesWindow.vala:104 src/PreferencesWindow.vala:237
+msgid "Import Configuration"
+msgstr ""
+
+#: src/PreferencesWindow.vala:105
+msgid "Replace local commands and constants from a zip file."
+msgstr ""
+
+#: src/PreferencesWindow.vala:107
+msgid "Import"
+msgstr ""
+
+#: src/PreferencesWindow.vala:116 src/PreferencesWindow.vala:260
+msgid "Export Configuration"
+msgstr ""
+
+#: src/PreferencesWindow.vala:117
+msgid "Save commands and constants into a zip file."
+msgstr ""
+
+#: src/PreferencesWindow.vala:119
+msgid "Export"
+msgstr ""
+
+#: src/PreferencesWindow.vala:128
+msgid "Danger Zone"
+msgstr ""
+
+#: src/PreferencesWindow.vala:129
+msgid "Remove all saved commands and constants from this device."
+msgstr ""
+
+#: src/PreferencesWindow.vala:133
+msgid "Delete All Configuration"
+msgstr ""
+
+#: src/PreferencesWindow.vala:134
 msgid "Deletes commands.json and constants.json. This cannot be undone."
 msgstr ""
 
-#: src/PreferencesWindow.vala:67 src/PreferencesWindow.vala:129
+#: src/PreferencesWindow.vala:136 src/PreferencesWindow.vala:287
 msgid "Delete"
 msgstr ""
 
-#: src/PreferencesWindow.vala:88
+#: src/PreferencesWindow.vala:159
+msgid "Location unknown"
+msgstr ""
+
+#: src/PreferencesWindow.vala:165
+msgid "The sun stays down today"
+msgstr ""
+
+#: src/PreferencesWindow.vala:168
+msgid "The sun stays up today"
+msgstr ""
+
+#: src/PreferencesWindow.vala:170
+#, c-format
+msgid "Sunrise %s, sunset %s"
+msgstr ""
+
+#: src/PreferencesWindow.vala:178
+msgid "Hour"
+msgstr ""
+
+#: src/PreferencesWindow.vala:179
+msgid "Minute"
+msgstr ""
+
+#: src/PreferencesWindow.vala:246
 msgid "Configuration imported"
 msgstr ""
 
-#: src/PreferencesWindow.vala:90 src/PreferencesWindow.vala:96
+#: src/PreferencesWindow.vala:248 src/PreferencesWindow.vala:254
 #, c-format
 msgid "Import failed: %s"
 msgstr ""
 
-#: src/PreferencesWindow.vala:111
+#: src/PreferencesWindow.vala:269
 msgid "Configuration exported"
 msgstr ""
 
-#: src/PreferencesWindow.vala:113 src/PreferencesWindow.vala:119
+#: src/PreferencesWindow.vala:271 src/PreferencesWindow.vala:277
 #, c-format
 msgid "Export failed: %s"
 msgstr ""
 
-#: src/PreferencesWindow.vala:125
+#: src/PreferencesWindow.vala:283
 msgid "Delete all configuration?"
 msgstr ""
 
-#: src/PreferencesWindow.vala:126
+#: src/PreferencesWindow.vala:284
 msgid ""
 "This will remove every command and constant. This action cannot be undone."
 msgstr ""
 
-#: src/PreferencesWindow.vala:147
+#: src/PreferencesWindow.vala:305
 msgid "Configuration deleted"
 msgstr ""
 
-#: src/PreferencesWindow.vala:149
+#: src/PreferencesWindow.vala:307
 #, c-format
 msgid "Delete failed: %s"
 msgstr ""
@@ -362,6 +465,44 @@ msgstr ""
 
 #: data/com.github.Switchcraft.gschema.xml:7
 msgid "Whether the background process for theme monitoring is enabled."
+msgstr ""
+
+#: data/com.github.Switchcraft.gschema.xml:16
+msgid "Automatic light and dark switching"
+msgstr ""
+
+#: data/com.github.Switchcraft.gschema.xml:17
+msgid ""
+"Switch the light/dark style at sunrise and sunset (sun), at light-time and "
+"dark-time (custom), or never (off). Runs in the background monitor."
+msgstr ""
+
+#: data/com.github.Switchcraft.gschema.xml:22
+msgid "Light style time"
+msgstr ""
+
+#: data/com.github.Switchcraft.gschema.xml:23
+msgid ""
+"Minutes after midnight when the custom schedule switches to the light style."
+msgstr ""
+
+#: data/com.github.Switchcraft.gschema.xml:28
+msgid "Dark style time"
+msgstr ""
+
+#: data/com.github.Switchcraft.gschema.xml:29
+msgid ""
+"Minutes after midnight when the custom schedule switches to the dark style."
+msgstr ""
+
+#: data/com.github.Switchcraft.gschema.xml:33
+msgid "Last known location"
+msgstr ""
+
+#: data/com.github.Switchcraft.gschema.xml:34
+msgid ""
+"Latitude and longitude from GeoClue, used for sunrise and sunset. Out of "
+"range values mean none is known, and the system time zone gives the location."
 msgstr ""
 
 #: data/com.github.Switchcraft.metainfo.xml.in:6
