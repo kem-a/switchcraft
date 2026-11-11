@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: switchcraft 2.0.0\n"
 "Report-Msgid-Bugs-To: https://github.com/kem-a/switchcraft/issues\n"
-"POT-Creation-Date: 2026-11-11 11:39+0200\n"
+"POT-Creation-Date: 2026-11-11 13:09+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -106,12 +106,148 @@ msgid "Failed to remove theme_settings.json."
 msgstr ""
 
 #: src/Application.vala:1720
-#, c-format
 msgid "Switchcraft Monitor"
 msgstr ""
 
 #: src/Application.vala:1721
 msgid "Monitor GNOME theme changes and run commands"
+msgstr ""
+
+#: src/CommandDialog.vala:44
+msgid "Color Scheme"
+msgstr ""
+
+#: src/CommandDialog.vala:46
+msgid "Accent Color"
+msgstr ""
+
+#: src/CommandDialog.vala:49
+msgid "Icon Theme"
+msgstr ""
+
+#: src/CommandDialog.vala:51
+msgid "GTK Theme"
+msgstr ""
+
+#: src/CommandDialog.vala:54
+msgid "Cursor Theme"
+msgstr ""
+
+#: src/CommandDialog.vala:56
+msgid "Shell Theme"
+msgstr ""
+
+#: src/CommandDialog.vala:59
+msgid "Wallpaper"
+msgstr ""
+
+#: src/CommandDialog.vala:61
+msgid "Night Light"
+msgstr ""
+
+#: src/CommandDialog.vala:63
+msgid "Global Theme"
+msgstr ""
+
+#: src/CommandDialog.vala:65
+msgid "Plasma Style"
+msgstr ""
+
+#: src/CommandDialog.vala:67
+msgid "Kvantum Theme"
+msgstr ""
+
+#: src/CommandDialog.vala:96
+msgid "Switches to the light style and would loop in Dark mode"
+msgstr ""
+
+#: src/CommandDialog.vala:99
+msgid "Switches to the dark style and would loop in Light mode"
+msgstr ""
+
+#: src/CommandDialog.vala:113
+#, c-format
+msgid "%s is already set in this mode"
+msgstr ""
+
+#: src/CommandDialog.vala:116
+msgid "This command is already in this mode"
+msgstr ""
+
+#: src/CommandDialog.vala:124
+msgid "Edit Command"
+msgstr ""
+
+#: src/CommandDialog.vala:124
+msgid "Add Command"
+msgstr ""
+
+#: src/CommandDialog.vala:131
+msgid "Delete"
+msgstr ""
+
+#: src/CommandDialog.vala:134
+msgid "Cancel"
+msgstr ""
+
+#: src/CommandDialog.vala:135
+msgid "Save"
+msgstr ""
+
+#: src/CommandDialog.vala:135
+msgid "Add"
+msgstr ""
+
+#: src/CommandDialog.vala:148
+msgid "Custom Command"
+msgstr ""
+
+#: src/CommandDialog.vala:170
+msgid "Type"
+msgstr ""
+
+#: src/CommandDialog.vala:175
+msgid "Command"
+msgstr ""
+
+#: src/CommandDialog.vala:215
+msgid "Copy Error"
+msgstr ""
+
+#: src/CommandDialog.vala:240
+msgid "Test"
+msgstr ""
+
+#: src/CommandDialog.vala:256
+msgid "Value"
+msgstr ""
+
+#: src/CommandDialog.vala:261
+msgid "Image"
+msgstr ""
+
+#: src/CommandDialog.vala:266
+msgid "Browse…"
+msgstr ""
+
+#: src/CommandDialog.vala:276
+msgid "Mode"
+msgstr ""
+
+#: src/CommandDialog.vala:402
+msgid "Requires the User Themes GNOME Shell extension."
+msgstr ""
+
+#: src/CommandDialog.vala:514
+msgid "Command failed"
+msgstr ""
+
+#: src/CommandDialog.vala:514
+msgid "Command succeeded"
+msgstr ""
+
+#: src/CommandDialog.vala:527
+msgid "Select Wallpaper"
 msgstr ""
 
 #: src/ConstantsWindow.vala:22
@@ -133,7 +269,7 @@ msgid "No Constants"
 msgstr ""
 
 #: src/ConstantsWindow.vala:70
-msgid "Click the + button to define a constant."
+msgid "Click the '+' button to define a constant."
 msgstr ""
 
 #: src/ConstantsWindow.vala:145
@@ -152,18 +288,6 @@ msgstr ""
 msgid "Define a constant name and value."
 msgstr ""
 
-#: src/ConstantsWindow.vala:185
-msgid "Cancel"
-msgstr ""
-
-#: src/ConstantsWindow.vala:186
-msgid "Save"
-msgstr ""
-
-#: src/ConstantsWindow.vala:186
-msgid "Add"
-msgstr ""
-
 #: src/ConstantsWindow.vala:202
 msgid "Constant name (e.g., D2DL_SCHEMA)"
 msgstr ""
@@ -176,10 +300,6 @@ msgstr ""
 msgid ""
 "Use in commands as $NAME or ${NAME}. Names use letters, numbers and "
 "underscores."
-msgstr ""
-
-#: src/MainWindow.vala:56 src/MainWindow.vala:93
-msgid "Add Command"
 msgstr ""
 
 #: src/MainWindow.vala:64
@@ -211,7 +331,8 @@ msgid "No Commands"
 msgstr ""
 
 #: src/MainWindow.vala:89
-msgid "Use the + button in the header bar or press Ctrl + N to add a command."
+msgid ""
+"Use the '+' button in the header bar or press (Ctrl+N) to add a command."
 msgstr ""
 
 #: src/MainWindow.vala:128
@@ -366,10 +487,6 @@ msgstr ""
 msgid "Deletes commands.json and constants.json. This cannot be undone."
 msgstr ""
 
-#: src/PreferencesWindow.vala:136 src/PreferencesWindow.vala:287
-msgid "Delete"
-msgstr ""
-
 #: src/PreferencesWindow.vala:159
 msgid "Location unknown"
 msgstr ""
@@ -429,6 +546,14 @@ msgstr ""
 #: src/PreferencesWindow.vala:307
 #, c-format
 msgid "Delete failed: %s"
+msgstr ""
+
+#: src/SlidingToggleGroup.vala:38
+msgid "Light"
+msgstr ""
+
+#: src/SlidingToggleGroup.vala:39
+msgid "Dark"
 msgstr ""
 
 #: data/resources/shortcuts-dialog.ui:6

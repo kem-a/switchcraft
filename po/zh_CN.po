@@ -1,0 +1,648 @@
+# Switchcraft translations.
+# Copyright (C) 2026 kem-a
+# This file is distributed under the same license as the switchcraft package.
+# Automatically generated, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: switchcraft 2.0.0\n"
+"Report-Msgid-Bugs-To: https://github.com/kem-a/switchcraft/issues\n"
+"POT-Creation-Date: 2026-11-11 13:09+0200\n"
+"PO-Revision-Date: 2026-11-11 12:02+0000\n"
+"Last-Translator: Switchcraft translators\n"
+"Language-Team: none\n"
+"Language: zh_CN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: src/Application.vala:126
+msgid "Show version information"
+msgstr "显示版本信息"
+
+#: src/Application.vala:127
+msgid "Run in background for theme monitoring"
+msgstr "在后台运行以进行主题监控"
+
+#: src/Application.vala:343
+#, c-format
+msgid "Exited with code %d"
+msgstr "已退出，代码为 %d"
+
+#: src/Application.vala:344
+#, c-format
+msgid "Killed by signal %d"
+msgstr "被信号 %d 杀死"
+
+#: src/Application.vala:1331
+msgid "The 'zip' command is required to export."
+msgstr "导出需要“zip”命令。"
+
+#: src/Application.vala:1337
+msgid "Destination must be a local file."
+msgstr "目标必须是本地文件。"
+
+#: src/Application.vala:1344
+msgid "Failed to prepare destination directory."
+msgstr "无法准备目标目录。"
+
+#: src/Application.vala:1352 src/Application.vala:1425
+msgid "Failed to create temporary directory."
+msgstr "创建临时目录失败。"
+
+#: src/Application.vala:1383
+msgid "Unable to overwrite existing archive."
+msgstr "无法覆盖现有存档。"
+
+#: src/Application.vala:1395
+#, c-format
+msgid "Failed to write archive: %s"
+msgstr "无法写入存档：%s"
+
+#: src/Application.vala:1412
+msgid "The 'unzip' command is required to import."
+msgstr "导入需要“unzip”命令。"
+
+#: src/Application.vala:1418
+msgid "Archive must be a local file."
+msgstr "存档必须是本地文件。"
+
+#: src/Application.vala:1436
+#, c-format
+msgid "Failed to unpack archive: %s"
+msgstr "无法解压缩存档：%s"
+
+#: src/Application.vala:1444
+msgid "Archive must contain commands.json and constants.json at the top level."
+msgstr "存档必须在顶层包含 commands.json 和 constants.json。"
+
+#: src/Application.vala:1456
+msgid "commands.json is not a JSON object."
+msgstr "commands.json 不是 JSON 对象。"
+
+#: src/Application.vala:1467
+msgid "constants.json is not a JSON object."
+msgstr "constants.json 不是 JSON 对象。"
+
+#: src/Application.vala:1484
+msgid "constants.json must only contain string values."
+msgstr "constants.json 必须仅包含字符串值。"
+
+#: src/Application.vala:1497
+msgid "theme_settings.json is not a JSON object."
+msgstr "theme_settings.json 不是 JSON 对象。"
+
+#: src/Application.vala:1520
+msgid "Failed to remove commands.json."
+msgstr "无法删除 commands.json。"
+
+#: src/Application.vala:1527
+msgid "Failed to remove constants.json."
+msgstr "无法删除 constants.json。"
+
+#: src/Application.vala:1534
+msgid "Failed to remove theme_settings.json."
+msgstr "无法删除 theme_settings.json。"
+
+#: src/Application.vala:1720
+msgid "Switchcraft Monitor"
+msgstr "Switchcraft 监视器"
+
+#: src/Application.vala:1721
+msgid "Monitor GNOME theme changes and run commands"
+msgstr "监控 GNOME 主题更改并运行命令"
+
+#: src/CommandDialog.vala:44
+msgid "Color Scheme"
+msgstr "配色方案"
+
+#: src/CommandDialog.vala:46
+msgid "Accent Color"
+msgstr "强调色"
+
+#: src/CommandDialog.vala:49
+msgid "Icon Theme"
+msgstr "图标主题"
+
+#: src/CommandDialog.vala:51
+msgid "GTK Theme"
+msgstr "GTK 主题"
+
+#: src/CommandDialog.vala:54
+msgid "Cursor Theme"
+msgstr "光标主题"
+
+#: src/CommandDialog.vala:56
+msgid "Shell Theme"
+msgstr "Shell 主题"
+
+#: src/CommandDialog.vala:59
+msgid "Wallpaper"
+msgstr "壁纸"
+
+#: src/CommandDialog.vala:61
+msgid "Night Light"
+msgstr "夜间颜色"
+
+#: src/CommandDialog.vala:63
+msgid "Global Theme"
+msgstr "全局主题"
+
+#: src/CommandDialog.vala:65
+msgid "Plasma Style"
+msgstr "Plasma 外观样式"
+
+#: src/CommandDialog.vala:67
+msgid "Kvantum Theme"
+msgstr "Kvantum 主题"
+
+#: src/CommandDialog.vala:96
+msgid "Switches to the light style and would loop in Dark mode"
+msgstr "切换到浅色样式并在深色模式下循环"
+
+#: src/CommandDialog.vala:99
+msgid "Switches to the dark style and would loop in Light mode"
+msgstr "切换到深色风格并在浅色模式下循环"
+
+#: src/CommandDialog.vala:113
+#, c-format
+msgid "%s is already set in this mode"
+msgstr "%s 已设置为该模式"
+
+#: src/CommandDialog.vala:116
+msgid "This command is already in this mode"
+msgstr "该命令已经处于该模式"
+
+#: src/CommandDialog.vala:124
+msgid "Edit Command"
+msgstr "编辑命令"
+
+#: src/CommandDialog.vala:124
+msgid "Add Command"
+msgstr "添加命令"
+
+#: src/CommandDialog.vala:131
+msgid "Delete"
+msgstr "删除"
+
+#: src/CommandDialog.vala:134
+msgid "Cancel"
+msgstr "取消"
+
+#: src/CommandDialog.vala:135
+msgid "Save"
+msgstr "保存"
+
+#: src/CommandDialog.vala:135
+msgid "Add"
+msgstr "添加"
+
+#: src/CommandDialog.vala:148
+msgid "Custom Command"
+msgstr "自定义命令"
+
+#: src/CommandDialog.vala:170
+msgid "Type"
+msgstr "类型"
+
+#: src/CommandDialog.vala:175
+msgid "Command"
+msgstr "命令"
+
+#: src/CommandDialog.vala:215
+msgid "Copy Error"
+msgstr "复制错误"
+
+#: src/CommandDialog.vala:240
+msgid "Test"
+msgstr "测试"
+
+#: src/CommandDialog.vala:256
+msgid "Value"
+msgstr "值"
+
+#: src/CommandDialog.vala:261
+msgid "Image"
+msgstr "图像"
+
+#: src/CommandDialog.vala:266
+msgid "Browse…"
+msgstr "浏览…"
+
+#: src/CommandDialog.vala:276
+msgid "Mode"
+msgstr "模式"
+
+#: src/CommandDialog.vala:402
+msgid "Requires the User Themes GNOME Shell extension."
+msgstr "需要用户主题 GNOME Shell 扩展。"
+
+#: src/CommandDialog.vala:514
+msgid "Command failed"
+msgstr "命令失败"
+
+#: src/CommandDialog.vala:514
+msgid "Command succeeded"
+msgstr "命令成功"
+
+#: src/CommandDialog.vala:527
+msgid "Select Wallpaper"
+msgstr "选择壁纸"
+
+#: src/ConstantsWindow.vala:22
+msgid "Constants"
+msgstr "常数"
+
+#: src/ConstantsWindow.vala:39 src/ConstantsWindow.vala:182
+msgid "Add Constant"
+msgstr "添加常量"
+
+#: src/ConstantsWindow.vala:51
+msgid ""
+"Define constants to use in your commands. Reference them with $NAME or $"
+"{NAME}."
+msgstr "定义要在命令中使用的常量。使用 $NAME 或 ${NAME} 引用它们。"
+
+#: src/ConstantsWindow.vala:69
+msgid "No Constants"
+msgstr "无常量"
+
+#: src/ConstantsWindow.vala:70
+msgid "Click the '+' button to define a constant."
+msgstr "单击 '+' 按钮定义常量。"
+
+#: src/ConstantsWindow.vala:145
+msgid "Edit constant"
+msgstr "编辑常数"
+
+#: src/ConstantsWindow.vala:153
+msgid "Remove constant"
+msgstr "删除常数"
+
+#: src/ConstantsWindow.vala:182
+msgid "Edit Constant"
+msgstr "编辑常量"
+
+#: src/ConstantsWindow.vala:184
+msgid "Define a constant name and value."
+msgstr "定义常量名称和值。"
+
+#: src/ConstantsWindow.vala:202
+msgid "Constant name (e.g., D2DL_SCHEMA)"
+msgstr "常量名称（例如 D2DL_SCHEMA）"
+
+#: src/ConstantsWindow.vala:210
+msgid "Value (e.g., org.gnome.shell.extensions.dash2dock-lite)"
+msgstr "值（例如 org.gnome.shell.extensions.dash2dock-lite）"
+
+#: src/ConstantsWindow.vala:216
+msgid ""
+"Use in commands as $NAME or ${NAME}. Names use letters, numbers and "
+"underscores."
+msgstr "在命令中使用 $NAME 或 ${NAME}。名称使用字母、数字和下划线。"
+
+#: src/MainWindow.vala:64
+msgid "Preferences"
+msgstr "首选项"
+
+#: src/MainWindow.vala:67
+msgid "Keyboard Shortcuts"
+msgstr "键盘快捷键"
+
+#: src/MainWindow.vala:68
+msgid "About Switchcraft"
+msgstr "关于 Switchcraft"
+
+#: src/MainWindow.vala:69
+msgid "Quit"
+msgstr "退出"
+
+#: src/MainWindow.vala:78
+msgid "Run the background process that reacts to GNOME theme changes."
+msgstr "运行对 GNOME 主题更改做出反应的后台进程。"
+
+#: src/MainWindow.vala:79 src/MainWindow.vala:82
+msgid "Monitor"
+msgstr "监视"
+
+#: src/MainWindow.vala:88
+msgid "No Commands"
+msgstr "无命令"
+
+#: src/MainWindow.vala:89
+msgid "Use the '+' button in the header bar or press (Ctrl+N) to add a command."
+msgstr "使用标题栏中的 '+' 按钮或按 (Ctrl+N) 添加命令。"
+
+#: src/MainWindow.vala:128
+msgid "Commands"
+msgstr "命令"
+
+#: src/MainWindow.vala:129
+msgid "Active commands that will run when their theme matches."
+msgstr "当主题匹配时将运行的活动命令。"
+
+#: src/MainWindow.vala:135
+msgid "Disabled"
+msgstr "已禁用"
+
+#: src/MainWindow.vala:136
+msgid "Saved commands that are currently turned off."
+msgstr "当前关闭的已保存命令。"
+
+#: src/MainWindow.vala:297
+msgid "Duplicate"
+msgstr "创建副本"
+
+#: src/MainWindow.vala:310
+msgid "Drag to reorder"
+msgstr "拖动以重新排序"
+
+#: src/MainWindow.vala:610
+msgid "Command deleted"
+msgstr "命令已删除"
+
+#: src/MainWindow.vala:611
+msgid "Undo"
+msgstr "撤销"
+
+#: src/MainWindow.vala:697
+msgid "Background monitoring is now active"
+msgstr "后台监控现已启动"
+
+#: src/MainWindow.vala:698
+msgid "Background monitoring is now inactive"
+msgstr "后台监控现已停用"
+
+#: src/PreferencesWindow.vala:43
+msgid "Automatic Switching"
+msgstr "自动切换"
+
+#: src/PreferencesWindow.vala:45
+msgid ""
+"KDE Plasma is set to switch global themes automatically. Turn that off to "
+"use this schedule."
+msgstr "KDE Plasma 设置为自动切换全局主题。关闭它以使用此时间表。"
+
+#: src/PreferencesWindow.vala:47
+msgid ""
+"Switch KDE's default light and dark global themes on a schedule. Needs "
+"background monitoring."
+msgstr "按计划切换 KDE 的默认浅色和深色全局主题。需要后台监控。"
+
+#: src/PreferencesWindow.vala:48
+msgid ""
+"Switch between light and dark style on a schedule. Needs background "
+"monitoring."
+msgstr "按计划在浅色和深色风格之间切换。需要后台监控。"
+
+#: src/PreferencesWindow.vala:54
+msgid "Automatic Switching Is Set in KDE"
+msgstr "自动切换已在 KDE 中设置"
+
+#: src/PreferencesWindow.vala:55
+msgid ""
+"Turn off “Switch to Dark Mode at Night” in System Settings to use this "
+"schedule."
+msgstr "在系统设置中关闭“夜间切换到深色模式”即可使用此计划。"
+
+#: src/PreferencesWindow.vala:61
+msgid "Open Settings"
+msgstr "打开设置"
+
+#: src/PreferencesWindow.vala:65
+msgid "Could not open System Settings"
+msgstr "无法打开系统设置"
+
+#: src/PreferencesWindow.vala:74
+msgid "Schedule"
+msgstr "计划"
+
+#: src/PreferencesWindow.vala:75
+msgid "Off"
+msgstr "关"
+
+#: src/PreferencesWindow.vala:75
+msgid "Sunset to Sunrise"
+msgstr "日落到日出"
+
+#: src/PreferencesWindow.vala:75
+msgid "Custom Times"
+msgstr "自定义时间"
+
+#: src/PreferencesWindow.vala:86
+msgid "Light From"
+msgstr "亮色开始"
+
+#: src/PreferencesWindow.vala:87
+msgid "Dark From"
+msgstr "暗色开始"
+
+#: src/PreferencesWindow.vala:99
+msgid "Configuration"
+msgstr "配置"
+
+#: src/PreferencesWindow.vala:100
+msgid "Import or export commands and constants together as a zip archive."
+msgstr "将命令和常量作为 zip 存档一起导入或导出。"
+
+#: src/PreferencesWindow.vala:104 src/PreferencesWindow.vala:237
+msgid "Import Configuration"
+msgstr "导入配置"
+
+#: src/PreferencesWindow.vala:105
+msgid "Replace local commands and constants from a zip file."
+msgstr "替换 zip 文件中的本地命令和常量。"
+
+#: src/PreferencesWindow.vala:107
+msgid "Import"
+msgstr "导入"
+
+#: src/PreferencesWindow.vala:116 src/PreferencesWindow.vala:260
+msgid "Export Configuration"
+msgstr "导出配置"
+
+#: src/PreferencesWindow.vala:117
+msgid "Save commands and constants into a zip file."
+msgstr "将命令和常量保存到 zip 文件中。"
+
+#: src/PreferencesWindow.vala:119
+msgid "Export"
+msgstr "导出"
+
+#: src/PreferencesWindow.vala:128
+msgid "Danger Zone"
+msgstr "危险区"
+
+#: src/PreferencesWindow.vala:129
+msgid "Remove all saved commands and constants from this device."
+msgstr "从此设备中删除所有已保存的命令和常量。"
+
+#: src/PreferencesWindow.vala:133
+msgid "Delete All Configuration"
+msgstr "删除所有配置"
+
+#: src/PreferencesWindow.vala:134
+msgid "Deletes commands.json and constants.json. This cannot be undone."
+msgstr "删除 commands.json 和 constants.json。此操作无法撤消。"
+
+#: src/PreferencesWindow.vala:159
+msgid "Location unknown"
+msgstr "地点未知"
+
+#: src/PreferencesWindow.vala:165
+msgid "The sun stays down today"
+msgstr "今天太阳不会升起"
+
+#: src/PreferencesWindow.vala:168
+msgid "The sun stays up today"
+msgstr "今天太阳不会落下"
+
+#: src/PreferencesWindow.vala:170
+#, c-format
+msgid "Sunrise %s, sunset %s"
+msgstr "日出 %s，日落 %s"
+
+#: src/PreferencesWindow.vala:178
+msgid "Hour"
+msgstr "小时"
+
+#: src/PreferencesWindow.vala:179
+msgid "Minute"
+msgstr "分钟"
+
+#: src/PreferencesWindow.vala:246
+msgid "Configuration imported"
+msgstr "配置已导入"
+
+#: src/PreferencesWindow.vala:248 src/PreferencesWindow.vala:254
+#, c-format
+msgid "Import failed: %s"
+msgstr "导入失败：%s"
+
+#: src/PreferencesWindow.vala:269
+msgid "Configuration exported"
+msgstr "配置已导出"
+
+#: src/PreferencesWindow.vala:271 src/PreferencesWindow.vala:277
+#, c-format
+msgid "Export failed: %s"
+msgstr "导出失败：%s"
+
+#: src/PreferencesWindow.vala:283
+msgid "Delete all configuration?"
+msgstr "删除所有配置？"
+
+#: src/PreferencesWindow.vala:284
+msgid ""
+"This will remove every command and constant. This action cannot be undone."
+msgstr "这将删除每个命令和常量。此操作无法撤消。"
+
+#: src/PreferencesWindow.vala:305
+msgid "Configuration deleted"
+msgstr "配置已删除"
+
+#: src/PreferencesWindow.vala:307
+#, c-format
+msgid "Delete failed: %s"
+msgstr "删除失败：%s"
+
+#: src/SlidingToggleGroup.vala:38
+msgid "Light"
+msgstr "亮色"
+
+#: src/SlidingToggleGroup.vala:39
+msgid "Dark"
+msgstr "暗色"
+
+#: data/resources/shortcuts-dialog.ui:6
+msgid "General"
+msgstr "常规"
+
+#: data/resources/shortcuts-dialog.ui:9
+msgid "Add command"
+msgstr "添加命令"
+
+#: data/resources/shortcuts-dialog.ui:15
+msgid "Open preferences"
+msgstr "打开偏好设置"
+
+#: data/resources/shortcuts-dialog.ui:21
+msgid "Show keyboard shortcuts"
+msgstr "显示键盘快捷键"
+
+#: data/com.github.Switchcraft.desktop.in:3
+msgid "Switchcraft"
+msgstr "Switchcraft"
+
+#: data/com.github.Switchcraft.desktop.in:4
+msgid "Run commands when GNOME theme switches"
+msgstr "GNOME 主题切换时运行命令"
+
+#: data/com.github.Switchcraft.desktop.in:10
+msgid "theme;switch;gtk;gnome;"
+msgstr "主题;切换;gtk;gnome;"
+
+#: data/com.github.Switchcraft.gschema.xml:6
+msgid "Enable background monitoring"
+msgstr "启用后台监控"
+
+#: data/com.github.Switchcraft.gschema.xml:7
+msgid "Whether the background process for theme monitoring is enabled."
+msgstr "是否启用主题监控后台进程。"
+
+#: data/com.github.Switchcraft.gschema.xml:16
+msgid "Automatic light and dark switching"
+msgstr "自动明暗切换"
+
+#: data/com.github.Switchcraft.gschema.xml:17
+msgid ""
+"Switch the light/dark style at sunrise and sunset (sun), at light-time and "
+"dark-time (custom), or never (off). Runs in the background monitor."
+msgstr "在日出和日落（太阳）、亮时和暗时（自定义）或从不（关闭）切换亮/暗样式。在后台监视器中运行。"
+
+#: data/com.github.Switchcraft.gschema.xml:22
+msgid "Light style time"
+msgstr "轻风格时光"
+
+#: data/com.github.Switchcraft.gschema.xml:23
+msgid ""
+"Minutes after midnight when the custom schedule switches to the light style."
+msgstr "午夜过后几分钟，自定义时间表切换为灯光样式。"
+
+#: data/com.github.Switchcraft.gschema.xml:28
+msgid "Dark style time"
+msgstr "暗黑风格时光"
+
+#: data/com.github.Switchcraft.gschema.xml:29
+msgid ""
+"Minutes after midnight when the custom schedule switches to the dark style."
+msgstr "午夜过后几分钟，自定义时间表切换为深色风格。"
+
+#: data/com.github.Switchcraft.gschema.xml:33
+msgid "Last known location"
+msgstr "最后已知位置"
+
+#: data/com.github.Switchcraft.gschema.xml:34
+msgid ""
+"Latitude and longitude from GeoClue, used for sunrise and sunset. Out of "
+"range values mean none is known, and the system time zone gives the location."
+msgstr "来自 GeoClue 的纬度和经度，用于日出和日落。超出范围的值意味着未知，系统时区给出了位置。"
+
+#: data/com.github.Switchcraft.metainfo.xml.in:6
+#: data/com.github.Switchcraft.metainfo.xml.in:8
+msgid "Arnis Kemlers"
+msgstr "Arnis Kemlers"
+
+#: data/com.github.Switchcraft.metainfo.xml.in:13
+msgid ""
+"Switchcraft watches GNOME's color-scheme preference and runs user-defined "
+"shell commands when the theme switches between light and dark. It allows you "
+"to automate theme-dependent adjustments for applications that don't follow "
+"system settings automatically."
+msgstr ""
+"Switchcraft 会监视 GNOME 的颜色方案首选项，并在主题在浅色和深色之间切换时运行用户定义的 shell"
+" 命令。它允许您对不自动遵循系统设置的应用程序自动进行与主题相关的调整。"
+
+#: data/com.github.Switchcraft.metainfo.xml.in:24
+msgid "Refactored icon structure and updated metadata integration."
+msgstr "重构了图标结构并更新了元数据集成。"

@@ -57,6 +57,10 @@ entries:
     locations: "src/MainWindow.vala:360"
 ```
 
+Keep placeholders (`%s`, `%d`, `$NAME`, `${NAME}`), literal file names
+(`commands.json`, `constants.json`, `theme_settings.json`) and command names
+(`zip`, `unzip`) exactly as they appear in `msgid`.
+
 ### 5. Import translations
 
 ```bash
@@ -91,10 +95,38 @@ Useful flags:
 - The GSettings schema
 - The AppStream metainfo file
 
-## Translation status
+## Translation Status
 
-The template currently contains 109 strings. No `.po` files are shipped yet,
-so the status table will be added after the first translation round.
+Counted with `./scripts/translations.sh --check-only` on 2026-11-11, out of 149 strings.
+
+| Language | Code | Translated | Fuzzy |
+| -------- | ---- | ---------- | ----- |
+| Arabic | ar | 100.0% (149) | 0 |
+| German | de | 100.0% (149) | 0 |
+| Greek | el | 100.0% (149) | 0 |
+| Spanish | es | 100.0% (149) | 0 |
+| Estonian | et | 100.0% (149) | 0 |
+| Finnish | fi | 100.0% (149) | 0 |
+| French | fr | 100.0% (149) | 0 |
+| Irish | ga | 100.0% (149) | 0 |
+| Italian | it | 100.0% (149) | 0 |
+| Japanese | ja | 100.0% (149) | 0 |
+| Kazakh | kk | 100.0% (149) | 0 |
+| Korean | ko | 100.0% (149) | 0 |
+| Lithuanian | lt | 100.0% (149) | 0 |
+| Latvian | lv | 100.0% (149) | 0 |
+| Norwegian Bokmål | nb | 100.0% (149) | 0 |
+| Dutch | nl | 100.0% (149) | 0 |
+| Polish | pl | 100.0% (149) | 0 |
+| Portuguese (Brazil) | pt_BR | 100.0% (149) | 0 |
+| Swedish | sv | 100.0% (149) | 0 |
+| Ukrainian | uk | 100.0% (149) | 0 |
+| Vietnamese | vi | 100.0% (149) | 0 |
+| Chinese (Simplified) | zh_CN | 100.0% (149) | 0 |
+
+## Note
+
+> Some translations are machine-generated and may contain mistakes. Native speakers are welcome to review and improve them!
 
 ## Testing translations locally
 

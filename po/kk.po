@@ -1,0 +1,672 @@
+# Switchcraft translations.
+# Copyright (C) 2026 kem-a
+# This file is distributed under the same license as the switchcraft package.
+# Automatically generated, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: switchcraft 2.0.0\n"
+"Report-Msgid-Bugs-To: https://github.com/kem-a/switchcraft/issues\n"
+"POT-Creation-Date: 2026-11-11 13:09+0200\n"
+"PO-Revision-Date: 2026-11-11 12:02+0000\n"
+"Last-Translator: Switchcraft translators\n"
+"Language-Team: none\n"
+"Language: kk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: src/Application.vala:126
+msgid "Show version information"
+msgstr "Нұсқа туралы ақпаратты көрсету"
+
+#: src/Application.vala:127
+msgid "Run in background for theme monitoring"
+msgstr "Тақырыпты бақылау үшін фондық режимде іске қосыңыз"
+
+#: src/Application.vala:343
+#, c-format
+msgid "Exited with code %d"
+msgstr "%d коды арқылы шықты"
+
+#: src/Application.vala:344
+#, c-format
+msgid "Killed by signal %d"
+msgstr "%d сигналымен өлтірілді"
+
+#: src/Application.vala:1331
+msgid "The 'zip' command is required to export."
+msgstr "Экспорттау үшін «zip» пәрмені қажет."
+
+#: src/Application.vala:1337
+msgid "Destination must be a local file."
+msgstr "Тағайындалған жер жергілікті файл болуы керек."
+
+#: src/Application.vala:1344
+msgid "Failed to prepare destination directory."
+msgstr "Мақсатты каталогты дайындау сәтсіз аяқталды."
+
+#: src/Application.vala:1352 src/Application.vala:1425
+msgid "Failed to create temporary directory."
+msgstr "Уақытша каталог жасау сәтсіз аяқталды."
+
+#: src/Application.vala:1383
+msgid "Unable to overwrite existing archive."
+msgstr "Бар мұрағатты қайта жазу мүмкін емес."
+
+#: src/Application.vala:1395
+#, c-format
+msgid "Failed to write archive: %s"
+msgstr "Мұрағат жазылмады: %s"
+
+#: src/Application.vala:1412
+msgid "The 'unzip' command is required to import."
+msgstr "Импорттау үшін «unzip» пәрмені қажет."
+
+#: src/Application.vala:1418
+msgid "Archive must be a local file."
+msgstr "Мұрағат жергілікті файл болуы керек."
+
+#: src/Application.vala:1436
+#, c-format
+msgid "Failed to unpack archive: %s"
+msgstr "Мұрағат қаптамасынан шығарылмады: %s"
+
+#: src/Application.vala:1444
+msgid "Archive must contain commands.json and constants.json at the top level."
+msgstr "Мұрағат жоғарғы деңгейде commands.json және constants.json болуы керек."
+
+#: src/Application.vala:1456
+msgid "commands.json is not a JSON object."
+msgstr "commands.json JSON нысаны емес."
+
+#: src/Application.vala:1467
+msgid "constants.json is not a JSON object."
+msgstr "constants.json JSON нысаны емес."
+
+#: src/Application.vala:1484
+msgid "constants.json must only contain string values."
+msgstr "constants.json тек жол мәндерін қамтуы керек."
+
+#: src/Application.vala:1497
+msgid "theme_settings.json is not a JSON object."
+msgstr "theme_settings.json JSON нысаны емес."
+
+#: src/Application.vala:1520
+msgid "Failed to remove commands.json."
+msgstr "commands.json жойылмады."
+
+#: src/Application.vala:1527
+msgid "Failed to remove constants.json."
+msgstr "constants.json жойылмады."
+
+#: src/Application.vala:1534
+msgid "Failed to remove theme_settings.json."
+msgstr "theme_settings.json жойылмады."
+
+#: src/Application.vala:1720
+msgid "Switchcraft Monitor"
+msgstr "Switchcraft мониторы"
+
+#: src/Application.vala:1721
+msgid "Monitor GNOME theme changes and run commands"
+msgstr "GNOME тақырыбының өзгерістерін бақылаңыз және пәрмендерді іске қосыңыз"
+
+#: src/CommandDialog.vala:44
+msgid "Color Scheme"
+msgstr "Түс схемасы"
+
+#: src/CommandDialog.vala:46
+msgid "Accent Color"
+msgstr "Акцент түсі"
+
+#: src/CommandDialog.vala:49
+msgid "Icon Theme"
+msgstr "Таңбашалар темасы"
+
+#: src/CommandDialog.vala:51
+msgid "GTK Theme"
+msgstr "GTK темасы"
+
+#: src/CommandDialog.vala:54
+msgid "Cursor Theme"
+msgstr "Курсор темасы"
+
+#: src/CommandDialog.vala:56
+msgid "Shell Theme"
+msgstr "Shell темасы"
+
+#: src/CommandDialog.vala:59
+msgid "Wallpaper"
+msgstr "Тұсқағаз"
+
+#: src/CommandDialog.vala:61
+msgid "Night Light"
+msgstr "Түнгі жарық"
+
+#: src/CommandDialog.vala:63
+msgid "Global Theme"
+msgstr "Ғаламдық тема"
+
+#: src/CommandDialog.vala:65
+msgid "Plasma Style"
+msgstr "Плазма стилі"
+
+#: src/CommandDialog.vala:67
+msgid "Kvantum Theme"
+msgstr "Kvantum темасы"
+
+#: src/CommandDialog.vala:96
+msgid "Switches to the light style and would loop in Dark mode"
+msgstr "Ашық стильге ауысады және қараңғы режимде цикл болады"
+
+#: src/CommandDialog.vala:99
+msgid "Switches to the dark style and would loop in Light mode"
+msgstr "Қараңғы стильге ауысады және жарық режимінде цикл болады"
+
+#: src/CommandDialog.vala:113
+#, c-format
+msgid "%s is already set in this mode"
+msgstr "%s осы режимде әлдеқашан орнатылған"
+
+#: src/CommandDialog.vala:116
+msgid "This command is already in this mode"
+msgstr "Бұл пәрмен қазірдің өзінде осы режимде"
+
+#: src/CommandDialog.vala:124
+msgid "Edit Command"
+msgstr "Пәрменді өңдеу"
+
+#: src/CommandDialog.vala:124
+msgid "Add Command"
+msgstr "Пәрмен қосу"
+
+#: src/CommandDialog.vala:131
+msgid "Delete"
+msgstr "Өшіру"
+
+#: src/CommandDialog.vala:134
+msgid "Cancel"
+msgstr "Бас тарту"
+
+#: src/CommandDialog.vala:135
+msgid "Save"
+msgstr "Сақтау"
+
+#: src/CommandDialog.vala:135
+msgid "Add"
+msgstr "Қосу"
+
+#: src/CommandDialog.vala:148
+msgid "Custom Command"
+msgstr "Теңшелетін пәрмен"
+
+#: src/CommandDialog.vala:170
+msgid "Type"
+msgstr "Түрі"
+
+#: src/CommandDialog.vala:175
+msgid "Command"
+msgstr "Команда"
+
+#: src/CommandDialog.vala:215
+msgid "Copy Error"
+msgstr "Қатені көшіру"
+
+#: src/CommandDialog.vala:240
+msgid "Test"
+msgstr "Сынау"
+
+#: src/CommandDialog.vala:256
+msgid "Value"
+msgstr "Мәні"
+
+#: src/CommandDialog.vala:261
+msgid "Image"
+msgstr "Сурет"
+
+#: src/CommandDialog.vala:266
+msgid "Browse…"
+msgstr "Шолу…"
+
+#: src/CommandDialog.vala:276
+msgid "Mode"
+msgstr "Режим"
+
+#: src/CommandDialog.vala:402
+msgid "Requires the User Themes GNOME Shell extension."
+msgstr "Пайдаланушы тақырыптарының GNOME Shell кеңейтімін талап етеді."
+
+#: src/CommandDialog.vala:514
+msgid "Command failed"
+msgstr "Команда сәтсіз аяқталды"
+
+#: src/CommandDialog.vala:514
+msgid "Command succeeded"
+msgstr "Команда сәтті болды"
+
+#: src/CommandDialog.vala:527
+msgid "Select Wallpaper"
+msgstr "Тұсқағазды таңдау"
+
+#: src/ConstantsWindow.vala:22
+msgid "Constants"
+msgstr "Тұрақтылар"
+
+#: src/ConstantsWindow.vala:39 src/ConstantsWindow.vala:182
+msgid "Add Constant"
+msgstr "Тұрақты қосу"
+
+#: src/ConstantsWindow.vala:51
+msgid ""
+"Define constants to use in your commands. Reference them with $NAME or $"
+"{NAME}."
+msgstr ""
+"Пәрмендеріңізде қолданылатын тұрақты мәндерді анықтаңыз. Оларға $NAME немесе"
+" ${NAME} сілтеме жасаңыз."
+
+#: src/ConstantsWindow.vala:69
+msgid "No Constants"
+msgstr "Тұрақтылар жоқ"
+
+#: src/ConstantsWindow.vala:70
+msgid "Click the '+' button to define a constant."
+msgstr "Тұрақтыны анықтау үшін '+' түймесін басыңыз."
+
+#: src/ConstantsWindow.vala:145
+msgid "Edit constant"
+msgstr "Тұрақтыны өңдеу"
+
+#: src/ConstantsWindow.vala:153
+msgid "Remove constant"
+msgstr "Тұрақтыны алып тастаңыз"
+
+#: src/ConstantsWindow.vala:182
+msgid "Edit Constant"
+msgstr "Тұрақтыны өңдеу"
+
+#: src/ConstantsWindow.vala:184
+msgid "Define a constant name and value."
+msgstr "Тұрақты атау мен мәнді анықтаңыз."
+
+#: src/ConstantsWindow.vala:202
+msgid "Constant name (e.g., D2DL_SCHEMA)"
+msgstr "Тұрақты атауы (мысалы, D2DL_SCHEMA)"
+
+#: src/ConstantsWindow.vala:210
+msgid "Value (e.g., org.gnome.shell.extensions.dash2dock-lite)"
+msgstr "Мән (мысалы, org.gnome.shell.extensions.dash2dock-lite)"
+
+#: src/ConstantsWindow.vala:216
+msgid ""
+"Use in commands as $NAME or ${NAME}. Names use letters, numbers and "
+"underscores."
+msgstr ""
+"Пәрмендерде $NAME немесе ${NAME} ретінде пайдаланыңыз. Атаулар әріптерді,"
+" сандарды және астын сызуды пайдаланады."
+
+#: src/MainWindow.vala:64
+msgid "Preferences"
+msgstr "Баптаулар"
+
+#: src/MainWindow.vala:67
+msgid "Keyboard Shortcuts"
+msgstr "Пернетақта жарлықтары"
+
+#: src/MainWindow.vala:68
+msgid "About Switchcraft"
+msgstr "Switchcraft туралы"
+
+#: src/MainWindow.vala:69
+msgid "Quit"
+msgstr "Шығу"
+
+#: src/MainWindow.vala:78
+msgid "Run the background process that reacts to GNOME theme changes."
+msgstr "GNOME тақырыбының өзгерістеріне жауап беретін фондық процесті іске қосыңыз."
+
+#: src/MainWindow.vala:79 src/MainWindow.vala:82
+msgid "Monitor"
+msgstr "Монитор"
+
+#: src/MainWindow.vala:88
+msgid "No Commands"
+msgstr "Командалар жоқ"
+
+#: src/MainWindow.vala:89
+msgid "Use the '+' button in the header bar or press (Ctrl+N) to add a command."
+msgstr ""
+"Пәрменді қосу үшін тақырып жолағындағы '+' түймесін пайдаланыңыз немесе"
+" (Ctrl+N) пернелер тіркесімін басыңыз."
+
+#: src/MainWindow.vala:128
+msgid "Commands"
+msgstr "Командалар"
+
+#: src/MainWindow.vala:129
+msgid "Active commands that will run when their theme matches."
+msgstr "Тақырыптары сәйкес келген кезде іске қосылатын белсенді пәрмендер."
+
+#: src/MainWindow.vala:135
+msgid "Disabled"
+msgstr "Сөндірулі"
+
+#: src/MainWindow.vala:136
+msgid "Saved commands that are currently turned off."
+msgstr "Қазіргі уақытта өшірілген сақталған пәрмендер."
+
+#: src/MainWindow.vala:297
+msgid "Duplicate"
+msgstr "Қосарлау"
+
+#: src/MainWindow.vala:310
+msgid "Drag to reorder"
+msgstr "Қайта реттеу үшін сүйреңіз"
+
+#: src/MainWindow.vala:610
+msgid "Command deleted"
+msgstr "Пәрмен жойылды"
+
+#: src/MainWindow.vala:611
+msgid "Undo"
+msgstr "Болдырмау"
+
+#: src/MainWindow.vala:697
+msgid "Background monitoring is now active"
+msgstr "Фондық бақылау қазір белсенді"
+
+#: src/MainWindow.vala:698
+msgid "Background monitoring is now inactive"
+msgstr "Фондық бақылау енді белсенді емес"
+
+#: src/PreferencesWindow.vala:43
+msgid "Automatic Switching"
+msgstr "Автоматты ауысу"
+
+#: src/PreferencesWindow.vala:45
+msgid ""
+"KDE Plasma is set to switch global themes automatically. Turn that off to "
+"use this schedule."
+msgstr ""
+"KDE Plasma жаһандық тақырыптарды автоматты түрде ауыстыратын етіп"
+" орнатылған. Осы кестені пайдалану үшін оны өшіріңіз."
+
+#: src/PreferencesWindow.vala:47
+msgid ""
+"Switch KDE's default light and dark global themes on a schedule. Needs "
+"background monitoring."
+msgstr ""
+"KDE әдепкі ашық және қараңғы жаһандық тақырыптарын кесте бойынша"
+" ауыстырыңыз. Фондық бақылау қажет."
+
+#: src/PreferencesWindow.vala:48
+msgid ""
+"Switch between light and dark style on a schedule. Needs background "
+"monitoring."
+msgstr ""
+"Кесте бойынша ашық және қараңғы стиль арасында ауысыңыз. Фондық бақылау"
+" қажет."
+
+#: src/PreferencesWindow.vala:54
+msgid "Automatic Switching Is Set in KDE"
+msgstr "Автоматты ауыстыру KDE-де орнатылған"
+
+#: src/PreferencesWindow.vala:55
+msgid ""
+"Turn off “Switch to Dark Mode at Night” in System Settings to use this "
+"schedule."
+msgstr ""
+"Осы кестені пайдалану үшін Жүйе параметрлерінде «Түнгі қараңғы режимге"
+" ауысу» опциясын өшіріңіз."
+
+#: src/PreferencesWindow.vala:61
+msgid "Open Settings"
+msgstr "Параметрлерді ашыңыз"
+
+#: src/PreferencesWindow.vala:65
+msgid "Could not open System Settings"
+msgstr "Жүйе параметрлерін ашу мүмкін болмады"
+
+#: src/PreferencesWindow.vala:74
+msgid "Schedule"
+msgstr "Кесте"
+
+#: src/PreferencesWindow.vala:75
+msgid "Off"
+msgstr "Өшірулі"
+
+#: src/PreferencesWindow.vala:75
+msgid "Sunset to Sunrise"
+msgstr "Күн батуынан күн шығуына дейін"
+
+#: src/PreferencesWindow.vala:75
+msgid "Custom Times"
+msgstr "Арнаулы уақыттар"
+
+#: src/PreferencesWindow.vala:86
+msgid "Light From"
+msgstr "Жарық басталады"
+
+#: src/PreferencesWindow.vala:87
+msgid "Dark From"
+msgstr "Қараңғы басталады"
+
+#: src/PreferencesWindow.vala:99
+msgid "Configuration"
+msgstr "Конфигурация"
+
+#: src/PreferencesWindow.vala:100
+msgid "Import or export commands and constants together as a zip archive."
+msgstr ""
+"Командалар мен тұрақтыларды бірге zip мұрағаты ретінде импорттаңыз немесе"
+" экспорттаңыз."
+
+#: src/PreferencesWindow.vala:104 src/PreferencesWindow.vala:237
+msgid "Import Configuration"
+msgstr "Конфигурацияны импорттау"
+
+#: src/PreferencesWindow.vala:105
+msgid "Replace local commands and constants from a zip file."
+msgstr "Zip файлынан жергілікті пәрмендер мен тұрақты мәндерді ауыстырыңыз."
+
+#: src/PreferencesWindow.vala:107
+msgid "Import"
+msgstr "Импорттау"
+
+#: src/PreferencesWindow.vala:116 src/PreferencesWindow.vala:260
+msgid "Export Configuration"
+msgstr "Конфигурацияны экспорттау"
+
+#: src/PreferencesWindow.vala:117
+msgid "Save commands and constants into a zip file."
+msgstr "Командалар мен тұрақты мәндерді zip файлына сақтаңыз."
+
+#: src/PreferencesWindow.vala:119
+msgid "Export"
+msgstr "Экспорттау"
+
+#: src/PreferencesWindow.vala:128
+msgid "Danger Zone"
+msgstr "Қауіпті аймақ"
+
+#: src/PreferencesWindow.vala:129
+msgid "Remove all saved commands and constants from this device."
+msgstr "Осы құрылғыдан барлық сақталған пәрмендер мен тұрақты мәндерді жойыңыз."
+
+#: src/PreferencesWindow.vala:133
+msgid "Delete All Configuration"
+msgstr "Барлық конфигурацияны жою"
+
+#: src/PreferencesWindow.vala:134
+msgid "Deletes commands.json and constants.json. This cannot be undone."
+msgstr "commands.json және constants.json жояды. Бұл әрекетті қайтару мүмкін емес."
+
+#: src/PreferencesWindow.vala:159
+msgid "Location unknown"
+msgstr "Орналасқан жері белгісіз"
+
+#: src/PreferencesWindow.vala:165
+msgid "The sun stays down today"
+msgstr "Бүгін күн шықпайды"
+
+#: src/PreferencesWindow.vala:168
+msgid "The sun stays up today"
+msgstr "Бүгін күн батпайды"
+
+#: src/PreferencesWindow.vala:170
+#, c-format
+msgid "Sunrise %s, sunset %s"
+msgstr "Күннің шығуы %s, күннің батуы %s"
+
+#: src/PreferencesWindow.vala:178
+msgid "Hour"
+msgstr "Сағат"
+
+#: src/PreferencesWindow.vala:179
+msgid "Minute"
+msgstr "Минут"
+
+#: src/PreferencesWindow.vala:246
+msgid "Configuration imported"
+msgstr "Конфигурация импортталды"
+
+#: src/PreferencesWindow.vala:248 src/PreferencesWindow.vala:254
+#, c-format
+msgid "Import failed: %s"
+msgstr "Импорттау орындалмады: %s"
+
+#: src/PreferencesWindow.vala:269
+msgid "Configuration exported"
+msgstr "Конфигурация экспортталды"
+
+#: src/PreferencesWindow.vala:271 src/PreferencesWindow.vala:277
+#, c-format
+msgid "Export failed: %s"
+msgstr "Экспорттау сәтсіз аяқталды: %s"
+
+#: src/PreferencesWindow.vala:283
+msgid "Delete all configuration?"
+msgstr "Барлық конфигурация жойылсын ба?"
+
+#: src/PreferencesWindow.vala:284
+msgid ""
+"This will remove every command and constant. This action cannot be undone."
+msgstr "Бұл әрбір пәрменді және тұрақтыны жояды. Бұл әрекетті қайтару мүмкін емес."
+
+#: src/PreferencesWindow.vala:305
+msgid "Configuration deleted"
+msgstr "Конфигурация жойылды"
+
+#: src/PreferencesWindow.vala:307
+#, c-format
+msgid "Delete failed: %s"
+msgstr "Жою сәтсіз аяқталды: %s"
+
+#: src/SlidingToggleGroup.vala:38
+msgid "Light"
+msgstr "Ашық"
+
+#: src/SlidingToggleGroup.vala:39
+msgid "Dark"
+msgstr "Қараңғы"
+
+#: data/resources/shortcuts-dialog.ui:6
+msgid "General"
+msgstr "Жалпы"
+
+#: data/resources/shortcuts-dialog.ui:9
+msgid "Add command"
+msgstr "Пәрменді қосу"
+
+#: data/resources/shortcuts-dialog.ui:15
+msgid "Open preferences"
+msgstr "Параметрлерді ашу"
+
+#: data/resources/shortcuts-dialog.ui:21
+msgid "Show keyboard shortcuts"
+msgstr "Пернелер тіркесімін көрсету"
+
+#: data/com.github.Switchcraft.desktop.in:3
+msgid "Switchcraft"
+msgstr "Switchcraft"
+
+#: data/com.github.Switchcraft.desktop.in:4
+msgid "Run commands when GNOME theme switches"
+msgstr "GNOME тақырыбы ауысқанда пәрмендерді іске қосыңыз"
+
+#: data/com.github.Switchcraft.desktop.in:10
+msgid "theme;switch;gtk;gnome;"
+msgstr "тақырып;ауыстыру;gtk;gnome;"
+
+#: data/com.github.Switchcraft.gschema.xml:6
+msgid "Enable background monitoring"
+msgstr "Фондық бақылауды қосыңыз"
+
+#: data/com.github.Switchcraft.gschema.xml:7
+msgid "Whether the background process for theme monitoring is enabled."
+msgstr "Тақырыпты бақылауға арналған фондық процестің қосылған-қосылмағанын."
+
+#: data/com.github.Switchcraft.gschema.xml:16
+msgid "Automatic light and dark switching"
+msgstr "Автоматты жарық пен қараңғы ауысу"
+
+#: data/com.github.Switchcraft.gschema.xml:17
+msgid ""
+"Switch the light/dark style at sunrise and sunset (sun), at light-time and "
+"dark-time (custom), or never (off). Runs in the background monitor."
+msgstr ""
+"Ашық/қараңғы стильді күн шыққанда және батқанда (күн), жарық және қараңғы"
+" уақытта (арнайы) немесе ешқашан (өшірулі) ауыстырыңыз. Фондық мониторда"
+" жұмыс істейді."
+
+#: data/com.github.Switchcraft.gschema.xml:22
+msgid "Light style time"
+msgstr "Жеңіл стиль уақыты"
+
+#: data/com.github.Switchcraft.gschema.xml:23
+msgid ""
+"Minutes after midnight when the custom schedule switches to the light style."
+msgstr "Түн ортасынан кейінгі минуттар, реттелетін кесте жарық мәнеріне ауысады."
+
+#: data/com.github.Switchcraft.gschema.xml:28
+msgid "Dark style time"
+msgstr "Қараңғы стиль уақыты"
+
+#: data/com.github.Switchcraft.gschema.xml:29
+msgid ""
+"Minutes after midnight when the custom schedule switches to the dark style."
+msgstr "Түн ортасынан кейінгі минуттар, реттелетін кесте қараңғы стильге ауысады."
+
+#: data/com.github.Switchcraft.gschema.xml:33
+msgid "Last known location"
+msgstr "Соңғы белгілі орын"
+
+#: data/com.github.Switchcraft.gschema.xml:34
+msgid ""
+"Latitude and longitude from GeoClue, used for sunrise and sunset. Out of "
+"range values mean none is known, and the system time zone gives the location."
+msgstr ""
+"GeoClue ендік пен бойлық, күннің шығуы мен батуы үшін пайдаланылады."
+" Ауқымнан тыс мәндер ешбірі белгілі емес дегенді білдіреді және жүйелік"
+" уақыт белдеуі орынды береді."
+
+#: data/com.github.Switchcraft.metainfo.xml.in:6
+#: data/com.github.Switchcraft.metainfo.xml.in:8
+msgid "Arnis Kemlers"
+msgstr "Arnis Kemlers"
+
+#: data/com.github.Switchcraft.metainfo.xml.in:13
+msgid ""
+"Switchcraft watches GNOME's color-scheme preference and runs user-defined "
+"shell commands when the theme switches between light and dark. It allows you "
+"to automate theme-dependent adjustments for applications that don't follow "
+"system settings automatically."
+msgstr ""
+"Switchcraft GNOME түс схемасының таңдауын бақылайды және тақырып ашық және"
+" қараңғы арасында ауысқанда пайдаланушы анықтайтын қабық пәрмендерін іске"
+" қосады. Ол жүйе параметрлерін автоматты түрде орындамайтын қолданбалар үшін"
+" тақырыпқа байланысты реттеулерді автоматтандыруға мүмкіндік береді."
+
+#: data/com.github.Switchcraft.metainfo.xml.in:24
+msgid "Refactored icon structure and updated metadata integration."
+msgstr "Қайта өңделген белгіше құрылымы және жаңартылған метадеректер интеграциясы."

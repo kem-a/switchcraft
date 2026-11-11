@@ -86,7 +86,7 @@ namespace Switchcraft {
             var placeholder = new Adw.StatusPage ();
             placeholder.set_icon_name ("utilities-terminal-symbolic");
             placeholder.set_title (_("No Commands"));
-            placeholder.set_description (_("Use the + button in the header bar or press Ctrl + N to add a command."));
+            placeholder.set_description (_("Use the '+' button in the header bar or press (Ctrl+N) to add a command."));
 
             var empty_add_content = new Adw.ButtonContent ();
             empty_add_content.set_icon_name ("list-add-symbolic");

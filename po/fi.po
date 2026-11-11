@@ -1,0 +1,675 @@
+# Switchcraft translations.
+# Copyright (C) 2026 kem-a
+# This file is distributed under the same license as the switchcraft package.
+# Automatically generated, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: switchcraft 2.0.0\n"
+"Report-Msgid-Bugs-To: https://github.com/kem-a/switchcraft/issues\n"
+"POT-Creation-Date: 2026-11-11 13:09+0200\n"
+"PO-Revision-Date: 2026-11-11 12:02+0000\n"
+"Last-Translator: Switchcraft translators\n"
+"Language-Team: none\n"
+"Language: fi\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: src/Application.vala:126
+msgid "Show version information"
+msgstr "Näytä versiotiedot"
+
+#: src/Application.vala:127
+msgid "Run in background for theme monitoring"
+msgstr "Suorita taustalla teeman seurantaa varten"
+
+#: src/Application.vala:343
+#, c-format
+msgid "Exited with code %d"
+msgstr "Poistui koodilla %d"
+
+#: src/Application.vala:344
+#, c-format
+msgid "Killed by signal %d"
+msgstr "Tapettu signaalilla %d"
+
+#: src/Application.vala:1331
+msgid "The 'zip' command is required to export."
+msgstr "Viemiseen tarvitaan zip-komento."
+
+#: src/Application.vala:1337
+msgid "Destination must be a local file."
+msgstr "Kohteen on oltava paikallinen tiedosto."
+
+#: src/Application.vala:1344
+msgid "Failed to prepare destination directory."
+msgstr "Kohdehakemiston valmistelu epäonnistui."
+
+#: src/Application.vala:1352 src/Application.vala:1425
+msgid "Failed to create temporary directory."
+msgstr "Väliaikaisen hakemiston luominen epäonnistui."
+
+#: src/Application.vala:1383
+msgid "Unable to overwrite existing archive."
+msgstr "Olemassa olevan arkiston päälle ei voi kirjoittaa."
+
+#: src/Application.vala:1395
+#, c-format
+msgid "Failed to write archive: %s"
+msgstr "Arkiston kirjoittaminen epäonnistui: %s"
+
+#: src/Application.vala:1412
+msgid "The 'unzip' command is required to import."
+msgstr "unzip-komento vaaditaan tuontiin."
+
+#: src/Application.vala:1418
+msgid "Archive must be a local file."
+msgstr "Arkiston on oltava paikallinen tiedosto."
+
+#: src/Application.vala:1436
+#, c-format
+msgid "Failed to unpack archive: %s"
+msgstr "Arkiston purkaminen epäonnistui: %s"
+
+#: src/Application.vala:1444
+msgid "Archive must contain commands.json and constants.json at the top level."
+msgstr "Arkiston tulee sisältää commands.json ja constants.json ylimmällä tasolla."
+
+#: src/Application.vala:1456
+msgid "commands.json is not a JSON object."
+msgstr "commands.json ei ole JSON-objekti."
+
+#: src/Application.vala:1467
+msgid "constants.json is not a JSON object."
+msgstr "constants.json ei ole JSON-objekti."
+
+#: src/Application.vala:1484
+msgid "constants.json must only contain string values."
+msgstr "constants.json saa sisältää vain merkkijonoarvoja."
+
+#: src/Application.vala:1497
+msgid "theme_settings.json is not a JSON object."
+msgstr "theme_settings.json ei ole JSON-objekti."
+
+#: src/Application.vala:1520
+msgid "Failed to remove commands.json."
+msgstr "commands.json:n poistaminen epäonnistui."
+
+#: src/Application.vala:1527
+msgid "Failed to remove constants.json."
+msgstr "constants.json:n poistaminen epäonnistui."
+
+#: src/Application.vala:1534
+msgid "Failed to remove theme_settings.json."
+msgstr "theme_settings.json:n poistaminen epäonnistui."
+
+#: src/Application.vala:1720
+msgid "Switchcraft Monitor"
+msgstr "Switchcraft-seuranta"
+
+#: src/Application.vala:1721
+msgid "Monitor GNOME theme changes and run commands"
+msgstr "Tarkkaile GNOME-teeman muutoksia ja suorita komentoja"
+
+#: src/CommandDialog.vala:44
+msgid "Color Scheme"
+msgstr "Väriteema"
+
+#: src/CommandDialog.vala:46
+msgid "Accent Color"
+msgstr "Korostusväri"
+
+#: src/CommandDialog.vala:49
+msgid "Icon Theme"
+msgstr "Kuvaketeema"
+
+#: src/CommandDialog.vala:51
+msgid "GTK Theme"
+msgstr "GTK-teema"
+
+#: src/CommandDialog.vala:54
+msgid "Cursor Theme"
+msgstr "Kursoriteema"
+
+#: src/CommandDialog.vala:56
+msgid "Shell Theme"
+msgstr "Shell-teema"
+
+#: src/CommandDialog.vala:59
+msgid "Wallpaper"
+msgstr "Taustakuva"
+
+#: src/CommandDialog.vala:61
+msgid "Night Light"
+msgstr "Yövalo"
+
+#: src/CommandDialog.vala:63
+msgid "Global Theme"
+msgstr "Globaali teema"
+
+#: src/CommandDialog.vala:65
+msgid "Plasma Style"
+msgstr "Plasma-tyyli"
+
+#: src/CommandDialog.vala:67
+msgid "Kvantum Theme"
+msgstr "Kvantum-teema"
+
+#: src/CommandDialog.vala:96
+msgid "Switches to the light style and would loop in Dark mode"
+msgstr "Vaihtaa vaaleaan tyyliin ja aiheuttaisi silmukan tummassa tilassa"
+
+#: src/CommandDialog.vala:99
+msgid "Switches to the dark style and would loop in Light mode"
+msgstr "Vaihtaa tummaan tyyliin ja aiheuttaisi silmukan vaaleassa tilassa"
+
+#: src/CommandDialog.vala:113
+#, c-format
+msgid "%s is already set in this mode"
+msgstr "%s on jo asetettu tähän tilaan"
+
+#: src/CommandDialog.vala:116
+msgid "This command is already in this mode"
+msgstr "Tämä komento on jo tässä tilassa"
+
+#: src/CommandDialog.vala:124
+msgid "Edit Command"
+msgstr "Muokkaa komentoa"
+
+#: src/CommandDialog.vala:124
+msgid "Add Command"
+msgstr "Lisää komento"
+
+#: src/CommandDialog.vala:131
+msgid "Delete"
+msgstr "Poista"
+
+#: src/CommandDialog.vala:134
+msgid "Cancel"
+msgstr "Peru"
+
+#: src/CommandDialog.vala:135
+msgid "Save"
+msgstr "Tallenna"
+
+#: src/CommandDialog.vala:135
+msgid "Add"
+msgstr "Lisää"
+
+#: src/CommandDialog.vala:148
+msgid "Custom Command"
+msgstr "Oma komento"
+
+#: src/CommandDialog.vala:170
+msgid "Type"
+msgstr "Tyyppi"
+
+#: src/CommandDialog.vala:175
+msgid "Command"
+msgstr "Komento"
+
+#: src/CommandDialog.vala:215
+msgid "Copy Error"
+msgstr "Kopioi virhe"
+
+#: src/CommandDialog.vala:240
+msgid "Test"
+msgstr "Testaa"
+
+#: src/CommandDialog.vala:256
+msgid "Value"
+msgstr "Arvo"
+
+#: src/CommandDialog.vala:261
+msgid "Image"
+msgstr "Kuva"
+
+#: src/CommandDialog.vala:266
+msgid "Browse…"
+msgstr "Selaa…"
+
+#: src/CommandDialog.vala:276
+msgid "Mode"
+msgstr "Tila"
+
+#: src/CommandDialog.vala:402
+msgid "Requires the User Themes GNOME Shell extension."
+msgstr "Vaatii User Themes GNOME Shell -laajennuksen."
+
+#: src/CommandDialog.vala:514
+msgid "Command failed"
+msgstr "Komento epäonnistui"
+
+#: src/CommandDialog.vala:514
+msgid "Command succeeded"
+msgstr "Komento onnistui"
+
+#: src/CommandDialog.vala:527
+msgid "Select Wallpaper"
+msgstr "Valitse taustakuva"
+
+#: src/ConstantsWindow.vala:22
+msgid "Constants"
+msgstr "Vakiot"
+
+#: src/ConstantsWindow.vala:39 src/ConstantsWindow.vala:182
+msgid "Add Constant"
+msgstr "Lisää vakio"
+
+#: src/ConstantsWindow.vala:51
+msgid ""
+"Define constants to use in your commands. Reference them with $NAME or $"
+"{NAME}."
+msgstr ""
+"Määritä vakiot, joita käytetään komentoissasi. Viittaa niihin käyttämällä"
+" $NAME tai ${NAME}."
+
+#: src/ConstantsWindow.vala:69
+msgid "No Constants"
+msgstr "Ei vakioita"
+
+#: src/ConstantsWindow.vala:70
+msgid "Click the '+' button to define a constant."
+msgstr "Napsauta '+'-painiketta määrittääksesi vakion."
+
+#: src/ConstantsWindow.vala:145
+msgid "Edit constant"
+msgstr "Muokkaa vakiota"
+
+#: src/ConstantsWindow.vala:153
+msgid "Remove constant"
+msgstr "Poista vakio"
+
+#: src/ConstantsWindow.vala:182
+msgid "Edit Constant"
+msgstr "Muokkaa vakiota"
+
+#: src/ConstantsWindow.vala:184
+msgid "Define a constant name and value."
+msgstr "Määritä vakionimi ja arvo."
+
+#: src/ConstantsWindow.vala:202
+msgid "Constant name (e.g., D2DL_SCHEMA)"
+msgstr "Vakionimi (esim. D2DL_SCHEMA)"
+
+#: src/ConstantsWindow.vala:210
+msgid "Value (e.g., org.gnome.shell.extensions.dash2dock-lite)"
+msgstr "Arvo (esim. org.gnome.shell.extensions.dash2dock-lite)"
+
+#: src/ConstantsWindow.vala:216
+msgid ""
+"Use in commands as $NAME or ${NAME}. Names use letters, numbers and "
+"underscores."
+msgstr ""
+"Käytä komentoissa $NAME tai ${NAME}. Nimet käyttävät kirjaimia, numeroita ja"
+" alaviivoja."
+
+#: src/MainWindow.vala:64
+msgid "Preferences"
+msgstr "Asetukset"
+
+#: src/MainWindow.vala:67
+msgid "Keyboard Shortcuts"
+msgstr "Pikanäppäimet"
+
+#: src/MainWindow.vala:68
+msgid "About Switchcraft"
+msgstr "Tietoja Switchcraftista"
+
+#: src/MainWindow.vala:69
+msgid "Quit"
+msgstr "Lopeta"
+
+#: src/MainWindow.vala:78
+msgid "Run the background process that reacts to GNOME theme changes."
+msgstr "Suorita taustaprosessi, joka reagoi GNOME-teeman muutoksiin."
+
+#: src/MainWindow.vala:79 src/MainWindow.vala:82
+msgid "Monitor"
+msgstr "Seuranta"
+
+#: src/MainWindow.vala:88
+msgid "No Commands"
+msgstr "Ei komentoja"
+
+#: src/MainWindow.vala:89
+msgid "Use the '+' button in the header bar or press (Ctrl+N) to add a command."
+msgstr ""
+"Käytä '+'-painiketta otsikkorivissä tai paina (Ctrl+N) lisätäksesi"
+" komennon."
+
+#: src/MainWindow.vala:128
+msgid "Commands"
+msgstr "Komennot"
+
+#: src/MainWindow.vala:129
+msgid "Active commands that will run when their theme matches."
+msgstr "Aktiiviset komennot, jotka suoritetaan, kun niiden teema täsmää."
+
+#: src/MainWindow.vala:135
+msgid "Disabled"
+msgstr "Pois käytöstä"
+
+#: src/MainWindow.vala:136
+msgid "Saved commands that are currently turned off."
+msgstr "Tallennetut komennot, jotka ovat tällä hetkellä pois päältä."
+
+#: src/MainWindow.vala:297
+msgid "Duplicate"
+msgstr "Monista"
+
+#: src/MainWindow.vala:310
+msgid "Drag to reorder"
+msgstr "Järjestä uudelleen vetämällä"
+
+#: src/MainWindow.vala:610
+msgid "Command deleted"
+msgstr "Komento poistettu"
+
+#: src/MainWindow.vala:611
+msgid "Undo"
+msgstr "Kumoa"
+
+#: src/MainWindow.vala:697
+msgid "Background monitoring is now active"
+msgstr "Taustaseuranta on nyt käytössä"
+
+#: src/MainWindow.vala:698
+msgid "Background monitoring is now inactive"
+msgstr "Taustaseuranta on nyt pois käytöstä"
+
+#: src/PreferencesWindow.vala:43
+msgid "Automatic Switching"
+msgstr "Automaattinen vaihto"
+
+#: src/PreferencesWindow.vala:45
+msgid ""
+"KDE Plasma is set to switch global themes automatically. Turn that off to "
+"use this schedule."
+msgstr ""
+"KDE Plasma on asetettu vaihtamaan yleisteemoja automaattisesti. Kytke se"
+" pois käyttääksesi tätä aikataulua."
+
+#: src/PreferencesWindow.vala:47
+msgid ""
+"Switch KDE's default light and dark global themes on a schedule. Needs "
+"background monitoring."
+msgstr ""
+"Vaihda KDE:n oletusarvoiset vaaleat ja tummat yleisteemat aikataulun mukaan."
+" Vaatii taustaseurannan."
+
+#: src/PreferencesWindow.vala:48
+msgid ""
+"Switch between light and dark style on a schedule. Needs background "
+"monitoring."
+msgstr ""
+"Vaihda vaalean ja tumman tyylin välillä aikataulun mukaan. Vaatii"
+" taustaseurannan."
+
+#: src/PreferencesWindow.vala:54
+msgid "Automatic Switching Is Set in KDE"
+msgstr "Automaattinen vaihto on asetettu KDE:ssä"
+
+#: src/PreferencesWindow.vala:55
+msgid ""
+"Turn off “Switch to Dark Mode at Night” in System Settings to use this "
+"schedule."
+msgstr ""
+"Poista “Vaihda tummaan tilaan yöllä” käytöstä järjestelmäasetuksissa"
+" käyttääksesi tätä aikataulua."
+
+#: src/PreferencesWindow.vala:61
+msgid "Open Settings"
+msgstr "Avaa asetukset"
+
+#: src/PreferencesWindow.vala:65
+msgid "Could not open System Settings"
+msgstr "Järjestelmäasetuksia ei voitu avata"
+
+#: src/PreferencesWindow.vala:74
+msgid "Schedule"
+msgstr "Aikataulu"
+
+#: src/PreferencesWindow.vala:75
+msgid "Off"
+msgstr "Ei käytössä"
+
+#: src/PreferencesWindow.vala:75
+msgid "Sunset to Sunrise"
+msgstr "Auringonlaskusta auringonnousuun"
+
+#: src/PreferencesWindow.vala:75
+msgid "Custom Times"
+msgstr "Mukautetut ajat"
+
+#: src/PreferencesWindow.vala:86
+msgid "Light From"
+msgstr "Vaalea alkaa"
+
+#: src/PreferencesWindow.vala:87
+msgid "Dark From"
+msgstr "Tumma alkaa"
+
+#: src/PreferencesWindow.vala:99
+msgid "Configuration"
+msgstr "Määritykset"
+
+#: src/PreferencesWindow.vala:100
+msgid "Import or export commands and constants together as a zip archive."
+msgstr "Tuo tai vie komennot ja vakiot yhdessä zip-arkistona."
+
+#: src/PreferencesWindow.vala:104 src/PreferencesWindow.vala:237
+msgid "Import Configuration"
+msgstr "Tuo määritykset"
+
+#: src/PreferencesWindow.vala:105
+msgid "Replace local commands and constants from a zip file."
+msgstr "Korvaa paikalliset komennot ja vakiot zip-tiedostosta."
+
+#: src/PreferencesWindow.vala:107
+msgid "Import"
+msgstr "Tuo"
+
+#: src/PreferencesWindow.vala:116 src/PreferencesWindow.vala:260
+msgid "Export Configuration"
+msgstr "Vie määritykset"
+
+#: src/PreferencesWindow.vala:117
+msgid "Save commands and constants into a zip file."
+msgstr "Tallenna komennot ja vakiot zip-tiedostoon."
+
+#: src/PreferencesWindow.vala:119
+msgid "Export"
+msgstr "Vie"
+
+#: src/PreferencesWindow.vala:128
+msgid "Danger Zone"
+msgstr "Vaaravyöhyke"
+
+#: src/PreferencesWindow.vala:129
+msgid "Remove all saved commands and constants from this device."
+msgstr "Poista kaikki tallennetut komennot ja vakiot tästä laitteesta."
+
+#: src/PreferencesWindow.vala:133
+msgid "Delete All Configuration"
+msgstr "Poista kaikki asetukset"
+
+#: src/PreferencesWindow.vala:134
+msgid "Deletes commands.json and constants.json. This cannot be undone."
+msgstr "Poistaa commands.json ja constants.json. Tätä ei voi kumota."
+
+#: src/PreferencesWindow.vala:159
+msgid "Location unknown"
+msgstr "Sijainti tuntematon"
+
+#: src/PreferencesWindow.vala:165
+msgid "The sun stays down today"
+msgstr "Aurinko ei nouse tänään"
+
+#: src/PreferencesWindow.vala:168
+msgid "The sun stays up today"
+msgstr "Aurinko ei laske tänään"
+
+#: src/PreferencesWindow.vala:170
+#, c-format
+msgid "Sunrise %s, sunset %s"
+msgstr "Auringonnousu %s, auringonlasku %s"
+
+#: src/PreferencesWindow.vala:178
+msgid "Hour"
+msgstr "Tunti"
+
+#: src/PreferencesWindow.vala:179
+msgid "Minute"
+msgstr "Minuutti"
+
+#: src/PreferencesWindow.vala:246
+msgid "Configuration imported"
+msgstr "Määritykset tuotu"
+
+#: src/PreferencesWindow.vala:248 src/PreferencesWindow.vala:254
+#, c-format
+msgid "Import failed: %s"
+msgstr "Tuonti epäonnistui: %s"
+
+#: src/PreferencesWindow.vala:269
+msgid "Configuration exported"
+msgstr "Määritykset viety"
+
+#: src/PreferencesWindow.vala:271 src/PreferencesWindow.vala:277
+#, c-format
+msgid "Export failed: %s"
+msgstr "Vienti epäonnistui: %s"
+
+#: src/PreferencesWindow.vala:283
+msgid "Delete all configuration?"
+msgstr "Poistetaanko kaikki määritykset?"
+
+#: src/PreferencesWindow.vala:284
+msgid ""
+"This will remove every command and constant. This action cannot be undone."
+msgstr "Tämä poistaa kaikki komennot ja vakiot. Tätä toimintoa ei voi kumota."
+
+#: src/PreferencesWindow.vala:305
+msgid "Configuration deleted"
+msgstr "Määritykset poistettu"
+
+#: src/PreferencesWindow.vala:307
+#, c-format
+msgid "Delete failed: %s"
+msgstr "Poistaminen epäonnistui: %s"
+
+#: src/SlidingToggleGroup.vala:38
+msgid "Light"
+msgstr "Vaalea"
+
+#: src/SlidingToggleGroup.vala:39
+msgid "Dark"
+msgstr "Tumma"
+
+#: data/resources/shortcuts-dialog.ui:6
+msgid "General"
+msgstr "Yleinen"
+
+#: data/resources/shortcuts-dialog.ui:9
+msgid "Add command"
+msgstr "Lisää komento"
+
+#: data/resources/shortcuts-dialog.ui:15
+msgid "Open preferences"
+msgstr "Avaa asetukset"
+
+#: data/resources/shortcuts-dialog.ui:21
+msgid "Show keyboard shortcuts"
+msgstr "Näytä pikanäppäimet"
+
+#: data/com.github.Switchcraft.desktop.in:3
+msgid "Switchcraft"
+msgstr "Switchcraft"
+
+#: data/com.github.Switchcraft.desktop.in:4
+msgid "Run commands when GNOME theme switches"
+msgstr "Suorita komentoja, kun GNOME-teema vaihtuu"
+
+#: data/com.github.Switchcraft.desktop.in:10
+msgid "theme;switch;gtk;gnome;"
+msgstr "teema;kytkin;gtk;gnome;"
+
+#: data/com.github.Switchcraft.gschema.xml:6
+msgid "Enable background monitoring"
+msgstr "Ota taustaseuranta käyttöön"
+
+#: data/com.github.Switchcraft.gschema.xml:7
+msgid "Whether the background process for theme monitoring is enabled."
+msgstr "Onko teemavalvonnan taustaprosessi käytössä."
+
+#: data/com.github.Switchcraft.gschema.xml:16
+msgid "Automatic light and dark switching"
+msgstr "Automaattinen vaalean ja tumman tilan vaihto"
+
+#: data/com.github.Switchcraft.gschema.xml:17
+msgid ""
+"Switch the light/dark style at sunrise and sunset (sun), at light-time and "
+"dark-time (custom), or never (off). Runs in the background monitor."
+msgstr ""
+"Vaihda vaalea/tumma tyyli auringonnousun ja -laskun aikaan (aurinko),"
+" vaalean ja tumman ajan mukaan (mukautettu) tai ei koskaan (pois). Toimii"
+" taustaseurannassa."
+
+#: data/com.github.Switchcraft.gschema.xml:22
+msgid "Light style time"
+msgstr "Vaalean tyylin aika"
+
+#: data/com.github.Switchcraft.gschema.xml:23
+msgid ""
+"Minutes after midnight when the custom schedule switches to the light style."
+msgstr ""
+"Minuutit keskiyön jälkeen, jolloin mukautettu aikataulu vaihtaa vaaleaan"
+" tyyliin."
+
+#: data/com.github.Switchcraft.gschema.xml:28
+msgid "Dark style time"
+msgstr "Tumman tyylin aika"
+
+#: data/com.github.Switchcraft.gschema.xml:29
+msgid ""
+"Minutes after midnight when the custom schedule switches to the dark style."
+msgstr ""
+"Minuutit keskiyön jälkeen, jolloin mukautettu aikataulu vaihtaa tummaan"
+" tyyliin."
+
+#: data/com.github.Switchcraft.gschema.xml:33
+msgid "Last known location"
+msgstr "Viimeisin tunnettu sijainti"
+
+#: data/com.github.Switchcraft.gschema.xml:34
+msgid ""
+"Latitude and longitude from GeoClue, used for sunrise and sunset. Out of "
+"range values mean none is known, and the system time zone gives the location."
+msgstr ""
+"GeoCluen leveys- ja pituusaste, käytetään auringonnousun ja -laskun"
+" kuvaamiseen. Alueen ulkopuoliset arvot tarkoittavat, että mitään ei"
+" tunneta, ja järjestelmän aikavyöhyke ilmoittaa sijainnin."
+
+#: data/com.github.Switchcraft.metainfo.xml.in:6
+#: data/com.github.Switchcraft.metainfo.xml.in:8
+msgid "Arnis Kemlers"
+msgstr "Arnis Kemlers"
+
+#: data/com.github.Switchcraft.metainfo.xml.in:13
+msgid ""
+"Switchcraft watches GNOME's color-scheme preference and runs user-defined "
+"shell commands when the theme switches between light and dark. It allows you "
+"to automate theme-dependent adjustments for applications that don't follow "
+"system settings automatically."
+msgstr ""
+"Switchcraft seuraa GNOME-väriteeman asetusta ja suorittaa käyttäjän"
+" määrittämiä shell-komentoja, kun teema vaihtuu vaalean ja tumman välillä."
+" Sen avulla voit automatisoida teemakohtaisia säätöjä sovelluksille, jotka"
+" eivät seuraa järjestelmäasetuksia automaattisesti."
+
+#: data/com.github.Switchcraft.metainfo.xml.in:24
+msgid "Refactored icon structure and updated metadata integration."
+msgstr "Uudelleen muotoiltu kuvakerakenne ja päivitetty metatietojen integrointi."

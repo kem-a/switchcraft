@@ -440,7 +440,7 @@ extract_file() {
 
     case "$file" in
         *.vala)
-            xgettext --language=C --add-comments='TRANSLATORS:' \
+            xgettext --language=Vala --add-comments='TRANSLATORS:' \
                 "${XGETTEXT_COMMON[@]}" "${XGETTEXT_KEYWORDS[@]}" \
                 --output="$out" "$file"
             ;;

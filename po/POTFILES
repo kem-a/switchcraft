@@ -1,9 +1,11 @@
 # List of source files containing translatable strings
 
 src/Application.vala
+src/CommandDialog.vala
 src/ConstantsWindow.vala
 src/MainWindow.vala
 src/PreferencesWindow.vala
+src/SlidingToggleGroup.vala
 
 data/resources/shortcuts-dialog.ui
 data/com.github.Switchcraft.desktop.in

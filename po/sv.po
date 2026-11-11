@@ -1,0 +1,672 @@
+# Switchcraft translations.
+# Copyright (C) 2026 kem-a
+# This file is distributed under the same license as the switchcraft package.
+# Automatically generated, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: switchcraft 2.0.0\n"
+"Report-Msgid-Bugs-To: https://github.com/kem-a/switchcraft/issues\n"
+"POT-Creation-Date: 2026-11-11 13:09+0200\n"
+"PO-Revision-Date: 2026-11-11 12:02+0000\n"
+"Last-Translator: Switchcraft translators\n"
+"Language-Team: none\n"
+"Language: sv\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: src/Application.vala:126
+msgid "Show version information"
+msgstr "Visa versionsinformation"
+
+#: src/Application.vala:127
+msgid "Run in background for theme monitoring"
+msgstr "Kör i bakgrunden för temaövervakning"
+
+#: src/Application.vala:343
+#, c-format
+msgid "Exited with code %d"
+msgstr "Avslutade med koden %d"
+
+#: src/Application.vala:344
+#, c-format
+msgid "Killed by signal %d"
+msgstr "Dödad av signal %d"
+
+#: src/Application.vala:1331
+msgid "The 'zip' command is required to export."
+msgstr "Kommandot 'zip' krävs för att exportera."
+
+#: src/Application.vala:1337
+msgid "Destination must be a local file."
+msgstr "Destinationen måste vara en lokal fil."
+
+#: src/Application.vala:1344
+msgid "Failed to prepare destination directory."
+msgstr "Det gick inte att förbereda målkatalogen."
+
+#: src/Application.vala:1352 src/Application.vala:1425
+msgid "Failed to create temporary directory."
+msgstr "Det gick inte att skapa en tillfällig katalog."
+
+#: src/Application.vala:1383
+msgid "Unable to overwrite existing archive."
+msgstr "Det går inte att skriva över befintligt arkiv."
+
+#: src/Application.vala:1395
+#, c-format
+msgid "Failed to write archive: %s"
+msgstr "Det gick inte att skriva arkiv: %s"
+
+#: src/Application.vala:1412
+msgid "The 'unzip' command is required to import."
+msgstr "Kommandot 'unzip' krävs för att importera."
+
+#: src/Application.vala:1418
+msgid "Archive must be a local file."
+msgstr "Arkivet måste vara en lokal fil."
+
+#: src/Application.vala:1436
+#, c-format
+msgid "Failed to unpack archive: %s"
+msgstr "Det gick inte att packa upp arkivet: %s"
+
+#: src/Application.vala:1444
+msgid "Archive must contain commands.json and constants.json at the top level."
+msgstr "Arkiv måste innehålla commands.json och constants.json på översta nivån."
+
+#: src/Application.vala:1456
+msgid "commands.json is not a JSON object."
+msgstr "commands.json är inte ett JSON-objekt."
+
+#: src/Application.vala:1467
+msgid "constants.json is not a JSON object."
+msgstr "constants.json är inte ett JSON-objekt."
+
+#: src/Application.vala:1484
+msgid "constants.json must only contain string values."
+msgstr "constants.json får bara innehålla strängvärden."
+
+#: src/Application.vala:1497
+msgid "theme_settings.json is not a JSON object."
+msgstr "theme_settings.json är inte ett JSON-objekt."
+
+#: src/Application.vala:1520
+msgid "Failed to remove commands.json."
+msgstr "Det gick inte att ta bort commands.json."
+
+#: src/Application.vala:1527
+msgid "Failed to remove constants.json."
+msgstr "Det gick inte att ta bort constants.json."
+
+#: src/Application.vala:1534
+msgid "Failed to remove theme_settings.json."
+msgstr "Det gick inte att ta bort theme_settings.json."
+
+#: src/Application.vala:1720
+msgid "Switchcraft Monitor"
+msgstr "Switchcraft-övervakning"
+
+#: src/Application.vala:1721
+msgid "Monitor GNOME theme changes and run commands"
+msgstr "Övervaka GNOME-temaändringar och kör kommandon"
+
+#: src/CommandDialog.vala:44
+msgid "Color Scheme"
+msgstr "Färgschema"
+
+#: src/CommandDialog.vala:46
+msgid "Accent Color"
+msgstr "Accentfärg"
+
+#: src/CommandDialog.vala:49
+msgid "Icon Theme"
+msgstr "Ikontema"
+
+#: src/CommandDialog.vala:51
+msgid "GTK Theme"
+msgstr "GTK-tema"
+
+#: src/CommandDialog.vala:54
+msgid "Cursor Theme"
+msgstr "Markörtema"
+
+#: src/CommandDialog.vala:56
+msgid "Shell Theme"
+msgstr "Shell-tema"
+
+#: src/CommandDialog.vala:59
+msgid "Wallpaper"
+msgstr "Skrivbordsbakgrund"
+
+#: src/CommandDialog.vala:61
+msgid "Night Light"
+msgstr "Nattljus"
+
+#: src/CommandDialog.vala:63
+msgid "Global Theme"
+msgstr "Globalt tema"
+
+#: src/CommandDialog.vala:65
+msgid "Plasma Style"
+msgstr "Plasmastil"
+
+#: src/CommandDialog.vala:67
+msgid "Kvantum Theme"
+msgstr "Kvantum-tema"
+
+#: src/CommandDialog.vala:96
+msgid "Switches to the light style and would loop in Dark mode"
+msgstr "Växlar till den ljusa stilen och loopar i mörkt läge"
+
+#: src/CommandDialog.vala:99
+msgid "Switches to the dark style and would loop in Light mode"
+msgstr "Växlar till mörk stil och loopar i ljusläge"
+
+#: src/CommandDialog.vala:113
+#, c-format
+msgid "%s is already set in this mode"
+msgstr "%s är redan inställt i detta läge"
+
+#: src/CommandDialog.vala:116
+msgid "This command is already in this mode"
+msgstr "Detta kommando är redan i detta läge"
+
+#: src/CommandDialog.vala:124
+msgid "Edit Command"
+msgstr "Redigera kommando"
+
+#: src/CommandDialog.vala:124
+msgid "Add Command"
+msgstr "Lägg till kommando"
+
+#: src/CommandDialog.vala:131
+msgid "Delete"
+msgstr "Ta bort"
+
+#: src/CommandDialog.vala:134
+msgid "Cancel"
+msgstr "Avbryt"
+
+#: src/CommandDialog.vala:135
+msgid "Save"
+msgstr "Spara"
+
+#: src/CommandDialog.vala:135
+msgid "Add"
+msgstr "Lägg till"
+
+#: src/CommandDialog.vala:148
+msgid "Custom Command"
+msgstr "Anpassat kommando"
+
+#: src/CommandDialog.vala:170
+msgid "Type"
+msgstr "Typ"
+
+#: src/CommandDialog.vala:175
+msgid "Command"
+msgstr "Kommando"
+
+#: src/CommandDialog.vala:215
+msgid "Copy Error"
+msgstr "Kopiera fel"
+
+#: src/CommandDialog.vala:240
+msgid "Test"
+msgstr "Testa"
+
+#: src/CommandDialog.vala:256
+msgid "Value"
+msgstr "Värde"
+
+#: src/CommandDialog.vala:261
+msgid "Image"
+msgstr "Bild"
+
+#: src/CommandDialog.vala:266
+msgid "Browse…"
+msgstr "Bläddra…"
+
+#: src/CommandDialog.vala:276
+msgid "Mode"
+msgstr "Läge"
+
+#: src/CommandDialog.vala:402
+msgid "Requires the User Themes GNOME Shell extension."
+msgstr "Kräver tillägget User Themes GNOME Shell."
+
+#: src/CommandDialog.vala:514
+msgid "Command failed"
+msgstr "Kommandot misslyckades"
+
+#: src/CommandDialog.vala:514
+msgid "Command succeeded"
+msgstr "Kommandot lyckades"
+
+#: src/CommandDialog.vala:527
+msgid "Select Wallpaper"
+msgstr "Välj bakgrundsbild"
+
+#: src/ConstantsWindow.vala:22
+msgid "Constants"
+msgstr "Konstanter"
+
+#: src/ConstantsWindow.vala:39 src/ConstantsWindow.vala:182
+msgid "Add Constant"
+msgstr "Lägg till konstant"
+
+#: src/ConstantsWindow.vala:51
+msgid ""
+"Define constants to use in your commands. Reference them with $NAME or $"
+"{NAME}."
+msgstr ""
+"Definiera konstanter att använda i dina kommandon. Referera till dem med"
+" $NAME eller ${NAME}."
+
+#: src/ConstantsWindow.vala:69
+msgid "No Constants"
+msgstr "Inga konstanter"
+
+#: src/ConstantsWindow.vala:70
+msgid "Click the '+' button to define a constant."
+msgstr "Klicka på knappen '+' för att definiera en konstant."
+
+#: src/ConstantsWindow.vala:145
+msgid "Edit constant"
+msgstr "Redigera konstant"
+
+#: src/ConstantsWindow.vala:153
+msgid "Remove constant"
+msgstr "Ta bort konstanten"
+
+#: src/ConstantsWindow.vala:182
+msgid "Edit Constant"
+msgstr "Redigera konstant"
+
+#: src/ConstantsWindow.vala:184
+msgid "Define a constant name and value."
+msgstr "Definiera ett konstant namn och värde."
+
+#: src/ConstantsWindow.vala:202
+msgid "Constant name (e.g., D2DL_SCHEMA)"
+msgstr "Konstantnamn (t.ex. D2DL_SCHEMA)"
+
+#: src/ConstantsWindow.vala:210
+msgid "Value (e.g., org.gnome.shell.extensions.dash2dock-lite)"
+msgstr "Värde (t.ex. org.gnome.shell.extensions.dash2dock-lite)"
+
+#: src/ConstantsWindow.vala:216
+msgid ""
+"Use in commands as $NAME or ${NAME}. Names use letters, numbers and "
+"underscores."
+msgstr ""
+"Använd i kommandon som $NAME eller ${NAME}. Namn använder bokstäver, siffror"
+" och understreck."
+
+#: src/MainWindow.vala:64
+msgid "Preferences"
+msgstr "Inställningar"
+
+#: src/MainWindow.vala:67
+msgid "Keyboard Shortcuts"
+msgstr "Tangentbordsgenvägar"
+
+#: src/MainWindow.vala:68
+msgid "About Switchcraft"
+msgstr "Om Switchcraft"
+
+#: src/MainWindow.vala:69
+msgid "Quit"
+msgstr "Avsluta"
+
+#: src/MainWindow.vala:78
+msgid "Run the background process that reacts to GNOME theme changes."
+msgstr "Kör bakgrundsprocessen som reagerar på GNOME-temaändringar."
+
+#: src/MainWindow.vala:79 src/MainWindow.vala:82
+msgid "Monitor"
+msgstr "Övervakning"
+
+#: src/MainWindow.vala:88
+msgid "No Commands"
+msgstr "Inga kommandon"
+
+#: src/MainWindow.vala:89
+msgid "Use the '+' button in the header bar or press (Ctrl+N) to add a command."
+msgstr ""
+"Använd '+'-knappen i rubrikfältet eller tryck på (Ctrl+N) för att lägga till"
+" ett kommando."
+
+#: src/MainWindow.vala:128
+msgid "Commands"
+msgstr "Kommandon"
+
+#: src/MainWindow.vala:129
+msgid "Active commands that will run when their theme matches."
+msgstr "Aktiva kommandon som körs när deras tema matchar."
+
+#: src/MainWindow.vala:135
+msgid "Disabled"
+msgstr "Inaktiverad"
+
+#: src/MainWindow.vala:136
+msgid "Saved commands that are currently turned off."
+msgstr "Sparade kommandon som för närvarande är avstängda."
+
+#: src/MainWindow.vala:297
+msgid "Duplicate"
+msgstr "Duplicera"
+
+#: src/MainWindow.vala:310
+msgid "Drag to reorder"
+msgstr "Dra för att ändra ordning"
+
+#: src/MainWindow.vala:610
+msgid "Command deleted"
+msgstr "Kommandot raderat"
+
+#: src/MainWindow.vala:611
+msgid "Undo"
+msgstr "Ångra"
+
+#: src/MainWindow.vala:697
+msgid "Background monitoring is now active"
+msgstr "Bakgrundsövervakning är nu aktiv"
+
+#: src/MainWindow.vala:698
+msgid "Background monitoring is now inactive"
+msgstr "Bakgrundsövervakning är nu inaktiv"
+
+#: src/PreferencesWindow.vala:43
+msgid "Automatic Switching"
+msgstr "Automatisk växling"
+
+#: src/PreferencesWindow.vala:45
+msgid ""
+"KDE Plasma is set to switch global themes automatically. Turn that off to "
+"use this schedule."
+msgstr ""
+"KDE Plasma är inställt på att byta globala teman automatiskt. Stäng av det"
+" för att använda det här schemat."
+
+#: src/PreferencesWindow.vala:47
+msgid ""
+"Switch KDE's default light and dark global themes on a schedule. Needs "
+"background monitoring."
+msgstr ""
+"Byt KDE:s standard ljusa och mörka globala teman enligt ett schema. Behöver"
+" bakgrundsövervakning."
+
+#: src/PreferencesWindow.vala:48
+msgid ""
+"Switch between light and dark style on a schedule. Needs background "
+"monitoring."
+msgstr ""
+"Växla mellan ljus och mörk stil enligt ett schema. Behöver"
+" bakgrundsövervakning."
+
+#: src/PreferencesWindow.vala:54
+msgid "Automatic Switching Is Set in KDE"
+msgstr "Automatisk växling är inställd i KDE"
+
+#: src/PreferencesWindow.vala:55
+msgid ""
+"Turn off “Switch to Dark Mode at Night” in System Settings to use this "
+"schedule."
+msgstr ""
+"Stäng av \"Byt till mörkt läge på natten\" i systeminställningarna för att"
+" använda detta schema."
+
+#: src/PreferencesWindow.vala:61
+msgid "Open Settings"
+msgstr "Öppna Inställningar"
+
+#: src/PreferencesWindow.vala:65
+msgid "Could not open System Settings"
+msgstr "Kunde inte öppna Systeminställningar"
+
+#: src/PreferencesWindow.vala:74
+msgid "Schedule"
+msgstr "Schema"
+
+#: src/PreferencesWindow.vala:75
+msgid "Off"
+msgstr "Av"
+
+#: src/PreferencesWindow.vala:75
+msgid "Sunset to Sunrise"
+msgstr "Solnedgång till soluppgång"
+
+#: src/PreferencesWindow.vala:75
+msgid "Custom Times"
+msgstr "Anpassade tider"
+
+#: src/PreferencesWindow.vala:86
+msgid "Light From"
+msgstr "Ljust från"
+
+#: src/PreferencesWindow.vala:87
+msgid "Dark From"
+msgstr "Mörkt från"
+
+#: src/PreferencesWindow.vala:99
+msgid "Configuration"
+msgstr "Konfiguration"
+
+#: src/PreferencesWindow.vala:100
+msgid "Import or export commands and constants together as a zip archive."
+msgstr ""
+"Importera eller exportera kommandon och konstanter tillsammans som ett"
+" zip-arkiv."
+
+#: src/PreferencesWindow.vala:104 src/PreferencesWindow.vala:237
+msgid "Import Configuration"
+msgstr "Importera konfiguration"
+
+#: src/PreferencesWindow.vala:105
+msgid "Replace local commands and constants from a zip file."
+msgstr "Ersätt lokala kommandon och konstanter från en zip-fil."
+
+#: src/PreferencesWindow.vala:107
+msgid "Import"
+msgstr "Importera"
+
+#: src/PreferencesWindow.vala:116 src/PreferencesWindow.vala:260
+msgid "Export Configuration"
+msgstr "Exportera konfiguration"
+
+#: src/PreferencesWindow.vala:117
+msgid "Save commands and constants into a zip file."
+msgstr "Spara kommandon och konstanter i en zip-fil."
+
+#: src/PreferencesWindow.vala:119
+msgid "Export"
+msgstr "Exportera"
+
+#: src/PreferencesWindow.vala:128
+msgid "Danger Zone"
+msgstr "Farozon"
+
+#: src/PreferencesWindow.vala:129
+msgid "Remove all saved commands and constants from this device."
+msgstr "Ta bort alla sparade kommandon och konstanter från den här enheten."
+
+#: src/PreferencesWindow.vala:133
+msgid "Delete All Configuration"
+msgstr "Ta bort all konfiguration"
+
+#: src/PreferencesWindow.vala:134
+msgid "Deletes commands.json and constants.json. This cannot be undone."
+msgstr "Raderar commands.json och constants.json. Detta kan inte ångras."
+
+#: src/PreferencesWindow.vala:159
+msgid "Location unknown"
+msgstr "Plats okänd"
+
+#: src/PreferencesWindow.vala:165
+msgid "The sun stays down today"
+msgstr "Solen går inte upp idag"
+
+#: src/PreferencesWindow.vala:168
+msgid "The sun stays up today"
+msgstr "Solen går inte ner idag"
+
+#: src/PreferencesWindow.vala:170
+#, c-format
+msgid "Sunrise %s, sunset %s"
+msgstr "Soluppgång %s, solnedgång %s"
+
+#: src/PreferencesWindow.vala:178
+msgid "Hour"
+msgstr "Timme"
+
+#: src/PreferencesWindow.vala:179
+msgid "Minute"
+msgstr "Minut"
+
+#: src/PreferencesWindow.vala:246
+msgid "Configuration imported"
+msgstr "Konfiguration importerad"
+
+#: src/PreferencesWindow.vala:248 src/PreferencesWindow.vala:254
+#, c-format
+msgid "Import failed: %s"
+msgstr "Import misslyckades: %s"
+
+#: src/PreferencesWindow.vala:269
+msgid "Configuration exported"
+msgstr "Konfiguration exporterad"
+
+#: src/PreferencesWindow.vala:271 src/PreferencesWindow.vala:277
+#, c-format
+msgid "Export failed: %s"
+msgstr "Export misslyckades: %s"
+
+#: src/PreferencesWindow.vala:283
+msgid "Delete all configuration?"
+msgstr "Ta bort all konfiguration?"
+
+#: src/PreferencesWindow.vala:284
+msgid ""
+"This will remove every command and constant. This action cannot be undone."
+msgstr "Detta tar bort varje kommando och konstant. Denna åtgärd kan inte ångras."
+
+#: src/PreferencesWindow.vala:305
+msgid "Configuration deleted"
+msgstr "Konfiguration raderad"
+
+#: src/PreferencesWindow.vala:307
+#, c-format
+msgid "Delete failed: %s"
+msgstr "Det gick inte att ta bort: %s"
+
+#: src/SlidingToggleGroup.vala:38
+msgid "Light"
+msgstr "Ljust"
+
+#: src/SlidingToggleGroup.vala:39
+msgid "Dark"
+msgstr "Mörkt"
+
+#: data/resources/shortcuts-dialog.ui:6
+msgid "General"
+msgstr "Allmänt"
+
+#: data/resources/shortcuts-dialog.ui:9
+msgid "Add command"
+msgstr "Lägg till kommando"
+
+#: data/resources/shortcuts-dialog.ui:15
+msgid "Open preferences"
+msgstr "Öppna inställningar"
+
+#: data/resources/shortcuts-dialog.ui:21
+msgid "Show keyboard shortcuts"
+msgstr "Visa kortkommandon"
+
+#: data/com.github.Switchcraft.desktop.in:3
+msgid "Switchcraft"
+msgstr "Switchcraft"
+
+#: data/com.github.Switchcraft.desktop.in:4
+msgid "Run commands when GNOME theme switches"
+msgstr "Kör kommandon när GNOME-tema växlar"
+
+#: data/com.github.Switchcraft.desktop.in:10
+msgid "theme;switch;gtk;gnome;"
+msgstr "tema;växla;gtk;gnome;"
+
+#: data/com.github.Switchcraft.gschema.xml:6
+msgid "Enable background monitoring"
+msgstr "Aktivera bakgrundsövervakning"
+
+#: data/com.github.Switchcraft.gschema.xml:7
+msgid "Whether the background process for theme monitoring is enabled."
+msgstr "Om bakgrundsprocessen för temaövervakning är aktiverad."
+
+#: data/com.github.Switchcraft.gschema.xml:16
+msgid "Automatic light and dark switching"
+msgstr "Automatisk ljus- och mörkerväxling"
+
+#: data/com.github.Switchcraft.gschema.xml:17
+msgid ""
+"Switch the light/dark style at sunrise and sunset (sun), at light-time and "
+"dark-time (custom), or never (off). Runs in the background monitor."
+msgstr ""
+"Växla ljus/mörk stil vid soluppgång och solnedgång (sol), vid ljustid och"
+" mörkertid (anpassad) eller aldrig (av). Körs i bakgrundsmonitorn."
+
+#: data/com.github.Switchcraft.gschema.xml:22
+msgid "Light style time"
+msgstr "Lätt stiltid"
+
+#: data/com.github.Switchcraft.gschema.xml:23
+msgid ""
+"Minutes after midnight when the custom schedule switches to the light style."
+msgstr "Minuter efter midnatt när det anpassade schemat växlar till ljusstilen."
+
+#: data/com.github.Switchcraft.gschema.xml:28
+msgid "Dark style time"
+msgstr "Mörk stiltid"
+
+#: data/com.github.Switchcraft.gschema.xml:29
+msgid ""
+"Minutes after midnight when the custom schedule switches to the dark style."
+msgstr "Minuter efter midnatt när det anpassade schemat byter till mörk stil."
+
+#: data/com.github.Switchcraft.gschema.xml:33
+msgid "Last known location"
+msgstr "Senast kända plats"
+
+#: data/com.github.Switchcraft.gschema.xml:34
+msgid ""
+"Latitude and longitude from GeoClue, used for sunrise and sunset. Out of "
+"range values mean none is known, and the system time zone gives the location."
+msgstr ""
+"Latitud och longitud från GeoClue, används för soluppgång och solnedgång."
+" Värden utanför intervallet betyder att ingen är känd, och systemets tidszon"
+" anger platsen."
+
+#: data/com.github.Switchcraft.metainfo.xml.in:6
+#: data/com.github.Switchcraft.metainfo.xml.in:8
+msgid "Arnis Kemlers"
+msgstr "Arnis Kemlers"
+
+#: data/com.github.Switchcraft.metainfo.xml.in:13
+msgid ""
+"Switchcraft watches GNOME's color-scheme preference and runs user-defined "
+"shell commands when the theme switches between light and dark. It allows you "
+"to automate theme-dependent adjustments for applications that don't follow "
+"system settings automatically."
+msgstr ""
+"Switchcraft tittar på GNOMEs färgschemainställning och kör"
+" användardefinierade skalkommandon när temat växlar mellan ljust och mörkt."
+" Det låter dig automatisera temaberoende justeringar för applikationer som"
+" inte följer systeminställningarna automatiskt."
+
+#: data/com.github.Switchcraft.metainfo.xml.in:24
+msgid "Refactored icon structure and updated metadata integration."
+msgstr "Refaktorerad ikonstruktur och uppdaterad metadataintegration."

@@ -67,7 +67,7 @@ namespace Switchcraft {
             var placeholder = new Adw.StatusPage ();
             placeholder.set_icon_name ("text-x-generic-symbolic");
             placeholder.set_title (_("No Constants"));
-            placeholder.set_description (_("Click the + button to define a constant."));
+            placeholder.set_description (_("Click the '+' button to define a constant."));
             
             content_stack = new Gtk.Stack ();
             content_stack.set_transition_type (Gtk.StackTransitionType.CROSSFADE);

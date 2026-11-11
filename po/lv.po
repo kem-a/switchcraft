@@ -1,0 +1,671 @@
+# Switchcraft translations.
+# Copyright (C) 2026 kem-a
+# This file is distributed under the same license as the switchcraft package.
+# Automatically generated, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: switchcraft 2.0.0\n"
+"Report-Msgid-Bugs-To: https://github.com/kem-a/switchcraft/issues\n"
+"POT-Creation-Date: 2026-11-11 13:09+0200\n"
+"PO-Revision-Date: 2026-11-11 12:02+0000\n"
+"Last-Translator: Switchcraft translators\n"
+"Language-Team: none\n"
+"Language: lv\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : "
+"2);\n"
+
+#: src/Application.vala:126
+msgid "Show version information"
+msgstr "Rādīt versijas informāciju"
+
+#: src/Application.vala:127
+msgid "Run in background for theme monitoring"
+msgstr "Palaist fonā motīvu uzraudzībai"
+
+#: src/Application.vala:343
+#, c-format
+msgid "Exited with code %d"
+msgstr "Izgāja ar kodu %d"
+
+#: src/Application.vala:344
+#, c-format
+msgid "Killed by signal %d"
+msgstr "Nogalināts ar signālu %d"
+
+#: src/Application.vala:1331
+msgid "The 'zip' command is required to export."
+msgstr "Eksportēšanai ir nepieciešama komanda “zip”."
+
+#: src/Application.vala:1337
+msgid "Destination must be a local file."
+msgstr "Galamērķim ir jābūt vietējam failam."
+
+#: src/Application.vala:1344
+msgid "Failed to prepare destination directory."
+msgstr "Neizdevās sagatavot mērķa direktoriju."
+
+#: src/Application.vala:1352 src/Application.vala:1425
+msgid "Failed to create temporary directory."
+msgstr "Neizdevās izveidot pagaidu direktoriju."
+
+#: src/Application.vala:1383
+msgid "Unable to overwrite existing archive."
+msgstr "Nevar pārrakstīt esošo arhīvu."
+
+#: src/Application.vala:1395
+#, c-format
+msgid "Failed to write archive: %s"
+msgstr "Neizdevās uzrakstīt arhīvu: %s"
+
+#: src/Application.vala:1412
+msgid "The 'unzip' command is required to import."
+msgstr "Lai importētu, ir nepieciešama komanda “unzip”."
+
+#: src/Application.vala:1418
+msgid "Archive must be a local file."
+msgstr "Arhīvam ir jābūt lokālam failam."
+
+#: src/Application.vala:1436
+#, c-format
+msgid "Failed to unpack archive: %s"
+msgstr "Neizdevās izpakot arhīvu: %s"
+
+#: src/Application.vala:1444
+msgid "Archive must contain commands.json and constants.json at the top level."
+msgstr "Arhīvā ir jābūt commands.json un constants.json augšējā līmenī."
+
+#: src/Application.vala:1456
+msgid "commands.json is not a JSON object."
+msgstr "commands.json nav JSON objekts."
+
+#: src/Application.vala:1467
+msgid "constants.json is not a JSON object."
+msgstr "constants.json nav JSON objekts."
+
+#: src/Application.vala:1484
+msgid "constants.json must only contain string values."
+msgstr "constants.json drīkst ietvert tikai virknes vērtības."
+
+#: src/Application.vala:1497
+msgid "theme_settings.json is not a JSON object."
+msgstr "theme_settings.json nav JSON objekts."
+
+#: src/Application.vala:1520
+msgid "Failed to remove commands.json."
+msgstr "Neizdevās noņemt commands.json."
+
+#: src/Application.vala:1527
+msgid "Failed to remove constants.json."
+msgstr "Neizdevās noņemt constants.json."
+
+#: src/Application.vala:1534
+msgid "Failed to remove theme_settings.json."
+msgstr "Neizdevās noņemt theme_settings.json."
+
+#: src/Application.vala:1720
+msgid "Switchcraft Monitor"
+msgstr "Switchcraft monitors"
+
+#: src/Application.vala:1721
+msgid "Monitor GNOME theme changes and run commands"
+msgstr "Pārraugiet GNOME motīvu izmaiņas un palaidiet komandas"
+
+#: src/CommandDialog.vala:44
+msgid "Color Scheme"
+msgstr "Krāsu shēma"
+
+#: src/CommandDialog.vala:46
+msgid "Accent Color"
+msgstr "Akcenta krāsa"
+
+#: src/CommandDialog.vala:49
+msgid "Icon Theme"
+msgstr "Ikonu motīvs"
+
+#: src/CommandDialog.vala:51
+msgid "GTK Theme"
+msgstr "GTK motīvs"
+
+#: src/CommandDialog.vala:54
+msgid "Cursor Theme"
+msgstr "Kursora motīvs"
+
+#: src/CommandDialog.vala:56
+msgid "Shell Theme"
+msgstr "Shell tēma"
+
+#: src/CommandDialog.vala:59
+msgid "Wallpaper"
+msgstr "Ekrāntapete"
+
+#: src/CommandDialog.vala:61
+msgid "Night Light"
+msgstr "Nakts gaisma"
+
+#: src/CommandDialog.vala:63
+msgid "Global Theme"
+msgstr "Globālā tēma"
+
+#: src/CommandDialog.vala:65
+msgid "Plasma Style"
+msgstr "„Plasma“ stils"
+
+#: src/CommandDialog.vala:67
+msgid "Kvantum Theme"
+msgstr "Kvantum tēma"
+
+#: src/CommandDialog.vala:96
+msgid "Switches to the light style and would loop in Dark mode"
+msgstr "Pārslēdzas uz gaišo stilu un izraisītu cilpu tumšajā režīmā"
+
+#: src/CommandDialog.vala:99
+msgid "Switches to the dark style and would loop in Light mode"
+msgstr "Pārslēdzas uz tumšo stilu un izraisītu cilpu gaišajā režīmā"
+
+#: src/CommandDialog.vala:113
+#, c-format
+msgid "%s is already set in this mode"
+msgstr "%s jau ir iestatīts šajā režīmā"
+
+#: src/CommandDialog.vala:116
+msgid "This command is already in this mode"
+msgstr "Šī komanda jau ir šajā režīmā"
+
+#: src/CommandDialog.vala:124
+msgid "Edit Command"
+msgstr "Rediģēt komandu"
+
+#: src/CommandDialog.vala:124
+msgid "Add Command"
+msgstr "Pievienot komandu"
+
+#: src/CommandDialog.vala:131
+msgid "Delete"
+msgstr "Dzēst"
+
+#: src/CommandDialog.vala:134
+msgid "Cancel"
+msgstr "Atcelt"
+
+#: src/CommandDialog.vala:135
+msgid "Save"
+msgstr "Saglabāt"
+
+#: src/CommandDialog.vala:135
+msgid "Add"
+msgstr "Pievienot"
+
+#: src/CommandDialog.vala:148
+msgid "Custom Command"
+msgstr "Pielāgota komanda"
+
+#: src/CommandDialog.vala:170
+msgid "Type"
+msgstr "Tips"
+
+#: src/CommandDialog.vala:175
+msgid "Command"
+msgstr "Komanda"
+
+#: src/CommandDialog.vala:215
+msgid "Copy Error"
+msgstr "Kopēt kļūdu"
+
+#: src/CommandDialog.vala:240
+msgid "Test"
+msgstr "Testēt"
+
+#: src/CommandDialog.vala:256
+msgid "Value"
+msgstr "Vērtība"
+
+#: src/CommandDialog.vala:261
+msgid "Image"
+msgstr "Attēls"
+
+#: src/CommandDialog.vala:266
+msgid "Browse…"
+msgstr "Pārlūkot…"
+
+#: src/CommandDialog.vala:276
+msgid "Mode"
+msgstr "Režīms"
+
+#: src/CommandDialog.vala:402
+msgid "Requires the User Themes GNOME Shell extension."
+msgstr "Nepieciešams User Themes GNOME Shell paplašinājums."
+
+#: src/CommandDialog.vala:514
+msgid "Command failed"
+msgstr "Komanda neizdevās"
+
+#: src/CommandDialog.vala:514
+msgid "Command succeeded"
+msgstr "Komanda izdevās"
+
+#: src/CommandDialog.vala:527
+msgid "Select Wallpaper"
+msgstr "Atlasīt fona attēlu"
+
+#: src/ConstantsWindow.vala:22
+msgid "Constants"
+msgstr "Konstantes"
+
+#: src/ConstantsWindow.vala:39 src/ConstantsWindow.vala:182
+msgid "Add Constant"
+msgstr "Pievienot konstanti"
+
+#: src/ConstantsWindow.vala:51
+msgid ""
+"Define constants to use in your commands. Reference them with $NAME or $"
+"{NAME}."
+msgstr ""
+"Definējiet konstantes, ko izmantot savās komandās. Atsaucieties uz tām ar"
+" $NAME vai ${NAME}."
+
+#: src/ConstantsWindow.vala:69
+msgid "No Constants"
+msgstr "Bez konstantēm"
+
+#: src/ConstantsWindow.vala:70
+msgid "Click the '+' button to define a constant."
+msgstr "Noklikšķiniet uz pogas '+', lai definētu konstanti."
+
+#: src/ConstantsWindow.vala:145
+msgid "Edit constant"
+msgstr "Rediģēt konstanti"
+
+#: src/ConstantsWindow.vala:153
+msgid "Remove constant"
+msgstr "Noņemt konstanti"
+
+#: src/ConstantsWindow.vala:182
+msgid "Edit Constant"
+msgstr "Rediģēt konstantu"
+
+#: src/ConstantsWindow.vala:184
+msgid "Define a constant name and value."
+msgstr "Definējiet konstantes nosaukumu un vērtību."
+
+#: src/ConstantsWindow.vala:202
+msgid "Constant name (e.g., D2DL_SCHEMA)"
+msgstr "Konstantes nosaukums (piem., D2DL_SCHEMA)"
+
+#: src/ConstantsWindow.vala:210
+msgid "Value (e.g., org.gnome.shell.extensions.dash2dock-lite)"
+msgstr "Vērtība (piemēram, org.gnome.shell.extensions.dash2dock-lite)"
+
+#: src/ConstantsWindow.vala:216
+msgid ""
+"Use in commands as $NAME or ${NAME}. Names use letters, numbers and "
+"underscores."
+msgstr ""
+"Komandās izmantojiet kā $NAME vai ${NAME}. Vārdos tiek izmantoti burti,"
+" cipari un pasvītras."
+
+#: src/MainWindow.vala:64
+msgid "Preferences"
+msgstr "Iestatījumi"
+
+#: src/MainWindow.vala:67
+msgid "Keyboard Shortcuts"
+msgstr "Tastatūras saīsnes"
+
+#: src/MainWindow.vala:68
+msgid "About Switchcraft"
+msgstr "Par Switchcraft"
+
+#: src/MainWindow.vala:69
+msgid "Quit"
+msgstr "Iziet"
+
+#: src/MainWindow.vala:78
+msgid "Run the background process that reacts to GNOME theme changes."
+msgstr "Palaidiet fona procesu, kas reaģē uz GNOME motīva izmaiņām."
+
+#: src/MainWindow.vala:79 src/MainWindow.vala:82
+msgid "Monitor"
+msgstr "Monitors"
+
+#: src/MainWindow.vala:88
+msgid "No Commands"
+msgstr "Nav komandu"
+
+#: src/MainWindow.vala:89
+msgid "Use the '+' button in the header bar or press (Ctrl+N) to add a command."
+msgstr ""
+"Izmantojiet pogu '+' galvenes joslā vai nospiediet (Ctrl+N), lai"
+" pievienotu komandu."
+
+#: src/MainWindow.vala:128
+msgid "Commands"
+msgstr "Komandas"
+
+#: src/MainWindow.vala:129
+msgid "Active commands that will run when their theme matches."
+msgstr "Aktīvās komandas, kas darbosies, kad to tēma sakritīs."
+
+#: src/MainWindow.vala:135
+msgid "Disabled"
+msgstr "Izslēgts"
+
+#: src/MainWindow.vala:136
+msgid "Saved commands that are currently turned off."
+msgstr "Saglabātās komandas, kas pašlaik ir izslēgtas."
+
+#: src/MainWindow.vala:297
+msgid "Duplicate"
+msgstr "Dublēt"
+
+#: src/MainWindow.vala:310
+msgid "Drag to reorder"
+msgstr "Velciet, lai pārkārtotu"
+
+#: src/MainWindow.vala:610
+msgid "Command deleted"
+msgstr "Komanda izdzēsta"
+
+#: src/MainWindow.vala:611
+msgid "Undo"
+msgstr "Atsaukt"
+
+#: src/MainWindow.vala:697
+msgid "Background monitoring is now active"
+msgstr "Fona uzraudzība tagad ir aktīva"
+
+#: src/MainWindow.vala:698
+msgid "Background monitoring is now inactive"
+msgstr "Fona uzraudzība tagad ir neaktīva"
+
+#: src/PreferencesWindow.vala:43
+msgid "Automatic Switching"
+msgstr "Automātiska pārslēgšana"
+
+#: src/PreferencesWindow.vala:45
+msgid ""
+"KDE Plasma is set to switch global themes automatically. Turn that off to "
+"use this schedule."
+msgstr ""
+"KDE Plasma ir iestatīts, lai automātiski pārslēgtos globālos motīvus."
+" Izslēdziet to, lai izmantotu šo grafiku."
+
+#: src/PreferencesWindow.vala:47
+msgid ""
+"Switch KDE's default light and dark global themes on a schedule. Needs "
+"background monitoring."
+msgstr ""
+"Pārslēdziet KDE noklusējuma gaišos un tumšos globālos motīvus pēc grafika."
+" Nepieciešama fona uzraudzība."
+
+#: src/PreferencesWindow.vala:48
+msgid ""
+"Switch between light and dark style on a schedule. Needs background "
+"monitoring."
+msgstr ""
+"Pēc grafika pārslēdzieties starp gaišo un tumšo stilu. Nepieciešama fona"
+" uzraudzība."
+
+#: src/PreferencesWindow.vala:54
+msgid "Automatic Switching Is Set in KDE"
+msgstr "Automātiskā pārslēgšanās ir iestatīta KDE"
+
+#: src/PreferencesWindow.vala:55
+msgid ""
+"Turn off “Switch to Dark Mode at Night” in System Settings to use this "
+"schedule."
+msgstr ""
+"Lai izmantotu šo grafiku, sistēmas iestatījumos izslēdziet opciju"
+" “Pārslēgties uz tumšo režīmu naktī”."
+
+#: src/PreferencesWindow.vala:61
+msgid "Open Settings"
+msgstr "Atveriet iestatījumus"
+
+#: src/PreferencesWindow.vala:65
+msgid "Could not open System Settings"
+msgstr "Nevarēja atvērt sistēmas iestatījumus"
+
+#: src/PreferencesWindow.vala:74
+msgid "Schedule"
+msgstr "Plānotājs"
+
+#: src/PreferencesWindow.vala:75
+msgid "Off"
+msgstr "Izslēgts"
+
+#: src/PreferencesWindow.vala:75
+msgid "Sunset to Sunrise"
+msgstr "Saulriets līdz saullēktam"
+
+#: src/PreferencesWindow.vala:75
+msgid "Custom Times"
+msgstr "Pielāgoti laiki"
+
+#: src/PreferencesWindow.vala:86
+msgid "Light From"
+msgstr "Gaisma no"
+
+#: src/PreferencesWindow.vala:87
+msgid "Dark From"
+msgstr "Tumsa no"
+
+#: src/PreferencesWindow.vala:99
+msgid "Configuration"
+msgstr "Konfigurācija"
+
+#: src/PreferencesWindow.vala:100
+msgid "Import or export commands and constants together as a zip archive."
+msgstr "Importējiet vai eksportējiet komandas un konstantes kopā kā zip arhīvu."
+
+#: src/PreferencesWindow.vala:104 src/PreferencesWindow.vala:237
+msgid "Import Configuration"
+msgstr "Importēt konfigurāciju"
+
+#: src/PreferencesWindow.vala:105
+msgid "Replace local commands and constants from a zip file."
+msgstr "Aizstāt vietējās komandas un konstantes no zip faila."
+
+#: src/PreferencesWindow.vala:107
+msgid "Import"
+msgstr "Importēt"
+
+#: src/PreferencesWindow.vala:116 src/PreferencesWindow.vala:260
+msgid "Export Configuration"
+msgstr "Eksportēt konfigurāciju"
+
+#: src/PreferencesWindow.vala:117
+msgid "Save commands and constants into a zip file."
+msgstr "Saglabājiet komandas un konstantes zip failā."
+
+#: src/PreferencesWindow.vala:119
+msgid "Export"
+msgstr "Eksportēt"
+
+#: src/PreferencesWindow.vala:128
+msgid "Danger Zone"
+msgstr "Bīstamā zona"
+
+#: src/PreferencesWindow.vala:129
+msgid "Remove all saved commands and constants from this device."
+msgstr "Noņemiet visas saglabātās komandas un konstantes no šīs ierīces."
+
+#: src/PreferencesWindow.vala:133
+msgid "Delete All Configuration"
+msgstr "Dzēst visu konfigurāciju"
+
+#: src/PreferencesWindow.vala:134
+msgid "Deletes commands.json and constants.json. This cannot be undone."
+msgstr "Dzēš commands.json un constants.json. Šo darbību nevar atsaukt."
+
+#: src/PreferencesWindow.vala:159
+msgid "Location unknown"
+msgstr "Atrašanās vieta nav zināma"
+
+#: src/PreferencesWindow.vala:165
+msgid "The sun stays down today"
+msgstr "Šodien saule neuzlēks"
+
+#: src/PreferencesWindow.vala:168
+msgid "The sun stays up today"
+msgstr "Šodien saule nenorietēs"
+
+#: src/PreferencesWindow.vala:170
+#, c-format
+msgid "Sunrise %s, sunset %s"
+msgstr "Saullēkts %s, saulriets %s"
+
+#: src/PreferencesWindow.vala:178
+msgid "Hour"
+msgstr "Stunda"
+
+#: src/PreferencesWindow.vala:179
+msgid "Minute"
+msgstr "Minūte"
+
+#: src/PreferencesWindow.vala:246
+msgid "Configuration imported"
+msgstr "Konfigurācija importēta"
+
+#: src/PreferencesWindow.vala:248 src/PreferencesWindow.vala:254
+#, c-format
+msgid "Import failed: %s"
+msgstr "Importēšana neizdevās: %s"
+
+#: src/PreferencesWindow.vala:269
+msgid "Configuration exported"
+msgstr "Konfigurācija eksportēta"
+
+#: src/PreferencesWindow.vala:271 src/PreferencesWindow.vala:277
+#, c-format
+msgid "Export failed: %s"
+msgstr "Eksportēšana neizdevās: %s"
+
+#: src/PreferencesWindow.vala:283
+msgid "Delete all configuration?"
+msgstr "Vai dzēst visu konfigurāciju?"
+
+#: src/PreferencesWindow.vala:284
+msgid ""
+"This will remove every command and constant. This action cannot be undone."
+msgstr "Tas noņems visas komandas un konstantes. Šo darbību nevar atsaukt."
+
+#: src/PreferencesWindow.vala:305
+msgid "Configuration deleted"
+msgstr "Konfigurācija izdzēsta"
+
+#: src/PreferencesWindow.vala:307
+#, c-format
+msgid "Delete failed: %s"
+msgstr "Dzēšana neizdevās: %s"
+
+#: src/SlidingToggleGroup.vala:38
+msgid "Light"
+msgstr "Gaišs"
+
+#: src/SlidingToggleGroup.vala:39
+msgid "Dark"
+msgstr "Tumšs"
+
+#: data/resources/shortcuts-dialog.ui:6
+msgid "General"
+msgstr "Vispārīgi"
+
+#: data/resources/shortcuts-dialog.ui:9
+msgid "Add command"
+msgstr "Pievienot komandu"
+
+#: data/resources/shortcuts-dialog.ui:15
+msgid "Open preferences"
+msgstr "Atvērt iestatījumus"
+
+#: data/resources/shortcuts-dialog.ui:21
+msgid "Show keyboard shortcuts"
+msgstr "Rādīt īsinājumtaustiņus"
+
+#: data/com.github.Switchcraft.desktop.in:3
+msgid "Switchcraft"
+msgstr "Switchcraft"
+
+#: data/com.github.Switchcraft.desktop.in:4
+msgid "Run commands when GNOME theme switches"
+msgstr "Palaidiet komandas, kad tiek pārslēgts GNOME motīvs"
+
+#: data/com.github.Switchcraft.desktop.in:10
+msgid "theme;switch;gtk;gnome;"
+msgstr "tēma;pārslēgt;gtk;gnome;"
+
+#: data/com.github.Switchcraft.gschema.xml:6
+msgid "Enable background monitoring"
+msgstr "Iespējot fona uzraudzību"
+
+#: data/com.github.Switchcraft.gschema.xml:7
+msgid "Whether the background process for theme monitoring is enabled."
+msgstr "Vai ir iespējots fona process motīvu uzraudzībai."
+
+#: data/com.github.Switchcraft.gschema.xml:16
+msgid "Automatic light and dark switching"
+msgstr "Automātiska gaišā un tumšā stila pārslēgšana"
+
+#: data/com.github.Switchcraft.gschema.xml:17
+msgid ""
+"Switch the light/dark style at sunrise and sunset (sun), at light-time and "
+"dark-time (custom), or never (off). Runs in the background monitor."
+msgstr ""
+"Pārslēdziet gaišo/tumšo stilu saullēktā un saulrietā (saule), gaišajā un"
+" tumšajā laikā (pielāgots) vai nekad (izslēgts). Darbojas fona monitorā."
+
+#: data/com.github.Switchcraft.gschema.xml:22
+msgid "Light style time"
+msgstr "Gaišā stila laiks"
+
+#: data/com.github.Switchcraft.gschema.xml:23
+msgid ""
+"Minutes after midnight when the custom schedule switches to the light style."
+msgstr "Minūtes pēc pusnakts, kad pielāgotais grafiks pārslēdzas uz gaišo stilu."
+
+#: data/com.github.Switchcraft.gschema.xml:28
+msgid "Dark style time"
+msgstr "Tumšā stila laiks"
+
+#: data/com.github.Switchcraft.gschema.xml:29
+msgid ""
+"Minutes after midnight when the custom schedule switches to the dark style."
+msgstr "Minūtes pēc pusnakts, kad pielāgotais grafiks pārslēdzas uz tumšo stilu."
+
+#: data/com.github.Switchcraft.gschema.xml:33
+msgid "Last known location"
+msgstr "Pēdējā zināmā atrašanās vieta"
+
+#: data/com.github.Switchcraft.gschema.xml:34
+msgid ""
+"Latitude and longitude from GeoClue, used for sunrise and sunset. Out of "
+"range values mean none is known, and the system time zone gives the location."
+msgstr ""
+"GeoClue platums un garums, ko izmanto saullēktam un saulrietam. Ārpus"
+" diapazona vērtības nozīmē, ka neviena nav zināma, un sistēmas laika josla"
+" norāda atrašanās vietu."
+
+#: data/com.github.Switchcraft.metainfo.xml.in:6
+#: data/com.github.Switchcraft.metainfo.xml.in:8
+msgid "Arnis Kemlers"
+msgstr "Arnis Kemlers"
+
+#: data/com.github.Switchcraft.metainfo.xml.in:13
+msgid ""
+"Switchcraft watches GNOME's color-scheme preference and runs user-defined "
+"shell commands when the theme switches between light and dark. It allows you "
+"to automate theme-dependent adjustments for applications that don't follow "
+"system settings automatically."
+msgstr ""
+"Switchcraft uzrauga GNOME krāsu shēmas izvēli un palaiž lietotāja definētas"
+" čaulas komandas, kad motīvs pārslēdzas starp gaišo un tumšo. Tas ļauj"
+" automatizēt no motīva atkarīgus pielāgojumus lietojumprogrammām, kas"
+" automātiski neievēro sistēmas iestatījumus."
+
+#: data/com.github.Switchcraft.metainfo.xml.in:24
+msgid "Refactored icon structure and updated metadata integration."
+msgstr "Pārveidota ikonu struktūra un atjaunināta metadatu integrācija."

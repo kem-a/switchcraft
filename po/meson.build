@@ -1,8 +1,8 @@
 i18n = import('i18n')
 fs = import('fs')
 
-# Wire only languages that already have a .po file. This keeps the build
-# working while po/LINGUAS lists languages whose .po files are not created yet.
+# Wire every language listed in LINGUAS. The existence check keeps the build
+# working if a language is added to LINGUAS before its .po file is created.
 # Use scripts/translations.sh --pot-only for the template: Meson's own pot
 # target does not extract the AppStream metainfo strings.
 languages = []
