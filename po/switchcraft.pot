@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: switchcraft 2.0.0\n"
 "Report-Msgid-Bugs-To: https://github.com/kem-a/switchcraft/issues\n"
-"POT-Creation-Date: 2026-11-11 13:09+0200\n"
+"POT-Creation-Date: 2026-11-11 16:19+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,91 +25,91 @@ msgstr ""
 msgid "Run in background for theme monitoring"
 msgstr ""
 
-#: src/Application.vala:343
+#: src/Application.vala:352
 #, c-format
 msgid "Exited with code %d"
 msgstr ""
 
-#: src/Application.vala:344
+#: src/Application.vala:353
 #, c-format
 msgid "Killed by signal %d"
 msgstr ""
 
-#: src/Application.vala:1331
+#: src/Application.vala:1367
 msgid "The 'zip' command is required to export."
 msgstr ""
 
-#: src/Application.vala:1337
+#: src/Application.vala:1373
 msgid "Destination must be a local file."
 msgstr ""
 
-#: src/Application.vala:1344
+#: src/Application.vala:1380
 msgid "Failed to prepare destination directory."
 msgstr ""
 
-#: src/Application.vala:1352 src/Application.vala:1425
+#: src/Application.vala:1388 src/Application.vala:1461
 msgid "Failed to create temporary directory."
 msgstr ""
 
-#: src/Application.vala:1383
+#: src/Application.vala:1419
 msgid "Unable to overwrite existing archive."
 msgstr ""
 
-#: src/Application.vala:1395
+#: src/Application.vala:1431
 #, c-format
 msgid "Failed to write archive: %s"
 msgstr ""
 
-#: src/Application.vala:1412
+#: src/Application.vala:1448
 msgid "The 'unzip' command is required to import."
 msgstr ""
 
-#: src/Application.vala:1418
+#: src/Application.vala:1454
 msgid "Archive must be a local file."
 msgstr ""
 
-#: src/Application.vala:1436
+#: src/Application.vala:1472
 #, c-format
 msgid "Failed to unpack archive: %s"
 msgstr ""
 
-#: src/Application.vala:1444
+#: src/Application.vala:1480
 msgid "Archive must contain commands.json and constants.json at the top level."
 msgstr ""
 
-#: src/Application.vala:1456
+#: src/Application.vala:1492
 msgid "commands.json is not a JSON object."
 msgstr ""
 
-#: src/Application.vala:1467
+#: src/Application.vala:1503
 msgid "constants.json is not a JSON object."
 msgstr ""
 
-#: src/Application.vala:1484
+#: src/Application.vala:1520
 msgid "constants.json must only contain string values."
 msgstr ""
 
-#: src/Application.vala:1497
+#: src/Application.vala:1533
 msgid "theme_settings.json is not a JSON object."
 msgstr ""
 
-#: src/Application.vala:1520
+#: src/Application.vala:1556
 msgid "Failed to remove commands.json."
 msgstr ""
 
-#: src/Application.vala:1527
+#: src/Application.vala:1563
 msgid "Failed to remove constants.json."
 msgstr ""
 
-#: src/Application.vala:1534
+#: src/Application.vala:1570
 msgid "Failed to remove theme_settings.json."
 msgstr ""
 
-#: src/Application.vala:1720
+#: src/Application.vala:1756
 msgid "Switchcraft Monitor"
 msgstr ""
 
-#: src/Application.vala:1721
+#: src/Application.vala:1757
 msgid "Monitor GNOME theme changes and run commands"
 msgstr ""
 
@@ -170,83 +170,83 @@ msgstr ""
 msgid "%s is already set in this mode"
 msgstr ""
 
-#: src/CommandDialog.vala:116
+#: src/CommandDialog.vala:118
 msgid "This command is already in this mode"
 msgstr ""
 
-#: src/CommandDialog.vala:124
+#: src/CommandDialog.vala:128
 msgid "Edit Command"
 msgstr ""
 
-#: src/CommandDialog.vala:124
+#: src/CommandDialog.vala:128
 msgid "Add Command"
 msgstr ""
 
-#: src/CommandDialog.vala:131
+#: src/CommandDialog.vala:135
 msgid "Delete"
 msgstr ""
 
-#: src/CommandDialog.vala:134
+#: src/CommandDialog.vala:138
 msgid "Cancel"
 msgstr ""
 
-#: src/CommandDialog.vala:135
+#: src/CommandDialog.vala:139
 msgid "Save"
 msgstr ""
 
-#: src/CommandDialog.vala:135
+#: src/CommandDialog.vala:139
 msgid "Add"
 msgstr ""
 
-#: src/CommandDialog.vala:148
+#: src/CommandDialog.vala:152
 msgid "Custom Command"
 msgstr ""
 
-#: src/CommandDialog.vala:170
+#: src/CommandDialog.vala:174
 msgid "Type"
 msgstr ""
 
-#: src/CommandDialog.vala:175
+#: src/CommandDialog.vala:179
 msgid "Command"
 msgstr ""
 
-#: src/CommandDialog.vala:215
+#: src/CommandDialog.vala:219
 msgid "Copy Error"
 msgstr ""
 
-#: src/CommandDialog.vala:240
+#: src/CommandDialog.vala:244
 msgid "Test"
 msgstr ""
 
-#: src/CommandDialog.vala:256
+#: src/CommandDialog.vala:260
 msgid "Value"
 msgstr ""
 
-#: src/CommandDialog.vala:261
+#: src/CommandDialog.vala:265
 msgid "Image"
 msgstr ""
 
-#: src/CommandDialog.vala:266
+#: src/CommandDialog.vala:270
 msgid "Browse…"
 msgstr ""
 
-#: src/CommandDialog.vala:276
+#: src/CommandDialog.vala:280
 msgid "Mode"
 msgstr ""
 
-#: src/CommandDialog.vala:402
+#: src/CommandDialog.vala:406
 msgid "Requires the User Themes GNOME Shell extension."
 msgstr ""
 
-#: src/CommandDialog.vala:514
+#: src/CommandDialog.vala:521
 msgid "Command failed"
 msgstr ""
 
-#: src/CommandDialog.vala:514
+#: src/CommandDialog.vala:521
 msgid "Command succeeded"
 msgstr ""
 
-#: src/CommandDialog.vala:527
+#: src/CommandDialog.vala:534
 msgid "Select Wallpaper"
 msgstr ""
 
@@ -367,11 +367,19 @@ msgstr ""
 msgid "Undo"
 msgstr ""
 
-#: src/MainWindow.vala:697
+#: src/MainWindow.vala:652
+msgid "Contributors"
+msgstr ""
+
+#: src/MainWindow.vala:653
+msgid "Credits"
+msgstr ""
+
+#: src/MainWindow.vala:700
 msgid "Background monitoring is now active"
 msgstr ""
 
-#: src/MainWindow.vala:698
+#: src/MainWindow.vala:701
 msgid "Background monitoring is now inactive"
 msgstr ""
 
@@ -643,6 +651,6 @@ msgid ""
 "system settings automatically."
 msgstr ""
 
-#: data/com.github.Switchcraft.metainfo.xml.in:24
+#: data/com.github.Switchcraft.metainfo.xml.in:25
 msgid "Refactored icon structure and updated metadata integration."
 msgstr ""

@@ -15,6 +15,7 @@
   <launchable type="desktop-id">com.github.Switchcraft.desktop</launchable>
   <url type="homepage">https://github.com/kem-a/switchcraft</url>
   <url type="bugtracker">https://github.com/kem-a/switchcraft/issues</url>
+  <url type="contribute">https://github.com/kem-a/switchcraft/graphs/contributors</url>
   <provides>
     <binary>switchcraft</binary>
   </provides>

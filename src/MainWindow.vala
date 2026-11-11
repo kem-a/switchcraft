@@ -649,6 +649,9 @@ namespace Switchcraft {
             // Found in the GResource icons folder, also when run from source
             dialog.set_application_icon ("com.github.Switchcraft");
 
+            string[] credits = { _("Contributors") + " https://github.com/kem-a/switchcraft/graphs/contributors" };
+            dialog.add_credit_section (_("Credits"), credits);
+
             dialog.present (this);
         }
 
