@@ -280,15 +280,11 @@ pub fn get_kde_package_name(subdir: &str, id: &str) -> String {
         if util::exists(&metadata) {
             // On errors, try the desktop file below
             if let Ok(contents) = util::get_contents(&metadata)
-                && let Ok(parser) = json::Parser::load(&contents)
-                && let Some(root) = parser.root()
-                && root.node_type() == json::NodeType::Object
-                && let Some(plugin) = root.object().member("KPlugin")
-                && plugin.node_type() == json::NodeType::Object
-                && let Some(name) = plugin
-                    .object()
-                    .member("Name")
-                    .and_then(|n| n.string_value())
+                && let Ok(Some(root)) = json::parse(&contents)
+                && let Some(name) = root
+                    .get("KPlugin")
+                    .and_then(|plugin| plugin.get("Name"))
+                    .and_then(json::string)
                 && !name.is_empty()
             {
                 return name;

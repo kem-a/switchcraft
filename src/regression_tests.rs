@@ -1,7 +1,9 @@
 // Regression tests. The expected values were recorded from the Vala
 // version (2.0.0) with the same inputs, so they pin the behaviour the Rust
-// port keeps byte for byte. Only cases that do not depend on the machine
-// (installed themes, schemas, KDE files) are here.
+// port keeps byte for byte. The JSON fixtures differ only where serde_json
+// does: `"key": value` spacing, no comments, its error text. Only cases that
+// do not depend on the machine (installed themes, schemas, KDE files) are
+// here.
 
 use crate::util::StrTable;
 use crate::{builtins, constants_window, json, schedule, store, util};
@@ -32,9 +34,9 @@ fn commands_json_round_trip() {
         "odd",
         "trailing",
     ] {
-        let output = match json::Parser::load(&read(&format!("commands/{name}.json"))) {
-            Ok(parser) => store::commands_to_json(&store::normalize_commands(parser.root())),
-            Err(e) => format!("ERROR {}", e.message()),
+        let output = match json::parse(&read(&format!("commands/{name}.json"))) {
+            Ok(root) => store::commands_to_json(&store::normalize_commands(root.as_ref())),
+            Err(e) => format!("ERROR {e}"),
         };
         assert_eq!(output, text(&format!("commands/{name}.expected")), "{name}");
     }
@@ -46,11 +48,10 @@ fn commands_json_round_trip() {
 fn constants_order() {
     let mut out = String::new();
     let table = StrTable::new();
-    let parser = json::Parser::load(&read("constants/mixed.json")).unwrap();
-    let obj = parser.root().unwrap().object();
-    for name in obj.members() {
-        if let Some(value) = obj.member(&name).and_then(|n| n.string_value()) {
-            table.insert(&name, &value);
+    let root = json::parse(&read("constants/mixed.json")).unwrap().unwrap();
+    for (name, value) in root.as_object().unwrap() {
+        if let Some(value) = json::string(value) {
+            table.insert(name, &value);
         }
     }
     out.push_str(&format!("== load\n{}\n", store::constants_to_json(&table)));
@@ -224,8 +225,8 @@ fn loop_conflicts() {
 
 #[test]
 fn duplicates() {
-    let parser = json::Parser::load(&read("commands/current.json")).unwrap();
-    let commands = store::normalize_commands(parser.root());
+    let root = json::parse(&read("commands/current.json")).unwrap();
+    let commands = store::normalize_commands(root.as_ref());
     let first = commands.get("light")[0].clone();
     let second = commands.get("light")[1].clone();
     let light_command = "notify-send \"light\" & echo <b>";

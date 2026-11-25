@@ -1,97 +1,97 @@
 == load
 {
-  "D2DL_SCHEMA" : "org.gnome.shell.extensions.dash2dock-lite",
-  "A" : "one",
-  "with space" : "s",
-  "_u" : "${A}-$B",
-  "QUOTED" : "\"q\"",
-  "Z" : "last",
-  "1BAD" : "bad name",
-  "HOME_DIR" : "$HOME/x",
-  "B" : "two"
+  "D2DL_SCHEMA": "org.gnome.shell.extensions.dash2dock-lite",
+  "A": "one",
+  "with space": "s",
+  "_u": "${A}-$B",
+  "QUOTED": "\"q\"",
+  "Z": "last",
+  "1BAD": "bad name",
+  "HOME_DIR": "$HOME/x",
+  "B": "two"
 }
 == window
 {
-  "D2DL_SCHEMA" : "org.gnome.shell.extensions.dash2dock-lite",
-  "A" : "one",
-  "with space" : "s",
-  "_u" : "${A}-$B",
-  "Z" : "last",
-  "QUOTED" : "q",
-  "1BAD" : "bad name",
-  "HOME_DIR" : "$HOME/x",
-  "B" : "two"
+  "D2DL_SCHEMA": "org.gnome.shell.extensions.dash2dock-lite",
+  "A": "one",
+  "with space": "s",
+  "_u": "${A}-$B",
+  "Z": "last",
+  "QUOTED": "q",
+  "1BAD": "bad name",
+  "HOME_DIR": "$HOME/x",
+  "B": "two"
 }
 == remove A
 {
-  "D2DL_SCHEMA" : "org.gnome.shell.extensions.dash2dock-lite",
-  "with space" : "s",
-  "_u" : "${A}-$B",
-  "Z" : "last",
-  "QUOTED" : "q",
-  "1BAD" : "bad name",
-  "HOME_DIR" : "$HOME/x",
-  "B" : "two"
+  "D2DL_SCHEMA": "org.gnome.shell.extensions.dash2dock-lite",
+  "with space": "s",
+  "_u": "${A}-$B",
+  "Z": "last",
+  "QUOTED": "q",
+  "1BAD": "bad name",
+  "HOME_DIR": "$HOME/x",
+  "B": "two"
 }
 == insert NEW value
 {
-  "D2DL_SCHEMA" : "org.gnome.shell.extensions.dash2dock-lite",
-  "NEW" : "value",
-  "with space" : "s",
-  "_u" : "${A}-$B",
-  "Z" : "last",
-  "QUOTED" : "q",
-  "1BAD" : "bad name",
-  "HOME_DIR" : "$HOME/x",
-  "B" : "two"
+  "D2DL_SCHEMA": "org.gnome.shell.extensions.dash2dock-lite",
+  "NEW": "value",
+  "with space": "s",
+  "_u": "${A}-$B",
+  "Z": "last",
+  "QUOTED": "q",
+  "1BAD": "bad name",
+  "HOME_DIR": "$HOME/x",
+  "B": "two"
 }
 == insert B changed
 {
-  "D2DL_SCHEMA" : "org.gnome.shell.extensions.dash2dock-lite",
-  "NEW" : "value",
-  "with space" : "s",
-  "_u" : "${A}-$B",
-  "Z" : "last",
-  "QUOTED" : "q",
-  "1BAD" : "bad name",
-  "HOME_DIR" : "$HOME/x",
-  "B" : "changed"
+  "D2DL_SCHEMA": "org.gnome.shell.extensions.dash2dock-lite",
+  "NEW": "value",
+  "with space": "s",
+  "_u": "${A}-$B",
+  "Z": "last",
+  "QUOTED": "q",
+  "1BAD": "bad name",
+  "HOME_DIR": "$HOME/x",
+  "B": "changed"
 }
 == remove Z
 {
-  "D2DL_SCHEMA" : "org.gnome.shell.extensions.dash2dock-lite",
-  "NEW" : "value",
-  "with space" : "s",
-  "_u" : "${A}-$B",
-  "QUOTED" : "q",
-  "1BAD" : "bad name",
-  "HOME_DIR" : "$HOME/x",
-  "B" : "changed"
+  "D2DL_SCHEMA": "org.gnome.shell.extensions.dash2dock-lite",
+  "NEW": "value",
+  "with space": "s",
+  "_u": "${A}-$B",
+  "QUOTED": "q",
+  "1BAD": "bad name",
+  "HOME_DIR": "$HOME/x",
+  "B": "changed"
 }
 == insert A back
 {
-  "D2DL_SCHEMA" : "org.gnome.shell.extensions.dash2dock-lite",
-  "NEW" : "value",
-  "with space" : "s",
-  "_u" : "${A}-$B",
-  "A" : "back",
-  "QUOTED" : "q",
-  "1BAD" : "bad name",
-  "HOME_DIR" : "$HOME/x",
-  "B" : "changed"
+  "D2DL_SCHEMA": "org.gnome.shell.extensions.dash2dock-lite",
+  "NEW": "value",
+  "with space": "s",
+  "_u": "${A}-$B",
+  "A": "back",
+  "QUOTED": "q",
+  "1BAD": "bad name",
+  "HOME_DIR": "$HOME/x",
+  "B": "changed"
 }
 == insert Ä unicode
 {
-  "D2DL_SCHEMA" : "org.gnome.shell.extensions.dash2dock-lite",
-  "NEW" : "value",
-  "with space" : "s",
-  "_u" : "${A}-$B",
-  "A" : "back",
-  "Ä" : "unicode",
-  "QUOTED" : "q",
-  "1BAD" : "bad name",
-  "HOME_DIR" : "$HOME/x",
-  "B" : "changed"
+  "D2DL_SCHEMA": "org.gnome.shell.extensions.dash2dock-lite",
+  "NEW": "value",
+  "with space": "s",
+  "_u": "${A}-$B",
+  "A": "back",
+  "Ä": "unicode",
+  "QUOTED": "q",
+  "1BAD": "bad name",
+  "HOME_DIR": "$HOME/x",
+  "B": "changed"
 }
 == sorted
 1BAD,A,B,D2DL_SCHEMA,HOME_DIR,NEW,QUOTED,_u,with space,Ä,

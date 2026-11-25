@@ -1,1 +1,1 @@
-ERROR <data>:1:33: Parse error: unexpected character `,', expected character `]'
+ERROR trailing comma at line 1 column 34

@@ -3,6 +3,7 @@
 use gtk::gio;
 use gtk::gio::prelude::*;
 use gtk::glib;
+use serde_json::{Map, Value};
 use std::cell::{Cell, RefCell};
 use std::collections::HashMap;
 use std::rc::Rc;
@@ -175,15 +176,13 @@ pub fn load_commands() -> (bool, Commands) {
         return (true, Commands::default());
     }
 
-    let parsed = util::get_contents(&path).and_then(|contents| json::Parser::load(&contents));
+    let parsed = util::get_contents(&path)
+        .map_err(|e| e.message().to_string())
+        .and_then(|contents| json::parse(&contents));
     match parsed {
-        Ok(parser) => (true, normalize_commands(parser.root())),
+        Ok(root) => (true, normalize_commands(root.as_ref())),
         Err(e) => {
-            glib::g_log!(
-                glib::LogLevel::Warning,
-                "Failed to load commands: {}",
-                e.message()
-            );
+            glib::g_log!(glib::LogLevel::Warning, "Failed to load commands: {}", e);
             (false, Commands::default())
         }
     }
@@ -202,60 +201,43 @@ pub fn save_commands(commands: &Commands) {
     }
 }
 
-pub fn normalize_commands(root: Option<json::Node>) -> Commands {
+pub fn normalize_commands(root: Option<&Value>) -> Commands {
     let mut commands = Commands::default();
 
-    let Some(root) = root.filter(|r| r.node_type() == json::NodeType::Object) else {
+    let Some(root) = root.and_then(Value::as_object) else {
         return commands;
     };
-    let root = root.object();
 
     for theme in ["dark", "light"] {
-        if !root.has_member(theme) {
-            continue;
-        }
-
-        let Some(member) = root
-            .member(theme)
-            .filter(|m| m.node_type() == json::NodeType::Array)
-        else {
+        let Some(member) = root.get(theme).and_then(Value::as_array) else {
             continue;
         };
 
         let mut theme_commands = Vec::new();
-        for node in member.array().elements() {
-            match node.node_type() {
+        for node in member {
+            match node {
                 // String format
-                json::NodeType::Value => {
-                    if let Some(command) = node.string_value() {
+                Value::String(_) => {
+                    if let Some(command) = json::string(node) {
                         theme_commands.push(CommandEntry::new(&command, true));
                     }
                 }
                 // Object format with enabled flag
-                json::NodeType::Object => {
-                    let obj = node.object();
-                    let Some(command) = obj.member("command").and_then(|n| n.string_value()) else {
+                Value::Object(obj) => {
+                    let Some(command) = obj.get("command").and_then(json::string) else {
                         continue;
                     };
 
-                    let enabled_node = obj.member("enabled");
-                    let enabled = match enabled_node {
-                        Some(n) if n.is_bool() => n.boolean(),
-                        _ => true,
-                    };
+                    let enabled = obj.get("enabled").and_then(Value::as_bool).unwrap_or(true);
                     let entry = CommandEntry::new(&command, enabled);
                     entry.set_builtin(
-                        &obj.member("builtin")
-                            .and_then(|n| n.string_value())
+                        &obj.get("builtin")
+                            .and_then(json::string)
                             .unwrap_or_default(),
                     );
-                    entry.set_value(
-                        &obj.member("value")
-                            .and_then(|n| n.string_value())
-                            .unwrap_or_default(),
-                    );
-                    if let Some(position) = obj.member("position").filter(|n| n.is_int()) {
-                        entry.set_position(position.int() as i32);
+                    entry.set_value(&obj.get("value").and_then(json::string).unwrap_or_default());
+                    if let Some(position) = obj.get("position").and_then(Value::as_i64) {
+                        entry.set_position(position as i32);
                     }
                     theme_commands.push(entry);
                 }
@@ -270,25 +252,25 @@ pub fn normalize_commands(root: Option<json::Node>) -> Commands {
 
 // Members follow the order the Vala HashTable iterated "dark" and "light" in
 pub fn commands_to_json(commands: &Commands) -> String {
-    let obj = json::ObjectBuilder::new();
+    let mut obj = Map::new();
     for theme in util::hash_order(&["dark", "light"]) {
-        let array = json::ArrayBuilder::new();
+        let mut array = Vec::new();
         for entry in commands.get(&theme) {
-            let entry_obj = json::ObjectBuilder::new();
-            entry_obj.set_string("command", &entry.command());
-            entry_obj.set_bool("enabled", entry.enabled());
+            let mut entry_obj = Map::new();
+            entry_obj.insert("command".into(), entry.command().into());
+            entry_obj.insert("enabled".into(), entry.enabled().into());
             if entry.position() >= 0 {
-                entry_obj.set_int("position", entry.position() as i64);
+                entry_obj.insert("position".into(), entry.position().into());
             }
             if !entry.builtin().is_empty() {
-                entry_obj.set_string("builtin", &entry.builtin());
-                entry_obj.set_string("value", &entry.value());
+                entry_obj.insert("builtin".into(), entry.builtin().into());
+                entry_obj.insert("value".into(), entry.value().into());
             }
-            array.add_object(entry_obj);
+            array.push(Value::Object(entry_obj));
         }
-        obj.set_array(&theme, array);
+        obj.insert(theme, Value::Array(array));
     }
-    obj.into_pretty_data()
+    json::pretty(obj)
 }
 
 pub fn get_constants() -> StrTable {
@@ -298,36 +280,30 @@ pub fn get_constants() -> StrTable {
         return constants;
     }
 
-    let parsed = util::get_contents(&path).and_then(|contents| json::Parser::load(&contents));
+    let parsed = util::get_contents(&path)
+        .map_err(|e| e.message().to_string())
+        .and_then(|contents| json::parse(&contents));
     match parsed {
-        Ok(parser) => {
-            if let Some(root) = parser
-                .root()
-                .filter(|r| r.node_type() == json::NodeType::Object)
-            {
-                let obj = root.object();
-                for name in obj.members() {
-                    if let Some(value) = obj.member(&name).and_then(|n| n.string_value()) {
-                        constants.insert(&name, &value);
+        Ok(root) => {
+            if let Some(obj) = root.as_ref().and_then(Value::as_object) {
+                for (name, value) in obj {
+                    if let Some(value) = json::string(value) {
+                        constants.insert(name, &value);
                     }
                 }
             }
         }
-        Err(e) => glib::g_log!(
-            glib::LogLevel::Warning,
-            "Failed to load constants: {}",
-            e.message()
-        ),
+        Err(e) => glib::g_log!(glib::LogLevel::Warning, "Failed to load constants: {}", e),
     }
     constants
 }
 
 pub fn constants_to_json(constants: &StrTable) -> String {
-    let obj = json::ObjectBuilder::new();
+    let mut obj = Map::new();
     for (key, value) in constants.entries() {
-        obj.set_string(&key, &value);
+        obj.insert(key, value.into());
     }
-    obj.into_pretty_data()
+    json::pretty(obj)
 }
 
 pub fn save_constants(constants: &StrTable) {
@@ -348,43 +324,38 @@ fn get_theme_settings() -> HashMap<String, ThemeSettingValue> {
         return HashMap::new();
     }
 
-    let parsed = util::get_contents(&path).and_then(|contents| json::Parser::load(&contents));
+    let parsed = util::get_contents(&path)
+        .map_err(|e| e.message().to_string())
+        .and_then(|contents| json::parse(&contents));
     match parsed {
-        Ok(parser) => match parser
-            .root()
-            .filter(|r| r.node_type() == json::NodeType::Object)
-        {
-            Some(root) => parse_theme_settings(root.object()),
+        Ok(root) => match root.as_ref().and_then(Value::as_object) {
+            Some(obj) => parse_theme_settings(obj),
             None => HashMap::new(),
         },
         Err(e) => {
             glib::g_log!(
                 glib::LogLevel::Warning,
                 "Failed to load theme settings: {}",
-                e.message()
+                e
             );
             HashMap::new()
         }
     }
 }
 
-pub fn parse_theme_settings(obj: json::Object) -> HashMap<String, ThemeSettingValue> {
+pub fn parse_theme_settings(obj: &Map<String, Value>) -> HashMap<String, ThemeSettingValue> {
     let mut result = HashMap::new();
-    for id in obj.members() {
-        if let Some(node) = obj
-            .member(&id)
-            .filter(|n| n.node_type() == json::NodeType::Object)
-        {
-            let setting = node.object();
+    for (id, node) in obj {
+        if let Some(setting) = node.as_object() {
             let light = setting
-                .member("light")
-                .and_then(|n| n.string_value())
+                .get("light")
+                .and_then(json::string)
                 .unwrap_or_default();
             let dark = setting
-                .member("dark")
-                .and_then(|n| n.string_value())
+                .get("dark")
+                .and_then(json::string)
                 .unwrap_or_default();
-            result.insert(id, ThemeSettingValue { light, dark });
+            result.insert(id.clone(), ThemeSettingValue { light, dark });
         }
     }
     result

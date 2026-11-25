@@ -12,11 +12,12 @@ publish = false
 adw = { package = "libadwaita", version = "0.9", features = ["v1_8"] }
 gtk = { package = "gtk4", version = "0.11", features = ["v4_10"] }
 libc = "0.2"
-zip = { version = "9", default-features = false, features = ["deflate-flate2-zlib-rs"] }
+# preserve_order: members keep file order on load and insertion order on save
+serde_json = { version = "1", features = ["preserve_order"] }
+zip ={ version = "9", default-features = false, features = ["deflate-flate2-zlib-rs"] }
 
 [build-dependencies]
 glib-build-tools = "0.22"
-pkg-config = "0.3"
 
 [profile.release]
 lto = true

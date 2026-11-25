@@ -1,9 +1,9 @@
 {
-  "dark" : [],
-  "light" : [
+  "dark": [],
+  "light": [
     {
-      "command" : "second light",
-      "enabled" : true
+      "command": "second light",
+      "enabled": true
     }
   ]
 }

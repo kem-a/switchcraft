@@ -1,9 +1,1 @@
-{
-  "dark" : [],
-  "light" : [
-    {
-      "command" : "a",
-      "enabled" : true
-    }
-  ]
-}
+ERROR expected `,` or `}` at line 1 column 28

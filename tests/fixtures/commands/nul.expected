@@ -1,9 +1,9 @@
 {
-  "dark" : [],
-  "light" : [
+  "dark": [],
+  "light": [
     {
-      "command" : "nul",
-      "enabled" : true
+      "command": "nul",
+      "enabled": true
     }
   ]
 }

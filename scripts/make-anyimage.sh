@@ -66,7 +66,6 @@ pacman -Syu --noconfirm \
     glib2 \
     gtk4 \
     libadwaita \
-    json-glib \
     gettext \
     desktop-file-utils \
     squashfs-tools \

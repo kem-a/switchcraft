@@ -4,6 +4,7 @@
 use gtk::gio;
 use gtk::gio::prelude::*;
 use gtk::glib;
+use serde_json::Value;
 use std::io::{Read, Write};
 
 use crate::i18n::{gettext, i18n_f};
@@ -121,31 +122,22 @@ pub fn import_configuration_bundle(file: &gio::File) -> Result<(), String> {
 
     // Parse and check every file before saving, so a bad archive changes
     // nothing
-    let commands_parser =
-        json::Parser::load(&commands_data).map_err(|e| e.message().to_string())?;
-    let Some(commands_root) = commands_parser
-        .root()
-        .filter(|r| r.node_type() == json::NodeType::Object)
-    else {
+    let commands_root = json::parse(&commands_data)?;
+    if !commands_root.as_ref().is_some_and(Value::is_object) {
         return Err(gettext("commands.json is not a JSON object."));
-    };
-    let mut imported_commands = store::normalize_commands(Some(commands_root));
+    }
+    let mut imported_commands = store::normalize_commands(commands_root.as_ref());
 
-    let constants_parser =
-        json::Parser::load(&constants_data).map_err(|e| e.message().to_string())?;
-    let Some(constants_root) = constants_parser
-        .root()
-        .filter(|r| r.node_type() == json::NodeType::Object)
-    else {
+    let constants_root = json::parse(&constants_data)?;
+    let Some(constants_obj) = constants_root.as_ref().and_then(Value::as_object) else {
         return Err(gettext("constants.json is not a JSON object."));
     };
 
-    let constants_obj = constants_root.object();
     let constants_table = StrTable::new();
     let mut invalid_value = false;
-    for name in constants_obj.members() {
-        match constants_obj.member(&name).and_then(|n| n.string_value()) {
-            Some(value) => constants_table.insert(&name, &value),
+    for (name, value) in constants_obj {
+        match json::string(value) {
+            Some(value) => constants_table.insert(name, &value),
             None => invalid_value = true,
         }
     }
@@ -156,16 +148,13 @@ pub fn import_configuration_bundle(file: &gio::File) -> Result<(), String> {
 
     // Older exports have theme_settings.json. It becomes commands.
     if let Some(ts_data) = theme_settings_data {
-        let ts_parser = json::Parser::load(&ts_data).map_err(|e| e.message().to_string())?;
-        let Some(ts_root) = ts_parser
-            .root()
-            .filter(|r| r.node_type() == json::NodeType::Object)
-        else {
+        let ts_root = json::parse(&ts_data)?;
+        let Some(ts_obj) = ts_root.as_ref().and_then(Value::as_object) else {
             return Err(gettext("theme_settings.json is not a JSON object."));
         };
         store::add_theme_setting_commands(
             &mut imported_commands,
-            &store::parse_theme_settings(ts_root.object()),
+            &store::parse_theme_settings(ts_obj),
         );
     }
 

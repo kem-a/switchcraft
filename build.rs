@@ -21,7 +21,4 @@ fn main() {
         "data/resources/switchcraft.gresource.xml",
         "switchcraft.gresource",
     );
-
-    // JSON is read and written with json-glib, like the Vala version
-    pkg_config::probe_library("json-glib-1.0").unwrap();
 }
