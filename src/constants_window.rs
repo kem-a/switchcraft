@@ -47,6 +47,8 @@ impl ConstantsWindow {
         obj.set_title(Some(&gettext("Constants")));
         obj.set_default_size(600, 450);
         obj.set_transient_for(Some(parent));
+        // The monitor can keep the process running after the main window closes
+        obj.set_destroy_with_parent(true);
         obj.set_modal(true);
 
         obj.build_ui();

@@ -1,4 +1,5 @@
-// The background monitor's autostart entry and process
+// The background monitor's autostart entry. The monitor itself runs in the
+// application (see Application::start_monitoring).
 
 use gtk::gio;
 use gtk::gio::prelude::*;
@@ -8,9 +9,6 @@ use crate::i18n::gettext;
 use crate::spawn;
 use crate::util;
 
-// Matches the monitor binary in native and AppImage installs, but not the
-// AppImage runtime, the GUI or other apps' --background-* options
-const MONITOR_PATTERN: &str = "(^|/)switchcraft --background$";
 const LEGACY_MONITOR_SCRIPT: &str = "switchcraft-monitor.sh";
 // Only the bash process running the script, not editors or shells that
 // mention its path
@@ -33,42 +31,9 @@ pub fn set_monitoring_enabled(settings: &gio::Settings, enabled: bool) {
 
     // Manage autostart desktop entry
     if enabled {
-        enable_monitoring();
+        create_autostart_entry();
     } else {
-        disable_monitoring();
-    }
-}
-
-pub fn enable_monitoring() {
-    create_autostart_entry();
-    start_monitor();
-}
-
-fn disable_monitoring() {
-    remove_autostart_entry();
-    // SIGTERM, so an AppImage runtime can unmount cleanly
-    run_process(&["pkill", "-u", &util::user_name(), "-f", MONITOR_PATTERN]);
-}
-
-fn start_monitor() {
-    if run_process(&["pgrep", "-u", &util::user_name(), "-f", MONITOR_PATTERN]) == 0 {
-        return;
-    }
-
-    match spawn::spawn_async(
-        &[&get_exec_path(), "--background"],
-        None,
-        glib::SpawnFlags::SEARCH_PATH | glib::SpawnFlags::DO_NOT_REAP_CHILD,
-    ) {
-        // Reap it if it exits while the GUI is still open
-        Ok(pid) => {
-            glib::child_watch_add_local(pid, |_, _| {});
-        }
-        Err(e) => glib::g_log!(
-            glib::LogLevel::Warning,
-            "Failed to start background monitor: {}",
-            e.message()
-        ),
+        remove_autostart_entry();
     }
 }
 
@@ -166,7 +131,7 @@ pub fn migrate_legacy_monitor(settings: &gio::Settings) {
     );
 }
 
-fn create_autostart_entry() {
+pub fn create_autostart_entry() {
     let mut exe_path = get_exec_path();
     if exe_path.contains(' ') || exe_path.contains('\t') {
         exe_path = format!("\"{exe_path}\"");

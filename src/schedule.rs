@@ -28,6 +28,10 @@ pub struct ThemeSchedule {
     kde_tool: RefCell<Option<String>>,
     geoclue: RefCell<Option<gio::DBusProxy>>,
     geoclue_starting: Cell<bool>,
+    // The monitor can stop while the process keeps running with its window
+    timer: RefCell<Option<glib::SourceId>>,
+    settings_handler: RefCell<Option<glib::SignalHandlerId>>,
+    stopped: Cell<bool>,
 }
 
 impl ThemeSchedule {
@@ -40,6 +44,9 @@ impl ThemeSchedule {
             kde_tool: RefCell::new(None),
             geoclue: RefCell::new(None),
             geoclue_starting: Cell::new(false),
+            timer: RefCell::new(None),
+            settings_handler: RefCell::new(None),
+            stopped: Cell::new(false),
         });
 
         if schedule.kde {
@@ -75,22 +82,36 @@ impl ThemeSchedule {
         }
 
         let weak = Rc::downgrade(&schedule);
-        settings.connect_changed(None, move |_, key| {
+        let handler = settings.connect_changed(None, move |_, key| {
             if let Some(schedule) = weak.upgrade() {
                 schedule.on_settings_changed(key);
             }
         });
+        *schedule.settings_handler.borrow_mut() = Some(handler);
         // Polling the clock also catches up after suspend
         let weak = Rc::downgrade(&schedule);
-        glib::timeout_add_seconds_local(60, move || {
+        let timer = glib::timeout_add_seconds_local(60, move || {
             if let Some(schedule) = weak.upgrade() {
                 schedule.check();
             }
             glib::ControlFlow::Continue
         });
+        *schedule.timer.borrow_mut() = Some(timer);
         schedule.update_geoclue();
         schedule.check();
         schedule
+    }
+
+    pub fn stop(self: &Rc<Self>) {
+        self.stopped.set(true);
+        if let Some(timer) = self.timer.take() {
+            timer.remove();
+        }
+        if let Some(handler) = self.settings_handler.take() {
+            self.settings.disconnect(handler);
+        }
+        // Also stops a GeoClue client that is still starting, once it is up
+        self.update_geoclue();
     }
 
     fn on_settings_changed(self: &Rc<Self>, key: &str) {
@@ -173,7 +194,7 @@ impl ThemeSchedule {
 
     // GeoClue runs only for the sun schedule
     fn update_geoclue(self: &Rc<Self>) {
-        let wanted = self.settings.string("schedule-mode") == "sun";
+        let wanted = !self.stopped.get() && self.settings.string("schedule-mode") == "sun";
         if wanted && self.geoclue.borrow().is_none() && !self.geoclue_starting.get() {
             let schedule = self.clone();
             glib::spawn_future_local(async move { schedule.start_geoclue().await });

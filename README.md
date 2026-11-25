@@ -73,7 +73,7 @@ For seamless AppImage integration use [AppManager](https://github.com/kem-a/AppM
 
 - Build tools: Rust (>= 1.92) with `cargo`, a C compiler, `make`, `pkg-config`, `gettext`, `glib-compile-resources`, `glib-compile-schemas`
 - Libraries (with development headers): `gtk4`, `libadwaita-1` (>= 1.8), `glib-2.0` (>= 2.66), `gio-2.0`
-- Runtime tools: `gsettings`, `pgrep` and `pkill` (managing the background monitor). Optional: GeoClue with location services on, for exact sunrise and sunset; Plasma's `plasma-apply-*` tools for the KDE built-ins; `kvantummanager` for the Kvantum built-in
+- Runtime tools: `gsettings` and `pkill` (replacing the pre-2.0 monitor script). Optional: GeoClue with location services on, for exact sunrise and sunset; Plasma's `plasma-apply-*` tools for the KDE built-ins; `kvantummanager` for the Kvantum built-in
 - AnyLinux AppImage packaging with `scripts/make-anyimage.sh`: `podman` (the build runs in an Arch Linux container)
 - Local AppImage packaging with `scripts/make-appimage.sh`: `bash` and `appimagetool` (downloaded automatically if missing)
 

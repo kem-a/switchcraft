@@ -30,6 +30,7 @@ mod imp {
         pub settings: OnceCell<gio::Settings>,
         pub schedule: RefCell<Option<Rc<ThemeSchedule>>>,
         pub hold: RefCell<Option<gio::ApplicationHoldGuard>>,
+        pub dark_handler: RefCell<Option<glib::SignalHandlerId>>,
         pub last_switch_time: Cell<i64>,
         pub quick_switches: Cell<i32>,
     }
@@ -52,7 +53,8 @@ mod imp {
             // Repair the autostart path (e.g. a moved AppImage) and make sure
             // the monitor runs when it is enabled
             if obj.get_monitoring_enabled() {
-                monitor::enable_monitoring();
+                monitor::create_autostart_entry();
+                obj.start_monitoring();
             }
 
             // A second launch shows the open window instead of a new one
@@ -76,29 +78,7 @@ mod imp {
             let options = command_line.options_dict();
 
             if options.contains("background") {
-                *self.hold.borrow_mut() = Some(obj.hold());
-                let style_manager = adw::StyleManager::default();
-
-                style_manager.connect_dark_notify(glib::clone!(
-                    #[weak]
-                    obj,
-                    move |style_manager| {
-                        obj.execute_monitored_commands(if style_manager.is_dark() {
-                            "dark"
-                        } else {
-                            "light"
-                        });
-                    }
-                ));
-
-                // Initial execution
-                obj.execute_monitored_commands(if style_manager.is_dark() {
-                    "dark"
-                } else {
-                    "light"
-                });
-
-                *self.schedule.borrow_mut() = Some(ThemeSchedule::new(&obj.settings()));
+                obj.start_monitoring();
 
                 // Keep running. -1 in the Vala version, the same exit status.
                 return glib::ExitCode::from(255);
@@ -106,20 +86,6 @@ mod imp {
 
             obj.activate();
             glib::ExitCode::SUCCESS
-        }
-
-        fn local_command_line(
-            &self,
-            arguments: &mut gio::subclass::ArgumentList,
-        ) -> ControlFlow<glib::ExitCode> {
-            let obj = self.obj();
-            if arguments
-                .iter()
-                .any(|arg| arg == "--background" || arg == "-b")
-            {
-                obj.set_flags(obj.flags() | gio::ApplicationFlags::NON_UNIQUE);
-            }
-            self.parent_local_command_line(arguments)
         }
     }
 
@@ -167,12 +133,21 @@ impl Application {
         obj.set_accels_for_action("app.quit", &["<Primary>Q"]);
         obj.set_accels_for_action("win.show-preferences", &["<Primary>comma"]);
 
-        // Add quit action
+        // Add quit action. While the monitor holds the app it only removes
+        // the windows, so the monitor keeps going.
         let quit_action = gio::SimpleAction::new("quit", None);
         quit_action.connect_activate(glib::clone!(
             #[weak]
             obj,
-            move |_, _| obj.quit()
+            move |_, _| {
+                if obj.imp().hold.borrow().is_none() {
+                    obj.quit();
+                    return;
+                }
+                for window in obj.windows() {
+                    window.destroy();
+                }
+            }
         ));
         obj.add_action(&quit_action);
 
@@ -189,6 +164,58 @@ impl Application {
 
     pub fn set_monitoring_enabled(&self, enabled: bool) {
         monitor::set_monitoring_enabled(&self.settings(), enabled);
+        if enabled {
+            self.start_monitoring();
+        } else {
+            self.stop_monitoring();
+        }
+    }
+
+    // The monitor runs in the app's single instance, held alive without a
+    // window. Re-running $APPIMAGE for a separate monitor would make the
+    // AppImage runtime extract itself inside a sandbox without FUSE, and
+    // the unique bus name keeps a second monitor from starting anywhere.
+    fn start_monitoring(&self) {
+        let imp = self.imp();
+        if imp.hold.borrow().is_some() {
+            return;
+        }
+        *imp.hold.borrow_mut() = Some(self.hold());
+
+        let style_manager = adw::StyleManager::default();
+        let handler = style_manager.connect_dark_notify(glib::clone!(
+            #[weak(rename_to = obj)]
+            self,
+            move |style_manager| {
+                obj.execute_monitored_commands(if style_manager.is_dark() {
+                    "dark"
+                } else {
+                    "light"
+                });
+            }
+        ));
+        *imp.dark_handler.borrow_mut() = Some(handler);
+
+        // Initial execution
+        self.execute_monitored_commands(if style_manager.is_dark() {
+            "dark"
+        } else {
+            "light"
+        });
+
+        *imp.schedule.borrow_mut() = Some(ThemeSchedule::new(&self.settings()));
+    }
+
+    // Without the hold the app exits once its last window closes
+    fn stop_monitoring(&self) {
+        let imp = self.imp();
+        if let Some(handler) = imp.dark_handler.take() {
+            adw::StyleManager::default().disconnect(handler);
+        }
+        if let Some(schedule) = imp.schedule.take() {
+            schedule.stop();
+        }
+        imp.hold.take();
     }
 
     fn execute_monitored_commands(&self, theme: &str) {
