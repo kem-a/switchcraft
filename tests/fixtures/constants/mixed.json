@@ -1,0 +1,12 @@
+{
+  "B" : "two",
+  "A" : "one",
+  "D2DL_SCHEMA" : "org.gnome.shell.extensions.dash2dock-lite",
+  "HOME_DIR" : "$HOME/x",
+  "QUOTED" : "\"q\"",
+  "_u" : "${A}-$B",
+  "1BAD" : "bad name",
+  "with space" : "s",
+  "NUM" : 5,
+  "Z" : "last"
+}

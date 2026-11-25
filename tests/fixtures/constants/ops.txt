@@ -1,0 +1,6 @@
+remove A
+insert NEW value
+insert B changed
+remove Z
+insert A back
+insert Ä unicode

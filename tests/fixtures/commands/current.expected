@@ -1,0 +1,23 @@
+{
+  "dark" : [
+    {
+      "command" : "echo dark\ttab ä ☃ / \\ \u0001",
+      "enabled" : true,
+      "position" : 2
+    }
+  ],
+  "light" : [
+    {
+      "command" : "notify-send \"light\" & echo <b>",
+      "enabled" : true,
+      "position" : 1
+    },
+    {
+      "command" : "gsettings set org.gnome.desktop.interface icon-theme 'Adwaita'",
+      "enabled" : false,
+      "position" : 0,
+      "builtin" : "icon-theme",
+      "value" : "Adwaita"
+    }
+  ]
+}

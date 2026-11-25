@@ -1,0 +1,26 @@
+{
+  "dark" : [],
+  "light" : [
+    {
+      "command" : "no position",
+      "enabled" : true
+    },
+    {
+      "command" : "x",
+      "enabled" : true
+    },
+    {
+      "command" : "pos float",
+      "enabled" : true
+    },
+    {
+      "command" : "pos big",
+      "enabled" : true,
+      "position" : 1
+    },
+    {
+      "command" : "bool null",
+      "enabled" : true
+    }
+  ]
+}

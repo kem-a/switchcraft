@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: switchcraft 2.0.0\n"
 "Report-Msgid-Bugs-To: https://github.com/kem-a/switchcraft/issues\n"
-"POT-Creation-Date: 2026-11-12 00:18+0200\n"
+"POT-Creation-Date: 2026-11-23 16:40+0200\n"
 "PO-Revision-Date: 2026-11-11 12:02+0000\n"
 "Last-Translator: Switchcraft translators\n"
 "Language-Team: none\n"
@@ -17,288 +17,260 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: src/Application.vala:126
+#: src/application.rs:153
 msgid "Show version information"
 msgstr "버전 정보 표시"
 
-#: src/Application.vala:127
+#: src/application.rs:161
 msgid "Run in background for theme monitoring"
 msgstr "테마 모니터링을 위해 백그라운드에서 실행"
 
-#: src/Application.vala:352
+#: src/builtins.rs:373
+msgid "Color Scheme"
+msgstr "색 구성표"
+
+#: src/builtins.rs:374
+msgid "Accent Color"
+msgstr "색 강조"
+
+#: src/builtins.rs:375
+msgid "Icon Theme"
+msgstr "아이콘 테마"
+
+#: src/builtins.rs:376
+msgid "GTK Theme"
+msgstr "GTK 테마"
+
+#: src/builtins.rs:377
+msgid "Cursor Theme"
+msgstr "커서 테마"
+
+#: src/builtins.rs:378
+msgid "Shell Theme"
+msgstr "쉘 테마"
+
+#: src/builtins.rs:379
+msgid "Wallpaper"
+msgstr "바탕화면"
+
+#: src/builtins.rs:380
+msgid "Night Light"
+msgstr "야간 조명"
+
+#: src/builtins.rs:381
+msgid "Global Theme"
+msgstr "글로벌 테마"
+
+#: src/builtins.rs:382
+msgid "Plasma Style"
+msgstr "Plasma 스타일"
+
+#: src/builtins.rs:383
+msgid "Kvantum Theme"
+msgstr "Kvantum 테마"
+
+#: src/builtins.rs:433
+msgid "Switches to the light style and would loop in Dark mode"
+msgstr "밝은 스타일로 전환하고 어두운 모드에서 반복합니다."
+
+#: src/builtins.rs:436
+msgid "Switches to the dark style and would loop in Light mode"
+msgstr "어두운 스타일로 전환하고 밝은 모드에서 반복됩니다."
+
+#: src/builtins.rs:458
 #, c-format
-msgid "Exited with code %d"
-msgstr "%d 코드로 종료되었습니다."
+msgid "%s is already set in this mode"
+msgstr "%s은(는) 이미 이 모드로 설정되어 있습니다."
 
-#: src/Application.vala:353
-#, c-format
-msgid "Killed by signal %d"
-msgstr "신호 %d에 의해 종료됨"
+#: src/builtins.rs:465
+msgid "This command is already in this mode"
+msgstr "이 명령은 이미 이 모드에 있습니다."
 
-#: src/Application.vala:1367
-msgid "The 'zip' command is required to export."
-msgstr "내보내려면 'zip' 명령이 필요합니다."
-
-#: src/Application.vala:1373
+#: src/bundle.rs:16
 msgid "Destination must be a local file."
 msgstr "대상은 로컬 파일이어야 합니다."
 
-#: src/Application.vala:1380
+#: src/bundle.rs:21
 msgid "Failed to prepare destination directory."
 msgstr "대상 디렉터리를 준비하지 못했습니다."
 
-#: src/Application.vala:1388 src/Application.vala:1461
-msgid "Failed to create temporary directory."
-msgstr "임시 디렉터리를 생성하지 못했습니다."
-
-#: src/Application.vala:1419
+#: src/bundle.rs:28
 msgid "Unable to overwrite existing archive."
 msgstr "기존 아카이브를 덮어쓸 수 없습니다."
 
-#: src/Application.vala:1431
+#: src/bundle.rs:41
 #, c-format
 msgid "Failed to write archive: %s"
 msgstr "아카이브를 쓰지 못했습니다: %s"
 
-#: src/Application.vala:1448
-msgid "The 'unzip' command is required to import."
-msgstr "가져오려면 'unzip' 명령이 필요합니다."
-
-#: src/Application.vala:1454
+#: src/bundle.rs:97
 msgid "Archive must be a local file."
 msgstr "아카이브는 로컬 파일이어야 합니다."
 
-#: src/Application.vala:1472
+#: src/bundle.rs:103
 #, c-format
 msgid "Failed to unpack archive: %s"
 msgstr "아카이브 압축을 풀지 못했습니다: %s"
 
-#: src/Application.vala:1480
+#: src/bundle.rs:118
 msgid "Archive must contain commands.json and constants.json at the top level."
 msgstr ""
 "아카이브에는 최상위 수준의 commands.json 및 constants.json가 포함되어야 합니"
 "다."
 
-#: src/Application.vala:1492
+#: src/bundle.rs:130
 msgid "commands.json is not a JSON object."
 msgstr "commands.json은 JSON 객체가 아닙니다."
 
-#: src/Application.vala:1503
+#: src/bundle.rs:140
 msgid "constants.json is not a JSON object."
 msgstr "constants.json는 JSON 개체가 아닙니다."
 
-#: src/Application.vala:1520
+#: src/bundle.rs:154
 msgid "constants.json must only contain string values."
 msgstr "constants.json에는 문자열 값만 포함되어야 합니다."
 
-#: src/Application.vala:1533
+#: src/bundle.rs:164
 msgid "theme_settings.json is not a JSON object."
 msgstr "theme_settings.json은 JSON 개체가 아닙니다."
 
-#: src/Application.vala:1556
+#: src/bundle.rs:181
 msgid "Failed to remove commands.json."
 msgstr "commands.json을 제거하지 못했습니다."
 
-#: src/Application.vala:1563
+#: src/bundle.rs:186
 msgid "Failed to remove constants.json."
 msgstr "constants.json를 제거하지 못했습니다."
 
-#: src/Application.vala:1570
+#: src/bundle.rs:191
 msgid "Failed to remove theme_settings.json."
 msgstr "theme_settings.json을 제거하지 못했습니다."
 
-#: src/Application.vala:1756
-msgid "Switchcraft Monitor"
-msgstr "Switchcraft 모니터"
-
-#: src/Application.vala:1757
-msgid "Monitor theme changes and run commands"
-msgstr "테마 변경 사항을 모니터링하고 명령을 실행하세요"
-
-#: src/CommandDialog.vala:44
-msgid "Color Scheme"
-msgstr "색 구성표"
-
-#: src/CommandDialog.vala:46
-msgid "Accent Color"
-msgstr "색 강조"
-
-#: src/CommandDialog.vala:49
-msgid "Icon Theme"
-msgstr "아이콘 테마"
-
-#: src/CommandDialog.vala:51
-msgid "GTK Theme"
-msgstr "GTK 테마"
-
-#: src/CommandDialog.vala:54
-msgid "Cursor Theme"
-msgstr "커서 테마"
-
-#: src/CommandDialog.vala:56
-msgid "Shell Theme"
-msgstr "쉘 테마"
-
-#: src/CommandDialog.vala:59
-msgid "Wallpaper"
-msgstr "바탕화면"
-
-#: src/CommandDialog.vala:61
-msgid "Night Light"
-msgstr "야간 조명"
-
-#: src/CommandDialog.vala:63
-msgid "Global Theme"
-msgstr "글로벌 테마"
-
-#: src/CommandDialog.vala:65
-msgid "Plasma Style"
-msgstr "Plasma 스타일"
-
-#: src/CommandDialog.vala:67
-msgid "Kvantum Theme"
-msgstr "Kvantum 테마"
-
-#: src/CommandDialog.vala:96
-msgid "Switches to the light style and would loop in Dark mode"
-msgstr "밝은 스타일로 전환하고 어두운 모드에서 반복합니다."
-
-#: src/CommandDialog.vala:99
-msgid "Switches to the dark style and would loop in Light mode"
-msgstr "어두운 스타일로 전환하고 밝은 모드에서 반복됩니다."
-
-#: src/CommandDialog.vala:113
-#, c-format
-msgid "%s is already set in this mode"
-msgstr "%s은(는) 이미 이 모드로 설정되어 있습니다."
-
-#: src/CommandDialog.vala:118
-msgid "This command is already in this mode"
-msgstr "이 명령은 이미 이 모드에 있습니다."
-
-#: src/CommandDialog.vala:128
+#: src/command_dialog.rs:72
 msgid "Edit Command"
 msgstr "명령 편집"
 
-#: src/CommandDialog.vala:128
+#: src/command_dialog.rs:74
 msgid "Add Command"
 msgstr "명령 추가"
 
-#: src/CommandDialog.vala:135
+#: src/command_dialog.rs:82
 msgid "Delete"
 msgstr "삭제"
 
-#: src/CommandDialog.vala:138
+#: src/command_dialog.rs:85
 msgid "Cancel"
 msgstr "취소"
 
-#: src/CommandDialog.vala:139
+#: src/command_dialog.rs:89
 msgid "Save"
 msgstr "저장"
 
-#: src/CommandDialog.vala:139
+#: src/command_dialog.rs:91
 msgid "Add"
 msgstr "추가"
 
-#: src/CommandDialog.vala:152
+#: src/command_dialog.rs:106
 msgid "Custom Command"
 msgstr "사용자 정의 명령"
 
-#: src/CommandDialog.vala:174
+#: src/command_dialog.rs:124
 msgid "Type"
 msgstr "종류"
 
-#: src/CommandDialog.vala:179
+#: src/command_dialog.rs:130
 msgid "Command"
 msgstr "명령"
 
-#: src/CommandDialog.vala:219
+#: src/command_dialog.rs:172
 msgid "Copy Error"
 msgstr "오류 복사"
 
-#: src/CommandDialog.vala:244
+#: src/command_dialog.rs:204
 msgid "Test"
 msgstr "테스트"
 
-#: src/CommandDialog.vala:260
+#: src/command_dialog.rs:226
 msgid "Value"
 msgstr "값"
 
-#: src/CommandDialog.vala:265
+#: src/command_dialog.rs:232
 msgid "Image"
 msgstr "이미지"
 
-#: src/CommandDialog.vala:270
+#: src/command_dialog.rs:238
 msgid "Browse…"
 msgstr "찾아보기…"
 
-#: src/CommandDialog.vala:280
+#: src/command_dialog.rs:254
 msgid "Mode"
 msgstr "모드"
 
-#: src/CommandDialog.vala:406
+#: src/command_dialog.rs:441
 msgid "Requires the User Themes GNOME Shell extension."
 msgstr "사용자 테마 GNOME 쉘 확장이 필요합니다."
 
-#: src/CommandDialog.vala:521
+#: src/command_dialog.rs:569
 msgid "Command failed"
 msgstr "명령 실패"
 
-#: src/CommandDialog.vala:521
+#: src/command_dialog.rs:571
 msgid "Command succeeded"
 msgstr "명령 성공"
 
-#: src/CommandDialog.vala:534
+#: src/command_dialog.rs:594
 msgid "Select Wallpaper"
 msgstr "배경화면 선택"
 
-#: src/ConstantsWindow.vala:22
+#: src/constants_window.rs:47
 msgid "Constants"
 msgstr "상수"
 
-#: src/ConstantsWindow.vala:39 src/ConstantsWindow.vala:182
+#: src/constants_window.rs:66 src/constants_window.rs:224
 msgid "Add Constant"
 msgstr "상수 추가"
 
-#: src/ConstantsWindow.vala:51
+#: src/constants_window.rs:84
+#, no-rust-format
 msgid ""
 "Define constants to use in your commands. Reference them with $NAME or $"
 "{NAME}."
 msgstr "명령에 사용할 상수를 정의합니다. $NAME 또는 ${NAME}으로 참조하세요."
 
-#: src/ConstantsWindow.vala:69
+#: src/constants_window.rs:104
 msgid "No Constants"
 msgstr "상수 없음"
 
-#: src/ConstantsWindow.vala:70
+#: src/constants_window.rs:105
 msgid "Click the '+' button to define a constant."
 msgstr "'+' 버튼을 클릭하여 상수를 정의합니다."
 
-#: src/ConstantsWindow.vala:145
+#: src/constants_window.rs:181
 msgid "Edit constant"
 msgstr "상수 편집"
 
-#: src/ConstantsWindow.vala:153
+#: src/constants_window.rs:193
 msgid "Remove constant"
 msgstr "상수 제거"
 
-#: src/ConstantsWindow.vala:182
+#: src/constants_window.rs:222
 msgid "Edit Constant"
 msgstr "상수 편집"
 
-#: src/ConstantsWindow.vala:184
+#: src/constants_window.rs:229
 msgid "Define a constant name and value."
 msgstr "상수 이름과 값을 정의합니다."
 
-#: src/ConstantsWindow.vala:202
+#: src/constants_window.rs:255
 msgid "Constant name (e.g., D2DL_SCHEMA)"
 msgstr "상수 이름(예: D2DL_SCHEMA)"
 
-#: src/ConstantsWindow.vala:210
+#: src/constants_window.rs:265
 msgid "Value (e.g., org.gnome.shell.extensions.dash2dock-lite)"
 msgstr "값(예: org.gnome.shell.extensions.dash2dock-lite)"
 
-#: src/ConstantsWindow.vala:216
+#: src/constants_window.rs:274
+#, no-rust-format
 msgid ""
 "Use in commands as $NAME or ${NAME}. Names use letters, numbers and "
 "underscores."
@@ -306,92 +278,23 @@ msgstr ""
 "$NAME 또는 ${NAME}으로 명령에 사용합니다. 이름에는 문자, 숫자, 밑줄이 사용됩"
 "니다."
 
-#: src/MainWindow.vala:64
+#: src/monitor.rs:188
+msgid "Switchcraft Monitor"
+msgstr "Switchcraft 모니터"
+
+#: src/monitor.rs:189
+msgid "Monitor theme changes and run commands"
+msgstr "테마 변경 사항을 모니터링하고 명령을 실행하세요"
+
+#: src/preferences.rs:54
 msgid "Preferences"
 msgstr "기본 설정"
 
-#: src/MainWindow.vala:67
-msgid "Keyboard Shortcuts"
-msgstr "키보드 바로 가기 키"
-
-#: src/MainWindow.vala:68
-msgid "About Switchcraft"
-msgstr "Switchcraft 정보"
-
-#: src/MainWindow.vala:69
-msgid "Quit"
-msgstr "끝내기"
-
-#: src/MainWindow.vala:78
-msgid "Run the background process that reacts to theme changes."
-msgstr "테마 변경에 반응하는 백그라운드 프로세스를 실행합니다."
-
-#: src/MainWindow.vala:79 src/MainWindow.vala:82
-msgid "Monitor"
-msgstr "모니터링"
-
-#: src/MainWindow.vala:88
-msgid "No Commands"
-msgstr "명령 없음"
-
-#: src/MainWindow.vala:89
-msgid ""
-"Use the '+' button in the header bar or press (Ctrl+N) to add a command."
-msgstr "헤더 표시줄의 '+' 버튼을 사용하거나 (Ctrl+N)을 눌러 명령을 추가하세요."
-
-#: src/MainWindow.vala:128
-msgid "Commands"
-msgstr "명령"
-
-#: src/MainWindow.vala:129
-msgid "Active commands that will run when their theme matches."
-msgstr "테마가 일치할 때 실행되는 활성 명령입니다."
-
-#: src/MainWindow.vala:135
-msgid "Disabled"
-msgstr "사용 안 함"
-
-#: src/MainWindow.vala:136
-msgid "Saved commands that are currently turned off."
-msgstr "현재 꺼져 있는 저장된 명령입니다."
-
-#: src/MainWindow.vala:297
-msgid "Duplicate"
-msgstr "복제"
-
-#: src/MainWindow.vala:310
-msgid "Drag to reorder"
-msgstr "드래그하여 재정렬하세요."
-
-#: src/MainWindow.vala:610
-msgid "Command deleted"
-msgstr "명령이 삭제되었습니다."
-
-#: src/MainWindow.vala:611
-msgid "Undo"
-msgstr "실행 취소"
-
-#: src/MainWindow.vala:652
-msgid "Contributors"
-msgstr "기여자"
-
-#: src/MainWindow.vala:653
-msgid "Credits"
-msgstr "크레딧"
-
-#: src/MainWindow.vala:700
-msgid "Background monitoring is now active"
-msgstr "이제 백그라운드 모니터링이 활성화되었습니다."
-
-#: src/MainWindow.vala:701
-msgid "Background monitoring is now inactive"
-msgstr "이제 백그라운드 모니터링이 비활성화되었습니다."
-
-#: src/PreferencesWindow.vala:43
+#: src/preferences.rs:83
 msgid "Automatic Switching"
 msgstr "자동 전환"
 
-#: src/PreferencesWindow.vala:45
+#: src/preferences.rs:85
 msgid ""
 "KDE Plasma is set to switch global themes automatically. Turn that off to "
 "use this schedule."
@@ -399,7 +302,7 @@ msgstr ""
 "KDE Plasma는 전역 테마를 자동으로 전환하도록 설정되어 있습니다. 이 일정을 사"
 "용하려면 이 기능을 끄세요."
 
-#: src/PreferencesWindow.vala:47
+#: src/preferences.rs:87
 msgid ""
 "Switch KDE's default light and dark global themes on a schedule. Needs "
 "background monitoring."
@@ -407,7 +310,7 @@ msgstr ""
 "KDE의 기본 밝은 테마와 어두운 전역 테마를 일정에 따라 전환하세요. 백그라운드 "
 "모니터링이 필요합니다."
 
-#: src/PreferencesWindow.vala:48
+#: src/preferences.rs:89
 msgid ""
 "Switch between light and dark style on a schedule. Needs background "
 "monitoring."
@@ -415,166 +318,253 @@ msgstr ""
 "일정에 따라 밝은 스타일과 어두운 스타일 사이를 전환하세요. 백그라운드 모니터"
 "링이 필요합니다."
 
-#: src/PreferencesWindow.vala:54
+#: src/preferences.rs:96
 msgid "Automatic Switching Is Set in KDE"
 msgstr "KDE에서 자동 전환이 설정되었습니다"
 
-#: src/PreferencesWindow.vala:55
+#: src/preferences.rs:98
 msgid ""
 "Turn off “Switch to Dark Mode at Night” in System Settings to use this "
 "schedule."
 msgstr ""
 "이 일정을 사용하려면 시스템 설정에서 \"밤에 다크 모드로 전환\"을 끄세요."
 
-#: src/PreferencesWindow.vala:61
+#: src/preferences.rs:105
 msgid "Open Settings"
 msgstr "설정 열기"
 
-#: src/PreferencesWindow.vala:65
-msgid "Could not open System Settings"
-msgstr "시스템 설정을 열 수 없습니다."
-
-#: src/PreferencesWindow.vala:74
+#: src/preferences.rs:118
 msgid "Schedule"
 msgstr "일정"
 
-#: src/PreferencesWindow.vala:75
+#: src/preferences.rs:120
 msgid "Off"
 msgstr "꺼짐"
 
-#: src/PreferencesWindow.vala:75
+#: src/preferences.rs:121
 msgid "Sunset to Sunrise"
 msgstr "일몰부터 일출까지"
 
-#: src/PreferencesWindow.vala:75
+#: src/preferences.rs:122
 msgid "Custom Times"
 msgstr "맞춤 시간"
 
-#: src/PreferencesWindow.vala:86
+#: src/preferences.rs:141
 msgid "Light From"
 msgstr "라이트 시작"
 
-#: src/PreferencesWindow.vala:87
+#: src/preferences.rs:142
 msgid "Dark From"
 msgstr "다크 시작"
 
-#: src/PreferencesWindow.vala:99
+#: src/preferences.rs:161
 msgid "Configuration"
 msgstr "구성"
 
-#: src/PreferencesWindow.vala:100
+#: src/preferences.rs:163
 msgid "Import or export commands and constants together as a zip archive."
 msgstr "명령과 상수를 zip 아카이브로 함께 가져오거나 내보냅니다."
 
-#: src/PreferencesWindow.vala:104 src/PreferencesWindow.vala:237
+#: src/preferences.rs:168 src/preferences.rs:341
 msgid "Import Configuration"
 msgstr "구성 가져오기"
 
-#: src/PreferencesWindow.vala:105
+#: src/preferences.rs:170
 msgid "Replace local commands and constants from a zip file."
 msgstr "zip 파일에서 로컬 명령과 상수를 바꿉니다."
 
-#: src/PreferencesWindow.vala:107
+#: src/preferences.rs:173
 msgid "Import"
 msgstr "가져오기"
 
-#: src/PreferencesWindow.vala:116 src/PreferencesWindow.vala:260
+#: src/preferences.rs:184 src/preferences.rs:376
 msgid "Export Configuration"
 msgstr "구성 내보내기"
 
-#: src/PreferencesWindow.vala:117
+#: src/preferences.rs:185
 msgid "Save commands and constants into a zip file."
 msgstr "명령과 상수를 zip 파일에 저장합니다."
 
-#: src/PreferencesWindow.vala:119
+#: src/preferences.rs:187
 msgid "Export"
 msgstr "내보내기"
 
-#: src/PreferencesWindow.vala:128
+#: src/preferences.rs:198
 msgid "Danger Zone"
 msgstr "위험지대"
 
-#: src/PreferencesWindow.vala:129
+#: src/preferences.rs:200
 msgid "Remove all saved commands and constants from this device."
 msgstr "이 장치에서 저장된 명령과 상수를 모두 제거합니다."
 
-#: src/PreferencesWindow.vala:133
+#: src/preferences.rs:205
 msgid "Delete All Configuration"
 msgstr "모든 구성 삭제"
 
-#: src/PreferencesWindow.vala:134
+#: src/preferences.rs:207
 msgid "Deletes commands.json and constants.json. This cannot be undone."
 msgstr ""
 "commands.json과 constants.json를 삭제합니다. 이 작업은 취소할 수 없습니다."
 
-#: src/PreferencesWindow.vala:159
+#: src/preferences.rs:243
 msgid "Location unknown"
 msgstr "위치 알 수 없음"
 
-#: src/PreferencesWindow.vala:165
+#: src/preferences.rs:249
 msgid "The sun stays down today"
 msgstr "오늘은 해가 뜨지 않습니다"
 
-#: src/PreferencesWindow.vala:168
+#: src/preferences.rs:252
 msgid "The sun stays up today"
 msgstr "오늘은 해가 지지 않습니다"
 
-#: src/PreferencesWindow.vala:170
+#: src/preferences.rs:258
 #, c-format
 msgid "Sunrise %s, sunset %s"
 msgstr "일출 %s, 일몰 %s"
 
-#: src/PreferencesWindow.vala:178
+#: src/preferences.rs:265
+msgid "Could not open System Settings"
+msgstr "시스템 설정을 열 수 없습니다."
+
+#: src/preferences.rs:274
 msgid "Hour"
 msgstr "시"
 
-#: src/PreferencesWindow.vala:179
+#: src/preferences.rs:275
 msgid "Minute"
 msgstr "분"
 
-#: src/PreferencesWindow.vala:246
+#: src/preferences.rs:358
 msgid "Configuration imported"
 msgstr "구성을 가져왔습니다"
 
-#: src/PreferencesWindow.vala:248 src/PreferencesWindow.vala:254
+#: src/preferences.rs:368
 #, c-format
 msgid "Import failed: %s"
 msgstr "가져오기 실패: %s"
 
-#: src/PreferencesWindow.vala:269
+#: src/preferences.rs:393
 msgid "Configuration exported"
 msgstr "구성을 내보냈습니다"
 
-#: src/PreferencesWindow.vala:271 src/PreferencesWindow.vala:277
+#: src/preferences.rs:403
 #, c-format
 msgid "Export failed: %s"
 msgstr "내보내기 실패: %s"
 
-#: src/PreferencesWindow.vala:283
+#: src/preferences.rs:411
 msgid "Delete all configuration?"
 msgstr "모든 구성을 삭제하시겠습니까?"
 
-#: src/PreferencesWindow.vala:284
+#: src/preferences.rs:413
 msgid ""
 "This will remove every command and constant. This action cannot be undone."
 msgstr "그러면 모든 명령과 상수가 제거됩니다. 이 작업은 취소할 수 없습니다."
 
-#: src/PreferencesWindow.vala:305
+#: src/preferences.rs:442
 msgid "Configuration deleted"
 msgstr "구성을 삭제했습니다"
 
-#: src/PreferencesWindow.vala:307
+#: src/preferences.rs:447
 #, c-format
 msgid "Delete failed: %s"
 msgstr "삭제 실패: %s"
 
-#: src/SlidingToggleGroup.vala:38
+#: src/runner.rs:122
+#, c-format
+msgid "Exited with code %d"
+msgstr "%d 코드로 종료되었습니다."
+
+#: src/runner.rs:128
+#, c-format
+msgid "Killed by signal %d"
+msgstr "신호 %d에 의해 종료됨"
+
+#: src/widgets/sliding_toggle_group.rs:166
 msgid "Light"
 msgstr "밝게"
 
-#: src/SlidingToggleGroup.vala:39
+#: src/widgets/sliding_toggle_group.rs:173
 msgid "Dark"
 msgstr "어둡게"
+
+#: src/window.rs:110
+msgid "Keyboard Shortcuts"
+msgstr "키보드 바로 가기 키"
+
+#: src/window.rs:111
+msgid "About Switchcraft"
+msgstr "Switchcraft 정보"
+
+#: src/window.rs:112
+msgid "Quit"
+msgstr "끝내기"
+
+#: src/window.rs:121
+msgid "Run the background process that reacts to theme changes."
+msgstr "테마 변경에 반응하는 백그라운드 프로세스를 실행합니다."
+
+#: src/window.rs:123 src/window.rs:131
+msgid "Monitor"
+msgstr "모니터링"
+
+#: src/window.rs:137
+msgid "No Commands"
+msgstr "명령 없음"
+
+#: src/window.rs:139
+msgid ""
+"Use the '+' button in the header bar or press (Ctrl+N) to add a command."
+msgstr "헤더 표시줄의 '+' 버튼을 사용하거나 (Ctrl+N)을 눌러 명령을 추가하세요."
+
+#: src/window.rs:182
+msgid "Commands"
+msgstr "명령"
+
+#: src/window.rs:183
+msgid "Active commands that will run when their theme matches."
+msgstr "테마가 일치할 때 실행되는 활성 명령입니다."
+
+#: src/window.rs:188
+msgid "Disabled"
+msgstr "사용 안 함"
+
+#: src/window.rs:189
+msgid "Saved commands that are currently turned off."
+msgstr "현재 꺼져 있는 저장된 명령입니다."
+
+#: src/window.rs:371
+msgid "Duplicate"
+msgstr "복제"
+
+#: src/window.rs:384
+msgid "Drag to reorder"
+msgstr "드래그하여 재정렬하세요."
+
+#: src/window.rs:796
+msgid "Command deleted"
+msgstr "명령이 삭제되었습니다."
+
+#: src/window.rs:797
+msgid "Undo"
+msgstr "실행 취소"
+
+#: src/window.rs:855
+msgid "Contributors"
+msgstr "기여자"
+
+#: src/window.rs:858
+msgid "Credits"
+msgstr "크레딧"
+
+#: src/window.rs:911
+msgid "Background monitoring is now active"
+msgstr "이제 백그라운드 모니터링이 활성화되었습니다."
+
+#: src/window.rs:913
+msgid "Background monitoring is now inactive"
+msgstr "이제 백그라운드 모니터링이 비활성화되었습니다."
 
 #: data/resources/shortcuts-dialog.ui:6
 msgid "General"
@@ -698,6 +688,15 @@ msgstr "드래그 앤 드롭 재정렬, 명령 테스트, 실행 취소를 갖�
 #: data/com.github.Switchcraft.metainfo.xml.in:45
 msgid "Translated into 22 languages"
 msgstr "22개 언어로 번역"
+
+#~ msgid "The 'zip' command is required to export."
+#~ msgstr "내보내려면 'zip' 명령이 필요합니다."
+
+#~ msgid "Failed to create temporary directory."
+#~ msgstr "임시 디렉터리를 생성하지 못했습니다."
+
+#~ msgid "The 'unzip' command is required to import."
+#~ msgstr "가져오려면 'unzip' 명령이 필요합니다."
 
 #~ msgid "Monitor GNOME theme changes and run commands"
 #~ msgstr "GNOME 테마 변경 사항을 모니터링하고 명령을 실행하세요"

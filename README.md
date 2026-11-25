@@ -6,10 +6,10 @@
 [![License](https://img.shields.io/github/license/kem-a/switchcraft)](https://github.com/kem-a/switchcraft/blob/main/LICENSE)
 [![AnyLinux](https://img.shields.io/badge/AnyLinux-compatible-green?logo=linux&logoColor=white)](https://pkgforge-dev.github.io/Anylinux-AppImages/)
 ![GTK 4](https://img.shields.io/badge/GTK-4-blue?logo=gtk)
-![Vala](https://img.shields.io/badge/Vala-compiler-blue?logo=vala)
+![Rust](https://img.shields.io/badge/Rust-language-orange?logo=rust)
 [![Stars](https://img.shields.io/github/stars/kem-a/switchcraft?style=social)](https://github.com/kem-a/switchcraft/stargazers)
 
-**Switchcraft** is a GTK/Libadwaita developed desktop utility in **Vala** that makes your whole desktop follow the light/dark style on GNOME and KDE Plasma. A lightweight **background monitor** watches the system preference and, on every switch, runs your shell commands and applies per-theme settings such as icons, wallpaper, GTK, shell and Kvantum themes. It can also switch the style for you **at sunset and sunrise** or at custom times.
+**Switchcraft** is a GTK/Libadwaita developed desktop utility that makes your whole desktop follow the light/dark style on GNOME and KDE Plasma. A lightweight **background monitor** watches the system preference and, on every switch, runs your shell commands and applies per-theme settings such as icons, wallpaper, GTK, shell and Kvantum themes. It can also switch the style for you **at sunset and sunrise** or at custom times.
 
 > **This AppImage bundles everything and it should work on any Linux distro, including old and musl-based ones.**
 
@@ -33,7 +33,6 @@ Switchcraft doesn't require FUSE to run, thanks to the [uruntime](https://github
 - **Import and export**: Save commands and constants into a zip archive and restore them on another machine.
 
 <details> <summary> Command Examples <b>(click to open)</b> </summary>
-
 
 - Change Dash 2 Dock Lite background based on theme and using constants
 
@@ -68,72 +67,70 @@ Simply [download](https://github.com/kem-a/switchcraft/releases/latest) the late
 
 For seamless AppImage integration use [AppManager](https://github.com/kem-a/AppManager).
 
-## Requirements
-
-- Build tools: a C compiler, `valac`, `meson` (>= 0.59), `ninja`, `pkg-config`, `gettext`, `glib-compile-resources`, `glib-compile-schemas`
-- Libraries (with development headers): `gtk4`, `libadwaita-1` (>= 1.8), `glib-2.0` (>= 2.66), `gio-2.0`, `json-glib-1.0`
-- Runtime tools: `gsettings`, `zip` and `unzip` (configuration export and import), `pgrep` and `pkill` (managing the background monitor). Optional: GeoClue with location services on, for exact sunrise and sunset; Plasma's `plasma-apply-*` tools for the KDE built-ins; `kvantummanager` for the Kvantum built-in
-- AnyLinux AppImage packaging with `scripts/make-anyimage.sh`: `podman` (the build runs in an Arch Linux container)
-- Local AppImage packaging with `scripts/make-appimage.sh`: `bash`, `jq` and `appimagetool` (downloaded automatically if missing)
-
 ## Build
+
+### Requirements
+
+- Build tools: Rust (>= 1.92) with `cargo`, a C compiler, `make`, `pkg-config`, `gettext`, `glib-compile-resources`, `glib-compile-schemas`
+- Libraries (with development headers): `gtk4`, `libadwaita-1` (>= 1.8), `glib-2.0` (>= 2.66), `gio-2.0`, `json-glib-1.0`
+- Runtime tools: `gsettings`, `pgrep` and `pkill` (managing the background monitor). Optional: GeoClue with location services on, for exact sunrise and sunset; Plasma's `plasma-apply-*` tools for the KDE built-ins; `kvantummanager` for the Kvantum built-in
+- AnyLinux AppImage packaging with `scripts/make-anyimage.sh`: `podman` (the build runs in an Arch Linux container)
+- Local AppImage packaging with `scripts/make-appimage.sh`: `bash` and `appimagetool` (downloaded automatically if missing)
 
 <details> <summary> <H4>Install development dependencies</H4> <b>(click to open)</b> </summary>
 
-Your distribution must provide libadwaita >= 1.8. The lists include `zip`, `unzip` and `jq`.
+Your distribution must provide libadwaita >= 1.8 and Rust >= 1.92. If its Rust is older, install Rust with [rustup](https://rustup.rs).
 
 - **Debian / Ubuntu:**
 
 ```bash
-sudo apt install build-essential valac meson ninja-build pkg-config gettext \
-  libglib2.0-dev libgtk-4-dev libadwaita-1-dev libjson-glib-dev zip unzip jq
+sudo apt install build-essential cargo rustc pkg-config gettext \
+  libglib2.0-dev libgtk-4-dev libadwaita-1-dev libjson-glib-dev
 ```
 
 - **Fedora:**
 
 ```bash
-sudo dnf install gcc vala meson ninja-build pkgconf-pkg-config gettext \
-  glib2-devel gtk4-devel libadwaita-devel json-glib-devel zip unzip jq
+sudo dnf install gcc make cargo rust pkgconf-pkg-config gettext \
+  glib2-devel gtk4-devel libadwaita-devel json-glib-devel
 ```
 
 - **Arch Linux / Manjaro:**
 
 ```bash
-sudo pacman -S --needed base-devel vala meson ninja gettext glib2 gtk4 libadwaita json-glib zip unzip jq
+sudo pacman -S --needed base-devel rust gettext glib2 gtk4 libadwaita json-glib
 ```
 
-On Arch Linux / Manjaro, `base-devel` supplies the C compiler and `pkgconf`.
-
-`jq` is needed by `scripts/make-appimage.sh`, but not by the Meson build itself.
+On Arch Linux / Manjaro, `base-devel` supplies the C compiler, `make` and `pkgconf`.
 
 </details>
 
-Default setup
+Build and install for your user
 
 ```bash
-meson setup build --prefix=$HOME/.local
+make
+make install PREFIX=$HOME/.local
 ```
 
-Build and install
+Uninstall, with the same `PREFIX` as the install
 
 ```bash
-meson compile -C build
-meson install -C build
+make uninstall PREFIX=$HOME/.local
 ```
 
-Uninstall
+For a system-wide install leave out `PREFIX` (it defaults to `/usr/local`) and run the install and uninstall steps with `sudo`. `make install` only copies files, so `sudo` never runs `cargo`.
+
+Run the tests
 
 ```bash
-ninja -C build remove
+make check
 ```
-
-For a system-wide install use `--prefix=/usr/local` and run the install and remove steps with `sudo`.
 
 Build portable AppImage versions:
 
 ```bash
 scripts/make-anyimage.sh  # anylinux version (long build)
-scripts/make-appimage.sh  # standard AppImage (requires FUSE)
+scripts/make-appimage.sh  # standard AppImage from the `make` build (requires FUSE)
 ```
 
 ## Translations

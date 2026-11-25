@@ -62,8 +62,7 @@ echo "Installing build dependencies..."
 echo "---------------------------------------------------------------"
 pacman -Syu --noconfirm \
     base-devel \
-    meson \
-    vala \
+    rust \
     glib2 \
     gtk4 \
     libadwaita \
@@ -97,15 +96,14 @@ fi
 # ── Build and install switchcraft ────────────────────────────────────
 echo "Building switchcraft..."
 echo "---------------------------------------------------------------"
-# Use a separate build dir to avoid conflicts with the host build/
+# A separate target dir keeps this build apart from the host's target/
 rm -rf build-anyimage
-meson setup build-anyimage --prefix=/usr
-meson compile -C build-anyimage
-meson install -C build-anyimage
+export CARGO_TARGET_DIR="$PWD/build-anyimage/target"
+make
+make install PREFIX=/usr
 
 # ── Get version ──────────────────────────────────────────────────────
-VERSION=$(meson introspect build-anyimage --projectinfo 2>/dev/null \
-    | awk -F'"' '/"version"/{print $4}')
+VERSION=$(sed -n 's/^version = "\(.*\)"/\1/p' Cargo.toml | head -1)
 
 # ── Configure AppImage ───────────────────────────────────────────────
 export ARCH VERSION

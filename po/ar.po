@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: switchcraft 2.0.0\n"
 "Report-Msgid-Bugs-To: https://github.com/kem-a/switchcraft/issues\n"
-"POT-Creation-Date: 2026-11-12 00:18+0200\n"
+"POT-Creation-Date: 2026-11-23 16:40+0200\n"
 "PO-Revision-Date: 2026-11-11 12:02+0000\n"
 "Last-Translator: Switchcraft translators\n"
 "Language-Team: none\n"
@@ -16,287 +16,259 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/Application.vala:126
+#: src/application.rs:153
 msgid "Show version information"
 msgstr "إظهار معلومات الإصدار"
 
-#: src/Application.vala:127
+#: src/application.rs:161
 msgid "Run in background for theme monitoring"
 msgstr "تشغيل في الخلفية لمراقبة السمات"
 
-#: src/Application.vala:352
-#, c-format
-msgid "Exited with code %d"
-msgstr "تم الخروج بالرمز %d"
-
-#: src/Application.vala:353
-#, c-format
-msgid "Killed by signal %d"
-msgstr "تم القتل بواسطة الإشارة %d"
-
-#: src/Application.vala:1367
-msgid "The 'zip' command is required to export."
-msgstr "الأمر \"zip\" مطلوب للتصدير."
-
-#: src/Application.vala:1373
-msgid "Destination must be a local file."
-msgstr "يجب أن تكون الوجهة ملفًا محليًا."
-
-#: src/Application.vala:1380
-msgid "Failed to prepare destination directory."
-msgstr "فشل في إعداد دليل الوجهة."
-
-#: src/Application.vala:1388 src/Application.vala:1461
-msgid "Failed to create temporary directory."
-msgstr "فشل في إنشاء الدليل المؤقت."
-
-#: src/Application.vala:1419
-msgid "Unable to overwrite existing archive."
-msgstr "غير قادر على الكتابة فوق الأرشيف الموجود."
-
-#: src/Application.vala:1431
-#, c-format
-msgid "Failed to write archive: %s"
-msgstr "فشل في كتابة الأرشيف: %s"
-
-#: src/Application.vala:1448
-msgid "The 'unzip' command is required to import."
-msgstr "الأمر \"unzip\" مطلوب للاستيراد."
-
-#: src/Application.vala:1454
-msgid "Archive must be a local file."
-msgstr "يجب أن يكون الأرشيف ملفًا محليًا."
-
-#: src/Application.vala:1472
-#, c-format
-msgid "Failed to unpack archive: %s"
-msgstr "فشل في فك ضغط الأرشيف: %s"
-
-#: src/Application.vala:1480
-msgid "Archive must contain commands.json and constants.json at the top level."
-msgstr ""
-"يجب أن يحتوي الأرشيف على commands.json وconstants.json في المستوى الأعلى."
-
-#: src/Application.vala:1492
-msgid "commands.json is not a JSON object."
-msgstr "commands.json ليس كائن JSON."
-
-#: src/Application.vala:1503
-msgid "constants.json is not a JSON object."
-msgstr "constants.json ليس كائن JSON."
-
-#: src/Application.vala:1520
-msgid "constants.json must only contain string values."
-msgstr "يجب أن يحتوي constants.json على قيم سلسلة فقط."
-
-#: src/Application.vala:1533
-msgid "theme_settings.json is not a JSON object."
-msgstr "theme_settings.json ليس كائن JSON."
-
-#: src/Application.vala:1556
-msgid "Failed to remove commands.json."
-msgstr "فشل في إزالة commands.json."
-
-#: src/Application.vala:1563
-msgid "Failed to remove constants.json."
-msgstr "فشل في إزالة constants.json."
-
-#: src/Application.vala:1570
-msgid "Failed to remove theme_settings.json."
-msgstr "فشل في إزالة theme_settings.json."
-
-#: src/Application.vala:1756
-msgid "Switchcraft Monitor"
-msgstr "مراقب Switchcraft"
-
-#: src/Application.vala:1757
-msgid "Monitor theme changes and run commands"
-msgstr "مراقبة تغييرات السمة وتشغيل الأوامر"
-
-#: src/CommandDialog.vala:44
+#: src/builtins.rs:373
 msgid "Color Scheme"
 msgstr "مخطّط الألوان"
 
-#: src/CommandDialog.vala:46
+#: src/builtins.rs:374
 msgid "Accent Color"
 msgstr "لون مميز"
 
-#: src/CommandDialog.vala:49
+#: src/builtins.rs:375
 msgid "Icon Theme"
 msgstr "سِمة الأيقونات"
 
-#: src/CommandDialog.vala:51
+#: src/builtins.rs:376
 msgid "GTK Theme"
 msgstr "سمة GTK"
 
-#: src/CommandDialog.vala:54
+#: src/builtins.rs:377
 msgid "Cursor Theme"
 msgstr "سِمة المؤشر"
 
-#: src/CommandDialog.vala:56
+#: src/builtins.rs:378
 msgid "Shell Theme"
 msgstr "سمة Shell"
 
-#: src/CommandDialog.vala:59
+#: src/builtins.rs:379
 msgid "Wallpaper"
 msgstr "صورة خلفية"
 
-#: src/CommandDialog.vala:61
+#: src/builtins.rs:380
 msgid "Night Light"
 msgstr "الإضاءة الليلية"
 
-#: src/CommandDialog.vala:63
+#: src/builtins.rs:381
 msgid "Global Theme"
 msgstr "السمة العامة"
 
-#: src/CommandDialog.vala:65
+#: src/builtins.rs:382
 msgid "Plasma Style"
 msgstr "نمط بلازما"
 
-#: src/CommandDialog.vala:67
+#: src/builtins.rs:383
 msgid "Kvantum Theme"
 msgstr "سمة Kvantum"
 
-#: src/CommandDialog.vala:96
+#: src/builtins.rs:433
 msgid "Switches to the light style and would loop in Dark mode"
 msgstr "يتحول إلى النمط الفاتح وسيتكرر في الوضع الداكن"
 
-#: src/CommandDialog.vala:99
+#: src/builtins.rs:436
 msgid "Switches to the dark style and would loop in Light mode"
 msgstr "يتحول إلى النمط الداكن وسيتكرر في الوضع الفاتح"
 
-#: src/CommandDialog.vala:113
+#: src/builtins.rs:458
 #, c-format
 msgid "%s is already set in this mode"
 msgstr "تم تعيين %s بالفعل في هذا الوضع"
 
-#: src/CommandDialog.vala:118
+#: src/builtins.rs:465
 msgid "This command is already in this mode"
 msgstr "هذا الأمر موجود بالفعل في هذا الوضع"
 
-#: src/CommandDialog.vala:128
+#: src/bundle.rs:16
+msgid "Destination must be a local file."
+msgstr "يجب أن تكون الوجهة ملفًا محليًا."
+
+#: src/bundle.rs:21
+msgid "Failed to prepare destination directory."
+msgstr "فشل في إعداد دليل الوجهة."
+
+#: src/bundle.rs:28
+msgid "Unable to overwrite existing archive."
+msgstr "غير قادر على الكتابة فوق الأرشيف الموجود."
+
+#: src/bundle.rs:41
+#, c-format
+msgid "Failed to write archive: %s"
+msgstr "فشل في كتابة الأرشيف: %s"
+
+#: src/bundle.rs:97
+msgid "Archive must be a local file."
+msgstr "يجب أن يكون الأرشيف ملفًا محليًا."
+
+#: src/bundle.rs:103
+#, c-format
+msgid "Failed to unpack archive: %s"
+msgstr "فشل في فك ضغط الأرشيف: %s"
+
+#: src/bundle.rs:118
+msgid "Archive must contain commands.json and constants.json at the top level."
+msgstr ""
+"يجب أن يحتوي الأرشيف على commands.json وconstants.json في المستوى الأعلى."
+
+#: src/bundle.rs:130
+msgid "commands.json is not a JSON object."
+msgstr "commands.json ليس كائن JSON."
+
+#: src/bundle.rs:140
+msgid "constants.json is not a JSON object."
+msgstr "constants.json ليس كائن JSON."
+
+#: src/bundle.rs:154
+msgid "constants.json must only contain string values."
+msgstr "يجب أن يحتوي constants.json على قيم سلسلة فقط."
+
+#: src/bundle.rs:164
+msgid "theme_settings.json is not a JSON object."
+msgstr "theme_settings.json ليس كائن JSON."
+
+#: src/bundle.rs:181
+msgid "Failed to remove commands.json."
+msgstr "فشل في إزالة commands.json."
+
+#: src/bundle.rs:186
+msgid "Failed to remove constants.json."
+msgstr "فشل في إزالة constants.json."
+
+#: src/bundle.rs:191
+msgid "Failed to remove theme_settings.json."
+msgstr "فشل في إزالة theme_settings.json."
+
+#: src/command_dialog.rs:72
 msgid "Edit Command"
 msgstr "تحرير الأمر"
 
-#: src/CommandDialog.vala:128
+#: src/command_dialog.rs:74
 msgid "Add Command"
 msgstr "إضافة أمر"
 
-#: src/CommandDialog.vala:135
+#: src/command_dialog.rs:82
 msgid "Delete"
 msgstr "احذف"
 
-#: src/CommandDialog.vala:138
+#: src/command_dialog.rs:85
 msgid "Cancel"
 msgstr "ألغِ"
 
-#: src/CommandDialog.vala:139
+#: src/command_dialog.rs:89
 msgid "Save"
 msgstr "احفظ"
 
-#: src/CommandDialog.vala:139
+#: src/command_dialog.rs:91
 msgid "Add"
 msgstr "أضف"
 
-#: src/CommandDialog.vala:152
+#: src/command_dialog.rs:106
 msgid "Custom Command"
 msgstr "أمر مخصص"
 
-#: src/CommandDialog.vala:174
+#: src/command_dialog.rs:124
 msgid "Type"
 msgstr "النوع"
 
-#: src/CommandDialog.vala:179
+#: src/command_dialog.rs:130
 msgid "Command"
 msgstr "أمر"
 
-#: src/CommandDialog.vala:219
+#: src/command_dialog.rs:172
 msgid "Copy Error"
 msgstr "نسخ الخطأ"
 
-#: src/CommandDialog.vala:244
+#: src/command_dialog.rs:204
 msgid "Test"
 msgstr "اختبر"
 
-#: src/CommandDialog.vala:260
+#: src/command_dialog.rs:226
 msgid "Value"
 msgstr "القيمة"
 
-#: src/CommandDialog.vala:265
+#: src/command_dialog.rs:232
 msgid "Image"
 msgstr "الصورة"
 
-#: src/CommandDialog.vala:270
+#: src/command_dialog.rs:238
 msgid "Browse…"
 msgstr "تصفّح…"
 
-#: src/CommandDialog.vala:280
+#: src/command_dialog.rs:254
 msgid "Mode"
 msgstr "الوضع"
 
-#: src/CommandDialog.vala:406
+#: src/command_dialog.rs:441
 msgid "Requires the User Themes GNOME Shell extension."
 msgstr "يتطلب امتداد سمات المستخدم GNOME Shell."
 
-#: src/CommandDialog.vala:521
+#: src/command_dialog.rs:569
 msgid "Command failed"
 msgstr "فشل الأمر"
 
-#: src/CommandDialog.vala:521
+#: src/command_dialog.rs:571
 msgid "Command succeeded"
 msgstr "نجح الأمر"
 
-#: src/CommandDialog.vala:534
+#: src/command_dialog.rs:594
 msgid "Select Wallpaper"
 msgstr "اختيار خلفية"
 
-#: src/ConstantsWindow.vala:22
+#: src/constants_window.rs:47
 msgid "Constants"
 msgstr "ثوابت"
 
-#: src/ConstantsWindow.vala:39 src/ConstantsWindow.vala:182
+#: src/constants_window.rs:66 src/constants_window.rs:224
 msgid "Add Constant"
 msgstr "إضافة ثابت"
 
-#: src/ConstantsWindow.vala:51
+#: src/constants_window.rs:84
+#, no-rust-format
 msgid ""
 "Define constants to use in your commands. Reference them with $NAME or $"
 "{NAME}."
 msgstr "حدّد الثوابت لاستخدامها في أوامرك. أشر إليها باستخدام $NAME أو ${NAME}."
 
-#: src/ConstantsWindow.vala:69
+#: src/constants_window.rs:104
 msgid "No Constants"
 msgstr "لا توجد ثوابت"
 
-#: src/ConstantsWindow.vala:70
+#: src/constants_window.rs:105
 msgid "Click the '+' button to define a constant."
 msgstr "انقر فوق الزر '+' لتحديد ثابت."
 
-#: src/ConstantsWindow.vala:145
+#: src/constants_window.rs:181
 msgid "Edit constant"
 msgstr "تحرير ثابت"
 
-#: src/ConstantsWindow.vala:153
+#: src/constants_window.rs:193
 msgid "Remove constant"
 msgstr "إزالة الثابت"
 
-#: src/ConstantsWindow.vala:182
+#: src/constants_window.rs:222
 msgid "Edit Constant"
 msgstr "تحرير ثابت"
 
-#: src/ConstantsWindow.vala:184
+#: src/constants_window.rs:229
 msgid "Define a constant name and value."
 msgstr "تحديد اسم وقيمة ثابتة."
 
-#: src/ConstantsWindow.vala:202
+#: src/constants_window.rs:255
 msgid "Constant name (e.g., D2DL_SCHEMA)"
 msgstr "اسم الثابت (مثال، D2DL_SCHEMA)"
 
-#: src/ConstantsWindow.vala:210
+#: src/constants_window.rs:265
 msgid "Value (e.g., org.gnome.shell.extensions.dash2dock-lite)"
 msgstr "القيمة (على سبيل المثال، org.gnome.shell.extensions.dash2dock-lite)"
 
-#: src/ConstantsWindow.vala:216
+#: src/constants_window.rs:274
+#, no-rust-format
 msgid ""
 "Use in commands as $NAME or ${NAME}. Names use letters, numbers and "
 "underscores."
@@ -304,92 +276,23 @@ msgstr ""
 "استخدم في الأوامر كـ $NAME أو ${NAME}. تستخدم الأسماء الحروف والأرقام "
 "والشرطات السفلية."
 
-#: src/MainWindow.vala:64
+#: src/monitor.rs:188
+msgid "Switchcraft Monitor"
+msgstr "مراقب Switchcraft"
+
+#: src/monitor.rs:189
+msgid "Monitor theme changes and run commands"
+msgstr "مراقبة تغييرات السمة وتشغيل الأوامر"
+
+#: src/preferences.rs:54
 msgid "Preferences"
 msgstr "التفضيلات"
 
-#: src/MainWindow.vala:67
-msgid "Keyboard Shortcuts"
-msgstr "اختصارات لوحة المفاتيح"
-
-#: src/MainWindow.vala:68
-msgid "About Switchcraft"
-msgstr "حول Switchcraft"
-
-#: src/MainWindow.vala:69
-msgid "Quit"
-msgstr "أنهِ"
-
-#: src/MainWindow.vala:78
-msgid "Run the background process that reacts to theme changes."
-msgstr "قم بتشغيل عملية الخلفية التي تتفاعل مع تغييرات السمة."
-
-#: src/MainWindow.vala:79 src/MainWindow.vala:82
-msgid "Monitor"
-msgstr "مراقب"
-
-#: src/MainWindow.vala:88
-msgid "No Commands"
-msgstr "لا توجد أوامر"
-
-#: src/MainWindow.vala:89
-msgid ""
-"Use the '+' button in the header bar or press (Ctrl+N) to add a command."
-msgstr "استخدم الزر '+' في شريط الرأس أو اضغط على (Ctrl+N) لإضافة أمر."
-
-#: src/MainWindow.vala:128
-msgid "Commands"
-msgstr "الأوامر"
-
-#: src/MainWindow.vala:129
-msgid "Active commands that will run when their theme matches."
-msgstr "الأوامر النشطة التي ستعمل عند تطابق سمة كل منها."
-
-#: src/MainWindow.vala:135
-msgid "Disabled"
-msgstr "معطّل"
-
-#: src/MainWindow.vala:136
-msgid "Saved commands that are currently turned off."
-msgstr "الأوامر المحفوظة التي تم إيقاف تشغيلها حاليًا."
-
-#: src/MainWindow.vala:297
-msgid "Duplicate"
-msgstr "تكرار"
-
-#: src/MainWindow.vala:310
-msgid "Drag to reorder"
-msgstr "اسحب لإعادة الترتيب"
-
-#: src/MainWindow.vala:610
-msgid "Command deleted"
-msgstr "تم حذف الأمر"
-
-#: src/MainWindow.vala:611
-msgid "Undo"
-msgstr "تراجع"
-
-#: src/MainWindow.vala:652
-msgid "Contributors"
-msgstr "المساهمون"
-
-#: src/MainWindow.vala:653
-msgid "Credits"
-msgstr "شكر وتقدير"
-
-#: src/MainWindow.vala:700
-msgid "Background monitoring is now active"
-msgstr "مراقبة الخلفية نشطة الآن"
-
-#: src/MainWindow.vala:701
-msgid "Background monitoring is now inactive"
-msgstr "مراقبة الخلفية غير نشطة الآن"
-
-#: src/PreferencesWindow.vala:43
+#: src/preferences.rs:83
 msgid "Automatic Switching"
 msgstr "التبديل التلقائي"
 
-#: src/PreferencesWindow.vala:45
+#: src/preferences.rs:85
 msgid ""
 "KDE Plasma is set to switch global themes automatically. Turn that off to "
 "use this schedule."
@@ -397,7 +300,7 @@ msgstr ""
 "تم ضبط KDE Plasma لتبديل السمات العالمية تلقائيًا. قم بإيقاف تشغيل ذلك "
 "لاستخدام هذا الجدول الزمني."
 
-#: src/PreferencesWindow.vala:47
+#: src/preferences.rs:87
 msgid ""
 "Switch KDE's default light and dark global themes on a schedule. Needs "
 "background monitoring."
@@ -405,18 +308,18 @@ msgstr ""
 "قم بتبديل سمات KDE الافتراضية الفاتحة والداكنة وفقًا لجدول زمني. يحتاج إلى "
 "مراقبة الخلفية."
 
-#: src/PreferencesWindow.vala:48
+#: src/preferences.rs:89
 msgid ""
 "Switch between light and dark style on a schedule. Needs background "
 "monitoring."
 msgstr ""
 "التبديل بين النمط الفاتح والداكن وفقًا لجدول زمني. يحتاج إلى مراقبة الخلفية."
 
-#: src/PreferencesWindow.vala:54
+#: src/preferences.rs:96
 msgid "Automatic Switching Is Set in KDE"
 msgstr "تم ضبط التبديل التلقائي في KDE"
 
-#: src/PreferencesWindow.vala:55
+#: src/preferences.rs:98
 msgid ""
 "Turn off “Switch to Dark Mode at Night” in System Settings to use this "
 "schedule."
@@ -424,154 +327,241 @@ msgstr ""
 "قم بإيقاف تشغيل \"التبديل إلى الوضع الداكن ليلاً\" في إعدادات النظام لاستخدام "
 "هذا الجدول الزمني."
 
-#: src/PreferencesWindow.vala:61
+#: src/preferences.rs:105
 msgid "Open Settings"
 msgstr "افتح الإعدادات"
 
-#: src/PreferencesWindow.vala:65
-msgid "Could not open System Settings"
-msgstr "لا يمكن فتح إعدادات النظام"
-
-#: src/PreferencesWindow.vala:74
+#: src/preferences.rs:118
 msgid "Schedule"
 msgstr "الجدولة"
 
-#: src/PreferencesWindow.vala:75
+#: src/preferences.rs:120
 msgid "Off"
 msgstr "إيقاف"
 
-#: src/PreferencesWindow.vala:75
+#: src/preferences.rs:121
 msgid "Sunset to Sunrise"
 msgstr "من غروب الشمس إلى شروق الشمس"
 
-#: src/PreferencesWindow.vala:75
+#: src/preferences.rs:122
 msgid "Custom Times"
 msgstr "الأوقات المخصصة"
 
-#: src/PreferencesWindow.vala:86
+#: src/preferences.rs:141
 msgid "Light From"
 msgstr "الوضع الفاتح من"
 
-#: src/PreferencesWindow.vala:87
+#: src/preferences.rs:142
 msgid "Dark From"
 msgstr "الوضع الداكن من"
 
-#: src/PreferencesWindow.vala:99
+#: src/preferences.rs:161
 msgid "Configuration"
 msgstr "التكوين"
 
-#: src/PreferencesWindow.vala:100
+#: src/preferences.rs:163
 msgid "Import or export commands and constants together as a zip archive."
 msgstr "قم باستيراد أو تصدير الأوامر والثوابت معًا كأرشيف مضغوط."
 
-#: src/PreferencesWindow.vala:104 src/PreferencesWindow.vala:237
+#: src/preferences.rs:168 src/preferences.rs:341
 msgid "Import Configuration"
 msgstr "استيراد التكوين"
 
-#: src/PreferencesWindow.vala:105
+#: src/preferences.rs:170
 msgid "Replace local commands and constants from a zip file."
 msgstr "استبدال الأوامر والثوابت المحلية من ملف مضغوط."
 
-#: src/PreferencesWindow.vala:107
+#: src/preferences.rs:173
 msgid "Import"
 msgstr "استورد"
 
-#: src/PreferencesWindow.vala:116 src/PreferencesWindow.vala:260
+#: src/preferences.rs:184 src/preferences.rs:376
 msgid "Export Configuration"
 msgstr "تصدير التكوين"
 
-#: src/PreferencesWindow.vala:117
+#: src/preferences.rs:185
 msgid "Save commands and constants into a zip file."
 msgstr "حفظ الأوامر والثوابت في ملف مضغوط."
 
-#: src/PreferencesWindow.vala:119
+#: src/preferences.rs:187
 msgid "Export"
 msgstr "صدّر"
 
-#: src/PreferencesWindow.vala:128
+#: src/preferences.rs:198
 msgid "Danger Zone"
 msgstr "منطقة الخطر"
 
-#: src/PreferencesWindow.vala:129
+#: src/preferences.rs:200
 msgid "Remove all saved commands and constants from this device."
 msgstr "قم بإزالة جميع الأوامر والثوابت المحفوظة من هذا الجهاز."
 
-#: src/PreferencesWindow.vala:133
+#: src/preferences.rs:205
 msgid "Delete All Configuration"
 msgstr "حذف جميع التكوينات"
 
-#: src/PreferencesWindow.vala:134
+#: src/preferences.rs:207
 msgid "Deletes commands.json and constants.json. This cannot be undone."
 msgstr "يحذف commands.json وconstants.json. لا يمكن التراجع عن هذا."
 
-#: src/PreferencesWindow.vala:159
+#: src/preferences.rs:243
 msgid "Location unknown"
 msgstr "الموقع غير معروف"
 
-#: src/PreferencesWindow.vala:165
+#: src/preferences.rs:249
 msgid "The sun stays down today"
 msgstr "الشمس لا تشرق اليوم"
 
-#: src/PreferencesWindow.vala:168
+#: src/preferences.rs:252
 msgid "The sun stays up today"
 msgstr "الشمس لا تغرب اليوم"
 
-#: src/PreferencesWindow.vala:170
+#: src/preferences.rs:258
 #, c-format
 msgid "Sunrise %s, sunset %s"
 msgstr "شروق الشمس %s، غروب الشمس %s"
 
-#: src/PreferencesWindow.vala:178
+#: src/preferences.rs:265
+msgid "Could not open System Settings"
+msgstr "لا يمكن فتح إعدادات النظام"
+
+#: src/preferences.rs:274
 msgid "Hour"
 msgstr "ساعة"
 
-#: src/PreferencesWindow.vala:179
+#: src/preferences.rs:275
 msgid "Minute"
 msgstr "دقيقة"
 
-#: src/PreferencesWindow.vala:246
+#: src/preferences.rs:358
 msgid "Configuration imported"
 msgstr "تم استيراد التكوين"
 
-#: src/PreferencesWindow.vala:248 src/PreferencesWindow.vala:254
+#: src/preferences.rs:368
 #, c-format
 msgid "Import failed: %s"
 msgstr "فشل الاستيراد: %s"
 
-#: src/PreferencesWindow.vala:269
+#: src/preferences.rs:393
 msgid "Configuration exported"
 msgstr "تم تصدير التكوين"
 
-#: src/PreferencesWindow.vala:271 src/PreferencesWindow.vala:277
+#: src/preferences.rs:403
 #, c-format
 msgid "Export failed: %s"
 msgstr "فشل التصدير: %s"
 
-#: src/PreferencesWindow.vala:283
+#: src/preferences.rs:411
 msgid "Delete all configuration?"
 msgstr "هل تريد حذف كافة التكوينات؟"
 
-#: src/PreferencesWindow.vala:284
+#: src/preferences.rs:413
 msgid ""
 "This will remove every command and constant. This action cannot be undone."
 msgstr "سيؤدي هذا إلى إزالة كل أمر وثابت. لا يمكن التراجع عن هذا الإجراء."
 
-#: src/PreferencesWindow.vala:305
+#: src/preferences.rs:442
 msgid "Configuration deleted"
 msgstr "تم حذف التكوين"
 
-#: src/PreferencesWindow.vala:307
+#: src/preferences.rs:447
 #, c-format
 msgid "Delete failed: %s"
 msgstr "فشل الحذف: %s"
 
-#: src/SlidingToggleGroup.vala:38
+#: src/runner.rs:122
+#, c-format
+msgid "Exited with code %d"
+msgstr "تم الخروج بالرمز %d"
+
+#: src/runner.rs:128
+#, c-format
+msgid "Killed by signal %d"
+msgstr "تم القتل بواسطة الإشارة %d"
+
+#: src/widgets/sliding_toggle_group.rs:166
 msgid "Light"
 msgstr "فاتح"
 
-#: src/SlidingToggleGroup.vala:39
+#: src/widgets/sliding_toggle_group.rs:173
 msgid "Dark"
 msgstr "داكن"
+
+#: src/window.rs:110
+msgid "Keyboard Shortcuts"
+msgstr "اختصارات لوحة المفاتيح"
+
+#: src/window.rs:111
+msgid "About Switchcraft"
+msgstr "حول Switchcraft"
+
+#: src/window.rs:112
+msgid "Quit"
+msgstr "أنهِ"
+
+#: src/window.rs:121
+msgid "Run the background process that reacts to theme changes."
+msgstr "قم بتشغيل عملية الخلفية التي تتفاعل مع تغييرات السمة."
+
+#: src/window.rs:123 src/window.rs:131
+msgid "Monitor"
+msgstr "مراقب"
+
+#: src/window.rs:137
+msgid "No Commands"
+msgstr "لا توجد أوامر"
+
+#: src/window.rs:139
+msgid ""
+"Use the '+' button in the header bar or press (Ctrl+N) to add a command."
+msgstr "استخدم الزر '+' في شريط الرأس أو اضغط على (Ctrl+N) لإضافة أمر."
+
+#: src/window.rs:182
+msgid "Commands"
+msgstr "الأوامر"
+
+#: src/window.rs:183
+msgid "Active commands that will run when their theme matches."
+msgstr "الأوامر النشطة التي ستعمل عند تطابق سمة كل منها."
+
+#: src/window.rs:188
+msgid "Disabled"
+msgstr "معطّل"
+
+#: src/window.rs:189
+msgid "Saved commands that are currently turned off."
+msgstr "الأوامر المحفوظة التي تم إيقاف تشغيلها حاليًا."
+
+#: src/window.rs:371
+msgid "Duplicate"
+msgstr "تكرار"
+
+#: src/window.rs:384
+msgid "Drag to reorder"
+msgstr "اسحب لإعادة الترتيب"
+
+#: src/window.rs:796
+msgid "Command deleted"
+msgstr "تم حذف الأمر"
+
+#: src/window.rs:797
+msgid "Undo"
+msgstr "تراجع"
+
+#: src/window.rs:855
+msgid "Contributors"
+msgstr "المساهمون"
+
+#: src/window.rs:858
+msgid "Credits"
+msgstr "شكر وتقدير"
+
+#: src/window.rs:911
+msgid "Background monitoring is now active"
+msgstr "مراقبة الخلفية نشطة الآن"
+
+#: src/window.rs:913
+msgid "Background monitoring is now inactive"
+msgstr "مراقبة الخلفية غير نشطة الآن"
 
 #: data/resources/shortcuts-dialog.ui:6
 msgid "General"
@@ -689,11 +679,22 @@ msgstr "تبديل تلقائي عند غروب الشمس وشروقها أو �
 msgid ""
 "Redesigned command list with drag-and-drop reordering, command testing and "
 "undo"
-msgstr "قائمة أوامر معاد تصميمها مع إعادة الترتيب بالسحب والإفلات واختبار الأوامر والتراجع"
+msgstr ""
+"قائمة أوامر معاد تصميمها مع إعادة الترتيب بالسحب والإفلات واختبار الأوامر "
+"والتراجع"
 
 #: data/com.github.Switchcraft.metainfo.xml.in:45
 msgid "Translated into 22 languages"
 msgstr "مترجم إلى 22 لغة"
+
+#~ msgid "The 'zip' command is required to export."
+#~ msgstr "الأمر \"zip\" مطلوب للتصدير."
+
+#~ msgid "Failed to create temporary directory."
+#~ msgstr "فشل في إنشاء الدليل المؤقت."
+
+#~ msgid "The 'unzip' command is required to import."
+#~ msgstr "الأمر \"unzip\" مطلوب للاستيراد."
 
 #~ msgid "Monitor GNOME theme changes and run commands"
 #~ msgstr "مراقبة تغييرات سمة GNOME وتشغيل الأوامر"

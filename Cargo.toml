@@ -1,0 +1,24 @@
+[package]
+name = "switchcraft"
+version = "2.0.0"
+edition = "2024"
+rust-version = "1.92"
+description = "Make the whole desktop follow the light/dark style"
+license = "GPL-3.0-or-later"
+repository = "https://github.com/kem-a/switchcraft"
+publish = false
+
+[dependencies]
+adw = { package = "libadwaita", version = "0.9", features = ["v1_8"] }
+gtk = { package = "gtk4", version = "0.11", features = ["v4_10"] }
+libc = "0.2"
+zip = { version = "9", default-features = false, features = ["deflate-flate2-zlib-rs"] }
+
+[build-dependencies]
+glib-build-tools = "0.22"
+pkg-config = "0.3"
+
+[profile.release]
+lto = true
+codegen-units = 1
+strip = true

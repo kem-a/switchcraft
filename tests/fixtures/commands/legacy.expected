@@ -1,0 +1,18 @@
+{
+  "dark" : [
+    {
+      "command" : "legacy dark",
+      "enabled" : true
+    },
+    {
+      "command" : "second",
+      "enabled" : true
+    }
+  ],
+  "light" : [
+    {
+      "command" : "legacy light",
+      "enabled" : true
+    }
+  ]
+}

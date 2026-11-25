@@ -1,11 +1,15 @@
 # List of source files containing translatable strings
 
-src/Application.vala
-src/CommandDialog.vala
-src/ConstantsWindow.vala
-src/MainWindow.vala
-src/PreferencesWindow.vala
-src/SlidingToggleGroup.vala
+src/application.rs
+src/builtins.rs
+src/bundle.rs
+src/command_dialog.rs
+src/constants_window.rs
+src/monitor.rs
+src/preferences.rs
+src/runner.rs
+src/widgets/sliding_toggle_group.rs
+src/window.rs
 
 data/resources/shortcuts-dialog.ui
 data/com.github.Switchcraft.gschema.xml

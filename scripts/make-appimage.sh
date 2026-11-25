@@ -2,14 +2,13 @@
 #
 # Build AppImage for Switchcraft using appimagetool
 #
-# Quick local build from an existing meson build dir. It uses the host's
+# Quick local build from an existing `make` build. It uses the host's
 # GTK4/libadwaita at runtime; use make-anyimage.sh for a portable build.
 #
-# Usage: ./scripts/make-appimage.sh [build_dir]
+# Usage: ./scripts/make-appimage.sh
 #
 # Requirements:
-#   - Compiled build in the build directory
-#   - jq
+#   - Compiled build: run `make` first
 #   - appimagetool (will be downloaded if not found)
 #   - desktop-file-utils (optional, for validation)
 
@@ -17,19 +16,13 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_DIR="$(dirname "$SCRIPT_DIR")"
-BUILD_DIR="${1:-$PROJECT_DIR/build}"
 
 # App info
 APP_NAME="Switchcraft"
 APP_ID="com.github.Switchcraft"
 BINARY_NAME="switchcraft"
 
-# Get version from meson introspect or fallback to meson.build
-if command -v jq &>/dev/null && [ -f "$BUILD_DIR/meson-info/intro-projectinfo.json" ]; then
-    VERSION=$(jq -r '.version' "$BUILD_DIR/meson-info/intro-projectinfo.json")
-else
-    VERSION=$(grep -oP "version:\s*'\K[^']+" "$PROJECT_DIR/meson.build" | head -1)
-fi
+VERSION=$(sed -n 's/^version = "\(.*\)"/\1/p' "$PROJECT_DIR/Cargo.toml" | head -1)
 ARCH=$(uname -m)
 
 # Output
@@ -37,13 +30,13 @@ PACKAGE_DIR="$PROJECT_DIR"
 APPIMAGE_NAME="$APP_NAME-${VERSION}-${ARCH}.AppImage"
 
 echo "=== Building AppImage for $APP_NAME v$VERSION ==="
-echo "Build directory: $BUILD_DIR"
 echo "Output: $PACKAGE_DIR/$APPIMAGE_NAME"
 
 # Verify build exists
-if [ ! -f "$BUILD_DIR/$BINARY_NAME" ]; then
-    echo "Error: Binary not found at $BUILD_DIR/$BINARY_NAME"
-    echo "Please run 'meson compile -C build' first."
+TARGET_DIR="${CARGO_TARGET_DIR:-$PROJECT_DIR/target}"
+if [ ! -f "$TARGET_DIR/release/$BINARY_NAME" ]; then
+    echo "Error: Binary not found at $TARGET_DIR/release/$BINARY_NAME"
+    echo "Please run 'make' first."
     exit 1
 fi
 
@@ -60,20 +53,17 @@ else
     APPIMAGETOOL="$PROJECT_DIR/appimagetool"
 fi
 
-# Create temporary install tree using meson install
+# Create temporary install tree using make install
 DESTDIR=$(mktemp -d)
 APPDIR=$(mktemp -d)
 trap "rm -rf '$DESTDIR' '$APPDIR'" EXIT
 # mktemp creates 0700 dirs; appimagetool requires the AppDir to be world-readable
 chmod 755 "$APPDIR"
 
-# Get the prefix from the build configuration
-PREFIX=$(meson introspect "$BUILD_DIR" --buildoptions | jq -r '.[] | select(.name == "prefix") | .value')
-echo "Build prefix: $PREFIX"
+PREFIX=/usr
 
 echo "Installing to staging directory..."
-meson install -C "$BUILD_DIR" --destdir "$DESTDIR" --quiet 2>/dev/null || \
-    meson install -C "$BUILD_DIR" --destdir "$DESTDIR"
+make -C "$PROJECT_DIR" install DESTDIR="$DESTDIR" PREFIX="$PREFIX"
 
 # Installed files are at DESTDIR + PREFIX, we need them under APPDIR/usr
 INSTALL_ROOT="$DESTDIR$PREFIX"
@@ -91,7 +81,7 @@ echo "Creating AppDir structure..."
 mkdir -p "$APPDIR/usr"
 cp -a "$INSTALL_ROOT"/* "$APPDIR/usr/"
 
-# meson skips post-install schema compilation with --destdir
+# make install skips the schema compile with DESTDIR
 glib-compile-schemas "$APPDIR/usr/share/glib-2.0/schemas"
 
 # AppRun: expose the bundled GSettings schema. No LD_LIBRARY_PATH, since

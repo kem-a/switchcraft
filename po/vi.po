@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: switchcraft 2.0.0\n"
 "Report-Msgid-Bugs-To: https://github.com/kem-a/switchcraft/issues\n"
-"POT-Creation-Date: 2026-11-12 00:18+0200\n"
+"POT-Creation-Date: 2026-11-23 16:40+0200\n"
 "PO-Revision-Date: 2026-11-11 12:02+0000\n"
 "Last-Translator: Switchcraft translators\n"
 "Language-Team: none\n"
@@ -17,248 +17,219 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: src/Application.vala:126
+#: src/application.rs:153
 msgid "Show version information"
 msgstr "Hiển thị thông tin phiên bản"
 
-#: src/Application.vala:127
+#: src/application.rs:161
 msgid "Run in background for theme monitoring"
 msgstr "Chạy ở chế độ nền để theo dõi chủ đề"
 
-#: src/Application.vala:352
-#, c-format
-msgid "Exited with code %d"
-msgstr "Đã thoát với mã %d"
-
-#: src/Application.vala:353
-#, c-format
-msgid "Killed by signal %d"
-msgstr "Bị giết bởi tín hiệu %d"
-
-#: src/Application.vala:1367
-msgid "The 'zip' command is required to export."
-msgstr "Cần có lệnh 'zip' để xuất."
-
-#: src/Application.vala:1373
-msgid "Destination must be a local file."
-msgstr "Đích đến phải là một tập tin cục bộ."
-
-#: src/Application.vala:1380
-msgid "Failed to prepare destination directory."
-msgstr "Không chuẩn bị được thư mục đích."
-
-#: src/Application.vala:1388 src/Application.vala:1461
-msgid "Failed to create temporary directory."
-msgstr "Không tạo được thư mục tạm thời."
-
-#: src/Application.vala:1419
-msgid "Unable to overwrite existing archive."
-msgstr "Không thể ghi đè lên kho lưu trữ hiện có."
-
-#: src/Application.vala:1431
-#, c-format
-msgid "Failed to write archive: %s"
-msgstr "Không thể ghi vào kho lưu trữ: %s"
-
-#: src/Application.vala:1448
-msgid "The 'unzip' command is required to import."
-msgstr "Cần có lệnh 'unzip' để nhập."
-
-#: src/Application.vala:1454
-msgid "Archive must be a local file."
-msgstr "Lưu trữ phải là một tập tin cục bộ."
-
-#: src/Application.vala:1472
-#, c-format
-msgid "Failed to unpack archive: %s"
-msgstr "Không giải nén được kho lưu trữ: %s"
-
-#: src/Application.vala:1480
-msgid "Archive must contain commands.json and constants.json at the top level."
-msgstr "Lưu trữ phải chứa commands.json và constants.json ở cấp cao nhất."
-
-#: src/Application.vala:1492
-msgid "commands.json is not a JSON object."
-msgstr "commands.json không phải là đối tượng JSON."
-
-#: src/Application.vala:1503
-msgid "constants.json is not a JSON object."
-msgstr "constants.json không phải là đối tượng JSON."
-
-#: src/Application.vala:1520
-msgid "constants.json must only contain string values."
-msgstr "constants.json chỉ được chứa các giá trị chuỗi."
-
-#: src/Application.vala:1533
-msgid "theme_settings.json is not a JSON object."
-msgstr "theme_settings.json không phải là đối tượng JSON."
-
-#: src/Application.vala:1556
-msgid "Failed to remove commands.json."
-msgstr "Không thể xóa commands.json."
-
-#: src/Application.vala:1563
-msgid "Failed to remove constants.json."
-msgstr "Không thể xóa constants.json."
-
-#: src/Application.vala:1570
-msgid "Failed to remove theme_settings.json."
-msgstr "Không thể xóa theme_settings.json."
-
-#: src/Application.vala:1756
-msgid "Switchcraft Monitor"
-msgstr "Giám sát Switchcraft"
-
-#: src/Application.vala:1757
-msgid "Monitor theme changes and run commands"
-msgstr "Giám sát các thay đổi chủ đề và chạy lệnh"
-
-#: src/CommandDialog.vala:44
+#: src/builtins.rs:373
 msgid "Color Scheme"
 msgstr "Lược đồ màu"
 
-#: src/CommandDialog.vala:46
+#: src/builtins.rs:374
 msgid "Accent Color"
 msgstr "Màu nhấn"
 
-#: src/CommandDialog.vala:49
+#: src/builtins.rs:375
 msgid "Icon Theme"
 msgstr "Chủ đề biểu tượng"
 
-#: src/CommandDialog.vala:51
+#: src/builtins.rs:376
 msgid "GTK Theme"
 msgstr "Chủ đề GTK"
 
-#: src/CommandDialog.vala:54
+#: src/builtins.rs:377
 msgid "Cursor Theme"
 msgstr "Chủ đề con trỏ"
 
-#: src/CommandDialog.vala:56
+#: src/builtins.rs:378
 msgid "Shell Theme"
 msgstr "Chủ đề Shell"
 
-#: src/CommandDialog.vala:59
+#: src/builtins.rs:379
 msgid "Wallpaper"
 msgstr "Hình nền"
 
-#: src/CommandDialog.vala:61
+#: src/builtins.rs:380
 msgid "Night Light"
 msgstr "Ánh sáng ban đêm"
 
-#: src/CommandDialog.vala:63
+#: src/builtins.rs:381
 msgid "Global Theme"
 msgstr "Chủ đề toàn cầu"
 
-#: src/CommandDialog.vala:65
+#: src/builtins.rs:382
 msgid "Plasma Style"
 msgstr "Kiểu cách Plasma"
 
-#: src/CommandDialog.vala:67
+#: src/builtins.rs:383
 msgid "Kvantum Theme"
 msgstr "Chủ đề Kvantum"
 
-#: src/CommandDialog.vala:96
+#: src/builtins.rs:433
 msgid "Switches to the light style and would loop in Dark mode"
 msgstr "Chuyển sang kiểu sáng và sẽ lặp ở Chế độ tối"
 
-#: src/CommandDialog.vala:99
+#: src/builtins.rs:436
 msgid "Switches to the dark style and would loop in Light mode"
 msgstr "Chuyển sang kiểu tối và sẽ lặp ở chế độ Sáng"
 
-#: src/CommandDialog.vala:113
+#: src/builtins.rs:458
 #, c-format
 msgid "%s is already set in this mode"
 msgstr "%s đã được đặt ở chế độ này"
 
-#: src/CommandDialog.vala:118
+#: src/builtins.rs:465
 msgid "This command is already in this mode"
 msgstr "Lệnh này đã ở chế độ này"
 
-#: src/CommandDialog.vala:128
+#: src/bundle.rs:16
+msgid "Destination must be a local file."
+msgstr "Đích đến phải là một tập tin cục bộ."
+
+#: src/bundle.rs:21
+msgid "Failed to prepare destination directory."
+msgstr "Không chuẩn bị được thư mục đích."
+
+#: src/bundle.rs:28
+msgid "Unable to overwrite existing archive."
+msgstr "Không thể ghi đè lên kho lưu trữ hiện có."
+
+#: src/bundle.rs:41
+#, c-format
+msgid "Failed to write archive: %s"
+msgstr "Không thể ghi vào kho lưu trữ: %s"
+
+#: src/bundle.rs:97
+msgid "Archive must be a local file."
+msgstr "Lưu trữ phải là một tập tin cục bộ."
+
+#: src/bundle.rs:103
+#, c-format
+msgid "Failed to unpack archive: %s"
+msgstr "Không giải nén được kho lưu trữ: %s"
+
+#: src/bundle.rs:118
+msgid "Archive must contain commands.json and constants.json at the top level."
+msgstr "Lưu trữ phải chứa commands.json và constants.json ở cấp cao nhất."
+
+#: src/bundle.rs:130
+msgid "commands.json is not a JSON object."
+msgstr "commands.json không phải là đối tượng JSON."
+
+#: src/bundle.rs:140
+msgid "constants.json is not a JSON object."
+msgstr "constants.json không phải là đối tượng JSON."
+
+#: src/bundle.rs:154
+msgid "constants.json must only contain string values."
+msgstr "constants.json chỉ được chứa các giá trị chuỗi."
+
+#: src/bundle.rs:164
+msgid "theme_settings.json is not a JSON object."
+msgstr "theme_settings.json không phải là đối tượng JSON."
+
+#: src/bundle.rs:181
+msgid "Failed to remove commands.json."
+msgstr "Không thể xóa commands.json."
+
+#: src/bundle.rs:186
+msgid "Failed to remove constants.json."
+msgstr "Không thể xóa constants.json."
+
+#: src/bundle.rs:191
+msgid "Failed to remove theme_settings.json."
+msgstr "Không thể xóa theme_settings.json."
+
+#: src/command_dialog.rs:72
 msgid "Edit Command"
 msgstr "Chỉnh sửa lệnh"
 
-#: src/CommandDialog.vala:128
+#: src/command_dialog.rs:74
 msgid "Add Command"
 msgstr "Thêm lệnh"
 
-#: src/CommandDialog.vala:135
+#: src/command_dialog.rs:82
 msgid "Delete"
 msgstr "Xoá"
 
-#: src/CommandDialog.vala:138
+#: src/command_dialog.rs:85
 msgid "Cancel"
 msgstr "Hủy"
 
-#: src/CommandDialog.vala:139
+#: src/command_dialog.rs:89
 msgid "Save"
 msgstr "Lưu"
 
-#: src/CommandDialog.vala:139
+#: src/command_dialog.rs:91
 msgid "Add"
 msgstr "Thêm"
 
-#: src/CommandDialog.vala:152
+#: src/command_dialog.rs:106
 msgid "Custom Command"
 msgstr "Lệnh tự chọn"
 
-#: src/CommandDialog.vala:174
+#: src/command_dialog.rs:124
 msgid "Type"
 msgstr "Kiểu"
 
-#: src/CommandDialog.vala:179
+#: src/command_dialog.rs:130
 msgid "Command"
 msgstr "Lệnh"
 
-#: src/CommandDialog.vala:219
+#: src/command_dialog.rs:172
 msgid "Copy Error"
 msgstr "Sao chép lỗi"
 
-#: src/CommandDialog.vala:244
+#: src/command_dialog.rs:204
 msgid "Test"
 msgstr "Kiểm tra"
 
-#: src/CommandDialog.vala:260
+#: src/command_dialog.rs:226
 msgid "Value"
 msgstr "Giá trị"
 
-#: src/CommandDialog.vala:265
+#: src/command_dialog.rs:232
 msgid "Image"
 msgstr "Ảnh"
 
-#: src/CommandDialog.vala:270
+#: src/command_dialog.rs:238
 msgid "Browse…"
 msgstr "Duyệt…"
 
-#: src/CommandDialog.vala:280
+#: src/command_dialog.rs:254
 msgid "Mode"
 msgstr "Chế độ"
 
-#: src/CommandDialog.vala:406
+#: src/command_dialog.rs:441
 msgid "Requires the User Themes GNOME Shell extension."
 msgstr "Yêu cầu tiện ích mở rộng GNOME Shell của Chủ đề Người dùng."
 
-#: src/CommandDialog.vala:521
+#: src/command_dialog.rs:569
 msgid "Command failed"
 msgstr "Lệnh không thành công"
 
-#: src/CommandDialog.vala:521
+#: src/command_dialog.rs:571
 msgid "Command succeeded"
 msgstr "Lệnh đã thành công"
 
-#: src/CommandDialog.vala:534
+#: src/command_dialog.rs:594
 msgid "Select Wallpaper"
 msgstr "Chọn hình nền"
 
-#: src/ConstantsWindow.vala:22
+#: src/constants_window.rs:47
 msgid "Constants"
 msgstr "Hằng"
 
-#: src/ConstantsWindow.vala:39 src/ConstantsWindow.vala:182
+#: src/constants_window.rs:66 src/constants_window.rs:224
 msgid "Add Constant"
 msgstr "Thêm hằng số"
 
-#: src/ConstantsWindow.vala:51
+#: src/constants_window.rs:84
+#, no-rust-format
 msgid ""
 "Define constants to use in your commands. Reference them with $NAME or $"
 "{NAME}."
@@ -266,39 +237,40 @@ msgstr ""
 "Xác định các hằng số để sử dụng trong các lệnh của bạn. Tham chiếu chúng với "
 "$NAME hoặc ${NAME}."
 
-#: src/ConstantsWindow.vala:69
+#: src/constants_window.rs:104
 msgid "No Constants"
 msgstr "Không có hằng số"
 
-#: src/ConstantsWindow.vala:70
+#: src/constants_window.rs:105
 msgid "Click the '+' button to define a constant."
 msgstr "Bấm vào nút '+' để xác định một hằng số."
 
-#: src/ConstantsWindow.vala:145
+#: src/constants_window.rs:181
 msgid "Edit constant"
 msgstr "Chỉnh sửa hằng số"
 
-#: src/ConstantsWindow.vala:153
+#: src/constants_window.rs:193
 msgid "Remove constant"
 msgstr "Xóa hằng số"
 
-#: src/ConstantsWindow.vala:182
+#: src/constants_window.rs:222
 msgid "Edit Constant"
 msgstr "Chỉnh sửa hằng số"
 
-#: src/ConstantsWindow.vala:184
+#: src/constants_window.rs:229
 msgid "Define a constant name and value."
 msgstr "Xác định tên và giá trị hằng."
 
-#: src/ConstantsWindow.vala:202
+#: src/constants_window.rs:255
 msgid "Constant name (e.g., D2DL_SCHEMA)"
 msgstr "Tên hằng số (ví dụ: D2DL_SCHEMA)"
 
-#: src/ConstantsWindow.vala:210
+#: src/constants_window.rs:265
 msgid "Value (e.g., org.gnome.shell.extensions.dash2dock-lite)"
 msgstr "Giá trị (ví dụ: org.gnome.shell.extensions.dash2dock-lite)"
 
-#: src/ConstantsWindow.vala:216
+#: src/constants_window.rs:274
+#, no-rust-format
 msgid ""
 "Use in commands as $NAME or ${NAME}. Names use letters, numbers and "
 "underscores."
@@ -306,92 +278,23 @@ msgstr ""
 "Sử dụng trong các lệnh dưới dạng $NAME hoặc ${NAME}. Tên sử dụng chữ cái, số "
 "và dấu gạch dưới."
 
-#: src/MainWindow.vala:64
+#: src/monitor.rs:188
+msgid "Switchcraft Monitor"
+msgstr "Giám sát Switchcraft"
+
+#: src/monitor.rs:189
+msgid "Monitor theme changes and run commands"
+msgstr "Giám sát các thay đổi chủ đề và chạy lệnh"
+
+#: src/preferences.rs:54
 msgid "Preferences"
 msgstr "Tùy chọn"
 
-#: src/MainWindow.vala:67
-msgid "Keyboard Shortcuts"
-msgstr "Phím tắt"
-
-#: src/MainWindow.vala:68
-msgid "About Switchcraft"
-msgstr "Giới thiệu về Switchcraft"
-
-#: src/MainWindow.vala:69
-msgid "Quit"
-msgstr "Thoát"
-
-#: src/MainWindow.vala:78
-msgid "Run the background process that reacts to theme changes."
-msgstr "Chạy quy trình nền phản ứng với các thay đổi chủ đề."
-
-#: src/MainWindow.vala:79 src/MainWindow.vala:82
-msgid "Monitor"
-msgstr "Giám sát"
-
-#: src/MainWindow.vala:88
-msgid "No Commands"
-msgstr "Không có lệnh"
-
-#: src/MainWindow.vala:89
-msgid ""
-"Use the '+' button in the header bar or press (Ctrl+N) to add a command."
-msgstr "Sử dụng nút '+' trong thanh tiêu đề hoặc nhấn (Ctrl+N) để thêm lệnh."
-
-#: src/MainWindow.vala:128
-msgid "Commands"
-msgstr "Lệnh"
-
-#: src/MainWindow.vala:129
-msgid "Active commands that will run when their theme matches."
-msgstr "Các lệnh hoạt động sẽ chạy khi chủ đề của chúng phù hợp."
-
-#: src/MainWindow.vala:135
-msgid "Disabled"
-msgstr "Đã tắt"
-
-#: src/MainWindow.vala:136
-msgid "Saved commands that are currently turned off."
-msgstr "Các lệnh đã lưu hiện đang bị tắt."
-
-#: src/MainWindow.vala:297
-msgid "Duplicate"
-msgstr "Nhân đôi"
-
-#: src/MainWindow.vala:310
-msgid "Drag to reorder"
-msgstr "Kéo để sắp xếp lại"
-
-#: src/MainWindow.vala:610
-msgid "Command deleted"
-msgstr "Lệnh đã bị xóa"
-
-#: src/MainWindow.vala:611
-msgid "Undo"
-msgstr "Hoàn tác"
-
-#: src/MainWindow.vala:652
-msgid "Contributors"
-msgstr "Người đóng góp"
-
-#: src/MainWindow.vala:653
-msgid "Credits"
-msgstr "Ghi công"
-
-#: src/MainWindow.vala:700
-msgid "Background monitoring is now active"
-msgstr "Giám sát nền hiện đang hoạt động"
-
-#: src/MainWindow.vala:701
-msgid "Background monitoring is now inactive"
-msgstr "Giám sát nền hiện không hoạt động"
-
-#: src/PreferencesWindow.vala:43
+#: src/preferences.rs:83
 msgid "Automatic Switching"
 msgstr "Chuyển đổi tự động"
 
-#: src/PreferencesWindow.vala:45
+#: src/preferences.rs:85
 msgid ""
 "KDE Plasma is set to switch global themes automatically. Turn that off to "
 "use this schedule."
@@ -399,7 +302,7 @@ msgstr ""
 "KDE Plasma được thiết lập để tự động chuyển đổi chủ đề chung. Tắt nó đi để "
 "sử dụng lịch trình này."
 
-#: src/PreferencesWindow.vala:47
+#: src/preferences.rs:87
 msgid ""
 "Switch KDE's default light and dark global themes on a schedule. Needs "
 "background monitoring."
@@ -407,18 +310,18 @@ msgstr ""
 "Chuyển đổi chủ đề toàn cầu sáng và tối mặc định của KDE theo lịch trình. Cần "
 "theo dõi nền."
 
-#: src/PreferencesWindow.vala:48
+#: src/preferences.rs:89
 msgid ""
 "Switch between light and dark style on a schedule. Needs background "
 "monitoring."
 msgstr ""
 "Chuyển đổi giữa phong cách sáng và tối theo lịch trình. Cần theo dõi nền."
 
-#: src/PreferencesWindow.vala:54
+#: src/preferences.rs:96
 msgid "Automatic Switching Is Set in KDE"
 msgstr "Chuyển đổi tự động được đặt trong KDE"
 
-#: src/PreferencesWindow.vala:55
+#: src/preferences.rs:98
 msgid ""
 "Turn off “Switch to Dark Mode at Night” in System Settings to use this "
 "schedule."
@@ -426,156 +329,243 @@ msgstr ""
 "Tắt “Chuyển sang chế độ tối vào ban đêm” trong Cài đặt hệ thống để sử dụng "
 "lịch trình này."
 
-#: src/PreferencesWindow.vala:61
+#: src/preferences.rs:105
 msgid "Open Settings"
 msgstr "Mở Cài đặt"
 
-#: src/PreferencesWindow.vala:65
-msgid "Could not open System Settings"
-msgstr "Không thể mở Cài đặt hệ thống"
-
-#: src/PreferencesWindow.vala:74
+#: src/preferences.rs:118
 msgid "Schedule"
 msgstr "Lịch trình"
 
-#: src/PreferencesWindow.vala:75
+#: src/preferences.rs:120
 msgid "Off"
 msgstr "Tắt"
 
-#: src/PreferencesWindow.vala:75
+#: src/preferences.rs:121
 msgid "Sunset to Sunrise"
 msgstr "Hoàng hôn đến bình minh"
 
-#: src/PreferencesWindow.vala:75
+#: src/preferences.rs:122
 msgid "Custom Times"
 msgstr "Thời gian tùy chỉnh"
 
-#: src/PreferencesWindow.vala:86
+#: src/preferences.rs:141
 msgid "Light From"
 msgstr "Sáng từ"
 
-#: src/PreferencesWindow.vala:87
+#: src/preferences.rs:142
 msgid "Dark From"
 msgstr "Tối từ"
 
-#: src/PreferencesWindow.vala:99
+#: src/preferences.rs:161
 msgid "Configuration"
 msgstr "Cấu hình"
 
-#: src/PreferencesWindow.vala:100
+#: src/preferences.rs:163
 msgid "Import or export commands and constants together as a zip archive."
 msgstr ""
 "Nhập hoặc xuất các lệnh và hằng số cùng nhau dưới dạng kho lưu trữ zip."
 
-#: src/PreferencesWindow.vala:104 src/PreferencesWindow.vala:237
+#: src/preferences.rs:168 src/preferences.rs:341
 msgid "Import Configuration"
 msgstr "Nhập cấu hình"
 
-#: src/PreferencesWindow.vala:105
+#: src/preferences.rs:170
 msgid "Replace local commands and constants from a zip file."
 msgstr "Thay thế các lệnh và hằng cục bộ từ tệp zip."
 
-#: src/PreferencesWindow.vala:107
+#: src/preferences.rs:173
 msgid "Import"
 msgstr "Nhập"
 
-#: src/PreferencesWindow.vala:116 src/PreferencesWindow.vala:260
+#: src/preferences.rs:184 src/preferences.rs:376
 msgid "Export Configuration"
 msgstr "Xuất cấu hình"
 
-#: src/PreferencesWindow.vala:117
+#: src/preferences.rs:185
 msgid "Save commands and constants into a zip file."
 msgstr "Lưu các lệnh và hằng số vào một tệp zip."
 
-#: src/PreferencesWindow.vala:119
+#: src/preferences.rs:187
 msgid "Export"
 msgstr "Xuất"
 
-#: src/PreferencesWindow.vala:128
+#: src/preferences.rs:198
 msgid "Danger Zone"
 msgstr "Vùng nguy hiểm"
 
-#: src/PreferencesWindow.vala:129
+#: src/preferences.rs:200
 msgid "Remove all saved commands and constants from this device."
 msgstr "Xóa tất cả các lệnh và hằng số đã lưu khỏi thiết bị này."
 
-#: src/PreferencesWindow.vala:133
+#: src/preferences.rs:205
 msgid "Delete All Configuration"
 msgstr "Xóa tất cả cấu hình"
 
-#: src/PreferencesWindow.vala:134
+#: src/preferences.rs:207
 msgid "Deletes commands.json and constants.json. This cannot be undone."
 msgstr "Xóa commands.json và constants.json. Điều này không thể hoàn tác được."
 
-#: src/PreferencesWindow.vala:159
+#: src/preferences.rs:243
 msgid "Location unknown"
 msgstr "Vị trí không xác định"
 
-#: src/PreferencesWindow.vala:165
+#: src/preferences.rs:249
 msgid "The sun stays down today"
 msgstr "Hôm nay mặt trời không mọc"
 
-#: src/PreferencesWindow.vala:168
+#: src/preferences.rs:252
 msgid "The sun stays up today"
 msgstr "Hôm nay mặt trời không lặn"
 
-#: src/PreferencesWindow.vala:170
+#: src/preferences.rs:258
 #, c-format
 msgid "Sunrise %s, sunset %s"
 msgstr "Bình minh %s, hoàng hôn %s"
 
-#: src/PreferencesWindow.vala:178
+#: src/preferences.rs:265
+msgid "Could not open System Settings"
+msgstr "Không thể mở Cài đặt hệ thống"
+
+#: src/preferences.rs:274
 msgid "Hour"
 msgstr "Giờ"
 
-#: src/PreferencesWindow.vala:179
+#: src/preferences.rs:275
 msgid "Minute"
 msgstr "Phút"
 
-#: src/PreferencesWindow.vala:246
+#: src/preferences.rs:358
 msgid "Configuration imported"
 msgstr "Đã nhập cấu hình"
 
-#: src/PreferencesWindow.vala:248 src/PreferencesWindow.vala:254
+#: src/preferences.rs:368
 #, c-format
 msgid "Import failed: %s"
 msgstr "Nhập không thành công: %s"
 
-#: src/PreferencesWindow.vala:269
+#: src/preferences.rs:393
 msgid "Configuration exported"
 msgstr "Đã xuất cấu hình"
 
-#: src/PreferencesWindow.vala:271 src/PreferencesWindow.vala:277
+#: src/preferences.rs:403
 #, c-format
 msgid "Export failed: %s"
 msgstr "Xuất không thành công: %s"
 
-#: src/PreferencesWindow.vala:283
+#: src/preferences.rs:411
 msgid "Delete all configuration?"
 msgstr "Xóa tất cả cấu hình?"
 
-#: src/PreferencesWindow.vala:284
+#: src/preferences.rs:413
 msgid ""
 "This will remove every command and constant. This action cannot be undone."
 msgstr ""
 "Điều này sẽ loại bỏ mọi lệnh và hằng số. Không thể hoàn tác hành động này."
 
-#: src/PreferencesWindow.vala:305
+#: src/preferences.rs:442
 msgid "Configuration deleted"
 msgstr "Đã xóa cấu hình"
 
-#: src/PreferencesWindow.vala:307
+#: src/preferences.rs:447
 #, c-format
 msgid "Delete failed: %s"
 msgstr "Xóa không thành công: %s"
 
-#: src/SlidingToggleGroup.vala:38
+#: src/runner.rs:122
+#, c-format
+msgid "Exited with code %d"
+msgstr "Đã thoát với mã %d"
+
+#: src/runner.rs:128
+#, c-format
+msgid "Killed by signal %d"
+msgstr "Bị giết bởi tín hiệu %d"
+
+#: src/widgets/sliding_toggle_group.rs:166
 msgid "Light"
 msgstr "Sáng"
 
-#: src/SlidingToggleGroup.vala:39
+#: src/widgets/sliding_toggle_group.rs:173
 msgid "Dark"
 msgstr "Tối"
+
+#: src/window.rs:110
+msgid "Keyboard Shortcuts"
+msgstr "Phím tắt"
+
+#: src/window.rs:111
+msgid "About Switchcraft"
+msgstr "Giới thiệu về Switchcraft"
+
+#: src/window.rs:112
+msgid "Quit"
+msgstr "Thoát"
+
+#: src/window.rs:121
+msgid "Run the background process that reacts to theme changes."
+msgstr "Chạy quy trình nền phản ứng với các thay đổi chủ đề."
+
+#: src/window.rs:123 src/window.rs:131
+msgid "Monitor"
+msgstr "Giám sát"
+
+#: src/window.rs:137
+msgid "No Commands"
+msgstr "Không có lệnh"
+
+#: src/window.rs:139
+msgid ""
+"Use the '+' button in the header bar or press (Ctrl+N) to add a command."
+msgstr "Sử dụng nút '+' trong thanh tiêu đề hoặc nhấn (Ctrl+N) để thêm lệnh."
+
+#: src/window.rs:182
+msgid "Commands"
+msgstr "Lệnh"
+
+#: src/window.rs:183
+msgid "Active commands that will run when their theme matches."
+msgstr "Các lệnh hoạt động sẽ chạy khi chủ đề của chúng phù hợp."
+
+#: src/window.rs:188
+msgid "Disabled"
+msgstr "Đã tắt"
+
+#: src/window.rs:189
+msgid "Saved commands that are currently turned off."
+msgstr "Các lệnh đã lưu hiện đang bị tắt."
+
+#: src/window.rs:371
+msgid "Duplicate"
+msgstr "Nhân đôi"
+
+#: src/window.rs:384
+msgid "Drag to reorder"
+msgstr "Kéo để sắp xếp lại"
+
+#: src/window.rs:796
+msgid "Command deleted"
+msgstr "Lệnh đã bị xóa"
+
+#: src/window.rs:797
+msgid "Undo"
+msgstr "Hoàn tác"
+
+#: src/window.rs:855
+msgid "Contributors"
+msgstr "Người đóng góp"
+
+#: src/window.rs:858
+msgid "Credits"
+msgstr "Ghi công"
+
+#: src/window.rs:911
+msgid "Background monitoring is now active"
+msgstr "Giám sát nền hiện đang hoạt động"
+
+#: src/window.rs:913
+msgid "Background monitoring is now inactive"
+msgstr "Giám sát nền hiện không hoạt động"
 
 #: data/resources/shortcuts-dialog.ui:6
 msgid "General"
@@ -681,7 +671,9 @@ msgstr ""
 msgid ""
 "Built-in commands: pick a setting and a value from a list instead of typing "
 "a command"
-msgstr "Lệnh tích hợp sẵn: chọn một cài đặt và một giá trị từ danh sách thay vì gõ lệnh"
+msgstr ""
+"Lệnh tích hợp sẵn: chọn một cài đặt và một giá trị từ danh sách thay vì gõ "
+"lệnh"
 
 #: data/com.github.Switchcraft.metainfo.xml.in:42
 msgid "KDE Plasma and Kvantum support"
@@ -689,17 +681,30 @@ msgstr "Hỗ trợ KDE Plasma và Kvantum"
 
 #: data/com.github.Switchcraft.metainfo.xml.in:43
 msgid "Automatic switching at sunset and sunrise or at custom times"
-msgstr "Tự động chuyển đổi vào lúc hoàng hôn và bình minh hoặc vào thời gian tùy chỉnh"
+msgstr ""
+"Tự động chuyển đổi vào lúc hoàng hôn và bình minh hoặc vào thời gian tùy "
+"chỉnh"
 
 #: data/com.github.Switchcraft.metainfo.xml.in:44
 msgid ""
 "Redesigned command list with drag-and-drop reordering, command testing and "
 "undo"
-msgstr "Danh sách lệnh được thiết kế lại với sắp xếp bằng kéo thả, kiểm tra lệnh và hoàn tác"
+msgstr ""
+"Danh sách lệnh được thiết kế lại với sắp xếp bằng kéo thả, kiểm tra lệnh và "
+"hoàn tác"
 
 #: data/com.github.Switchcraft.metainfo.xml.in:45
 msgid "Translated into 22 languages"
 msgstr "Đã dịch sang 22 ngôn ngữ"
+
+#~ msgid "The 'zip' command is required to export."
+#~ msgstr "Cần có lệnh 'zip' để xuất."
+
+#~ msgid "Failed to create temporary directory."
+#~ msgstr "Không tạo được thư mục tạm thời."
+
+#~ msgid "The 'unzip' command is required to import."
+#~ msgstr "Cần có lệnh 'unzip' để nhập."
 
 #~ msgid "Monitor GNOME theme changes and run commands"
 #~ msgstr "Giám sát các thay đổi chủ đề GNOME và chạy lệnh"
