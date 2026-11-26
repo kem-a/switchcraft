@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: switchcraft 2.0.0\n"
 "Report-Msgid-Bugs-To: https://github.com/kem-a/switchcraft/issues\n"
-"POT-Creation-Date: 2026-11-12 00:18+0200\n"
+"POT-Creation-Date: 2026-11-23 16:40+0200\n"
 "PO-Revision-Date: 2026-11-11 12:02+0000\n"
 "Last-Translator: Switchcraft translators\n"
 "Language-Team: none\n"
@@ -18,249 +18,220 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
-#: src/Application.vala:126
+#: src/application.rs:153
 msgid "Show version information"
 msgstr "Показати інформацію про версію"
 
-#: src/Application.vala:127
+#: src/application.rs:161
 msgid "Run in background for theme monitoring"
 msgstr "Запуск у фоновому режимі для моніторингу теми"
 
-#: src/Application.vala:352
-#, c-format
-msgid "Exited with code %d"
-msgstr "Вийшов із кодом %d"
-
-#: src/Application.vala:353
-#, c-format
-msgid "Killed by signal %d"
-msgstr "Убитий сигналом %d"
-
-#: src/Application.vala:1367
-msgid "The 'zip' command is required to export."
-msgstr "Для експорту потрібна команда \"zip\"."
-
-#: src/Application.vala:1373
-msgid "Destination must be a local file."
-msgstr "Місцем призначення має бути локальний файл."
-
-#: src/Application.vala:1380
-msgid "Failed to prepare destination directory."
-msgstr "Не вдалося підготувати цільовий каталог."
-
-#: src/Application.vala:1388 src/Application.vala:1461
-msgid "Failed to create temporary directory."
-msgstr "Не вдалося створити тимчасовий каталог."
-
-#: src/Application.vala:1419
-msgid "Unable to overwrite existing archive."
-msgstr "Не вдалося перезаписати існуючий архів."
-
-#: src/Application.vala:1431
-#, c-format
-msgid "Failed to write archive: %s"
-msgstr "Не вдалося записати архів: %s"
-
-#: src/Application.vala:1448
-msgid "The 'unzip' command is required to import."
-msgstr "Для імпорту потрібна команда \"unzip\"."
-
-#: src/Application.vala:1454
-msgid "Archive must be a local file."
-msgstr "Архів має бути локальним файлом."
-
-#: src/Application.vala:1472
-#, c-format
-msgid "Failed to unpack archive: %s"
-msgstr "Не вдалося розпакувати архів: %s"
-
-#: src/Application.vala:1480
-msgid "Archive must contain commands.json and constants.json at the top level."
-msgstr ""
-"Архів повинен містити commands.json і constants.json на верхньому рівні."
-
-#: src/Application.vala:1492
-msgid "commands.json is not a JSON object."
-msgstr "commands.json не є об’єктом JSON."
-
-#: src/Application.vala:1503
-msgid "constants.json is not a JSON object."
-msgstr "constants.json не є об’єктом JSON."
-
-#: src/Application.vala:1520
-msgid "constants.json must only contain string values."
-msgstr "constants.json має містити лише рядкові значення."
-
-#: src/Application.vala:1533
-msgid "theme_settings.json is not a JSON object."
-msgstr "theme_settings.json не є об’єктом JSON."
-
-#: src/Application.vala:1556
-msgid "Failed to remove commands.json."
-msgstr "Не вдалося видалити commands.json."
-
-#: src/Application.vala:1563
-msgid "Failed to remove constants.json."
-msgstr "Не вдалося видалити constants.json."
-
-#: src/Application.vala:1570
-msgid "Failed to remove theme_settings.json."
-msgstr "Не вдалося видалити theme_settings.json."
-
-#: src/Application.vala:1756
-msgid "Switchcraft Monitor"
-msgstr "Монітор Switchcraft"
-
-#: src/Application.vala:1757
-msgid "Monitor theme changes and run commands"
-msgstr "Відстежуйте зміни теми та запускайте команди"
-
-#: src/CommandDialog.vala:44
+#: src/builtins.rs:373
 msgid "Color Scheme"
 msgstr "Схема кольорів"
 
-#: src/CommandDialog.vala:46
+#: src/builtins.rs:374
 msgid "Accent Color"
 msgstr "Колір акценту"
 
-#: src/CommandDialog.vala:49
+#: src/builtins.rs:375
 msgid "Icon Theme"
 msgstr "Тема піктограм"
 
-#: src/CommandDialog.vala:51
+#: src/builtins.rs:376
 msgid "GTK Theme"
 msgstr "Тема GTK"
 
-#: src/CommandDialog.vala:54
+#: src/builtins.rs:377
 msgid "Cursor Theme"
 msgstr "Тема курсора"
 
-#: src/CommandDialog.vala:56
+#: src/builtins.rs:378
 msgid "Shell Theme"
 msgstr "Тема GNOME Shell"
 
-#: src/CommandDialog.vala:59
+#: src/builtins.rs:379
 msgid "Wallpaper"
 msgstr "Шпалери"
 
-#: src/CommandDialog.vala:61
+#: src/builtins.rs:380
 msgid "Night Light"
 msgstr "Нічні кольори"
 
-#: src/CommandDialog.vala:63
+#: src/builtins.rs:381
 msgid "Global Theme"
 msgstr "Загальна тема"
 
-#: src/CommandDialog.vala:65
+#: src/builtins.rs:382
 msgid "Plasma Style"
 msgstr "Стиль Плазми"
 
-#: src/CommandDialog.vala:67
+#: src/builtins.rs:383
 msgid "Kvantum Theme"
 msgstr "Тема Kvantum"
 
-#: src/CommandDialog.vala:96
+#: src/builtins.rs:433
 msgid "Switches to the light style and would loop in Dark mode"
 msgstr "Перемикається на світлий стиль і зациклюється в темному режимі"
 
-#: src/CommandDialog.vala:99
+#: src/builtins.rs:436
 msgid "Switches to the dark style and would loop in Light mode"
 msgstr "Перемикається на темний стиль і зациклюється в світлому режимі"
 
-#: src/CommandDialog.vala:113
+#: src/builtins.rs:458
 #, c-format
 msgid "%s is already set in this mode"
 msgstr "%s уже встановлено в цьому режимі"
 
-#: src/CommandDialog.vala:118
+#: src/builtins.rs:465
 msgid "This command is already in this mode"
 msgstr "Ця команда вже в цьому режимі"
 
-#: src/CommandDialog.vala:128
+#: src/bundle.rs:16
+msgid "Destination must be a local file."
+msgstr "Місцем призначення має бути локальний файл."
+
+#: src/bundle.rs:21
+msgid "Failed to prepare destination directory."
+msgstr "Не вдалося підготувати цільовий каталог."
+
+#: src/bundle.rs:28
+msgid "Unable to overwrite existing archive."
+msgstr "Не вдалося перезаписати існуючий архів."
+
+#: src/bundle.rs:41
+#, c-format
+msgid "Failed to write archive: %s"
+msgstr "Не вдалося записати архів: %s"
+
+#: src/bundle.rs:97
+msgid "Archive must be a local file."
+msgstr "Архів має бути локальним файлом."
+
+#: src/bundle.rs:103
+#, c-format
+msgid "Failed to unpack archive: %s"
+msgstr "Не вдалося розпакувати архів: %s"
+
+#: src/bundle.rs:118
+msgid "Archive must contain commands.json and constants.json at the top level."
+msgstr ""
+"Архів повинен містити commands.json і constants.json на верхньому рівні."
+
+#: src/bundle.rs:130
+msgid "commands.json is not a JSON object."
+msgstr "commands.json не є об’єктом JSON."
+
+#: src/bundle.rs:140
+msgid "constants.json is not a JSON object."
+msgstr "constants.json не є об’єктом JSON."
+
+#: src/bundle.rs:154
+msgid "constants.json must only contain string values."
+msgstr "constants.json має містити лише рядкові значення."
+
+#: src/bundle.rs:164
+msgid "theme_settings.json is not a JSON object."
+msgstr "theme_settings.json не є об’єктом JSON."
+
+#: src/bundle.rs:181
+msgid "Failed to remove commands.json."
+msgstr "Не вдалося видалити commands.json."
+
+#: src/bundle.rs:186
+msgid "Failed to remove constants.json."
+msgstr "Не вдалося видалити constants.json."
+
+#: src/bundle.rs:191
+msgid "Failed to remove theme_settings.json."
+msgstr "Не вдалося видалити theme_settings.json."
+
+#: src/command_dialog.rs:72
 msgid "Edit Command"
 msgstr "Редагувати команду"
 
-#: src/CommandDialog.vala:128
+#: src/command_dialog.rs:74
 msgid "Add Command"
 msgstr "Додати команду"
 
-#: src/CommandDialog.vala:135
+#: src/command_dialog.rs:82
 msgid "Delete"
 msgstr "Вилучити"
 
-#: src/CommandDialog.vala:138
+#: src/command_dialog.rs:85
 msgid "Cancel"
 msgstr "Скасувати"
 
-#: src/CommandDialog.vala:139
+#: src/command_dialog.rs:89
 msgid "Save"
 msgstr "Зберегти"
 
-#: src/CommandDialog.vala:139
+#: src/command_dialog.rs:91
 msgid "Add"
 msgstr "Додати"
 
-#: src/CommandDialog.vala:152
+#: src/command_dialog.rs:106
 msgid "Custom Command"
 msgstr "Власна команда"
 
-#: src/CommandDialog.vala:174
+#: src/command_dialog.rs:124
 msgid "Type"
 msgstr "Тип"
 
-#: src/CommandDialog.vala:179
+#: src/command_dialog.rs:130
 msgid "Command"
 msgstr "Команда"
 
-#: src/CommandDialog.vala:219
+#: src/command_dialog.rs:172
 msgid "Copy Error"
 msgstr "Копіювати помилку"
 
-#: src/CommandDialog.vala:244
+#: src/command_dialog.rs:204
 msgid "Test"
 msgstr "Перевірити"
 
-#: src/CommandDialog.vala:260
+#: src/command_dialog.rs:226
 msgid "Value"
 msgstr "Значення"
 
-#: src/CommandDialog.vala:265
+#: src/command_dialog.rs:232
 msgid "Image"
 msgstr "Зображення"
 
-#: src/CommandDialog.vala:270
+#: src/command_dialog.rs:238
 msgid "Browse…"
 msgstr "Вибрати…"
 
-#: src/CommandDialog.vala:280
+#: src/command_dialog.rs:254
 msgid "Mode"
 msgstr "Режим"
 
-#: src/CommandDialog.vala:406
+#: src/command_dialog.rs:441
 msgid "Requires the User Themes GNOME Shell extension."
 msgstr "Потрібне розширення GNOME Shell Теми користувача."
 
-#: src/CommandDialog.vala:521
+#: src/command_dialog.rs:569
 msgid "Command failed"
 msgstr "Не вдалося виконати команду"
 
-#: src/CommandDialog.vala:521
+#: src/command_dialog.rs:571
 msgid "Command succeeded"
 msgstr "Команда виконана успішно"
 
-#: src/CommandDialog.vala:534
+#: src/command_dialog.rs:594
 msgid "Select Wallpaper"
 msgstr "Вибрати шпалери"
 
-#: src/ConstantsWindow.vala:22
+#: src/constants_window.rs:47
 msgid "Constants"
 msgstr "Сталі"
 
-#: src/ConstantsWindow.vala:39 src/ConstantsWindow.vala:182
+#: src/constants_window.rs:66 src/constants_window.rs:224
 msgid "Add Constant"
 msgstr "Додати константу"
 
-#: src/ConstantsWindow.vala:51
+#: src/constants_window.rs:84
+#, no-rust-format
 msgid ""
 "Define constants to use in your commands. Reference them with $NAME or $"
 "{NAME}."
@@ -268,39 +239,40 @@ msgstr ""
 "Визначте константи для використання у ваших командах. Посилайтеся на них за "
 "допомогою $NAME або ${NAME}."
 
-#: src/ConstantsWindow.vala:69
+#: src/constants_window.rs:104
 msgid "No Constants"
 msgstr "Немає констант"
 
-#: src/ConstantsWindow.vala:70
+#: src/constants_window.rs:105
 msgid "Click the '+' button to define a constant."
 msgstr "Натисніть кнопку '+', щоб визначити константу."
 
-#: src/ConstantsWindow.vala:145
+#: src/constants_window.rs:181
 msgid "Edit constant"
 msgstr "Редагувати константу"
 
-#: src/ConstantsWindow.vala:153
+#: src/constants_window.rs:193
 msgid "Remove constant"
 msgstr "Видаліть константу"
 
-#: src/ConstantsWindow.vala:182
+#: src/constants_window.rs:222
 msgid "Edit Constant"
 msgstr "Редагувати константу"
 
-#: src/ConstantsWindow.vala:184
+#: src/constants_window.rs:229
 msgid "Define a constant name and value."
 msgstr "Визначте ім’я константи та значення."
 
-#: src/ConstantsWindow.vala:202
+#: src/constants_window.rs:255
 msgid "Constant name (e.g., D2DL_SCHEMA)"
 msgstr "Ім'я константи (наприклад, D2DL_SCHEMA)"
 
-#: src/ConstantsWindow.vala:210
+#: src/constants_window.rs:265
 msgid "Value (e.g., org.gnome.shell.extensions.dash2dock-lite)"
 msgstr "Значення (наприклад, org.gnome.shell.extensions.dash2dock-lite)"
 
-#: src/ConstantsWindow.vala:216
+#: src/constants_window.rs:274
+#, no-rust-format
 msgid ""
 "Use in commands as $NAME or ${NAME}. Names use letters, numbers and "
 "underscores."
@@ -308,94 +280,23 @@ msgstr ""
 "Використовуйте в командах як $NAME або ${NAME}. В іменах використовуються "
 "літери, цифри та підкреслення."
 
-#: src/MainWindow.vala:64
+#: src/monitor.rs:188
+msgid "Switchcraft Monitor"
+msgstr "Монітор Switchcraft"
+
+#: src/monitor.rs:189
+msgid "Monitor theme changes and run commands"
+msgstr "Відстежуйте зміни теми та запускайте команди"
+
+#: src/preferences.rs:54
 msgid "Preferences"
 msgstr "Параметри"
 
-#: src/MainWindow.vala:67
-msgid "Keyboard Shortcuts"
-msgstr "Клавіатурні скорочення"
-
-#: src/MainWindow.vala:68
-msgid "About Switchcraft"
-msgstr "Про Switchcraft"
-
-#: src/MainWindow.vala:69
-msgid "Quit"
-msgstr "Вийти"
-
-#: src/MainWindow.vala:78
-msgid "Run the background process that reacts to theme changes."
-msgstr "Запустіть фоновий процес, який реагує на зміни теми."
-
-#: src/MainWindow.vala:79 src/MainWindow.vala:82
-msgid "Monitor"
-msgstr "Монітор"
-
-#: src/MainWindow.vala:88
-msgid "No Commands"
-msgstr "Немає команд"
-
-#: src/MainWindow.vala:89
-msgid ""
-"Use the '+' button in the header bar or press (Ctrl+N) to add a command."
-msgstr ""
-"Скористайтеся кнопкою '+' на панелі заголовка або натисніть (Ctrl+N), щоб "
-"додати команду."
-
-#: src/MainWindow.vala:128
-msgid "Commands"
-msgstr "Команди"
-
-#: src/MainWindow.vala:129
-msgid "Active commands that will run when their theme matches."
-msgstr "Активні команди, які запускатимуться, коли їх тема збігається."
-
-#: src/MainWindow.vala:135
-msgid "Disabled"
-msgstr "Вимкнений"
-
-#: src/MainWindow.vala:136
-msgid "Saved commands that are currently turned off."
-msgstr "Збережені команди, які зараз вимкнено."
-
-#: src/MainWindow.vala:297
-msgid "Duplicate"
-msgstr "Дублювати"
-
-#: src/MainWindow.vala:310
-msgid "Drag to reorder"
-msgstr "Перетягніть, щоб змінити порядок"
-
-#: src/MainWindow.vala:610
-msgid "Command deleted"
-msgstr "Команду видалено"
-
-#: src/MainWindow.vala:611
-msgid "Undo"
-msgstr "Повернути"
-
-#: src/MainWindow.vala:652
-msgid "Contributors"
-msgstr "Учасники"
-
-#: src/MainWindow.vala:653
-msgid "Credits"
-msgstr "Подяки"
-
-#: src/MainWindow.vala:700
-msgid "Background monitoring is now active"
-msgstr "Фоновий моніторинг тепер активний"
-
-#: src/MainWindow.vala:701
-msgid "Background monitoring is now inactive"
-msgstr "Фоновий моніторинг зараз неактивний"
-
-#: src/PreferencesWindow.vala:43
+#: src/preferences.rs:83
 msgid "Automatic Switching"
 msgstr "Автоматичне перемикання"
 
-#: src/PreferencesWindow.vala:45
+#: src/preferences.rs:85
 msgid ""
 "KDE Plasma is set to switch global themes automatically. Turn that off to "
 "use this schedule."
@@ -403,7 +304,7 @@ msgstr ""
 "KDE Plasma налаштовано на автоматичне перемикання глобальних тем. Вимкніть "
 "це, щоб використовувати цей розклад."
 
-#: src/PreferencesWindow.vala:47
+#: src/preferences.rs:87
 msgid ""
 "Switch KDE's default light and dark global themes on a schedule. Needs "
 "background monitoring."
@@ -411,7 +312,7 @@ msgstr ""
 "Перемикайте стандартні світлі та темні глобальні теми KDE за розкладом. "
 "Потрібен фоновий моніторинг."
 
-#: src/PreferencesWindow.vala:48
+#: src/preferences.rs:89
 msgid ""
 "Switch between light and dark style on a schedule. Needs background "
 "monitoring."
@@ -419,11 +320,11 @@ msgstr ""
 "Перемикайтеся між світлим і темним стилем за розкладом. Потрібен фоновий "
 "моніторинг."
 
-#: src/PreferencesWindow.vala:54
+#: src/preferences.rs:96
 msgid "Automatic Switching Is Set in KDE"
 msgstr "Автоматичне перемикання встановлено в KDE"
 
-#: src/PreferencesWindow.vala:55
+#: src/preferences.rs:98
 msgid ""
 "Turn off “Switch to Dark Mode at Night” in System Settings to use this "
 "schedule."
@@ -431,154 +332,243 @@ msgstr ""
 "Щоб використовувати цей розклад, вимкніть «Перемикатися в темний режим "
 "вночі» в налаштуваннях системи."
 
-#: src/PreferencesWindow.vala:61
+#: src/preferences.rs:105
 msgid "Open Settings"
 msgstr "Відкрийте налаштування"
 
-#: src/PreferencesWindow.vala:65
-msgid "Could not open System Settings"
-msgstr "Не вдалося відкрити налаштування системи"
-
-#: src/PreferencesWindow.vala:74
+#: src/preferences.rs:118
 msgid "Schedule"
 msgstr "Планування"
 
-#: src/PreferencesWindow.vala:75
+#: src/preferences.rs:120
 msgid "Off"
 msgstr "Вимкнено"
 
-#: src/PreferencesWindow.vala:75
+#: src/preferences.rs:121
 msgid "Sunset to Sunrise"
 msgstr "Від заходу до сходу сонця"
 
-#: src/PreferencesWindow.vala:75
+#: src/preferences.rs:122
 msgid "Custom Times"
 msgstr "Спеціальний час"
 
-#: src/PreferencesWindow.vala:86
+#: src/preferences.rs:141
 msgid "Light From"
 msgstr "Світло з"
 
-#: src/PreferencesWindow.vala:87
+#: src/preferences.rs:142
 msgid "Dark From"
 msgstr "Темрява з"
 
-#: src/PreferencesWindow.vala:99
+#: src/preferences.rs:161
 msgid "Configuration"
 msgstr "Конфігурація"
 
-#: src/PreferencesWindow.vala:100
+#: src/preferences.rs:163
 msgid "Import or export commands and constants together as a zip archive."
 msgstr "Імпортуйте або експортуйте команди та константи разом як zip-архів."
 
-#: src/PreferencesWindow.vala:104 src/PreferencesWindow.vala:237
+#: src/preferences.rs:168 src/preferences.rs:341
 msgid "Import Configuration"
 msgstr "Імпортувати конфігурацію"
 
-#: src/PreferencesWindow.vala:105
+#: src/preferences.rs:170
 msgid "Replace local commands and constants from a zip file."
 msgstr "Замініть локальні команди та константи з zip-файлу."
 
-#: src/PreferencesWindow.vala:107
+#: src/preferences.rs:173
 msgid "Import"
 msgstr "Імпортувати"
 
-#: src/PreferencesWindow.vala:116 src/PreferencesWindow.vala:260
+#: src/preferences.rs:184 src/preferences.rs:376
 msgid "Export Configuration"
 msgstr "Експортувати конфігурацію"
 
-#: src/PreferencesWindow.vala:117
+#: src/preferences.rs:185
 msgid "Save commands and constants into a zip file."
 msgstr "Збережіть команди та константи у файлі zip."
 
-#: src/PreferencesWindow.vala:119
+#: src/preferences.rs:187
 msgid "Export"
 msgstr "Експортувати"
 
-#: src/PreferencesWindow.vala:128
+#: src/preferences.rs:198
 msgid "Danger Zone"
 msgstr "Небезпечна зона"
 
-#: src/PreferencesWindow.vala:129
+#: src/preferences.rs:200
 msgid "Remove all saved commands and constants from this device."
 msgstr "Видаліть усі збережені команди та константи з цього пристрою."
 
-#: src/PreferencesWindow.vala:133
+#: src/preferences.rs:205
 msgid "Delete All Configuration"
 msgstr "Видалити всю конфігурацію"
 
-#: src/PreferencesWindow.vala:134
+#: src/preferences.rs:207
 msgid "Deletes commands.json and constants.json. This cannot be undone."
 msgstr "Видаляє commands.json і constants.json. Це неможливо скасувати."
 
-#: src/PreferencesWindow.vala:159
+#: src/preferences.rs:243
 msgid "Location unknown"
 msgstr "Місцезнаходження невідоме"
 
-#: src/PreferencesWindow.vala:165
+#: src/preferences.rs:249
 msgid "The sun stays down today"
 msgstr "Сьогодні сонце не зійде"
 
-#: src/PreferencesWindow.vala:168
+#: src/preferences.rs:252
 msgid "The sun stays up today"
 msgstr "Сьогодні сонце не зайде"
 
-#: src/PreferencesWindow.vala:170
+#: src/preferences.rs:258
 #, c-format
 msgid "Sunrise %s, sunset %s"
 msgstr "Схід сонця %s, захід сонця %s"
 
-#: src/PreferencesWindow.vala:178
+#: src/preferences.rs:265
+msgid "Could not open System Settings"
+msgstr "Не вдалося відкрити налаштування системи"
+
+#: src/preferences.rs:274
 msgid "Hour"
 msgstr "Година"
 
-#: src/PreferencesWindow.vala:179
+#: src/preferences.rs:275
 msgid "Minute"
 msgstr "Хвилина"
 
-#: src/PreferencesWindow.vala:246
+#: src/preferences.rs:358
 msgid "Configuration imported"
 msgstr "Конфігурацію імпортовано"
 
-#: src/PreferencesWindow.vala:248 src/PreferencesWindow.vala:254
+#: src/preferences.rs:368
 #, c-format
 msgid "Import failed: %s"
 msgstr "Помилка імпорту: %s"
 
-#: src/PreferencesWindow.vala:269
+#: src/preferences.rs:393
 msgid "Configuration exported"
 msgstr "Конфігурацію експортовано"
 
-#: src/PreferencesWindow.vala:271 src/PreferencesWindow.vala:277
+#: src/preferences.rs:403
 #, c-format
 msgid "Export failed: %s"
 msgstr "Помилка експорту: %s"
 
-#: src/PreferencesWindow.vala:283
+#: src/preferences.rs:411
 msgid "Delete all configuration?"
 msgstr "Видалити всю конфігурацію?"
 
-#: src/PreferencesWindow.vala:284
+#: src/preferences.rs:413
 msgid ""
 "This will remove every command and constant. This action cannot be undone."
 msgstr "Це видалить усі команди та константи. Цю дію не можна скасувати."
 
-#: src/PreferencesWindow.vala:305
+#: src/preferences.rs:442
 msgid "Configuration deleted"
 msgstr "Конфігурацію видалено"
 
-#: src/PreferencesWindow.vala:307
+#: src/preferences.rs:447
 #, c-format
 msgid "Delete failed: %s"
 msgstr "Не вдалося видалити: %s"
 
-#: src/SlidingToggleGroup.vala:38
+#: src/runner.rs:122
+#, c-format
+msgid "Exited with code %d"
+msgstr "Вийшов із кодом %d"
+
+#: src/runner.rs:128
+#, c-format
+msgid "Killed by signal %d"
+msgstr "Убитий сигналом %d"
+
+#: src/widgets/sliding_toggle_group.rs:166
 msgid "Light"
 msgstr "Світла"
 
-#: src/SlidingToggleGroup.vala:39
+#: src/widgets/sliding_toggle_group.rs:173
 msgid "Dark"
 msgstr "Темна"
+
+#: src/window.rs:110
+msgid "Keyboard Shortcuts"
+msgstr "Клавіатурні скорочення"
+
+#: src/window.rs:111
+msgid "About Switchcraft"
+msgstr "Про Switchcraft"
+
+#: src/window.rs:112
+msgid "Quit"
+msgstr "Вийти"
+
+#: src/window.rs:121
+msgid "Run the background process that reacts to theme changes."
+msgstr "Запустіть фоновий процес, який реагує на зміни теми."
+
+#: src/window.rs:123 src/window.rs:131
+msgid "Monitor"
+msgstr "Монітор"
+
+#: src/window.rs:137
+msgid "No Commands"
+msgstr "Немає команд"
+
+#: src/window.rs:139
+msgid ""
+"Use the '+' button in the header bar or press (Ctrl+N) to add a command."
+msgstr ""
+"Скористайтеся кнопкою '+' на панелі заголовка або натисніть (Ctrl+N), щоб "
+"додати команду."
+
+#: src/window.rs:182
+msgid "Commands"
+msgstr "Команди"
+
+#: src/window.rs:183
+msgid "Active commands that will run when their theme matches."
+msgstr "Активні команди, які запускатимуться, коли їх тема збігається."
+
+#: src/window.rs:188
+msgid "Disabled"
+msgstr "Вимкнений"
+
+#: src/window.rs:189
+msgid "Saved commands that are currently turned off."
+msgstr "Збережені команди, які зараз вимкнено."
+
+#: src/window.rs:371
+msgid "Duplicate"
+msgstr "Дублювати"
+
+#: src/window.rs:384
+msgid "Drag to reorder"
+msgstr "Перетягніть, щоб змінити порядок"
+
+#: src/window.rs:796
+msgid "Command deleted"
+msgstr "Команду видалено"
+
+#: src/window.rs:797
+msgid "Undo"
+msgstr "Повернути"
+
+#: src/window.rs:855
+msgid "Contributors"
+msgstr "Учасники"
+
+#: src/window.rs:858
+msgid "Credits"
+msgstr "Подяки"
+
+#: src/window.rs:911
+msgid "Background monitoring is now active"
+msgstr "Фоновий моніторинг тепер активний"
+
+#: src/window.rs:913
+msgid "Background monitoring is now inactive"
+msgstr "Фоновий моніторинг зараз неактивний"
 
 #: data/resources/shortcuts-dialog.ui:6
 msgid "General"
@@ -687,7 +677,9 @@ msgstr ""
 msgid ""
 "Built-in commands: pick a setting and a value from a list instead of typing "
 "a command"
-msgstr "Вбудовані команди: виберіть налаштування та значення зі списку замість введення команди"
+msgstr ""
+"Вбудовані команди: виберіть налаштування та значення зі списку замість "
+"введення команди"
 
 #: data/com.github.Switchcraft.metainfo.xml.in:42
 msgid "KDE Plasma and Kvantum support"
@@ -701,11 +693,22 @@ msgstr "Автоматичне перемикання на заході та с�
 msgid ""
 "Redesigned command list with drag-and-drop reordering, command testing and "
 "undo"
-msgstr "Оновлений список команд зі зміною порядку перетягуванням, перевіркою команд і скасуванням"
+msgstr ""
+"Оновлений список команд зі зміною порядку перетягуванням, перевіркою команд "
+"і скасуванням"
 
 #: data/com.github.Switchcraft.metainfo.xml.in:45
 msgid "Translated into 22 languages"
 msgstr "Перекладено 22 мовами"
+
+#~ msgid "The 'zip' command is required to export."
+#~ msgstr "Для експорту потрібна команда \"zip\"."
+
+#~ msgid "Failed to create temporary directory."
+#~ msgstr "Не вдалося створити тимчасовий каталог."
+
+#~ msgid "The 'unzip' command is required to import."
+#~ msgstr "Для імпорту потрібна команда \"unzip\"."
 
 #~ msgid "Monitor GNOME theme changes and run commands"
 #~ msgstr "Відстежуйте зміни теми GNOME та запускайте команди"

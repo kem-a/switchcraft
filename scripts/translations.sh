@@ -2,7 +2,7 @@
 # ---------------------------------------------------------------------------
 # translations.sh - Manage Switchcraft translation files
 #
-# Extracts translatable strings from Vala sources, GtkBuilder UI, desktop
+# Extracts translatable strings from Rust sources, GtkBuilder UI, desktop
 # metadata, GSettings schemas and AppStream metadata. It regenerates the .pot
 # template, merges it into every .po file, and validates each one with msgfmt.
 #
@@ -44,8 +44,8 @@ POT_FILE="$PO_DIR/switchcraft.pot"
 LINGUAS_FILE="$PO_DIR/LINGUAS"
 POTFILES_FILE="$PO_DIR/POTFILES"
 
-PACKAGE_NAME=$(sed -n "s/^project('\([^']*\)'.*/\1/p" "$PROJECT_DIR/meson.build" | head -1)
-PACKAGE_VERSION=$(sed -n "s/^  version: '\([^']*\)'.*/\1/p" "$PROJECT_DIR/meson.build" | head -1)
+PACKAGE_NAME=$(sed -n 's/^name = "\(.*\)"/\1/p' "$PROJECT_DIR/Cargo.toml" | head -1)
+PACKAGE_VERSION=$(sed -n 's/^version = "\(.*\)"/\1/p' "$PROJECT_DIR/Cargo.toml" | head -1)
 BUGS_ADDRESS="https://github.com/kem-a/switchcraft/issues"
 
 # xgettext keywords matching GLib preset (Vala / C gettext conventions)
@@ -439,9 +439,11 @@ extract_file() {
     local out="$2"
 
     case "$file" in
-        *.vala)
-            xgettext --language=Vala --add-comments='TRANSLATORS:' \
-                "${XGETTEXT_COMMON[@]}" "${XGETTEXT_KEYWORDS[@]}" \
+        *.rs)
+            # gettext() and i18n_f() from src/i18n.rs. Strings with %s or %d
+            # carry a "// xgettext:c-format" comment, so msgfmt checks them.
+            xgettext --language=Rust --add-comments='TRANSLATORS:' \
+                "${XGETTEXT_COMMON[@]}" --keyword=gettext --keyword=i18n_f:1 \
                 --output="$out" "$file"
             ;;
         *.ui)

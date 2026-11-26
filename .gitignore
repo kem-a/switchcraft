@@ -1,5 +1,4 @@
 # Build artifacts
-builddir/
 build/
 dist/
 squashfs-root/
@@ -11,5 +10,7 @@ appimagetool
 .directory
 .c[a-z]*/
 *.log
-samples/
+*.zip
 docs/
+/target/
+/build-anyimage/

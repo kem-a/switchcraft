@@ -1,0 +1,1 @@
+{"light":[{"command":"no position"},{"command":"x","enabled":"yes"},{"command":7},{"enabled":false},{"command":"pos float","position":1.0},{"command":"pos big","position":4294967297},{"command":"bool null","enabled":null,"builtin":5,"value":"v"}],"dark":{"not":"array"}}

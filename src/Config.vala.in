@@ -1,3 +1,0 @@
-namespace Switchcraft {
-    public const string VERSION = "@VERSION@";
-}

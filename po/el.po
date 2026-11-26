@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: switchcraft 2.0.0\n"
 "Report-Msgid-Bugs-To: https://github.com/kem-a/switchcraft/issues\n"
-"POT-Creation-Date: 2026-11-12 00:18+0200\n"
+"POT-Creation-Date: 2026-11-23 16:40+0200\n"
 "PO-Revision-Date: 2026-11-11 12:02+0000\n"
 "Last-Translator: Switchcraft translators\n"
 "Language-Team: none\n"
@@ -17,252 +17,223 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: src/Application.vala:126
+#: src/application.rs:153
 msgid "Show version information"
 msgstr "Εμφάνιση πληροφοριών έκδοσης"
 
-#: src/Application.vala:127
+#: src/application.rs:161
 msgid "Run in background for theme monitoring"
 msgstr "Εκτέλεση στο παρασκήνιο για παρακολούθηση θέματος"
 
-#: src/Application.vala:352
+#: src/builtins.rs:373
+msgid "Color Scheme"
+msgstr "Σχήμα χρώματος"
+
+#: src/builtins.rs:374
+msgid "Accent Color"
+msgstr "Χρώμα Έμφασης"
+
+#: src/builtins.rs:375
+msgid "Icon Theme"
+msgstr "Θέμα εικονιδίων"
+
+#: src/builtins.rs:376
+msgid "GTK Theme"
+msgstr "Θέμα GTK"
+
+#: src/builtins.rs:377
+msgid "Cursor Theme"
+msgstr "Θέμα δρομέα"
+
+#: src/builtins.rs:378
+msgid "Shell Theme"
+msgstr "Θέμα Shell"
+
+#: src/builtins.rs:379
+msgid "Wallpaper"
+msgstr "Ταπετσαρία"
+
+#: src/builtins.rs:380
+msgid "Night Light"
+msgstr "Φως νύχτας"
+
+#: src/builtins.rs:381
+msgid "Global Theme"
+msgstr "Γενικό θέμα"
+
+#: src/builtins.rs:382
+msgid "Plasma Style"
+msgstr "Στυλ Plasma"
+
+#: src/builtins.rs:383
+msgid "Kvantum Theme"
+msgstr "Θέμα Kvantum"
+
+#: src/builtins.rs:433
+msgid "Switches to the light style and would loop in Dark mode"
+msgstr ""
+"Αλλάζει στο φωτεινό στυλ και θα προκαλούσε βρόχο στη σκοτεινή λειτουργία"
+
+#: src/builtins.rs:436
+msgid "Switches to the dark style and would loop in Light mode"
+msgstr ""
+"Αλλάζει στο σκοτεινό στυλ και θα προκαλούσε βρόχο στη φωτεινή λειτουργία"
+
+#: src/builtins.rs:458
 #, c-format
-msgid "Exited with code %d"
-msgstr "Έγινε έξοδος με κωδικό %d"
+msgid "%s is already set in this mode"
+msgstr "Το %s έχει ήδη ρυθμιστεί σε αυτήν τη λειτουργία"
 
-#: src/Application.vala:353
-#, c-format
-msgid "Killed by signal %d"
-msgstr "Σκοτώθηκε από σήμα %d"
+#: src/builtins.rs:465
+msgid "This command is already in this mode"
+msgstr "Αυτή η εντολή βρίσκεται ήδη σε αυτήν τη λειτουργία"
 
-#: src/Application.vala:1367
-msgid "The 'zip' command is required to export."
-msgstr "Η εντολή 'zip' απαιτείται για την εξαγωγή."
-
-#: src/Application.vala:1373
+#: src/bundle.rs:16
 msgid "Destination must be a local file."
 msgstr "Ο προορισμός πρέπει να είναι τοπικό αρχείο."
 
-#: src/Application.vala:1380
+#: src/bundle.rs:21
 msgid "Failed to prepare destination directory."
 msgstr "Αποτυχία προετοιμασίας καταλόγου προορισμού."
 
-#: src/Application.vala:1388 src/Application.vala:1461
-msgid "Failed to create temporary directory."
-msgstr "Αποτυχία δημιουργίας προσωρινού καταλόγου."
-
-#: src/Application.vala:1419
+#: src/bundle.rs:28
 msgid "Unable to overwrite existing archive."
 msgstr "Δεν είναι δυνατή η αντικατάσταση του υπάρχοντος αρχείου."
 
-#: src/Application.vala:1431
+#: src/bundle.rs:41
 #, c-format
 msgid "Failed to write archive: %s"
 msgstr "Απέτυχε η εγγραφή του αρχείου: %s"
 
-#: src/Application.vala:1448
-msgid "The 'unzip' command is required to import."
-msgstr "Η εντολή 'unzip' απαιτείται για την εισαγωγή."
-
-#: src/Application.vala:1454
+#: src/bundle.rs:97
 msgid "Archive must be a local file."
 msgstr "Το αρχείο πρέπει να είναι τοπικό αρχείο."
 
-#: src/Application.vala:1472
+#: src/bundle.rs:103
 #, c-format
 msgid "Failed to unpack archive: %s"
 msgstr "Απέτυχε η αποσυσκευασία του αρχείου: %s"
 
-#: src/Application.vala:1480
+#: src/bundle.rs:118
 msgid "Archive must contain commands.json and constants.json at the top level."
 msgstr ""
 "Το αρχείο πρέπει να περιέχει commands.json και constants.json στο ανώτερο "
 "επίπεδο."
 
-#: src/Application.vala:1492
+#: src/bundle.rs:130
 msgid "commands.json is not a JSON object."
 msgstr "Το commands.json δεν είναι αντικείμενο JSON."
 
-#: src/Application.vala:1503
+#: src/bundle.rs:140
 msgid "constants.json is not a JSON object."
 msgstr "Το constants.json δεν είναι αντικείμενο JSON."
 
-#: src/Application.vala:1520
+#: src/bundle.rs:154
 msgid "constants.json must only contain string values."
 msgstr "Το constants.json πρέπει να περιέχει μόνο τιμές συμβολοσειράς."
 
-#: src/Application.vala:1533
+#: src/bundle.rs:164
 msgid "theme_settings.json is not a JSON object."
 msgstr "Το theme_settings.json δεν είναι αντικείμενο JSON."
 
-#: src/Application.vala:1556
+#: src/bundle.rs:181
 msgid "Failed to remove commands.json."
 msgstr "Η κατάργηση του commands.json απέτυχε."
 
-#: src/Application.vala:1563
+#: src/bundle.rs:186
 msgid "Failed to remove constants.json."
 msgstr "Απέτυχε η αφαίρεση του constants.json."
 
-#: src/Application.vala:1570
+#: src/bundle.rs:191
 msgid "Failed to remove theme_settings.json."
 msgstr "Απέτυχε η αφαίρεση του theme_settings.json."
 
-#: src/Application.vala:1756
-msgid "Switchcraft Monitor"
-msgstr "Παρακολούθηση Switchcraft"
-
-#: src/Application.vala:1757
-msgid "Monitor theme changes and run commands"
-msgstr "Παρακολουθήστε τις αλλαγές θέματος και εκτελέστε εντολές"
-
-#: src/CommandDialog.vala:44
-msgid "Color Scheme"
-msgstr "Σχήμα χρώματος"
-
-#: src/CommandDialog.vala:46
-msgid "Accent Color"
-msgstr "Χρώμα Έμφασης"
-
-#: src/CommandDialog.vala:49
-msgid "Icon Theme"
-msgstr "Θέμα εικονιδίων"
-
-#: src/CommandDialog.vala:51
-msgid "GTK Theme"
-msgstr "Θέμα GTK"
-
-#: src/CommandDialog.vala:54
-msgid "Cursor Theme"
-msgstr "Θέμα δρομέα"
-
-#: src/CommandDialog.vala:56
-msgid "Shell Theme"
-msgstr "Θέμα Shell"
-
-#: src/CommandDialog.vala:59
-msgid "Wallpaper"
-msgstr "Ταπετσαρία"
-
-#: src/CommandDialog.vala:61
-msgid "Night Light"
-msgstr "Φως νύχτας"
-
-#: src/CommandDialog.vala:63
-msgid "Global Theme"
-msgstr "Γενικό θέμα"
-
-#: src/CommandDialog.vala:65
-msgid "Plasma Style"
-msgstr "Στυλ Plasma"
-
-#: src/CommandDialog.vala:67
-msgid "Kvantum Theme"
-msgstr "Θέμα Kvantum"
-
-#: src/CommandDialog.vala:96
-msgid "Switches to the light style and would loop in Dark mode"
-msgstr ""
-"Αλλάζει στο φωτεινό στυλ και θα προκαλούσε βρόχο στη σκοτεινή λειτουργία"
-
-#: src/CommandDialog.vala:99
-msgid "Switches to the dark style and would loop in Light mode"
-msgstr ""
-"Αλλάζει στο σκοτεινό στυλ και θα προκαλούσε βρόχο στη φωτεινή λειτουργία"
-
-#: src/CommandDialog.vala:113
-#, c-format
-msgid "%s is already set in this mode"
-msgstr "Το %s έχει ήδη ρυθμιστεί σε αυτήν τη λειτουργία"
-
-#: src/CommandDialog.vala:118
-msgid "This command is already in this mode"
-msgstr "Αυτή η εντολή βρίσκεται ήδη σε αυτήν τη λειτουργία"
-
-#: src/CommandDialog.vala:128
+#: src/command_dialog.rs:72
 msgid "Edit Command"
 msgstr "Εντολή επεξεργασίας"
 
-#: src/CommandDialog.vala:128
+#: src/command_dialog.rs:74
 msgid "Add Command"
 msgstr "Προσθήκη εντολής"
 
-#: src/CommandDialog.vala:135
+#: src/command_dialog.rs:82
 msgid "Delete"
 msgstr "Διαγραφή"
 
-#: src/CommandDialog.vala:138
+#: src/command_dialog.rs:85
 msgid "Cancel"
 msgstr "Ακύρωση"
 
-#: src/CommandDialog.vala:139
+#: src/command_dialog.rs:89
 msgid "Save"
 msgstr "Αποθήκευση"
 
-#: src/CommandDialog.vala:139
+#: src/command_dialog.rs:91
 msgid "Add"
 msgstr "Προσθήκη"
 
-#: src/CommandDialog.vala:152
+#: src/command_dialog.rs:106
 msgid "Custom Command"
 msgstr "Προσαρμοσμένη εντολή"
 
-#: src/CommandDialog.vala:174
+#: src/command_dialog.rs:124
 msgid "Type"
 msgstr "Τύπος"
 
-#: src/CommandDialog.vala:179
+#: src/command_dialog.rs:130
 msgid "Command"
 msgstr "Εντολή"
 
-#: src/CommandDialog.vala:219
+#: src/command_dialog.rs:172
 msgid "Copy Error"
 msgstr "Αντιγραφή σφάλματος"
 
-#: src/CommandDialog.vala:244
+#: src/command_dialog.rs:204
 msgid "Test"
 msgstr "Δοκιμή"
 
-#: src/CommandDialog.vala:260
+#: src/command_dialog.rs:226
 msgid "Value"
 msgstr "Τιμή"
 
-#: src/CommandDialog.vala:265
+#: src/command_dialog.rs:232
 msgid "Image"
 msgstr "Εικόνα"
 
-#: src/CommandDialog.vala:270
+#: src/command_dialog.rs:238
 msgid "Browse…"
 msgstr "Εξερεύνηση…"
 
-#: src/CommandDialog.vala:280
+#: src/command_dialog.rs:254
 msgid "Mode"
 msgstr "Κατάσταση"
 
-#: src/CommandDialog.vala:406
+#: src/command_dialog.rs:441
 msgid "Requires the User Themes GNOME Shell extension."
 msgstr "Απαιτεί την επέκταση User Themes GNOME Shell."
 
-#: src/CommandDialog.vala:521
+#: src/command_dialog.rs:569
 msgid "Command failed"
 msgstr "Η εντολή απέτυχε"
 
-#: src/CommandDialog.vala:521
+#: src/command_dialog.rs:571
 msgid "Command succeeded"
 msgstr "Η εντολή πέτυχε"
 
-#: src/CommandDialog.vala:534
+#: src/command_dialog.rs:594
 msgid "Select Wallpaper"
 msgstr "Επιλογή ταπετσαρίας"
 
-#: src/ConstantsWindow.vala:22
+#: src/constants_window.rs:47
 msgid "Constants"
 msgstr "Σταθερές"
 
-#: src/ConstantsWindow.vala:39 src/ConstantsWindow.vala:182
+#: src/constants_window.rs:66 src/constants_window.rs:224
 msgid "Add Constant"
 msgstr "Προσθήκη σταθεράς"
 
-#: src/ConstantsWindow.vala:51
+#: src/constants_window.rs:84
+#, no-rust-format
 msgid ""
 "Define constants to use in your commands. Reference them with $NAME or $"
 "{NAME}."
@@ -270,39 +241,40 @@ msgstr ""
 "Ορίστε σταθερές για χρήση στις εντολές σας. Αναφέρετέ τους με $NAME ή $"
 "{NAME}."
 
-#: src/ConstantsWindow.vala:69
+#: src/constants_window.rs:104
 msgid "No Constants"
 msgstr "Χωρίς σταθερές"
 
-#: src/ConstantsWindow.vala:70
+#: src/constants_window.rs:105
 msgid "Click the '+' button to define a constant."
 msgstr "Κάντε κλικ στο κουμπί '+' για να ορίσετε μια σταθερά."
 
-#: src/ConstantsWindow.vala:145
+#: src/constants_window.rs:181
 msgid "Edit constant"
 msgstr "Επεξεργασία σταθερά"
 
-#: src/ConstantsWindow.vala:153
+#: src/constants_window.rs:193
 msgid "Remove constant"
 msgstr "Αφαιρέστε το σταθερό"
 
-#: src/ConstantsWindow.vala:182
+#: src/constants_window.rs:222
 msgid "Edit Constant"
 msgstr "Επεξεργασία σταθεράς"
 
-#: src/ConstantsWindow.vala:184
+#: src/constants_window.rs:229
 msgid "Define a constant name and value."
 msgstr "Ορίστε ένα σταθερό όνομα και τιμή."
 
-#: src/ConstantsWindow.vala:202
+#: src/constants_window.rs:255
 msgid "Constant name (e.g., D2DL_SCHEMA)"
 msgstr "Όνομα σταθεράς (π.χ., D2DL_SCHEMA)"
 
-#: src/ConstantsWindow.vala:210
+#: src/constants_window.rs:265
 msgid "Value (e.g., org.gnome.shell.extensions.dash2dock-lite)"
 msgstr "Τιμή (π.χ. org.gnome.shell.extensions.dash2dock-lite)"
 
-#: src/ConstantsWindow.vala:216
+#: src/constants_window.rs:274
+#, no-rust-format
 msgid ""
 "Use in commands as $NAME or ${NAME}. Names use letters, numbers and "
 "underscores."
@@ -310,94 +282,23 @@ msgstr ""
 "Χρησιμοποιήστε τις εντολές ως $NAME ή ${NAME}. Τα ονόματα χρησιμοποιούν "
 "γράμματα, αριθμούς και κάτω παύλες."
 
-#: src/MainWindow.vala:64
+#: src/monitor.rs:188
+msgid "Switchcraft Monitor"
+msgstr "Παρακολούθηση Switchcraft"
+
+#: src/monitor.rs:189
+msgid "Monitor theme changes and run commands"
+msgstr "Παρακολουθήστε τις αλλαγές θέματος και εκτελέστε εντολές"
+
+#: src/preferences.rs:54
 msgid "Preferences"
 msgstr "Προτιμήσεις"
 
-#: src/MainWindow.vala:67
-msgid "Keyboard Shortcuts"
-msgstr "Συντομεύσεις Πληκτρολογίου"
-
-#: src/MainWindow.vala:68
-msgid "About Switchcraft"
-msgstr "Σχετικά με το Switchcraft"
-
-#: src/MainWindow.vala:69
-msgid "Quit"
-msgstr "Έξοδος"
-
-#: src/MainWindow.vala:78
-msgid "Run the background process that reacts to theme changes."
-msgstr "Εκτελέστε τη διαδικασία παρασκηνίου που αντιδρά στις αλλαγές θέματος."
-
-#: src/MainWindow.vala:79 src/MainWindow.vala:82
-msgid "Monitor"
-msgstr "Παρακολούθηση"
-
-#: src/MainWindow.vala:88
-msgid "No Commands"
-msgstr "Χωρίς εντολές"
-
-#: src/MainWindow.vala:89
-msgid ""
-"Use the '+' button in the header bar or press (Ctrl+N) to add a command."
-msgstr ""
-"Χρησιμοποιήστε το κουμπί '+' στη γραμμή κεφαλίδας ή πατήστε (Ctrl+N) για να "
-"προσθέσετε μια εντολή."
-
-#: src/MainWindow.vala:128
-msgid "Commands"
-msgstr "Εντολές"
-
-#: src/MainWindow.vala:129
-msgid "Active commands that will run when their theme matches."
-msgstr "Ενεργές εντολές που θα εκτελούνται όταν το θέμα τους ταιριάζει."
-
-#: src/MainWindow.vala:135
-msgid "Disabled"
-msgstr "Ανενεργό"
-
-#: src/MainWindow.vala:136
-msgid "Saved commands that are currently turned off."
-msgstr "Αποθηκευμένες εντολές που είναι απενεργοποιημένες αυτήν τη στιγμή."
-
-#: src/MainWindow.vala:297
-msgid "Duplicate"
-msgstr "Αντίγραφο"
-
-#: src/MainWindow.vala:310
-msgid "Drag to reorder"
-msgstr "Σύρετε για αναδιάταξη"
-
-#: src/MainWindow.vala:610
-msgid "Command deleted"
-msgstr "Η εντολή διαγράφηκε"
-
-#: src/MainWindow.vala:611
-msgid "Undo"
-msgstr "Αναίρεση"
-
-#: src/MainWindow.vala:652
-msgid "Contributors"
-msgstr "Συντελεστές"
-
-#: src/MainWindow.vala:653
-msgid "Credits"
-msgstr "Ευχαριστίες"
-
-#: src/MainWindow.vala:700
-msgid "Background monitoring is now active"
-msgstr "Η παρακολούθηση παρασκηνίου είναι πλέον ενεργή"
-
-#: src/MainWindow.vala:701
-msgid "Background monitoring is now inactive"
-msgstr "Η παρακολούθηση παρασκηνίου είναι πλέον ανενεργή"
-
-#: src/PreferencesWindow.vala:43
+#: src/preferences.rs:83
 msgid "Automatic Switching"
 msgstr "Αυτόματη εναλλαγή"
 
-#: src/PreferencesWindow.vala:45
+#: src/preferences.rs:85
 msgid ""
 "KDE Plasma is set to switch global themes automatically. Turn that off to "
 "use this schedule."
@@ -405,7 +306,7 @@ msgstr ""
 "Το KDE Plasma έχει ρυθμιστεί για αυτόματη εναλλαγή καθολικών θεμάτων. "
 "Απενεργοποιήστε το για να χρησιμοποιήσετε αυτό το πρόγραμμα."
 
-#: src/PreferencesWindow.vala:47
+#: src/preferences.rs:87
 msgid ""
 "Switch KDE's default light and dark global themes on a schedule. Needs "
 "background monitoring."
@@ -413,7 +314,7 @@ msgstr ""
 "Αλλάξτε τα προεπιλεγμένα φωτεινά και σκοτεινά καθολικά θέματα του KDE σε ένα "
 "χρονοδιάγραμμα. Χρειάζεται παρακολούθηση παρασκηνίου."
 
-#: src/PreferencesWindow.vala:48
+#: src/preferences.rs:89
 msgid ""
 "Switch between light and dark style on a schedule. Needs background "
 "monitoring."
@@ -421,11 +322,11 @@ msgstr ""
 "Εναλλαγή μεταξύ ανοιχτού και σκούρου στυλ σε ένα πρόγραμμα. Χρειάζεται "
 "παρακολούθηση παρασκηνίου."
 
-#: src/PreferencesWindow.vala:54
+#: src/preferences.rs:96
 msgid "Automatic Switching Is Set in KDE"
 msgstr "Η αυτόματη εναλλαγή έχει ρυθμιστεί στο KDE"
 
-#: src/PreferencesWindow.vala:55
+#: src/preferences.rs:98
 msgid ""
 "Turn off “Switch to Dark Mode at Night” in System Settings to use this "
 "schedule."
@@ -433,158 +334,247 @@ msgstr ""
 "Απενεργοποιήστε τη «Μετάβαση σε σκοτεινή λειτουργία τη νύχτα» στις Ρυθμίσεις "
 "συστήματος για να χρησιμοποιήσετε αυτό το πρόγραμμα."
 
-#: src/PreferencesWindow.vala:61
+#: src/preferences.rs:105
 msgid "Open Settings"
 msgstr "Ανοίξτε τις Ρυθμίσεις"
 
-#: src/PreferencesWindow.vala:65
-msgid "Could not open System Settings"
-msgstr "Δεν ήταν δυνατό το άνοιγμα των ρυθμίσεων συστήματος"
-
-#: src/PreferencesWindow.vala:74
+#: src/preferences.rs:118
 msgid "Schedule"
 msgstr "Χρονοδιάγραμμα"
 
-#: src/PreferencesWindow.vala:75
+#: src/preferences.rs:120
 msgid "Off"
 msgstr "Ανενεργό"
 
-#: src/PreferencesWindow.vala:75
+#: src/preferences.rs:121
 msgid "Sunset to Sunrise"
 msgstr "Ηλιοβασίλεμα έως Ανατολή"
 
-#: src/PreferencesWindow.vala:75
+#: src/preferences.rs:122
 msgid "Custom Times"
 msgstr "Προσαρμοσμένοι Χρόνοι"
 
-#: src/PreferencesWindow.vala:86
+#: src/preferences.rs:141
 msgid "Light From"
 msgstr "Φως από"
 
-#: src/PreferencesWindow.vala:87
+#: src/preferences.rs:142
 msgid "Dark From"
 msgstr "Σκοτάδι από"
 
-#: src/PreferencesWindow.vala:99
+#: src/preferences.rs:161
 msgid "Configuration"
 msgstr "Διαμόρφωση"
 
-#: src/PreferencesWindow.vala:100
+#: src/preferences.rs:163
 msgid "Import or export commands and constants together as a zip archive."
 msgstr "Εισαγάγετε ή εξάγετε εντολές και σταθερές μαζί ως αρχείο zip."
 
-#: src/PreferencesWindow.vala:104 src/PreferencesWindow.vala:237
+#: src/preferences.rs:168 src/preferences.rs:341
 msgid "Import Configuration"
 msgstr "Εισαγωγή διαμόρφωσης"
 
-#: src/PreferencesWindow.vala:105
+#: src/preferences.rs:170
 msgid "Replace local commands and constants from a zip file."
 msgstr "Αντικαταστήστε τις τοπικές εντολές και σταθερές από ένα αρχείο zip."
 
-#: src/PreferencesWindow.vala:107
+#: src/preferences.rs:173
 msgid "Import"
 msgstr "Εισαγωγή"
 
-#: src/PreferencesWindow.vala:116 src/PreferencesWindow.vala:260
+#: src/preferences.rs:184 src/preferences.rs:376
 msgid "Export Configuration"
 msgstr "Εξαγωγή διαμόρφωσης"
 
-#: src/PreferencesWindow.vala:117
+#: src/preferences.rs:185
 msgid "Save commands and constants into a zip file."
 msgstr "Αποθηκεύστε εντολές και σταθερές σε ένα αρχείο zip."
 
-#: src/PreferencesWindow.vala:119
+#: src/preferences.rs:187
 msgid "Export"
 msgstr "Εξαγωγή"
 
-#: src/PreferencesWindow.vala:128
+#: src/preferences.rs:198
 msgid "Danger Zone"
 msgstr "Επικίνδυνη Ζώνη"
 
-#: src/PreferencesWindow.vala:129
+#: src/preferences.rs:200
 msgid "Remove all saved commands and constants from this device."
 msgstr ""
 "Καταργήστε όλες τις αποθηκευμένες εντολές και σταθερές από αυτήν τη συσκευή."
 
-#: src/PreferencesWindow.vala:133
+#: src/preferences.rs:205
 msgid "Delete All Configuration"
 msgstr "Διαγραφή όλων των ρυθμίσεων"
 
-#: src/PreferencesWindow.vala:134
+#: src/preferences.rs:207
 msgid "Deletes commands.json and constants.json. This cannot be undone."
 msgstr ""
 "Διαγράφει τα commands.json και constants.json. Αυτό δεν μπορεί να αναιρεθεί."
 
-#: src/PreferencesWindow.vala:159
+#: src/preferences.rs:243
 msgid "Location unknown"
 msgstr "Άγνωστη τοποθεσία"
 
-#: src/PreferencesWindow.vala:165
+#: src/preferences.rs:249
 msgid "The sun stays down today"
 msgstr "Ο ήλιος δεν ανατέλλει σήμερα"
 
-#: src/PreferencesWindow.vala:168
+#: src/preferences.rs:252
 msgid "The sun stays up today"
 msgstr "Ο ήλιος δεν δύει σήμερα"
 
-#: src/PreferencesWindow.vala:170
+#: src/preferences.rs:258
 #, c-format
 msgid "Sunrise %s, sunset %s"
 msgstr "Ανατολή %s, δύση %s"
 
-#: src/PreferencesWindow.vala:178
+#: src/preferences.rs:265
+msgid "Could not open System Settings"
+msgstr "Δεν ήταν δυνατό το άνοιγμα των ρυθμίσεων συστήματος"
+
+#: src/preferences.rs:274
 msgid "Hour"
 msgstr "Ώρα"
 
-#: src/PreferencesWindow.vala:179
+#: src/preferences.rs:275
 msgid "Minute"
 msgstr "Λεπτό"
 
-#: src/PreferencesWindow.vala:246
+#: src/preferences.rs:358
 msgid "Configuration imported"
 msgstr "Η διαμόρφωση εισήχθη"
 
-#: src/PreferencesWindow.vala:248 src/PreferencesWindow.vala:254
+#: src/preferences.rs:368
 #, c-format
 msgid "Import failed: %s"
 msgstr "Η εισαγωγή απέτυχε: %s"
 
-#: src/PreferencesWindow.vala:269
+#: src/preferences.rs:393
 msgid "Configuration exported"
 msgstr "Εξαγωγή διαμόρφωσης"
 
-#: src/PreferencesWindow.vala:271 src/PreferencesWindow.vala:277
+#: src/preferences.rs:403
 #, c-format
 msgid "Export failed: %s"
 msgstr "Η εξαγωγή απέτυχε: %s"
 
-#: src/PreferencesWindow.vala:283
+#: src/preferences.rs:411
 msgid "Delete all configuration?"
 msgstr "Διαγραφή όλων των ρυθμίσεων;"
 
-#: src/PreferencesWindow.vala:284
+#: src/preferences.rs:413
 msgid ""
 "This will remove every command and constant. This action cannot be undone."
 msgstr ""
 "Αυτό θα αφαιρέσει κάθε εντολή και σταθερά. Αυτή η ενέργεια δεν μπορεί να "
 "αναιρεθεί."
 
-#: src/PreferencesWindow.vala:305
+#: src/preferences.rs:442
 msgid "Configuration deleted"
 msgstr "Η διαμόρφωση διαγράφηκε"
 
-#: src/PreferencesWindow.vala:307
+#: src/preferences.rs:447
 #, c-format
 msgid "Delete failed: %s"
 msgstr "Η διαγραφή απέτυχε: %s"
 
-#: src/SlidingToggleGroup.vala:38
+#: src/runner.rs:122
+#, c-format
+msgid "Exited with code %d"
+msgstr "Έγινε έξοδος με κωδικό %d"
+
+#: src/runner.rs:128
+#, c-format
+msgid "Killed by signal %d"
+msgstr "Σκοτώθηκε από σήμα %d"
+
+#: src/widgets/sliding_toggle_group.rs:166
 msgid "Light"
 msgstr "Ανοιχτό"
 
-#: src/SlidingToggleGroup.vala:39
+#: src/widgets/sliding_toggle_group.rs:173
 msgid "Dark"
 msgstr "Σκούρο"
+
+#: src/window.rs:110
+msgid "Keyboard Shortcuts"
+msgstr "Συντομεύσεις Πληκτρολογίου"
+
+#: src/window.rs:111
+msgid "About Switchcraft"
+msgstr "Σχετικά με το Switchcraft"
+
+#: src/window.rs:112
+msgid "Quit"
+msgstr "Έξοδος"
+
+#: src/window.rs:121
+msgid "Run the background process that reacts to theme changes."
+msgstr "Εκτελέστε τη διαδικασία παρασκηνίου που αντιδρά στις αλλαγές θέματος."
+
+#: src/window.rs:123 src/window.rs:131
+msgid "Monitor"
+msgstr "Παρακολούθηση"
+
+#: src/window.rs:137
+msgid "No Commands"
+msgstr "Χωρίς εντολές"
+
+#: src/window.rs:139
+msgid ""
+"Use the '+' button in the header bar or press (Ctrl+N) to add a command."
+msgstr ""
+"Χρησιμοποιήστε το κουμπί '+' στη γραμμή κεφαλίδας ή πατήστε (Ctrl+N) για να "
+"προσθέσετε μια εντολή."
+
+#: src/window.rs:182
+msgid "Commands"
+msgstr "Εντολές"
+
+#: src/window.rs:183
+msgid "Active commands that will run when their theme matches."
+msgstr "Ενεργές εντολές που θα εκτελούνται όταν το θέμα τους ταιριάζει."
+
+#: src/window.rs:188
+msgid "Disabled"
+msgstr "Ανενεργό"
+
+#: src/window.rs:189
+msgid "Saved commands that are currently turned off."
+msgstr "Αποθηκευμένες εντολές που είναι απενεργοποιημένες αυτήν τη στιγμή."
+
+#: src/window.rs:371
+msgid "Duplicate"
+msgstr "Αντίγραφο"
+
+#: src/window.rs:384
+msgid "Drag to reorder"
+msgstr "Σύρετε για αναδιάταξη"
+
+#: src/window.rs:796
+msgid "Command deleted"
+msgstr "Η εντολή διαγράφηκε"
+
+#: src/window.rs:797
+msgid "Undo"
+msgstr "Αναίρεση"
+
+#: src/window.rs:855
+msgid "Contributors"
+msgstr "Συντελεστές"
+
+#: src/window.rs:858
+msgid "Credits"
+msgstr "Ευχαριστίες"
+
+#: src/window.rs:911
+msgid "Background monitoring is now active"
+msgstr "Η παρακολούθηση παρασκηνίου είναι πλέον ενεργή"
+
+#: src/window.rs:913
+msgid "Background monitoring is now inactive"
+msgstr "Η παρακολούθηση παρασκηνίου είναι πλέον ανενεργή"
 
 #: data/resources/shortcuts-dialog.ui:6
 msgid "General"
@@ -698,7 +688,9 @@ msgstr ""
 msgid ""
 "Built-in commands: pick a setting and a value from a list instead of typing "
 "a command"
-msgstr "Ενσωματωμένες εντολές: επιλέξτε ρύθμιση και τιμή από λίστα αντί να πληκτρολογείτε εντολή"
+msgstr ""
+"Ενσωματωμένες εντολές: επιλέξτε ρύθμιση και τιμή από λίστα αντί να "
+"πληκτρολογείτε εντολή"
 
 #: data/com.github.Switchcraft.metainfo.xml.in:42
 msgid "KDE Plasma and Kvantum support"
@@ -706,17 +698,30 @@ msgstr "Υποστήριξη KDE Plasma και Kvantum"
 
 #: data/com.github.Switchcraft.metainfo.xml.in:43
 msgid "Automatic switching at sunset and sunrise or at custom times"
-msgstr "Αυτόματη εναλλαγή κατά τη δύση και την ανατολή του ηλίου ή σε προσαρμοσμένες ώρες"
+msgstr ""
+"Αυτόματη εναλλαγή κατά τη δύση και την ανατολή του ηλίου ή σε προσαρμοσμένες "
+"ώρες"
 
 #: data/com.github.Switchcraft.metainfo.xml.in:44
 msgid ""
 "Redesigned command list with drag-and-drop reordering, command testing and "
 "undo"
-msgstr "Επανασχεδιασμένη λίστα εντολών με αναδιάταξη με μεταφορά και απόθεση, δοκιμή εντολών και αναίρεση"
+msgstr ""
+"Επανασχεδιασμένη λίστα εντολών με αναδιάταξη με μεταφορά και απόθεση, δοκιμή "
+"εντολών και αναίρεση"
 
 #: data/com.github.Switchcraft.metainfo.xml.in:45
 msgid "Translated into 22 languages"
 msgstr "Μεταφρασμένο σε 22 γλώσσες"
+
+#~ msgid "The 'zip' command is required to export."
+#~ msgstr "Η εντολή 'zip' απαιτείται για την εξαγωγή."
+
+#~ msgid "Failed to create temporary directory."
+#~ msgstr "Αποτυχία δημιουργίας προσωρινού καταλόγου."
+
+#~ msgid "The 'unzip' command is required to import."
+#~ msgstr "Η εντολή 'unzip' απαιτείται για την εισαγωγή."
 
 #~ msgid "Monitor GNOME theme changes and run commands"
 #~ msgstr "Παρακολουθήστε τις αλλαγές θέματος του GNOME και εκτελέστε εντολές"

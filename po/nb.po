@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: switchcraft 2.0.0\n"
 "Report-Msgid-Bugs-To: https://github.com/kem-a/switchcraft/issues\n"
-"POT-Creation-Date: 2026-11-12 00:18+0200\n"
+"POT-Creation-Date: 2026-11-23 16:40+0200\n"
 "PO-Revision-Date: 2026-11-11 12:02+0000\n"
 "Last-Translator: Switchcraft translators\n"
 "Language-Team: none\n"
@@ -17,248 +17,219 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: src/Application.vala:126
+#: src/application.rs:153
 msgid "Show version information"
 msgstr "Vis versjonsinformasjon"
 
-#: src/Application.vala:127
+#: src/application.rs:161
 msgid "Run in background for theme monitoring"
 msgstr "Kjør i bakgrunnen for temaovervåking"
 
-#: src/Application.vala:352
-#, c-format
-msgid "Exited with code %d"
-msgstr "Avsluttet med koden %d"
-
-#: src/Application.vala:353
-#, c-format
-msgid "Killed by signal %d"
-msgstr "Drept av signal %d"
-
-#: src/Application.vala:1367
-msgid "The 'zip' command is required to export."
-msgstr "Kommandoen 'zip' er nødvendig for å eksportere."
-
-#: src/Application.vala:1373
-msgid "Destination must be a local file."
-msgstr "Destinasjonen må være en lokal fil."
-
-#: src/Application.vala:1380
-msgid "Failed to prepare destination directory."
-msgstr "Kunne ikke klargjøre målkatalogen."
-
-#: src/Application.vala:1388 src/Application.vala:1461
-msgid "Failed to create temporary directory."
-msgstr "Kunne ikke opprette midlertidig katalog."
-
-#: src/Application.vala:1419
-msgid "Unable to overwrite existing archive."
-msgstr "Kan ikke overskrive eksisterende arkiv."
-
-#: src/Application.vala:1431
-#, c-format
-msgid "Failed to write archive: %s"
-msgstr "Kunne ikke skrive arkiv: %s"
-
-#: src/Application.vala:1448
-msgid "The 'unzip' command is required to import."
-msgstr "Kommandoen 'unzip' er nødvendig for å importere."
-
-#: src/Application.vala:1454
-msgid "Archive must be a local file."
-msgstr "Arkivet må være en lokal fil."
-
-#: src/Application.vala:1472
-#, c-format
-msgid "Failed to unpack archive: %s"
-msgstr "Kunne ikke pakke ut arkivet: %s"
-
-#: src/Application.vala:1480
-msgid "Archive must contain commands.json and constants.json at the top level."
-msgstr "Arkiv må inneholde commands.json og constants.json på toppnivå."
-
-#: src/Application.vala:1492
-msgid "commands.json is not a JSON object."
-msgstr "commands.json er ikke et JSON-objekt."
-
-#: src/Application.vala:1503
-msgid "constants.json is not a JSON object."
-msgstr "constants.json er ikke et JSON-objekt."
-
-#: src/Application.vala:1520
-msgid "constants.json must only contain string values."
-msgstr "constants.json må bare inneholde strengverdier."
-
-#: src/Application.vala:1533
-msgid "theme_settings.json is not a JSON object."
-msgstr "theme_settings.json er ikke et JSON-objekt."
-
-#: src/Application.vala:1556
-msgid "Failed to remove commands.json."
-msgstr "Kunne ikke fjerne commands.json."
-
-#: src/Application.vala:1563
-msgid "Failed to remove constants.json."
-msgstr "Kunne ikke fjerne constants.json."
-
-#: src/Application.vala:1570
-msgid "Failed to remove theme_settings.json."
-msgstr "Kunne ikke fjerne theme_settings.json."
-
-#: src/Application.vala:1756
-msgid "Switchcraft Monitor"
-msgstr "Switchcraft-overvåking"
-
-#: src/Application.vala:1757
-msgid "Monitor theme changes and run commands"
-msgstr "Overvåk temaendringer og kjør kommandoer"
-
-#: src/CommandDialog.vala:44
+#: src/builtins.rs:373
 msgid "Color Scheme"
 msgstr "Fargeoppsett"
 
-#: src/CommandDialog.vala:46
+#: src/builtins.rs:374
 msgid "Accent Color"
 msgstr "Systemfarge"
 
-#: src/CommandDialog.vala:49
+#: src/builtins.rs:375
 msgid "Icon Theme"
 msgstr "Ikontema"
 
-#: src/CommandDialog.vala:51
+#: src/builtins.rs:376
 msgid "GTK Theme"
 msgstr "GTK-tema"
 
-#: src/CommandDialog.vala:54
+#: src/builtins.rs:377
 msgid "Cursor Theme"
 msgstr "Markørtema"
 
-#: src/CommandDialog.vala:56
+#: src/builtins.rs:378
 msgid "Shell Theme"
 msgstr "Shell-tema"
 
-#: src/CommandDialog.vala:59
+#: src/builtins.rs:379
 msgid "Wallpaper"
 msgstr "Bakgrunnsbilde"
 
-#: src/CommandDialog.vala:61
+#: src/builtins.rs:380
 msgid "Night Light"
 msgstr "Kveldsfarger"
 
-#: src/CommandDialog.vala:63
+#: src/builtins.rs:381
 msgid "Global Theme"
 msgstr "Globalt tema"
 
-#: src/CommandDialog.vala:65
+#: src/builtins.rs:382
 msgid "Plasma Style"
 msgstr "Plasma-stil"
 
-#: src/CommandDialog.vala:67
+#: src/builtins.rs:383
 msgid "Kvantum Theme"
 msgstr "Kvantum-tema"
 
-#: src/CommandDialog.vala:96
+#: src/builtins.rs:433
 msgid "Switches to the light style and would loop in Dark mode"
 msgstr "Byter til lys stil og vil gå i løkke i mørk modus"
 
-#: src/CommandDialog.vala:99
+#: src/builtins.rs:436
 msgid "Switches to the dark style and would loop in Light mode"
 msgstr "Byter til mørk stil og vil gå i løkke i lys modus"
 
-#: src/CommandDialog.vala:113
+#: src/builtins.rs:458
 #, c-format
 msgid "%s is already set in this mode"
 msgstr "%s er allerede satt i denne modusen"
 
-#: src/CommandDialog.vala:118
+#: src/builtins.rs:465
 msgid "This command is already in this mode"
 msgstr "Denne kommandoen er allerede i denne modusen"
 
-#: src/CommandDialog.vala:128
+#: src/bundle.rs:16
+msgid "Destination must be a local file."
+msgstr "Destinasjonen må være en lokal fil."
+
+#: src/bundle.rs:21
+msgid "Failed to prepare destination directory."
+msgstr "Kunne ikke klargjøre målkatalogen."
+
+#: src/bundle.rs:28
+msgid "Unable to overwrite existing archive."
+msgstr "Kan ikke overskrive eksisterende arkiv."
+
+#: src/bundle.rs:41
+#, c-format
+msgid "Failed to write archive: %s"
+msgstr "Kunne ikke skrive arkiv: %s"
+
+#: src/bundle.rs:97
+msgid "Archive must be a local file."
+msgstr "Arkivet må være en lokal fil."
+
+#: src/bundle.rs:103
+#, c-format
+msgid "Failed to unpack archive: %s"
+msgstr "Kunne ikke pakke ut arkivet: %s"
+
+#: src/bundle.rs:118
+msgid "Archive must contain commands.json and constants.json at the top level."
+msgstr "Arkiv må inneholde commands.json og constants.json på toppnivå."
+
+#: src/bundle.rs:130
+msgid "commands.json is not a JSON object."
+msgstr "commands.json er ikke et JSON-objekt."
+
+#: src/bundle.rs:140
+msgid "constants.json is not a JSON object."
+msgstr "constants.json er ikke et JSON-objekt."
+
+#: src/bundle.rs:154
+msgid "constants.json must only contain string values."
+msgstr "constants.json må bare inneholde strengverdier."
+
+#: src/bundle.rs:164
+msgid "theme_settings.json is not a JSON object."
+msgstr "theme_settings.json er ikke et JSON-objekt."
+
+#: src/bundle.rs:181
+msgid "Failed to remove commands.json."
+msgstr "Kunne ikke fjerne commands.json."
+
+#: src/bundle.rs:186
+msgid "Failed to remove constants.json."
+msgstr "Kunne ikke fjerne constants.json."
+
+#: src/bundle.rs:191
+msgid "Failed to remove theme_settings.json."
+msgstr "Kunne ikke fjerne theme_settings.json."
+
+#: src/command_dialog.rs:72
 msgid "Edit Command"
 msgstr "Rediger kommando"
 
-#: src/CommandDialog.vala:128
+#: src/command_dialog.rs:74
 msgid "Add Command"
 msgstr "Legg til kommando"
 
-#: src/CommandDialog.vala:135
+#: src/command_dialog.rs:82
 msgid "Delete"
 msgstr "Slett"
 
-#: src/CommandDialog.vala:138
+#: src/command_dialog.rs:85
 msgid "Cancel"
 msgstr "Avbryt"
 
-#: src/CommandDialog.vala:139
+#: src/command_dialog.rs:89
 msgid "Save"
 msgstr "Lagre"
 
-#: src/CommandDialog.vala:139
+#: src/command_dialog.rs:91
 msgid "Add"
 msgstr "Legg til"
 
-#: src/CommandDialog.vala:152
+#: src/command_dialog.rs:106
 msgid "Custom Command"
 msgstr "Egendefinert kommando"
 
-#: src/CommandDialog.vala:174
+#: src/command_dialog.rs:124
 msgid "Type"
 msgstr "Type"
 
-#: src/CommandDialog.vala:179
+#: src/command_dialog.rs:130
 msgid "Command"
 msgstr "Kommando"
 
-#: src/CommandDialog.vala:219
+#: src/command_dialog.rs:172
 msgid "Copy Error"
 msgstr "Kopier feil"
 
-#: src/CommandDialog.vala:244
+#: src/command_dialog.rs:204
 msgid "Test"
 msgstr "Test"
 
-#: src/CommandDialog.vala:260
+#: src/command_dialog.rs:226
 msgid "Value"
 msgstr "Verdi"
 
-#: src/CommandDialog.vala:265
+#: src/command_dialog.rs:232
 msgid "Image"
 msgstr "Bilde"
 
-#: src/CommandDialog.vala:270
+#: src/command_dialog.rs:238
 msgid "Browse…"
 msgstr "Bla gjennom…"
 
-#: src/CommandDialog.vala:280
+#: src/command_dialog.rs:254
 msgid "Mode"
 msgstr "Modus"
 
-#: src/CommandDialog.vala:406
+#: src/command_dialog.rs:441
 msgid "Requires the User Themes GNOME Shell extension."
 msgstr "Krever User Themes GNOME Shell-utvidelsen."
 
-#: src/CommandDialog.vala:521
+#: src/command_dialog.rs:569
 msgid "Command failed"
 msgstr "Klarte ikke å kjøre kommandoen"
 
-#: src/CommandDialog.vala:521
+#: src/command_dialog.rs:571
 msgid "Command succeeded"
 msgstr "Kommandoen lyktes"
 
-#: src/CommandDialog.vala:534
+#: src/command_dialog.rs:594
 msgid "Select Wallpaper"
 msgstr "Velg bakgrunnsbilde"
 
-#: src/ConstantsWindow.vala:22
+#: src/constants_window.rs:47
 msgid "Constants"
 msgstr "Konstanter"
 
-#: src/ConstantsWindow.vala:39 src/ConstantsWindow.vala:182
+#: src/constants_window.rs:66 src/constants_window.rs:224
 msgid "Add Constant"
 msgstr "Legg til konstant"
 
-#: src/ConstantsWindow.vala:51
+#: src/constants_window.rs:84
+#, no-rust-format
 msgid ""
 "Define constants to use in your commands. Reference them with $NAME or $"
 "{NAME}."
@@ -266,39 +237,40 @@ msgstr ""
 "Definer konstanter som skal brukes i kommandoene dine. Referer dem med $NAME "
 "eller ${NAME}."
 
-#: src/ConstantsWindow.vala:69
+#: src/constants_window.rs:104
 msgid "No Constants"
 msgstr "Ingen konstanter"
 
-#: src/ConstantsWindow.vala:70
+#: src/constants_window.rs:105
 msgid "Click the '+' button to define a constant."
 msgstr "Klikk på '+'-knappen for å definere en konstant."
 
-#: src/ConstantsWindow.vala:145
+#: src/constants_window.rs:181
 msgid "Edit constant"
 msgstr "Rediger konstant"
 
-#: src/ConstantsWindow.vala:153
+#: src/constants_window.rs:193
 msgid "Remove constant"
 msgstr "Fjern konstant"
 
-#: src/ConstantsWindow.vala:182
+#: src/constants_window.rs:222
 msgid "Edit Constant"
 msgstr "Rediger konstant"
 
-#: src/ConstantsWindow.vala:184
+#: src/constants_window.rs:229
 msgid "Define a constant name and value."
 msgstr "Definer et konstant navn og verdi."
 
-#: src/ConstantsWindow.vala:202
+#: src/constants_window.rs:255
 msgid "Constant name (e.g., D2DL_SCHEMA)"
 msgstr "Konstantnavn (f.eks. D2DL_SCHEMA)"
 
-#: src/ConstantsWindow.vala:210
+#: src/constants_window.rs:265
 msgid "Value (e.g., org.gnome.shell.extensions.dash2dock-lite)"
 msgstr "Verdi (f.eks. org.gnome.shell.extensions.dash2dock-lite)"
 
-#: src/ConstantsWindow.vala:216
+#: src/constants_window.rs:274
+#, no-rust-format
 msgid ""
 "Use in commands as $NAME or ${NAME}. Names use letters, numbers and "
 "underscores."
@@ -306,94 +278,23 @@ msgstr ""
 "Bruk i kommandoer som $NAME eller ${NAME}. Navn bruker bokstaver, tall og "
 "understreker."
 
-#: src/MainWindow.vala:64
+#: src/monitor.rs:188
+msgid "Switchcraft Monitor"
+msgstr "Switchcraft-overvåking"
+
+#: src/monitor.rs:189
+msgid "Monitor theme changes and run commands"
+msgstr "Overvåk temaendringer og kjør kommandoer"
+
+#: src/preferences.rs:54
 msgid "Preferences"
 msgstr "Innstillinger"
 
-#: src/MainWindow.vala:67
-msgid "Keyboard Shortcuts"
-msgstr "Tastatursnarveier"
-
-#: src/MainWindow.vala:68
-msgid "About Switchcraft"
-msgstr "Om Switchcraft"
-
-#: src/MainWindow.vala:69
-msgid "Quit"
-msgstr "Avslutt"
-
-#: src/MainWindow.vala:78
-msgid "Run the background process that reacts to theme changes."
-msgstr "Kjør bakgrunnsprosessen som reagerer på temaendringer."
-
-#: src/MainWindow.vala:79 src/MainWindow.vala:82
-msgid "Monitor"
-msgstr "Overvåking"
-
-#: src/MainWindow.vala:88
-msgid "No Commands"
-msgstr "Ingen kommandoer"
-
-#: src/MainWindow.vala:89
-msgid ""
-"Use the '+' button in the header bar or press (Ctrl+N) to add a command."
-msgstr ""
-"Bruk '+'-knappen i overskriftslinjen eller trykk (Ctrl+N) for å legge til en "
-"kommando."
-
-#: src/MainWindow.vala:128
-msgid "Commands"
-msgstr "Kommandoer"
-
-#: src/MainWindow.vala:129
-msgid "Active commands that will run when their theme matches."
-msgstr "Aktive kommandoer som kjøres når temaet deres samsvarer."
-
-#: src/MainWindow.vala:135
-msgid "Disabled"
-msgstr "Slått av"
-
-#: src/MainWindow.vala:136
-msgid "Saved commands that are currently turned off."
-msgstr "Lagrede kommandoer som for øyeblikket er slått av."
-
-#: src/MainWindow.vala:297
-msgid "Duplicate"
-msgstr "Lag kopi"
-
-#: src/MainWindow.vala:310
-msgid "Drag to reorder"
-msgstr "Dra for å omorganisere"
-
-#: src/MainWindow.vala:610
-msgid "Command deleted"
-msgstr "Kommando slettet"
-
-#: src/MainWindow.vala:611
-msgid "Undo"
-msgstr "Angre"
-
-#: src/MainWindow.vala:652
-msgid "Contributors"
-msgstr "Bidragsytere"
-
-#: src/MainWindow.vala:653
-msgid "Credits"
-msgstr "Takk til"
-
-#: src/MainWindow.vala:700
-msgid "Background monitoring is now active"
-msgstr "Bakgrunnsovervåking er nå aktiv"
-
-#: src/MainWindow.vala:701
-msgid "Background monitoring is now inactive"
-msgstr "Bakgrunnsovervåking er nå inaktiv"
-
-#: src/PreferencesWindow.vala:43
+#: src/preferences.rs:83
 msgid "Automatic Switching"
 msgstr "Automatisk veksling"
 
-#: src/PreferencesWindow.vala:45
+#: src/preferences.rs:85
 msgid ""
 "KDE Plasma is set to switch global themes automatically. Turn that off to "
 "use this schedule."
@@ -401,7 +302,7 @@ msgstr ""
 "KDE Plasma er satt til å bytte globale temaer automatisk. Slå den av for å "
 "bruke denne tidsplanen."
 
-#: src/PreferencesWindow.vala:47
+#: src/preferences.rs:87
 msgid ""
 "Switch KDE's default light and dark global themes on a schedule. Needs "
 "background monitoring."
@@ -409,18 +310,18 @@ msgstr ""
 "Bytt KDEs standard lyse og mørke globale temaer etter en tidsplan. Trenger "
 "bakgrunnsovervåking."
 
-#: src/PreferencesWindow.vala:48
+#: src/preferences.rs:89
 msgid ""
 "Switch between light and dark style on a schedule. Needs background "
 "monitoring."
 msgstr ""
 "Bytt mellom lys og mørk stil på en timeplan. Trenger bakgrunnsovervåking."
 
-#: src/PreferencesWindow.vala:54
+#: src/preferences.rs:96
 msgid "Automatic Switching Is Set in KDE"
 msgstr "Automatisk veksling er satt i KDE"
 
-#: src/PreferencesWindow.vala:55
+#: src/preferences.rs:98
 msgid ""
 "Turn off “Switch to Dark Mode at Night” in System Settings to use this "
 "schedule."
@@ -428,156 +329,245 @@ msgstr ""
 "Slå av \"Bytt til mørk modus om natten\" i systeminnstillinger for å bruke "
 "denne tidsplanen."
 
-#: src/PreferencesWindow.vala:61
+#: src/preferences.rs:105
 msgid "Open Settings"
 msgstr "Åpne Innstillinger"
 
-#: src/PreferencesWindow.vala:65
-msgid "Could not open System Settings"
-msgstr "Kunne ikke åpne Systeminnstillinger"
-
-#: src/PreferencesWindow.vala:74
+#: src/preferences.rs:118
 msgid "Schedule"
 msgstr "Tidsplan"
 
-#: src/PreferencesWindow.vala:75
+#: src/preferences.rs:120
 msgid "Off"
 msgstr "Av"
 
-#: src/PreferencesWindow.vala:75
+#: src/preferences.rs:121
 msgid "Sunset to Sunrise"
 msgstr "Solnedgang til soloppgang"
 
-#: src/PreferencesWindow.vala:75
+#: src/preferences.rs:122
 msgid "Custom Times"
 msgstr "Egendefinerte tider"
 
-#: src/PreferencesWindow.vala:86
+#: src/preferences.rs:141
 msgid "Light From"
 msgstr "Lys fra"
 
-#: src/PreferencesWindow.vala:87
+#: src/preferences.rs:142
 msgid "Dark From"
 msgstr "Mørk fra"
 
-#: src/PreferencesWindow.vala:99
+#: src/preferences.rs:161
 msgid "Configuration"
 msgstr "Konfigurasjon"
 
-#: src/PreferencesWindow.vala:100
+#: src/preferences.rs:163
 msgid "Import or export commands and constants together as a zip archive."
 msgstr ""
 "Importer eller eksporter kommandoer og konstanter sammen som et zip-arkiv."
 
-#: src/PreferencesWindow.vala:104 src/PreferencesWindow.vala:237
+#: src/preferences.rs:168 src/preferences.rs:341
 msgid "Import Configuration"
 msgstr "Importer konfigurasjon"
 
-#: src/PreferencesWindow.vala:105
+#: src/preferences.rs:170
 msgid "Replace local commands and constants from a zip file."
 msgstr "Erstatt lokale kommandoer og konstanter fra en zip-fil."
 
-#: src/PreferencesWindow.vala:107
+#: src/preferences.rs:173
 msgid "Import"
 msgstr "Importer"
 
-#: src/PreferencesWindow.vala:116 src/PreferencesWindow.vala:260
+#: src/preferences.rs:184 src/preferences.rs:376
 msgid "Export Configuration"
 msgstr "Eksporter konfigurasjon"
 
-#: src/PreferencesWindow.vala:117
+#: src/preferences.rs:185
 msgid "Save commands and constants into a zip file."
 msgstr "Lagre kommandoer og konstanter i en zip-fil."
 
-#: src/PreferencesWindow.vala:119
+#: src/preferences.rs:187
 msgid "Export"
 msgstr "Eksporter"
 
-#: src/PreferencesWindow.vala:128
+#: src/preferences.rs:198
 msgid "Danger Zone"
 msgstr "Faresone"
 
-#: src/PreferencesWindow.vala:129
+#: src/preferences.rs:200
 msgid "Remove all saved commands and constants from this device."
 msgstr "Fjern alle lagrede kommandoer og konstanter fra denne enheten."
 
-#: src/PreferencesWindow.vala:133
+#: src/preferences.rs:205
 msgid "Delete All Configuration"
 msgstr "Slett all konfigurasjon"
 
-#: src/PreferencesWindow.vala:134
+#: src/preferences.rs:207
 msgid "Deletes commands.json and constants.json. This cannot be undone."
 msgstr "Sletter commands.json og constants.json. Dette kan ikke angres."
 
-#: src/PreferencesWindow.vala:159
+#: src/preferences.rs:243
 msgid "Location unknown"
 msgstr "Plassering ukjent"
 
-#: src/PreferencesWindow.vala:165
+#: src/preferences.rs:249
 msgid "The sun stays down today"
 msgstr "Solen står ikke opp i dag"
 
-#: src/PreferencesWindow.vala:168
+#: src/preferences.rs:252
 msgid "The sun stays up today"
 msgstr "Solen går ikke ned i dag"
 
-#: src/PreferencesWindow.vala:170
+#: src/preferences.rs:258
 #, c-format
 msgid "Sunrise %s, sunset %s"
 msgstr "Soloppgang %s, solnedgang %s"
 
-#: src/PreferencesWindow.vala:178
+#: src/preferences.rs:265
+msgid "Could not open System Settings"
+msgstr "Kunne ikke åpne Systeminnstillinger"
+
+#: src/preferences.rs:274
 msgid "Hour"
 msgstr "Time"
 
-#: src/PreferencesWindow.vala:179
+#: src/preferences.rs:275
 msgid "Minute"
 msgstr "Minutt"
 
-#: src/PreferencesWindow.vala:246
+#: src/preferences.rs:358
 msgid "Configuration imported"
 msgstr "Konfigurasjon importert"
 
-#: src/PreferencesWindow.vala:248 src/PreferencesWindow.vala:254
+#: src/preferences.rs:368
 #, c-format
 msgid "Import failed: %s"
 msgstr "Import mislyktes: %s"
 
-#: src/PreferencesWindow.vala:269
+#: src/preferences.rs:393
 msgid "Configuration exported"
 msgstr "Konfigurasjonen er eksportert"
 
-#: src/PreferencesWindow.vala:271 src/PreferencesWindow.vala:277
+#: src/preferences.rs:403
 #, c-format
 msgid "Export failed: %s"
 msgstr "Eksporten mislyktes: %s"
 
-#: src/PreferencesWindow.vala:283
+#: src/preferences.rs:411
 msgid "Delete all configuration?"
 msgstr "Vil du slette all konfigurasjon?"
 
-#: src/PreferencesWindow.vala:284
+#: src/preferences.rs:413
 msgid ""
 "This will remove every command and constant. This action cannot be undone."
 msgstr ""
 "Dette vil fjerne hver kommando og konstant. Denne handlingen kan ikke angres."
 
-#: src/PreferencesWindow.vala:305
+#: src/preferences.rs:442
 msgid "Configuration deleted"
 msgstr "Konfigurasjonen er slettet"
 
-#: src/PreferencesWindow.vala:307
+#: src/preferences.rs:447
 #, c-format
 msgid "Delete failed: %s"
 msgstr "Sletting mislyktes: %s"
 
-#: src/SlidingToggleGroup.vala:38
+#: src/runner.rs:122
+#, c-format
+msgid "Exited with code %d"
+msgstr "Avsluttet med koden %d"
+
+#: src/runner.rs:128
+#, c-format
+msgid "Killed by signal %d"
+msgstr "Drept av signal %d"
+
+#: src/widgets/sliding_toggle_group.rs:166
 msgid "Light"
 msgstr "Lys"
 
-#: src/SlidingToggleGroup.vala:39
+#: src/widgets/sliding_toggle_group.rs:173
 msgid "Dark"
 msgstr "Mørk"
+
+#: src/window.rs:110
+msgid "Keyboard Shortcuts"
+msgstr "Tastatursnarveier"
+
+#: src/window.rs:111
+msgid "About Switchcraft"
+msgstr "Om Switchcraft"
+
+#: src/window.rs:112
+msgid "Quit"
+msgstr "Avslutt"
+
+#: src/window.rs:121
+msgid "Run the background process that reacts to theme changes."
+msgstr "Kjør bakgrunnsprosessen som reagerer på temaendringer."
+
+#: src/window.rs:123 src/window.rs:131
+msgid "Monitor"
+msgstr "Overvåking"
+
+#: src/window.rs:137
+msgid "No Commands"
+msgstr "Ingen kommandoer"
+
+#: src/window.rs:139
+msgid ""
+"Use the '+' button in the header bar or press (Ctrl+N) to add a command."
+msgstr ""
+"Bruk '+'-knappen i overskriftslinjen eller trykk (Ctrl+N) for å legge til en "
+"kommando."
+
+#: src/window.rs:182
+msgid "Commands"
+msgstr "Kommandoer"
+
+#: src/window.rs:183
+msgid "Active commands that will run when their theme matches."
+msgstr "Aktive kommandoer som kjøres når temaet deres samsvarer."
+
+#: src/window.rs:188
+msgid "Disabled"
+msgstr "Slått av"
+
+#: src/window.rs:189
+msgid "Saved commands that are currently turned off."
+msgstr "Lagrede kommandoer som for øyeblikket er slått av."
+
+#: src/window.rs:371
+msgid "Duplicate"
+msgstr "Lag kopi"
+
+#: src/window.rs:384
+msgid "Drag to reorder"
+msgstr "Dra for å omorganisere"
+
+#: src/window.rs:796
+msgid "Command deleted"
+msgstr "Kommando slettet"
+
+#: src/window.rs:797
+msgid "Undo"
+msgstr "Angre"
+
+#: src/window.rs:855
+msgid "Contributors"
+msgstr "Bidragsytere"
+
+#: src/window.rs:858
+msgid "Credits"
+msgstr "Takk til"
+
+#: src/window.rs:911
+msgid "Background monitoring is now active"
+msgstr "Bakgrunnsovervåking er nå aktiv"
+
+#: src/window.rs:913
+msgid "Background monitoring is now inactive"
+msgstr "Bakgrunnsovervåking er nå inaktiv"
 
 #: data/resources/shortcuts-dialog.ui:6
 msgid "General"
@@ -685,7 +675,9 @@ msgstr ""
 msgid ""
 "Built-in commands: pick a setting and a value from a list instead of typing "
 "a command"
-msgstr "Innebygde kommandoer: velg en innstilling og en verdi fra en liste i stedet for å skrive en kommando"
+msgstr ""
+"Innebygde kommandoer: velg en innstilling og en verdi fra en liste i stedet "
+"for å skrive en kommando"
 
 #: data/com.github.Switchcraft.metainfo.xml.in:42
 msgid "KDE Plasma and Kvantum support"
@@ -693,17 +685,29 @@ msgstr "Støtte for KDE Plasma og Kvantum"
 
 #: data/com.github.Switchcraft.metainfo.xml.in:43
 msgid "Automatic switching at sunset and sunrise or at custom times"
-msgstr "Automatisk bytte ved solnedgang og soloppgang eller til egendefinerte tider"
+msgstr ""
+"Automatisk bytte ved solnedgang og soloppgang eller til egendefinerte tider"
 
 #: data/com.github.Switchcraft.metainfo.xml.in:44
 msgid ""
 "Redesigned command list with drag-and-drop reordering, command testing and "
 "undo"
-msgstr "Ny kommandoliste med omorganisering ved å dra og slippe, kommandotesting og angring"
+msgstr ""
+"Ny kommandoliste med omorganisering ved å dra og slippe, kommandotesting og "
+"angring"
 
 #: data/com.github.Switchcraft.metainfo.xml.in:45
 msgid "Translated into 22 languages"
 msgstr "Oversatt til 22 språk"
+
+#~ msgid "The 'zip' command is required to export."
+#~ msgstr "Kommandoen 'zip' er nødvendig for å eksportere."
+
+#~ msgid "Failed to create temporary directory."
+#~ msgstr "Kunne ikke opprette midlertidig katalog."
+
+#~ msgid "The 'unzip' command is required to import."
+#~ msgstr "Kommandoen 'unzip' er nødvendig for å importere."
 
 #~ msgid "Monitor GNOME theme changes and run commands"
 #~ msgstr "Overvåk GNOME-temaendringer og kjør kommandoer"

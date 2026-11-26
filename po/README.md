@@ -54,12 +54,12 @@ Open the generated YAML file and fill in the `msgstr` fields:
 entries:
   - msgid: "Add command"
     msgstr: "Pievienot komandu"
-    locations: "src/MainWindow.vala:360"
+    locations: "data/resources/shortcuts-dialog.ui:9"
 ```
 
-Keep placeholders (`%s`, `%d`, `$NAME`, `${NAME}`), literal file names
-(`commands.json`, `constants.json`, `theme_settings.json`) and command names
-(`zip`, `unzip`) exactly as they appear in `msgid`.
+Keep placeholders (`%s`, `%d`, `$NAME`, `${NAME}`) and literal file names
+(`commands.json`, `constants.json`, `theme_settings.json`) exactly as they
+appear in `msgid`.
 
 ### 5. Import translations
 
@@ -89,7 +89,7 @@ Useful flags:
 
 `po/POTFILES` lists every file scanned for translatable strings:
 
-- Vala sources in `src/`
+- Rust sources in `src/`
 - GtkBuilder UI files in `data/resources/ui/`
 - The GSettings schema
 - The AppStream metainfo file
@@ -107,28 +107,28 @@ Counted with `./scripts/translations.sh --check-only` on 2026-11-12, out of 155 
 
 | Language | Code | Translated | Fuzzy |
 | -------- | ---- | ---------- | ----- |
-| Arabic | ar | 100.0% (155) | 0 |
-| German | de | 100.0% (155) | 0 |
-| Greek | el | 100.0% (155) | 0 |
-| Spanish | es | 100.0% (155) | 0 |
-| Estonian | et | 100.0% (155) | 0 |
-| Finnish | fi | 100.0% (155) | 0 |
-| French | fr | 100.0% (155) | 0 |
-| Irish | ga | 100.0% (155) | 0 |
-| Italian | it | 100.0% (155) | 0 |
-| Japanese | ja | 100.0% (155) | 0 |
-| Kazakh | kk | 100.0% (155) | 0 |
-| Korean | ko | 100.0% (155) | 0 |
-| Lithuanian | lt | 100.0% (155) | 0 |
-| Latvian | lv | 100.0% (155) | 0 |
-| Norwegian Bokmål | nb | 100.0% (155) | 0 |
-| Dutch | nl | 100.0% (155) | 0 |
-| Polish | pl | 100.0% (155) | 0 |
-| Portuguese (Brazil) | pt_BR | 100.0% (155) | 0 |
-| Swedish | sv | 100.0% (155) | 0 |
-| Ukrainian | uk | 100.0% (155) | 0 |
-| Vietnamese | vi | 100.0% (155) | 0 |
-| Chinese (Simplified) | zh_CN | 100.0% (155) | 0 |
+| Arabic | ar | 100.0% (152) | 0 |
+| German | de | 100.0% (152) | 0 |
+| Greek | el | 100.0% (152) | 0 |
+| Spanish | es | 100.0% (152) | 0 |
+| Estonian | et | 100.0% (152) | 0 |
+| Finnish | fi | 100.0% (152) | 0 |
+| French | fr | 100.0% (152) | 0 |
+| Irish | ga | 100.0% (152) | 0 |
+| Italian | it | 100.0% (152) | 0 |
+| Japanese | ja | 100.0% (152) | 0 |
+| Kazakh | kk | 100.0% (152) | 0 |
+| Korean | ko | 100.0% (152) | 0 |
+| Lithuanian | lt | 100.0% (152) | 0 |
+| Latvian | lv | 100.0% (152) | 0 |
+| Norwegian Bokmål | nb | 100.0% (152) | 0 |
+| Dutch | nl | 100.0% (152) | 0 |
+| Polish | pl | 100.0% (152) | 0 |
+| Portuguese (Brazil) | pt_BR | 100.0% (152) | 0 |
+| Swedish | sv | 100.0% (152) | 0 |
+| Ukrainian | uk | 100.0% (152) | 0 |
+| Vietnamese | vi | 100.0% (152) | 0 |
+| Chinese (Simplified) | zh_CN | 100.0% (152) | 0 |
 
 ## Note
 
@@ -137,11 +137,12 @@ Counted with `./scripts/translations.sh --check-only` on 2026-11-12, out of 155 
 ## Testing translations locally
 
 ```bash
-meson setup build --prefix=$HOME/.local
-meson compile -C build
-meson install -C build
-LANGUAGE=de switchcraft
+make
+GSETTINGS_SCHEMA_DIR=target/schemas LANGUAGE=de target/release/switchcraft
 ```
+
+`make` puts the `.mo` files in `target/share/locale`, where the binary looks
+first, so this needs no install.
 
 For the AppImage, `scripts/make-anyimage.sh` copies the `.mo` files for the
 languages in `po/LINGUAS` into the bundle.
@@ -149,5 +150,5 @@ languages in `po/LINGUAS` into the bundle.
 ## Further Reading
 
 - [GNU gettext Manual](https://www.gnu.org/software/gettext/manual/gettext.html)
-- [Meson i18n module](https://mesonbuild.com/i18n-module.html)
+- [xgettext invocation](https://www.gnu.org/software/gettext/manual/html_node/xgettext-Invocation.html)
 - [AppStream metadata](https://www.freedesktop.org/software/appstream/docs/)

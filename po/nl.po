@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: switchcraft 2.0.0\n"
 "Report-Msgid-Bugs-To: https://github.com/kem-a/switchcraft/issues\n"
-"POT-Creation-Date: 2026-11-12 00:18+0200\n"
+"POT-Creation-Date: 2026-11-23 16:40+0200\n"
 "PO-Revision-Date: 2026-11-11 12:02+0000\n"
 "Last-Translator: Switchcraft translators\n"
 "Language-Team: none\n"
@@ -17,250 +17,221 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: src/Application.vala:126
+#: src/application.rs:153
 msgid "Show version information"
 msgstr "Versie-informatie weergeven"
 
-#: src/Application.vala:127
+#: src/application.rs:161
 msgid "Run in background for theme monitoring"
 msgstr "Wordt op de achtergrond uitgevoerd voor themabewaking"
 
-#: src/Application.vala:352
+#: src/builtins.rs:373
+msgid "Color Scheme"
+msgstr "Kleurenschema"
+
+#: src/builtins.rs:374
+msgid "Accent Color"
+msgstr "Accentkleur"
+
+#: src/builtins.rs:375
+msgid "Icon Theme"
+msgstr "Pictogramthema"
+
+#: src/builtins.rs:376
+msgid "GTK Theme"
+msgstr "GTK-thema"
+
+#: src/builtins.rs:377
+msgid "Cursor Theme"
+msgstr "Cursorthema"
+
+#: src/builtins.rs:378
+msgid "Shell Theme"
+msgstr "Shell-thema"
+
+#: src/builtins.rs:379
+msgid "Wallpaper"
+msgstr "Bureaubladachtergrond"
+
+#: src/builtins.rs:380
+msgid "Night Light"
+msgstr "Nachtkleur"
+
+#: src/builtins.rs:381
+msgid "Global Theme"
+msgstr "Globaal thema"
+
+#: src/builtins.rs:382
+msgid "Plasma Style"
+msgstr "Plasma-stijl"
+
+#: src/builtins.rs:383
+msgid "Kvantum Theme"
+msgstr "Kvantum-thema"
+
+#: src/builtins.rs:433
+msgid "Switches to the light style and would loop in Dark mode"
+msgstr "Schakelt over naar de lichte stijl en loopt door in de donkere modus"
+
+#: src/builtins.rs:436
+msgid "Switches to the dark style and would loop in Light mode"
+msgstr "Schakelt over naar de donkere stijl en loopt in de lichte modus"
+
+#: src/builtins.rs:458
 #, c-format
-msgid "Exited with code %d"
-msgstr "Afgesloten met code %d"
+msgid "%s is already set in this mode"
+msgstr "%s is al ingesteld in deze modus"
 
-#: src/Application.vala:353
-#, c-format
-msgid "Killed by signal %d"
-msgstr "Gedood door signaal %d"
+#: src/builtins.rs:465
+msgid "This command is already in this mode"
+msgstr "Deze opdracht bevindt zich al in deze modus"
 
-#: src/Application.vala:1367
-msgid "The 'zip' command is required to export."
-msgstr "Om te exporteren is het commando 'zip' vereist."
-
-#: src/Application.vala:1373
+#: src/bundle.rs:16
 msgid "Destination must be a local file."
 msgstr "Bestemming moet een lokaal bestand zijn."
 
-#: src/Application.vala:1380
+#: src/bundle.rs:21
 msgid "Failed to prepare destination directory."
 msgstr "Kan de doelmap niet voorbereiden."
 
-#: src/Application.vala:1388 src/Application.vala:1461
-msgid "Failed to create temporary directory."
-msgstr "Kan tijdelijke map niet maken."
-
-#: src/Application.vala:1419
+#: src/bundle.rs:28
 msgid "Unable to overwrite existing archive."
 msgstr "Kan bestaand archief niet overschrijven."
 
-#: src/Application.vala:1431
+#: src/bundle.rs:41
 #, c-format
 msgid "Failed to write archive: %s"
 msgstr "Kan archief niet schrijven: %s"
 
-#: src/Application.vala:1448
-msgid "The 'unzip' command is required to import."
-msgstr "Voor het importeren is het commando 'unzip' vereist."
-
-#: src/Application.vala:1454
+#: src/bundle.rs:97
 msgid "Archive must be a local file."
 msgstr "Het archief moet een lokaal bestand zijn."
 
-#: src/Application.vala:1472
+#: src/bundle.rs:103
 #, c-format
 msgid "Failed to unpack archive: %s"
 msgstr "Kan archief niet uitpakken: %s"
 
-#: src/Application.vala:1480
+#: src/bundle.rs:118
 msgid "Archive must contain commands.json and constants.json at the top level."
 msgstr ""
 "Het archief moet commands.json en constants.json op het hoogste niveau "
 "bevatten."
 
-#: src/Application.vala:1492
+#: src/bundle.rs:130
 msgid "commands.json is not a JSON object."
 msgstr "commands.json is geen JSON-object."
 
-#: src/Application.vala:1503
+#: src/bundle.rs:140
 msgid "constants.json is not a JSON object."
 msgstr "constants.json is geen JSON-object."
 
-#: src/Application.vala:1520
+#: src/bundle.rs:154
 msgid "constants.json must only contain string values."
 msgstr "constants.json mag alleen stringwaarden bevatten."
 
-#: src/Application.vala:1533
+#: src/bundle.rs:164
 msgid "theme_settings.json is not a JSON object."
 msgstr "theme_settings.json is geen JSON-object."
 
-#: src/Application.vala:1556
+#: src/bundle.rs:181
 msgid "Failed to remove commands.json."
 msgstr "Kan commands.json niet verwijderen."
 
-#: src/Application.vala:1563
+#: src/bundle.rs:186
 msgid "Failed to remove constants.json."
 msgstr "Kan constants.json niet verwijderen."
 
-#: src/Application.vala:1570
+#: src/bundle.rs:191
 msgid "Failed to remove theme_settings.json."
 msgstr "Kan theme_settings.json niet verwijderen."
 
-#: src/Application.vala:1756
-msgid "Switchcraft Monitor"
-msgstr "Switchcraft-monitor"
-
-#: src/Application.vala:1757
-msgid "Monitor theme changes and run commands"
-msgstr "Houd toezicht op themawijzigingen en voer opdrachten uit"
-
-#: src/CommandDialog.vala:44
-msgid "Color Scheme"
-msgstr "Kleurenschema"
-
-#: src/CommandDialog.vala:46
-msgid "Accent Color"
-msgstr "Accentkleur"
-
-#: src/CommandDialog.vala:49
-msgid "Icon Theme"
-msgstr "Pictogramthema"
-
-#: src/CommandDialog.vala:51
-msgid "GTK Theme"
-msgstr "GTK-thema"
-
-#: src/CommandDialog.vala:54
-msgid "Cursor Theme"
-msgstr "Cursorthema"
-
-#: src/CommandDialog.vala:56
-msgid "Shell Theme"
-msgstr "Shell-thema"
-
-#: src/CommandDialog.vala:59
-msgid "Wallpaper"
-msgstr "Bureaubladachtergrond"
-
-#: src/CommandDialog.vala:61
-msgid "Night Light"
-msgstr "Nachtkleur"
-
-#: src/CommandDialog.vala:63
-msgid "Global Theme"
-msgstr "Globaal thema"
-
-#: src/CommandDialog.vala:65
-msgid "Plasma Style"
-msgstr "Plasma-stijl"
-
-#: src/CommandDialog.vala:67
-msgid "Kvantum Theme"
-msgstr "Kvantum-thema"
-
-#: src/CommandDialog.vala:96
-msgid "Switches to the light style and would loop in Dark mode"
-msgstr "Schakelt over naar de lichte stijl en loopt door in de donkere modus"
-
-#: src/CommandDialog.vala:99
-msgid "Switches to the dark style and would loop in Light mode"
-msgstr "Schakelt over naar de donkere stijl en loopt in de lichte modus"
-
-#: src/CommandDialog.vala:113
-#, c-format
-msgid "%s is already set in this mode"
-msgstr "%s is al ingesteld in deze modus"
-
-#: src/CommandDialog.vala:118
-msgid "This command is already in this mode"
-msgstr "Deze opdracht bevindt zich al in deze modus"
-
-#: src/CommandDialog.vala:128
+#: src/command_dialog.rs:72
 msgid "Edit Command"
 msgstr "Opdracht bewerken"
 
-#: src/CommandDialog.vala:128
+#: src/command_dialog.rs:74
 msgid "Add Command"
 msgstr "Opdracht toevoegen"
 
-#: src/CommandDialog.vala:135
+#: src/command_dialog.rs:82
 msgid "Delete"
 msgstr "Verwijderen"
 
-#: src/CommandDialog.vala:138
+#: src/command_dialog.rs:85
 msgid "Cancel"
 msgstr "Annuleren"
 
-#: src/CommandDialog.vala:139
+#: src/command_dialog.rs:89
 msgid "Save"
 msgstr "Opslaan"
 
-#: src/CommandDialog.vala:139
+#: src/command_dialog.rs:91
 msgid "Add"
 msgstr "Toevoegen"
 
-#: src/CommandDialog.vala:152
+#: src/command_dialog.rs:106
 msgid "Custom Command"
 msgstr "Aangepaste opdracht"
 
-#: src/CommandDialog.vala:174
+#: src/command_dialog.rs:124
 msgid "Type"
 msgstr "Typ"
 
-#: src/CommandDialog.vala:179
+#: src/command_dialog.rs:130
 msgid "Command"
 msgstr "Opdracht"
 
-#: src/CommandDialog.vala:219
+#: src/command_dialog.rs:172
 msgid "Copy Error"
 msgstr "Fout kopiëren"
 
-#: src/CommandDialog.vala:244
+#: src/command_dialog.rs:204
 msgid "Test"
 msgstr "Testen"
 
-#: src/CommandDialog.vala:260
+#: src/command_dialog.rs:226
 msgid "Value"
 msgstr "Waarde"
 
-#: src/CommandDialog.vala:265
+#: src/command_dialog.rs:232
 msgid "Image"
 msgstr "Afbeelding"
 
-#: src/CommandDialog.vala:270
+#: src/command_dialog.rs:238
 msgid "Browse…"
 msgstr "Bladeren…"
 
-#: src/CommandDialog.vala:280
+#: src/command_dialog.rs:254
 msgid "Mode"
 msgstr "Modus"
 
-#: src/CommandDialog.vala:406
+#: src/command_dialog.rs:441
 msgid "Requires the User Themes GNOME Shell extension."
 msgstr "Vereist de GNOME Shell-extensie User Themes."
 
-#: src/CommandDialog.vala:521
+#: src/command_dialog.rs:569
 msgid "Command failed"
 msgstr "Opdracht is niet gelukt"
 
-#: src/CommandDialog.vala:521
+#: src/command_dialog.rs:571
 msgid "Command succeeded"
 msgstr "Opdracht is gelukt"
 
-#: src/CommandDialog.vala:534
+#: src/command_dialog.rs:594
 msgid "Select Wallpaper"
 msgstr "Achtergrond selecteren"
 
-#: src/ConstantsWindow.vala:22
+#: src/constants_window.rs:47
 msgid "Constants"
 msgstr "Constanten"
 
-#: src/ConstantsWindow.vala:39 src/ConstantsWindow.vala:182
+#: src/constants_window.rs:66 src/constants_window.rs:224
 msgid "Add Constant"
 msgstr "Constante toevoegen"
 
-#: src/ConstantsWindow.vala:51
+#: src/constants_window.rs:84
+#, no-rust-format
 msgid ""
 "Define constants to use in your commands. Reference them with $NAME or $"
 "{NAME}."
@@ -268,39 +239,40 @@ msgstr ""
 "Definieer constanten die u in uw opdrachten wilt gebruiken. Verwijs ernaar "
 "met $NAME of ${NAME}."
 
-#: src/ConstantsWindow.vala:69
+#: src/constants_window.rs:104
 msgid "No Constants"
 msgstr "Geen constanten"
 
-#: src/ConstantsWindow.vala:70
+#: src/constants_window.rs:105
 msgid "Click the '+' button to define a constant."
 msgstr "Klik op de knop '+' om een constante te definiëren."
 
-#: src/ConstantsWindow.vala:145
+#: src/constants_window.rs:181
 msgid "Edit constant"
 msgstr "Constante bewerken"
 
-#: src/ConstantsWindow.vala:153
+#: src/constants_window.rs:193
 msgid "Remove constant"
 msgstr "Constante verwijderen"
 
-#: src/ConstantsWindow.vala:182
+#: src/constants_window.rs:222
 msgid "Edit Constant"
 msgstr "Bewerk Constant"
 
-#: src/ConstantsWindow.vala:184
+#: src/constants_window.rs:229
 msgid "Define a constant name and value."
 msgstr "Definieer een constante naam en waarde."
 
-#: src/ConstantsWindow.vala:202
+#: src/constants_window.rs:255
 msgid "Constant name (e.g., D2DL_SCHEMA)"
 msgstr "Constante naam (bijvoorbeeld D2DL_SCHEMA)"
 
-#: src/ConstantsWindow.vala:210
+#: src/constants_window.rs:265
 msgid "Value (e.g., org.gnome.shell.extensions.dash2dock-lite)"
 msgstr "Waarde (bijvoorbeeld org.gnome.shell.extensions.dash2dock-lite)"
 
-#: src/ConstantsWindow.vala:216
+#: src/constants_window.rs:274
+#, no-rust-format
 msgid ""
 "Use in commands as $NAME or ${NAME}. Names use letters, numbers and "
 "underscores."
@@ -308,95 +280,23 @@ msgstr ""
 "Gebruik in opdrachten als $NAME of ${NAME}. Namen gebruiken letters, cijfers "
 "en onderstrepingstekens."
 
-#: src/MainWindow.vala:64
+#: src/monitor.rs:188
+msgid "Switchcraft Monitor"
+msgstr "Switchcraft-monitor"
+
+#: src/monitor.rs:189
+msgid "Monitor theme changes and run commands"
+msgstr "Houd toezicht op themawijzigingen en voer opdrachten uit"
+
+#: src/preferences.rs:54
 msgid "Preferences"
 msgstr "Voorkeuren"
 
-#: src/MainWindow.vala:67
-msgid "Keyboard Shortcuts"
-msgstr "Sneltoetsen"
-
-#: src/MainWindow.vala:68
-msgid "About Switchcraft"
-msgstr "Over Switchcraft"
-
-#: src/MainWindow.vala:69
-msgid "Quit"
-msgstr "Afsluiten"
-
-#: src/MainWindow.vala:78
-msgid "Run the background process that reacts to theme changes."
-msgstr "Voer het achtergrondproces uit dat reageert op themawijzigingen."
-
-#: src/MainWindow.vala:79 src/MainWindow.vala:82
-msgid "Monitor"
-msgstr "Monitoring"
-
-#: src/MainWindow.vala:88
-msgid "No Commands"
-msgstr "Geen opdrachten"
-
-#: src/MainWindow.vala:89
-msgid ""
-"Use the '+' button in the header bar or press (Ctrl+N) to add a command."
-msgstr ""
-"Gebruik de knop '+' in de kopbalk of druk op (Ctrl+N) om een opdracht toe te "
-"voegen."
-
-#: src/MainWindow.vala:128
-msgid "Commands"
-msgstr "Opdrachten"
-
-#: src/MainWindow.vala:129
-msgid "Active commands that will run when their theme matches."
-msgstr ""
-"Actieve opdrachten die worden uitgevoerd wanneer hun thema overeenkomt."
-
-#: src/MainWindow.vala:135
-msgid "Disabled"
-msgstr "Uitgeschakeld"
-
-#: src/MainWindow.vala:136
-msgid "Saved commands that are currently turned off."
-msgstr "Opgeslagen opdrachten die momenteel zijn uitgeschakeld."
-
-#: src/MainWindow.vala:297
-msgid "Duplicate"
-msgstr "Dupliceren"
-
-#: src/MainWindow.vala:310
-msgid "Drag to reorder"
-msgstr "Sleep om de volgorde te wijzigen"
-
-#: src/MainWindow.vala:610
-msgid "Command deleted"
-msgstr "Opdracht verwijderd"
-
-#: src/MainWindow.vala:611
-msgid "Undo"
-msgstr "Ongedaan maken"
-
-#: src/MainWindow.vala:652
-msgid "Contributors"
-msgstr "Bijdragers"
-
-#: src/MainWindow.vala:653
-msgid "Credits"
-msgstr "Met dank aan"
-
-#: src/MainWindow.vala:700
-msgid "Background monitoring is now active"
-msgstr "Achtergrondmonitoring is nu actief"
-
-#: src/MainWindow.vala:701
-msgid "Background monitoring is now inactive"
-msgstr "Achtergrondmonitoring is nu inactief"
-
-#: src/PreferencesWindow.vala:43
+#: src/preferences.rs:83
 msgid "Automatic Switching"
 msgstr "Automatisch schakelen"
 
-#: src/PreferencesWindow.vala:45
+#: src/preferences.rs:85
 msgid ""
 "KDE Plasma is set to switch global themes automatically. Turn that off to "
 "use this schedule."
@@ -404,7 +304,7 @@ msgstr ""
 "KDE Plasma is ingesteld om automatisch van globale thema te wisselen. "
 "Schakel dat uit om dit schema te gebruiken."
 
-#: src/PreferencesWindow.vala:47
+#: src/preferences.rs:87
 msgid ""
 "Switch KDE's default light and dark global themes on a schedule. Needs "
 "background monitoring."
@@ -412,7 +312,7 @@ msgstr ""
 "Schakel de standaard lichte en donkere globale thema's van KDE volgens een "
 "schema. Heeft achtergrondmonitoring nodig."
 
-#: src/PreferencesWindow.vala:48
+#: src/preferences.rs:89
 msgid ""
 "Switch between light and dark style on a schedule. Needs background "
 "monitoring."
@@ -420,11 +320,11 @@ msgstr ""
 "Wissel volgens een schema tussen lichte en donkere stijl. Heeft "
 "achtergrondmonitoring nodig."
 
-#: src/PreferencesWindow.vala:54
+#: src/preferences.rs:96
 msgid "Automatic Switching Is Set in KDE"
 msgstr "Automatisch overschakelen is ingesteld in KDE"
 
-#: src/PreferencesWindow.vala:55
+#: src/preferences.rs:98
 msgid ""
 "Turn off “Switch to Dark Mode at Night” in System Settings to use this "
 "schedule."
@@ -432,159 +332,249 @@ msgstr ""
 "Schakel 'S nachts overschakelen naar donkere modus' uit in "
 "Systeeminstellingen om dit schema te gebruiken."
 
-#: src/PreferencesWindow.vala:61
+#: src/preferences.rs:105
 msgid "Open Settings"
 msgstr "Instellingen openen"
 
-#: src/PreferencesWindow.vala:65
-msgid "Could not open System Settings"
-msgstr "Kan Systeeminstellingen niet openen"
-
-#: src/PreferencesWindow.vala:74
+#: src/preferences.rs:118
 msgid "Schedule"
 msgstr "Programmering"
 
-#: src/PreferencesWindow.vala:75
+#: src/preferences.rs:120
 msgid "Off"
 msgstr "Uit"
 
-#: src/PreferencesWindow.vala:75
+#: src/preferences.rs:121
 msgid "Sunset to Sunrise"
 msgstr "Van zonsondergang tot zonsopgang"
 
-#: src/PreferencesWindow.vala:75
+#: src/preferences.rs:122
 msgid "Custom Times"
 msgstr "Aangepaste tijden"
 
-#: src/PreferencesWindow.vala:86
+#: src/preferences.rs:141
 msgid "Light From"
 msgstr "Licht vanaf"
 
-#: src/PreferencesWindow.vala:87
+#: src/preferences.rs:142
 msgid "Dark From"
 msgstr "Donker vanaf"
 
-#: src/PreferencesWindow.vala:99
+#: src/preferences.rs:161
 msgid "Configuration"
 msgstr "Configuratie"
 
-#: src/PreferencesWindow.vala:100
+#: src/preferences.rs:163
 msgid "Import or export commands and constants together as a zip archive."
 msgstr ""
 "Importeer of exporteer opdrachten en constanten samen als een zip-archief."
 
-#: src/PreferencesWindow.vala:104 src/PreferencesWindow.vala:237
+#: src/preferences.rs:168 src/preferences.rs:341
 msgid "Import Configuration"
 msgstr "Configuratie importeren"
 
-#: src/PreferencesWindow.vala:105
+#: src/preferences.rs:170
 msgid "Replace local commands and constants from a zip file."
 msgstr "Vervang lokale opdrachten en constanten uit een zipbestand."
 
-#: src/PreferencesWindow.vala:107
+#: src/preferences.rs:173
 msgid "Import"
 msgstr "Importeren"
 
-#: src/PreferencesWindow.vala:116 src/PreferencesWindow.vala:260
+#: src/preferences.rs:184 src/preferences.rs:376
 msgid "Export Configuration"
 msgstr "Configuratie exporteren"
 
-#: src/PreferencesWindow.vala:117
+#: src/preferences.rs:185
 msgid "Save commands and constants into a zip file."
 msgstr "Sla opdrachten en constanten op in een zipbestand."
 
-#: src/PreferencesWindow.vala:119
+#: src/preferences.rs:187
 msgid "Export"
 msgstr "Exporteren"
 
-#: src/PreferencesWindow.vala:128
+#: src/preferences.rs:198
 msgid "Danger Zone"
 msgstr "Gevarenzone"
 
-#: src/PreferencesWindow.vala:129
+#: src/preferences.rs:200
 msgid "Remove all saved commands and constants from this device."
 msgstr "Verwijder alle opgeslagen opdrachten en constanten van dit apparaat."
 
-#: src/PreferencesWindow.vala:133
+#: src/preferences.rs:205
 msgid "Delete All Configuration"
 msgstr "Verwijder alle configuratie"
 
-#: src/PreferencesWindow.vala:134
+#: src/preferences.rs:207
 msgid "Deletes commands.json and constants.json. This cannot be undone."
 msgstr ""
 "Verwijdert commands.json en constants.json. Dit kan niet ongedaan worden "
 "gemaakt."
 
-#: src/PreferencesWindow.vala:159
+#: src/preferences.rs:243
 msgid "Location unknown"
 msgstr "Locatie onbekend"
 
-#: src/PreferencesWindow.vala:165
+#: src/preferences.rs:249
 msgid "The sun stays down today"
 msgstr "De zon komt vandaag niet op"
 
-#: src/PreferencesWindow.vala:168
+#: src/preferences.rs:252
 msgid "The sun stays up today"
 msgstr "De zon gaat vandaag niet onder"
 
-#: src/PreferencesWindow.vala:170
+#: src/preferences.rs:258
 #, c-format
 msgid "Sunrise %s, sunset %s"
 msgstr "Zonsopgang %s, zonsondergang %s"
 
-#: src/PreferencesWindow.vala:178
+#: src/preferences.rs:265
+msgid "Could not open System Settings"
+msgstr "Kan Systeeminstellingen niet openen"
+
+#: src/preferences.rs:274
 msgid "Hour"
 msgstr "Uur"
 
-#: src/PreferencesWindow.vala:179
+#: src/preferences.rs:275
 msgid "Minute"
 msgstr "Minuut"
 
-#: src/PreferencesWindow.vala:246
+#: src/preferences.rs:358
 msgid "Configuration imported"
 msgstr "Configuratie geïmporteerd"
 
-#: src/PreferencesWindow.vala:248 src/PreferencesWindow.vala:254
+#: src/preferences.rs:368
 #, c-format
 msgid "Import failed: %s"
 msgstr "Importeren mislukt: %s"
 
-#: src/PreferencesWindow.vala:269
+#: src/preferences.rs:393
 msgid "Configuration exported"
 msgstr "Configuratie geëxporteerd"
 
-#: src/PreferencesWindow.vala:271 src/PreferencesWindow.vala:277
+#: src/preferences.rs:403
 #, c-format
 msgid "Export failed: %s"
 msgstr "Exporteren mislukt: %s"
 
-#: src/PreferencesWindow.vala:283
+#: src/preferences.rs:411
 msgid "Delete all configuration?"
 msgstr "Alle configuratie verwijderen?"
 
-#: src/PreferencesWindow.vala:284
+#: src/preferences.rs:413
 msgid ""
 "This will remove every command and constant. This action cannot be undone."
 msgstr ""
 "Hiermee wordt elk commando en elke constante verwijderd. Deze actie kan niet "
 "ongedaan worden gemaakt."
 
-#: src/PreferencesWindow.vala:305
+#: src/preferences.rs:442
 msgid "Configuration deleted"
 msgstr "Configuratie verwijderd"
 
-#: src/PreferencesWindow.vala:307
+#: src/preferences.rs:447
 #, c-format
 msgid "Delete failed: %s"
 msgstr "Verwijderen mislukt: %s"
 
-#: src/SlidingToggleGroup.vala:38
+#: src/runner.rs:122
+#, c-format
+msgid "Exited with code %d"
+msgstr "Afgesloten met code %d"
+
+#: src/runner.rs:128
+#, c-format
+msgid "Killed by signal %d"
+msgstr "Gedood door signaal %d"
+
+#: src/widgets/sliding_toggle_group.rs:166
 msgid "Light"
 msgstr "Licht"
 
-#: src/SlidingToggleGroup.vala:39
+#: src/widgets/sliding_toggle_group.rs:173
 msgid "Dark"
 msgstr "Donker"
+
+#: src/window.rs:110
+msgid "Keyboard Shortcuts"
+msgstr "Sneltoetsen"
+
+#: src/window.rs:111
+msgid "About Switchcraft"
+msgstr "Over Switchcraft"
+
+#: src/window.rs:112
+msgid "Quit"
+msgstr "Afsluiten"
+
+#: src/window.rs:121
+msgid "Run the background process that reacts to theme changes."
+msgstr "Voer het achtergrondproces uit dat reageert op themawijzigingen."
+
+#: src/window.rs:123 src/window.rs:131
+msgid "Monitor"
+msgstr "Monitoring"
+
+#: src/window.rs:137
+msgid "No Commands"
+msgstr "Geen opdrachten"
+
+#: src/window.rs:139
+msgid ""
+"Use the '+' button in the header bar or press (Ctrl+N) to add a command."
+msgstr ""
+"Gebruik de knop '+' in de kopbalk of druk op (Ctrl+N) om een opdracht toe te "
+"voegen."
+
+#: src/window.rs:182
+msgid "Commands"
+msgstr "Opdrachten"
+
+#: src/window.rs:183
+msgid "Active commands that will run when their theme matches."
+msgstr ""
+"Actieve opdrachten die worden uitgevoerd wanneer hun thema overeenkomt."
+
+#: src/window.rs:188
+msgid "Disabled"
+msgstr "Uitgeschakeld"
+
+#: src/window.rs:189
+msgid "Saved commands that are currently turned off."
+msgstr "Opgeslagen opdrachten die momenteel zijn uitgeschakeld."
+
+#: src/window.rs:371
+msgid "Duplicate"
+msgstr "Dupliceren"
+
+#: src/window.rs:384
+msgid "Drag to reorder"
+msgstr "Sleep om de volgorde te wijzigen"
+
+#: src/window.rs:796
+msgid "Command deleted"
+msgstr "Opdracht verwijderd"
+
+#: src/window.rs:797
+msgid "Undo"
+msgstr "Ongedaan maken"
+
+#: src/window.rs:855
+msgid "Contributors"
+msgstr "Bijdragers"
+
+#: src/window.rs:858
+msgid "Credits"
+msgstr "Met dank aan"
+
+#: src/window.rs:911
+msgid "Background monitoring is now active"
+msgstr "Achtergrondmonitoring is nu actief"
+
+#: src/window.rs:913
+msgid "Background monitoring is now inactive"
+msgstr "Achtergrondmonitoring is nu inactief"
 
 #: data/resources/shortcuts-dialog.ui:6
 msgid "General"
@@ -695,7 +685,9 @@ msgstr ""
 msgid ""
 "Built-in commands: pick a setting and a value from a list instead of typing "
 "a command"
-msgstr "Ingebouwde opdrachten: kies een instelling en een waarde uit een lijst in plaats van een opdracht te typen"
+msgstr ""
+"Ingebouwde opdrachten: kies een instelling en een waarde uit een lijst in "
+"plaats van een opdracht te typen"
 
 #: data/com.github.Switchcraft.metainfo.xml.in:42
 msgid "KDE Plasma and Kvantum support"
@@ -703,17 +695,29 @@ msgstr "Ondersteuning voor KDE Plasma en Kvantum"
 
 #: data/com.github.Switchcraft.metainfo.xml.in:43
 msgid "Automatic switching at sunset and sunrise or at custom times"
-msgstr "Automatisch wisselen bij zonsondergang en zonsopgang of op aangepaste tijden"
+msgstr ""
+"Automatisch wisselen bij zonsondergang en zonsopgang of op aangepaste tijden"
 
 #: data/com.github.Switchcraft.metainfo.xml.in:44
 msgid ""
 "Redesigned command list with drag-and-drop reordering, command testing and "
 "undo"
-msgstr "Vernieuwde opdrachtenlijst met herschikken via slepen en neerzetten, opdrachten testen en ongedaan maken"
+msgstr ""
+"Vernieuwde opdrachtenlijst met herschikken via slepen en neerzetten, "
+"opdrachten testen en ongedaan maken"
 
 #: data/com.github.Switchcraft.metainfo.xml.in:45
 msgid "Translated into 22 languages"
 msgstr "Vertaald in 22 talen"
+
+#~ msgid "The 'zip' command is required to export."
+#~ msgstr "Om te exporteren is het commando 'zip' vereist."
+
+#~ msgid "Failed to create temporary directory."
+#~ msgstr "Kan tijdelijke map niet maken."
+
+#~ msgid "The 'unzip' command is required to import."
+#~ msgstr "Voor het importeren is het commando 'unzip' vereist."
 
 #~ msgid "Monitor GNOME theme changes and run commands"
 #~ msgstr "Houd toezicht op GNOME-themawijzigingen en voer opdrachten uit"
